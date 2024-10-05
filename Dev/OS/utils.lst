@@ -1,0 +1,906 @@
+   1               		.file	"utils.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	mem_cpy
+  20               	mem_cpy:
+  21               	.LFB6:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26 0000 DC01      		movw r26,r24
+  27 0002 FB01      		movw r30,r22
+  28               	.LM2:
+  29 0004 4115      		cp r20,__zero_reg__
+  30 0006 5105      		cpc r21,__zero_reg__
+  31 0008 01F0      		breq .L5
+  32               	.LVL1:
+  33               	.L6:
+  34               	.LM3:
+  35 000a 8191      		ld r24,Z+
+  36 000c 8D93      		st X+,r24
+  37               	.LM4:
+  38 000e 4150      		subi r20,lo8(-(-1))
+  39 0010 5040      		sbci r21,hi8(-(-1))
+  40               	.LM5:
+  41 0012 01F4      		brne .L6
+  42               	.LVL2:
+  43               	.L5:
+  44 0014 0895      		ret
+  45               	/* epilogue: frame size=0 */
+  46               	/* epilogue: noreturn */
+  47               	/* epilogue end (size=0) */
+  48               	/* function mem_cpy size 13 (13) */
+  49               	.LFE6:
+  51               	.global	mem_set
+  53               	mem_set:
+  54               	.LFB7:
+  55               	.LM6:
+  56               	/* prologue: frame size=0 */
+  57               	/* prologue end (size=0) */
+  58               	.LVL3:
+  59 0016 FC01      		movw r30,r24
+  60               	.LM7:
+  61 0018 6115      		cp r22,__zero_reg__
+  62 001a 7105      		cpc r23,__zero_reg__
+  63 001c 01F0      		breq .L13
+  64               	.LVL4:
+  65               	.L14:
+  66               	.LM8:
+  67 001e 1192      		st Z+,__zero_reg__
+  68               	.LM9:
+  69 0020 6150      		subi r22,lo8(-(-1))
+  70 0022 7040      		sbci r23,hi8(-(-1))
+  71               	.LM10:
+  72 0024 01F4      		brne .L14
+  73               	.L13:
+  74 0026 0895      		ret
+  75               	/* epilogue: frame size=0 */
+  76               	/* epilogue: noreturn */
+  77               	/* epilogue end (size=0) */
+  78               	/* function mem_set size 11 (11) */
+  79               	.LFE7:
+  81               	.global	random_init
+  83               	random_init:
+  84               	.LFB8:
+  85               	.LM11:
+  86               	/* prologue: frame size=0 */
+  87               	/* prologue end (size=0) */
+  88               	.LM12:
+  89 0028 C098      		cbi 56-0x20,0
+  90 002a 41E2      		ldi r20,lo8(33)
+  91 002c 4FB9      		out 47-0x20,r20
+  92 002e 2FEF      		ldi r18,lo8(-1)
+  93 0030 2FB9      		out 47-0x20,r18
+  94 0032 81EF      		ldi r24,lo8(-15)
+  95 0034 8FB9      		out 47-0x20,r24
+  96 0036 C09A      		sbi 56-0x20,0
+  97               	.LM13:
+  98 0038 C098      		cbi 56-0x20,0
+  99 003a 3DE1      		ldi r19,lo8(29)
+ 100 003c 3FB9      		out 47-0x20,r19
+ 101 003e 1FB8      		out 47-0x20,__zero_reg__
+ 102 0040 81E0      		ldi r24,lo8(1)
+ 103 0042 8FB9      		out 47-0x20,r24
+ 104 0044 C09A      		sbi 56-0x20,0
+ 105 0046 81E0      		ldi r24,lo8(257)
+ 106 0048 91E0      		ldi r25,hi8(257)
+ 107 004a 9093 0000 		sts (random)+1,r25
+ 108 004e 8093 0000 		sts random,r24
+ 109               	.LM14:
+ 110 0052 C098      		cbi 56-0x20,0
+ 111 0054 4FB9      		out 47-0x20,r20
+ 112 0056 2FB9      		out 47-0x20,r18
+ 113 0058 2FB9      		out 47-0x20,r18
+ 114 005a C09A      		sbi 56-0x20,0
+ 115               	.LM15:
+ 116 005c C098      		cbi 56-0x20,0
+ 117 005e 3FB9      		out 47-0x20,r19
+ 118 0060 1FB8      		out 47-0x20,__zero_reg__
+ 119 0062 1FB8      		out 47-0x20,__zero_reg__
+ 120 0064 C09A      		sbi 56-0x20,0
+ 121               	/* epilogue: frame size=0 */
+ 122 0066 0895      		ret
+ 123               	/* epilogue end (size=1) */
+ 124               	/* function random_init size 32 (31) */
+ 125               	.LFE8:
+ 127               	.global	ramdom_getRandomByte
+ 129               	ramdom_getRandomByte:
+ 130               	.LFB9:
+ 131               	.LM16:
+ 132               	/* prologue: frame size=0 */
+ 133               	/* prologue end (size=0) */
+ 134 0068 2091 0000 		lds r18,random
+ 135 006c 3091 0000 		lds r19,(random)+1
+ 136               	.LM17:
+ 137 0070 832F      		mov r24,r19
+ 138 0072 9927      		clr r25
+ 139 0074 87FD      		sbrc r24,7
+ 140 0076 00C0      		rjmp .L19
+ 141               	.LM18:
+ 142 0078 220F      		lsl r18
+ 143 007a 331F      		rol r19
+ 144               	.LM19:
+ 145 007c 832F      		mov r24,r19
+ 146 007e 9927      		clr r25
+ 147 0080 87FD      		sbrc r24,7
+ 148 0082 00C0      		rjmp .L22
+ 149               	.L44:
+ 150               	.LM20:
+ 151 0084 220F      		lsl r18
+ 152 0086 331F      		rol r19
+ 153               	.LM21:
+ 154 0088 832F      		mov r24,r19
+ 155 008a 9927      		clr r25
+ 156 008c 87FD      		sbrc r24,7
+ 157 008e 00C0      		rjmp .L25
+ 158               	.L45:
+ 159               	.LM22:
+ 160 0090 220F      		lsl r18
+ 161 0092 331F      		rol r19
+ 162               	.LM23:
+ 163 0094 832F      		mov r24,r19
+ 164 0096 9927      		clr r25
+ 165 0098 87FD      		sbrc r24,7
+ 166 009a 00C0      		rjmp .L28
+ 167               	.L46:
+ 168               	.LM24:
+ 169 009c 220F      		lsl r18
+ 170 009e 331F      		rol r19
+ 171               	.LM25:
+ 172 00a0 832F      		mov r24,r19
+ 173 00a2 9927      		clr r25
+ 174 00a4 87FD      		sbrc r24,7
+ 175 00a6 00C0      		rjmp .L31
+ 176               	.L47:
+ 177               	.LM26:
+ 178 00a8 220F      		lsl r18
+ 179 00aa 331F      		rol r19
+ 180               	.LM27:
+ 181 00ac 832F      		mov r24,r19
+ 182 00ae 9927      		clr r25
+ 183 00b0 87FD      		sbrc r24,7
+ 184 00b2 00C0      		rjmp .L34
+ 185               	.L48:
+ 186               	.LM28:
+ 187 00b4 220F      		lsl r18
+ 188 00b6 331F      		rol r19
+ 189               	.LM29:
+ 190 00b8 832F      		mov r24,r19
+ 191 00ba 9927      		clr r25
+ 192 00bc 87FD      		sbrc r24,7
+ 193 00be 00C0      		rjmp .L37
+ 194               	.L49:
+ 195               	.LM30:
+ 196 00c0 220F      		lsl r18
+ 197 00c2 331F      		rol r19
+ 198               	.LM31:
+ 199 00c4 832F      		mov r24,r19
+ 200 00c6 9927      		clr r25
+ 201 00c8 87FF      		sbrs r24,7
+ 202 00ca 00C0      		rjmp .L40
+ 203               	.L50:
+ 204               	.LM32:
+ 205 00cc 220F      		lsl r18
+ 206 00ce 331F      		rol r19
+ 207 00d0 81E2      		ldi r24,lo8(4129)
+ 208 00d2 90E1      		ldi r25,hi8(4129)
+ 209 00d4 2827      		eor r18,r24
+ 210 00d6 3927      		eor r19,r25
+ 211 00d8 00C0      		rjmp .L42
+ 212               	.L19:
+ 213 00da 220F      		lsl r18
+ 214 00dc 331F      		rol r19
+ 215 00de 81E2      		ldi r24,lo8(4129)
+ 216 00e0 90E1      		ldi r25,hi8(4129)
+ 217 00e2 2827      		eor r18,r24
+ 218 00e4 3927      		eor r19,r25
+ 219               	.LM33:
+ 220 00e6 832F      		mov r24,r19
+ 221 00e8 9927      		clr r25
+ 222 00ea 87FF      		sbrs r24,7
+ 223 00ec 00C0      		rjmp .L44
+ 224               	.L22:
+ 225               	.LM34:
+ 226 00ee 220F      		lsl r18
+ 227 00f0 331F      		rol r19
+ 228 00f2 81E2      		ldi r24,lo8(4129)
+ 229 00f4 90E1      		ldi r25,hi8(4129)
+ 230 00f6 2827      		eor r18,r24
+ 231 00f8 3927      		eor r19,r25
+ 232               	.LM35:
+ 233 00fa 832F      		mov r24,r19
+ 234 00fc 9927      		clr r25
+ 235 00fe 87FF      		sbrs r24,7
+ 236 0100 00C0      		rjmp .L45
+ 237               	.L25:
+ 238               	.LM36:
+ 239 0102 220F      		lsl r18
+ 240 0104 331F      		rol r19
+ 241 0106 81E2      		ldi r24,lo8(4129)
+ 242 0108 90E1      		ldi r25,hi8(4129)
+ 243 010a 2827      		eor r18,r24
+ 244 010c 3927      		eor r19,r25
+ 245               	.LM37:
+ 246 010e 832F      		mov r24,r19
+ 247 0110 9927      		clr r25
+ 248 0112 87FF      		sbrs r24,7
+ 249 0114 00C0      		rjmp .L46
+ 250               	.L28:
+ 251               	.LM38:
+ 252 0116 220F      		lsl r18
+ 253 0118 331F      		rol r19
+ 254 011a 81E2      		ldi r24,lo8(4129)
+ 255 011c 90E1      		ldi r25,hi8(4129)
+ 256 011e 2827      		eor r18,r24
+ 257 0120 3927      		eor r19,r25
+ 258               	.LM39:
+ 259 0122 832F      		mov r24,r19
+ 260 0124 9927      		clr r25
+ 261 0126 87FF      		sbrs r24,7
+ 262 0128 00C0      		rjmp .L47
+ 263               	.L31:
+ 264               	.LM40:
+ 265 012a 220F      		lsl r18
+ 266 012c 331F      		rol r19
+ 267 012e 81E2      		ldi r24,lo8(4129)
+ 268 0130 90E1      		ldi r25,hi8(4129)
+ 269 0132 2827      		eor r18,r24
+ 270 0134 3927      		eor r19,r25
+ 271               	.LM41:
+ 272 0136 832F      		mov r24,r19
+ 273 0138 9927      		clr r25
+ 274 013a 87FF      		sbrs r24,7
+ 275 013c 00C0      		rjmp .L48
+ 276               	.L34:
+ 277               	.LM42:
+ 278 013e 220F      		lsl r18
+ 279 0140 331F      		rol r19
+ 280 0142 81E2      		ldi r24,lo8(4129)
+ 281 0144 90E1      		ldi r25,hi8(4129)
+ 282 0146 2827      		eor r18,r24
+ 283 0148 3927      		eor r19,r25
+ 284               	.LM43:
+ 285 014a 832F      		mov r24,r19
+ 286 014c 9927      		clr r25
+ 287 014e 87FF      		sbrs r24,7
+ 288 0150 00C0      		rjmp .L49
+ 289               	.L37:
+ 290               	.LM44:
+ 291 0152 220F      		lsl r18
+ 292 0154 331F      		rol r19
+ 293 0156 81E2      		ldi r24,lo8(4129)
+ 294 0158 90E1      		ldi r25,hi8(4129)
+ 295 015a 2827      		eor r18,r24
+ 296 015c 3927      		eor r19,r25
+ 297               	.LM45:
+ 298 015e 832F      		mov r24,r19
+ 299 0160 9927      		clr r25
+ 300 0162 87FD      		sbrc r24,7
+ 301 0164 00C0      		rjmp .L50
+ 302               	.L40:
+ 303               	.LM46:
+ 304 0166 220F      		lsl r18
+ 305 0168 331F      		rol r19
+ 306               	.L42:
+ 307 016a 3093 0000 		sts (random)+1,r19
+ 308 016e 2093 0000 		sts random,r18
+ 309               	.LM47:
+ 310 0172 822F      		mov r24,r18
+ 311 0174 9927      		clr r25
+ 312               	/* epilogue: frame size=0 */
+ 313 0176 0895      		ret
+ 314               	/* epilogue end (size=1) */
+ 315               	/* function ramdom_getRandomByte size 136 (135) */
+ 316               	.LFE9:
+ 318               	.global	wait
+ 320               	wait:
+ 321               	.LFB10:
+ 322               	.LM48:
+ 323               	/* prologue: frame size=0 */
+ 324               	/* prologue end (size=0) */
+ 325               	.LVL5:
+ 326               	.L53:
+ 327               	.LM49:
+ 328               	/* #APP */
+ 329 0178 0000      		nop
+ 330               		
+ 331               	.LM50:
+ 332 017a 0000      		nop
+ 333               		
+ 334               	.LM51:
+ 335 017c 0000      		nop
+ 336               		
+ 337               	.LM52:
+ 338 017e 0000      		nop
+ 339               		
+ 340               	.LM53:
+ 341               	/* #NOAPP */
+ 342 0180 0197      		sbiw r24,1
+ 343 0182 01F4      		brne .L53
+ 344               	/* epilogue: frame size=0 */
+ 345 0184 0895      		ret
+ 346               	/* epilogue end (size=1) */
+ 347               	/* function wait size 20 (19) */
+ 348               	.LFE10:
+ 350               	.global	cmpQword
+ 352               	cmpQword:
+ 353               	.LFB11:
+ 354               	.LM54:
+ 355               	/* prologue: frame size=0 */
+ 356 0186 CF93      		push r28
+ 357 0188 DF93      		push r29
+ 358               	/* prologue end (size=2) */
+ 359               	.LVL6:
+ 360 018a FC01      		movw r30,r24
+ 361 018c DB01      		movw r26,r22
+ 362 018e 20E0      		ldi r18,lo8(0)
+ 363 0190 30E0      		ldi r19,hi8(0)
+ 364 0192 9081      		ld r25,Z
+ 365 0194 8C91      		ld r24,X
+ 366               	.LVL7:
+ 367 0196 9817      		cp r25,r24
+ 368 0198 01F4      		brne .L59
+ 369               	.LVL8:
+ 370               	.LM55:
+ 371 019a 9181      		ldd r25,Z+1
+ 372 019c EB01      		movw r28,r22
+ 373 019e 8981      		ldd r24,Y+1
+ 374 01a0 9817      		cp r25,r24
+ 375 01a2 01F4      		brne .L59
+ 376               	.LVL9:
+ 377 01a4 9281      		ldd r25,Z+2
+ 378 01a6 8A81      		ldd r24,Y+2
+ 379 01a8 9817      		cp r25,r24
+ 380 01aa 01F4      		brne .L59
+ 381 01ac 9381      		ldd r25,Z+3
+ 382 01ae 8B81      		ldd r24,Y+3
+ 383 01b0 9817      		cp r25,r24
+ 384 01b2 01F4      		brne .L59
+ 385 01b4 9481      		ldd r25,Z+4
+ 386 01b6 8C81      		ldd r24,Y+4
+ 387 01b8 9817      		cp r25,r24
+ 388 01ba 01F4      		brne .L59
+ 389 01bc 9581      		ldd r25,Z+5
+ 390 01be 8D81      		ldd r24,Y+5
+ 391 01c0 9817      		cp r25,r24
+ 392 01c2 01F4      		brne .L59
+ 393 01c4 9681      		ldd r25,Z+6
+ 394 01c6 8E81      		ldd r24,Y+6
+ 395 01c8 9817      		cp r25,r24
+ 396 01ca 01F4      		brne .L59
+ 397 01cc 9781      		ldd r25,Z+7
+ 398 01ce 8F81      		ldd r24,Y+7
+ 399 01d0 9817      		cp r25,r24
+ 400 01d2 01F4      		brne .L59
+ 401 01d4 21E0      		ldi r18,lo8(1)
+ 402 01d6 30E0      		ldi r19,hi8(1)
+ 403               	.LVL10:
+ 404               	.L59:
+ 405               	.LM56:
+ 406 01d8 C901      		movw r24,r18
+ 407               	/* epilogue: frame size=0 */
+ 408 01da DF91      		pop r29
+ 409 01dc CF91      		pop r28
+ 410 01de 0895      		ret
+ 411               	/* epilogue end (size=3) */
+ 412               	/* function cmpQword size 45 (40) */
+ 413               	.LFE11:
+ 415               	.global	mem_freeMem
+ 417               	mem_freeMem:
+ 418               	.LFB5:
+ 419               	.LM57:
+ 420               	/* prologue: frame size=0 */
+ 421               	/* prologue end (size=0) */
+ 422               	.LVL11:
+ 423 01e0 BC01      		movw r22,r24
+ 424               	.LM58:
+ 425 01e2 80E0      		ldi r24,hi8(MemPool16)
+ 426 01e4 6030      		cpi r22,lo8(MemPool16)
+ 427 01e6 7807      		cpc r23,r24
+ 428               	.LVL12:
+ 429 01e8 00F0      		brlo .L62
+ 430               	.LM59:
+ 431 01ea 80E0      		ldi r24,hi8(MemPool16+256)
+ 432 01ec 6030      		cpi r22,lo8(MemPool16+256)
+ 433 01ee 7807      		cpc r23,r24
+ 434 01f0 00F0      		brlo .L75
+ 435               	.L62:
+ 436               	.LM60:
+ 437 01f2 80E0      		ldi r24,hi8(MemPool32)
+ 438 01f4 6030      		cpi r22,lo8(MemPool32)
+ 439 01f6 7807      		cpc r23,r24
+ 440 01f8 00F4      		brsh .L76
+ 441               	.L66:
+ 442               	.LM61:
+ 443 01fa 80E0      		ldi r24,hi8(MemPool64)
+ 444 01fc 6030      		cpi r22,lo8(MemPool64)
+ 445 01fe 7807      		cpc r23,r24
+ 446 0200 00F4      		brsh .L77
+ 447               	.L69:
+ 448               	.LM62:
+ 449 0202 80E0      		ldi r24,hi8(MemPool96)
+ 450 0204 6030      		cpi r22,lo8(MemPool96)
+ 451 0206 7807      		cpc r23,r24
+ 452 0208 00F0      		brlo .L74
+ 453 020a 80E0      		ldi r24,hi8(MemPool96+192)
+ 454 020c 6030      		cpi r22,lo8(MemPool96+192)
+ 455 020e 7807      		cpc r23,r24
+ 456 0210 00F0      		brlo .L78
+ 457               	.L74:
+ 458 0212 0895      		ret
+ 459               	.L76:
+ 460               	.LM63:
+ 461 0214 80E0      		ldi r24,hi8(MemPool32+384)
+ 462 0216 6030      		cpi r22,lo8(MemPool32+384)
+ 463 0218 7807      		cpc r23,r24
+ 464 021a 00F4      		brsh .L66
+ 465               	.LM64:
+ 466 021c 8091 0000 		lds r24,Mem+2
+ 467 0220 9091 0000 		lds r25,(Mem+2)+1
+ 468 0224 0E94 0000 		call OSMemPut
+ 469               	.LVL13:
+ 470 0228 0895      		ret
+ 471               	.LVL14:
+ 472               	.L77:
+ 473               	.LM65:
+ 474 022a 80E0      		ldi r24,hi8(MemPool64+448)
+ 475 022c 6030      		cpi r22,lo8(MemPool64+448)
+ 476 022e 7807      		cpc r23,r24
+ 477 0230 00F4      		brsh .L69
+ 478               	.LM66:
+ 479 0232 8091 0000 		lds r24,Mem+4
+ 480 0236 9091 0000 		lds r25,(Mem+4)+1
+ 481 023a 0E94 0000 		call OSMemPut
+ 482               	.LVL15:
+ 483 023e 0895      		ret
+ 484               	.LVL16:
+ 485               	.L78:
+ 486               	.LM67:
+ 487 0240 8091 0000 		lds r24,Mem+6
+ 488 0244 9091 0000 		lds r25,(Mem+6)+1
+ 489 0248 0E94 0000 		call OSMemPut
+ 490               	.LVL17:
+ 491 024c 0895      		ret
+ 492               	.LVL18:
+ 493               	.L75:
+ 494               	.LM68:
+ 495 024e 8091 0000 		lds r24,Mem
+ 496 0252 9091 0000 		lds r25,(Mem)+1
+ 497 0256 0E94 0000 		call OSMemPut
+ 498               	.LVL19:
+ 499 025a 0895      		ret
+ 500               	/* epilogue: frame size=0 */
+ 501               	/* epilogue: noreturn */
+ 502               	/* epilogue end (size=0) */
+ 503               	/* function mem_freeMem size 62 (62) */
+ 504               	.LFE5:
+ 506               	.global	mem_getLeastMem
+ 508               	mem_getLeastMem:
+ 509               	.LFB3:
+ 510               	.LM69:
+ 511               	/* prologue: frame size=1 */
+ 512 025c EF92      		push r14
+ 513 025e FF92      		push r15
+ 514 0260 1F93      		push r17
+ 515 0262 CF93      		push r28
+ 516 0264 DF93      		push r29
+ 517 0266 CDB7      		in r28,__SP_L__
+ 518 0268 DEB7      		in r29,__SP_H__
+ 519 026a 2197      		sbiw r28,1
+ 520 026c 0FB6      		in __tmp_reg__,__SREG__
+ 521 026e F894      		cli
+ 522 0270 DEBF      		out __SP_H__,r29
+ 523 0272 0FBE      		out __SREG__,__tmp_reg__
+ 524 0274 CDBF      		out __SP_L__,r28
+ 525               	/* prologue end (size=13) */
+ 526               	.LVL20:
+ 527               	.LBB2:
+ 528               	.LM70:
+ 529 0276 8430      		cpi r24,lo8(4)
+ 530 0278 00F4      		brsh .L87
+ 531               	.LM71:
+ 532 027a 182F      		mov r17,r24
+ 533               	.LVL21:
+ 534 027c 7E01      		movw r14,r28
+ 535 027e 0894      		sec
+ 536 0280 E11C      		adc r14,__zero_reg__
+ 537 0282 F11C      		adc r15,__zero_reg__
+ 538 0284 00C0      		rjmp .L83
+ 539               	.LVL22:
+ 540               	.L88:
+ 541 0286 1F5F      		subi r17,lo8(-(1))
+ 542 0288 1430      		cpi r17,lo8(4)
+ 543 028a 01F0      		breq .L82
+ 544               	.LVL23:
+ 545               	.L83:
+ 546               	.LM72:
+ 547 028c E12F      		mov r30,r17
+ 548 028e FF27      		clr r31
+ 549 0290 EE0F      		lsl r30
+ 550 0292 FF1F      		rol r31
+ 551 0294 E050      		subi r30,lo8(-(Mem))
+ 552 0296 F040      		sbci r31,hi8(-(Mem))
+ 553 0298 B701      		movw r22,r14
+ 554 029a 8081      		ld r24,Z
+ 555 029c 9181      		ldd r25,Z+1
+ 556               	.LVL24:
+ 557 029e 0E94 0000 		call OSMemGet
+ 558               	.LVL25:
+ 559               	.LM73:
+ 560 02a2 0097      		sbiw r24,0
+ 561 02a4 01F0      		breq .L88
+ 562 02a6 00C0      		rjmp .L82
+ 563               	.LVL26:
+ 564               	.L87:
+ 565               	.LM74:
+ 566 02a8 80E0      		ldi r24,lo8(0)
+ 567 02aa 90E0      		ldi r25,hi8(0)
+ 568               	.LVL27:
+ 569               	.L82:
+ 570               	.LVL28:
+ 571               	.LBE2:
+ 572               	/* epilogue: frame size=1 */
+ 573 02ac 2196      		adiw r28,1
+ 574 02ae 0FB6      		in __tmp_reg__,__SREG__
+ 575 02b0 F894      		cli
+ 576 02b2 DEBF      		out __SP_H__,r29
+ 577 02b4 0FBE      		out __SREG__,__tmp_reg__
+ 578 02b6 CDBF      		out __SP_L__,r28
+ 579 02b8 DF91      		pop r29
+ 580 02ba CF91      		pop r28
+ 581 02bc 1F91      		pop r17
+ 582 02be FF90      		pop r15
+ 583 02c0 EF90      		pop r14
+ 584 02c2 0895      		ret
+ 585               	/* epilogue end (size=12) */
+ 586               	/* function mem_getLeastMem size 52 (27) */
+ 587               	.LFE3:
+ 589               	.global	mem_init
+ 591               	mem_init:
+ 592               	.LFB2:
+ 593               	.LM75:
+ 594               	/* prologue: frame size=1 */
+ 595 02c4 CF92      		push r12
+ 596 02c6 DF92      		push r13
+ 597 02c8 EF92      		push r14
+ 598 02ca FF92      		push r15
+ 599 02cc 0F93      		push r16
+ 600 02ce 1F93      		push r17
+ 601 02d0 CF93      		push r28
+ 602 02d2 DF93      		push r29
+ 603 02d4 CDB7      		in r28,__SP_L__
+ 604 02d6 DEB7      		in r29,__SP_H__
+ 605 02d8 2197      		sbiw r28,1
+ 606 02da 0FB6      		in __tmp_reg__,__SREG__
+ 607 02dc F894      		cli
+ 608 02de DEBF      		out __SP_H__,r29
+ 609 02e0 0FBE      		out __SREG__,__tmp_reg__
+ 610 02e2 CDBF      		out __SP_L__,r28
+ 611               	/* prologue end (size=16) */
+ 612               	.LM76:
+ 613 02e4 6E01      		movw r12,r28
+ 614 02e6 0894      		sec
+ 615 02e8 C11C      		adc r12,__zero_reg__
+ 616 02ea D11C      		adc r13,__zero_reg__
+ 617 02ec 7601      		movw r14,r12
+ 618 02ee 00E1      		ldi r16,lo8(16)
+ 619 02f0 10E0      		ldi r17,hi8(16)
+ 620 02f2 20E0      		ldi r18,hlo8(16)
+ 621 02f4 30E0      		ldi r19,hhi8(16)
+ 622 02f6 40E1      		ldi r20,lo8(16)
+ 623 02f8 50E0      		ldi r21,hi8(16)
+ 624 02fa 60E0      		ldi r22,hlo8(16)
+ 625 02fc 70E0      		ldi r23,hhi8(16)
+ 626 02fe 80E0      		ldi r24,lo8(MemPool16)
+ 627 0300 90E0      		ldi r25,hi8(MemPool16)
+ 628 0302 0E94 0000 		call OSMemCreate
+ 629 0306 9093 0000 		sts (Mem)+1,r25
+ 630 030a 8093 0000 		sts Mem,r24
+ 631               	.LM77:
+ 632 030e 00E2      		ldi r16,lo8(32)
+ 633 0310 10E0      		ldi r17,hi8(32)
+ 634 0312 20E0      		ldi r18,hlo8(32)
+ 635 0314 30E0      		ldi r19,hhi8(32)
+ 636 0316 4CE0      		ldi r20,lo8(12)
+ 637 0318 50E0      		ldi r21,hi8(12)
+ 638 031a 60E0      		ldi r22,hlo8(12)
+ 639 031c 70E0      		ldi r23,hhi8(12)
+ 640 031e 80E0      		ldi r24,lo8(MemPool32)
+ 641 0320 90E0      		ldi r25,hi8(MemPool32)
+ 642 0322 0E94 0000 		call OSMemCreate
+ 643 0326 9093 0000 		sts (Mem+2)+1,r25
+ 644 032a 8093 0000 		sts Mem+2,r24
+ 645               	.LM78:
+ 646 032e 00E4      		ldi r16,lo8(64)
+ 647 0330 10E0      		ldi r17,hi8(64)
+ 648 0332 20E0      		ldi r18,hlo8(64)
+ 649 0334 30E0      		ldi r19,hhi8(64)
+ 650 0336 47E0      		ldi r20,lo8(7)
+ 651 0338 50E0      		ldi r21,hi8(7)
+ 652 033a 60E0      		ldi r22,hlo8(7)
+ 653 033c 70E0      		ldi r23,hhi8(7)
+ 654 033e 80E0      		ldi r24,lo8(MemPool64)
+ 655 0340 90E0      		ldi r25,hi8(MemPool64)
+ 656 0342 0E94 0000 		call OSMemCreate
+ 657 0346 9093 0000 		sts (Mem+4)+1,r25
+ 658 034a 8093 0000 		sts Mem+4,r24
+ 659               	.LM79:
+ 660 034e 00E6      		ldi r16,lo8(96)
+ 661 0350 10E0      		ldi r17,hi8(96)
+ 662 0352 20E0      		ldi r18,hlo8(96)
+ 663 0354 30E0      		ldi r19,hhi8(96)
+ 664 0356 42E0      		ldi r20,lo8(2)
+ 665 0358 50E0      		ldi r21,hi8(2)
+ 666 035a 60E0      		ldi r22,hlo8(2)
+ 667 035c 70E0      		ldi r23,hhi8(2)
+ 668 035e 80E0      		ldi r24,lo8(MemPool96)
+ 669 0360 90E0      		ldi r25,hi8(MemPool96)
+ 670 0362 0E94 0000 		call OSMemCreate
+ 671 0366 9093 0000 		sts (Mem+6)+1,r25
+ 672 036a 8093 0000 		sts Mem+6,r24
+ 673               	/* epilogue: frame size=1 */
+ 674 036e 2196      		adiw r28,1
+ 675 0370 0FB6      		in __tmp_reg__,__SREG__
+ 676 0372 F894      		cli
+ 677 0374 DEBF      		out __SP_H__,r29
+ 678 0376 0FBE      		out __SREG__,__tmp_reg__
+ 679 0378 CDBF      		out __SP_L__,r28
+ 680 037a DF91      		pop r29
+ 681 037c CF91      		pop r28
+ 682 037e 1F91      		pop r17
+ 683 0380 0F91      		pop r16
+ 684 0382 FF90      		pop r15
+ 685 0384 EF90      		pop r14
+ 686 0386 DF90      		pop r13
+ 687 0388 CF90      		pop r12
+ 688 038a 0895      		ret
+ 689               	/* epilogue end (size=15) */
+ 690               	/* function mem_init size 100 (69) */
+ 691               	.LFE2:
+ 693               	.global	mem_getMem
+ 695               	mem_getMem:
+ 696               	.LFB4:
+ 697               	.LM80:
+ 698               	/* prologue: frame size=1 */
+ 699 038c 0F93      		push r16
+ 700 038e 1F93      		push r17
+ 701 0390 CF93      		push r28
+ 702 0392 DF93      		push r29
+ 703 0394 CDB7      		in r28,__SP_L__
+ 704 0396 DEB7      		in r29,__SP_H__
+ 705 0398 2197      		sbiw r28,1
+ 706 039a 0FB6      		in __tmp_reg__,__SREG__
+ 707 039c F894      		cli
+ 708 039e DEBF      		out __SP_H__,r29
+ 709 03a0 0FBE      		out __SREG__,__tmp_reg__
+ 710 03a2 CDBF      		out __SP_L__,r28
+ 711               	/* prologue end (size=12) */
+ 712               	.LVL29:
+ 713               	.LM81:
+ 714 03a4 8131      		cpi r24,lo8(17)
+ 715 03a6 00F4      		brsh .L92
+ 716               	.LBB15:
+ 717               	.LM82:
+ 718 03a8 8E01      		movw r16,r28
+ 719 03aa 0F5F      		subi r16,lo8(-(1))
+ 720 03ac 1F4F      		sbci r17,hi8(-(1))
+ 721 03ae B801      		movw r22,r16
+ 722 03b0 8091 0000 		lds r24,Mem
+ 723 03b4 9091 0000 		lds r25,(Mem)+1
+ 724               	.LVL30:
+ 725 03b8 0E94 0000 		call OSMemGet
+ 726               	.LVL31:
+ 727               	.LBB16:
+ 728               	.LBB17:
+ 729               	.LM83:
+ 730 03bc 0097      		sbiw r24,0
+ 731 03be 01F0      		breq .+2
+ 732 03c0 00C0      		rjmp .L94
+ 733               	.LBE17:
+ 734               	.LBE16:
+ 735               	.LM84:
+ 736 03c2 B801      		movw r22,r16
+ 737 03c4 8091 0000 		lds r24,Mem+2
+ 738 03c8 9091 0000 		lds r25,(Mem+2)+1
+ 739               	.LVL32:
+ 740 03cc 0E94 0000 		call OSMemGet
+ 741               	.LVL33:
+ 742               	.LBB18:
+ 743               	.LBB19:
+ 744               	.LM85:
+ 745 03d0 0097      		sbiw r24,0
+ 746 03d2 01F0      		breq .+2
+ 747 03d4 00C0      		rjmp .L94
+ 748               	.LBE19:
+ 749               	.LBE18:
+ 750               	.LM86:
+ 751 03d6 B801      		movw r22,r16
+ 752 03d8 8091 0000 		lds r24,Mem+4
+ 753 03dc 9091 0000 		lds r25,(Mem+4)+1
+ 754               	.LVL34:
+ 755 03e0 0E94 0000 		call OSMemGet
+ 756               	.LVL35:
+ 757               	.LBB20:
+ 758               	.LBB21:
+ 759               	.LM87:
+ 760 03e4 0097      		sbiw r24,0
+ 761 03e6 01F4      		brne .L94
+ 762               	.L109:
+ 763               	.LBE21:
+ 764               	.LBE20:
+ 765               	.LBE15:
+ 766               	.LBB22:
+ 767               	.LM88:
+ 768 03e8 B801      		movw r22,r16
+ 769 03ea 8091 0000 		lds r24,Mem+6
+ 770 03ee 9091 0000 		lds r25,(Mem+6)+1
+ 771               	.LVL36:
+ 772 03f2 0E94 0000 		call OSMemGet
+ 773 03f6 00C0      		rjmp .L94
+ 774               	.LVL37:
+ 775               	.L92:
+ 776               	.LBE22:
+ 777               	.LM89:
+ 778 03f8 8132      		cpi r24,lo8(33)
+ 779 03fa 00F0      		brlo .L110
+ 780               	.LM90:
+ 781 03fc 8134      		cpi r24,lo8(65)
+ 782 03fe 00F4      		brsh .L102
+ 783               	.LBB23:
+ 784               	.LM91:
+ 785 0400 8E01      		movw r16,r28
+ 786 0402 0F5F      		subi r16,lo8(-(1))
+ 787 0404 1F4F      		sbci r17,hi8(-(1))
+ 788 0406 B801      		movw r22,r16
+ 789 0408 8091 0000 		lds r24,Mem+4
+ 790 040c 9091 0000 		lds r25,(Mem+4)+1
+ 791               	.LVL38:
+ 792 0410 0E94 0000 		call OSMemGet
+ 793               	.LVL39:
+ 794               	.LBB24:
+ 795               	.LBB25:
+ 796               	.LM92:
+ 797 0414 0097      		sbiw r24,0
+ 798 0416 01F0      		breq .L109
+ 799 0418 00C0      		rjmp .L94
+ 800               	.LVL40:
+ 801               	.L110:
+ 802               	.LBE25:
+ 803               	.LBE24:
+ 804               	.LBE23:
+ 805               	.LBB26:
+ 806               	.LM93:
+ 807 041a 8E01      		movw r16,r28
+ 808 041c 0F5F      		subi r16,lo8(-(1))
+ 809 041e 1F4F      		sbci r17,hi8(-(1))
+ 810 0420 B801      		movw r22,r16
+ 811 0422 8091 0000 		lds r24,Mem+2
+ 812 0426 9091 0000 		lds r25,(Mem+2)+1
+ 813               	.LVL41:
+ 814 042a 0E94 0000 		call OSMemGet
+ 815               	.LVL42:
+ 816               	.LBB27:
+ 817               	.LBB28:
+ 818               	.LM94:
+ 819 042e 0097      		sbiw r24,0
+ 820 0430 01F4      		brne .L94
+ 821               	.LBE28:
+ 822               	.LBE27:
+ 823               	.LM95:
+ 824 0432 B801      		movw r22,r16
+ 825 0434 8091 0000 		lds r24,Mem+4
+ 826 0438 9091 0000 		lds r25,(Mem+4)+1
+ 827               	.LVL43:
+ 828 043c 0E94 0000 		call OSMemGet
+ 829               	.LVL44:
+ 830               	.LBB29:
+ 831               	.LBB30:
+ 832               	.LM96:
+ 833 0440 0097      		sbiw r24,0
+ 834 0442 01F0      		breq .L109
+ 835 0444 00C0      		rjmp .L94
+ 836               	.LVL45:
+ 837               	.L102:
+ 838               	.LBE30:
+ 839               	.LBE29:
+ 840               	.LBE26:
+ 841               	.LM97:
+ 842 0446 8136      		cpi r24,lo8(97)
+ 843 0448 00F0      		brlo .L105
+ 844 044a 80E0      		ldi r24,lo8(0)
+ 845 044c 90E0      		ldi r25,hi8(0)
+ 846               	.LVL46:
+ 847 044e 00C0      		rjmp .L94
+ 848               	.LVL47:
+ 849               	.L105:
+ 850               	.LBB31:
+ 851               	.LM98:
+ 852 0450 BE01      		movw r22,r28
+ 853 0452 6F5F      		subi r22,lo8(-(1))
+ 854 0454 7F4F      		sbci r23,hi8(-(1))
+ 855 0456 8091 0000 		lds r24,Mem+6
+ 856 045a 9091 0000 		lds r25,(Mem+6)+1
+ 857               	.LVL48:
+ 858 045e 0E94 0000 		call OSMemGet
+ 859               	.LVL49:
+ 860               	.L94:
+ 861               	.LVL50:
+ 862               	.LBE31:
+ 863               	/* epilogue: frame size=1 */
+ 864 0462 2196      		adiw r28,1
+ 865 0464 0FB6      		in __tmp_reg__,__SREG__
+ 866 0466 F894      		cli
+ 867 0468 DEBF      		out __SP_H__,r29
+ 868 046a 0FBE      		out __SREG__,__tmp_reg__
+ 869 046c CDBF      		out __SP_L__,r28
+ 870 046e DF91      		pop r29
+ 871 0470 CF91      		pop r28
+ 872 0472 1F91      		pop r17
+ 873 0474 0F91      		pop r16
+ 874 0476 0895      		ret
+ 875               	/* epilogue end (size=11) */
+ 876               	/* function mem_getMem size 118 (95) */
+ 877               	.LFE4:
+ 879               		.comm OSIntNesting,1,1
+ 880               		.comm OSMemFreeList,2,1
+ 881               		.comm OSMemTbl,96,1
+ 882               		.comm OSTmrFree,2,1
+ 883               		.comm OSTmrUsed,2,1
+ 884               		.comm OSTmrTime,4,1
+ 885               		.comm OSTmrTbl,240,1
+ 886               		.comm OSTmrFreeList,2,1
+ 887               		.comm OSTmrWheelTbl,32,1
+ 888               		.comm MemPool16,256,1
+ 889               		.comm MemPool32,384,1
+ 890               		.comm MemPool64,448,1
+ 891               		.comm MemPool96,192,1
+ 892               		.comm Mem,8,1
+ 893               		.comm random,2,1
+ 979               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 utils.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:20     .text:00000000 mem_cpy
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:53     .text:00000016 mem_set
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:83     .text:00000028 random_init
+                            *COM*:00000002 random
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:129    .text:00000068 ramdom_getRandomByte
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:320    .text:00000178 wait
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:352    .text:00000186 cmpQword
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:417    .text:000001e0 mem_freeMem
+                            *COM*:00000100 MemPool16
+                            *COM*:00000180 MemPool32
+                            *COM*:000001c0 MemPool64
+                            *COM*:000000c0 MemPool96
+                            *COM*:00000008 Mem
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:508    .text:0000025c mem_getLeastMem
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:591    .text:000002c4 mem_init
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOWaaaa.s:695    .text:0000038c mem_getMem
+                            *COM*:00000001 OSIntNesting
+                            *COM*:00000002 OSMemFreeList
+                            *COM*:00000060 OSMemTbl
+                            *COM*:00000002 OSTmrFree
+                            *COM*:00000002 OSTmrUsed
+                            *COM*:00000004 OSTmrTime
+                            *COM*:000000f0 OSTmrTbl
+                            *COM*:00000002 OSTmrFreeList
+                            *COM*:00000020 OSTmrWheelTbl
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+OSMemPut
+OSMemGet
+OSMemCreate

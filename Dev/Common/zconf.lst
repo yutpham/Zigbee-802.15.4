@@ -1,0 +1,67 @@
+   1               		.file	"zconf.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	ZDO_Descriptor
+  19               		.data
+  22               	ZDO_Descriptor:
+  23 0000 00        		.byte	0
+  24 0001 0000      		.word	0
+  25 0003 0000      		.word	0
+  26 0005 00        		.byte	0
+  27 0006 00        		.byte	0
+  28 0007 0000      		.word	0
+  29 0009 00        		.byte	0
+  30 000a 0000      		.word	0
+  31 000c 0000      		.word	0
+  32 000e 0000      		.word	pm(zdo_init)
+  33               	.global	NodeDescriptor
+  36               	NodeDescriptor:
+  37 0010 01        		.byte	1
+  38 0011 40        		.byte	64
+  39 0012 8F        		.byte	-113
+  40 0013 00        		.byte	0
+  41 0014 00        		.byte	0
+  42 0015 50        		.byte	80
+  43 0016 00        		.byte	0
+  44 0017 00        		.byte	0
+  45               	.global	NodePowerDescriptor
+  48               	NodePowerDescriptor:
+  49 0018 00        		.byte	0
+  50 0019 C0        		.byte	192
+  51               	.global	aExtendedAddress
+  54               	aExtendedAddress:
+  55 001a 25        		.byte	37
+  56 001b 13        		.byte	19
+  57 001c 00        		.byte	0
+  58 001d 00        		.byte	0
+  59 001e 00        		.byte	0
+  60 001f 00        		.byte	0
+  61 0020 00        		.byte	0
+  62 0021 00        		.byte	0
+  63               		.comm EndpointDescriptors,4,1
+  64               		.text
+  65               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 zconf.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGiaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGiaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGiaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGiaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGiaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGiaaaa.s:22     .data:00000000 ZDO_Descriptor
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGiaaaa.s:36     .data:00000010 NodeDescriptor
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGiaaaa.s:48     .data:00000018 NodePowerDescriptor
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGiaaaa.s:54     .data:0000001a aExtendedAddress
+                            *COM*:00000004 EndpointDescriptors
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+zdo_init

@@ -1,0 +1,645 @@
+   1               		.file	"mac_state.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	mac_requestState
+  20               	mac_requestState:
+  21               	.LFB3:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26 0000 282F      		mov r18,r24
+  27               	.LM2:
+  28 0002 8430      		cpi r24,lo8(4)
+  29 0004 01F0      		breq .L4
+  30               	.LM3:
+  31 0006 8630      		cpi r24,lo8(6)
+  32 0008 01F0      		breq .L5
+  33 000a 8230      		cpi r24,lo8(2)
+  34 000c 01F0      		breq .L45
+  35               	.L2:
+  36               	.LM4:
+  37 000e 81E0      		ldi r24,lo8(1)
+  38 0010 90E0      		ldi r25,hi8(1)
+  39               	.LVL1:
+  40               	.LVL2:
+  41               	.L38:
+  42               	.LM5:
+  43 0012 2093 0000 		sts macInfo,r18
+  44               	.LM6:
+  45 0016 6093 0000 		sts macInfo+1,r22
+  46               	.LM7:
+  47 001a 0895      		ret
+  48               	.LVL3:
+  49               	.L4:
+  50               	.LM8:
+  51 001c 6623      		tst r22
+  52 001e 01F4      		brne .L46
+  53               	.LM9:
+  54 0020 30E0      		ldi r19,lo8(0)
+  55               	.LVL4:
+  56 0022 8091 0000 		lds r24,macInfo
+  57               	.LVL5:
+  58 0026 8130      		cpi r24,lo8(1)
+  59 0028 01F4      		brne .L33
+  60               	.L40:
+  61               	.LM10:
+  62 002a 31E0      		ldi r19,lo8(1)
+  63 002c 00C0      		rjmp .L33
+  64               	.LVL6:
+  65               	.L5:
+  66               	.LM11:
+  67 002e 9091 0000 		lds r25,macInfo
+  68 0032 9130      		cpi r25,lo8(1)
+  69 0034 01F0      		breq .L31
+  70               	.LVL7:
+  71               	.L41:
+  72 0036 30E0      		ldi r19,lo8(0)
+  73               	.LVL8:
+  74               	.L33:
+  75 0038 832F      		mov r24,r19
+  76 003a 9927      		clr r25
+  77               	.LM12:
+  78 003c 3323      		tst r19
+  79 003e 01F4      		brne .L38
+  80               	.LM13:
+  81 0040 0895      		ret
+  82               	.LVL9:
+  83               	.L45:
+  84               	.LM14:
+  85 0042 6130      		cpi r22,lo8(1)
+  86 0044 01F0      		breq .L7
+  87 0046 6130      		cpi r22,lo8(1)
+  88 0048 00F0      		brlo .L6
+  89 004a 6230      		cpi r22,lo8(2)
+  90 004c 01F0      		breq .L8
+  91 004e 6330      		cpi r22,lo8(3)
+  92 0050 01F4      		brne .L2
+  93               	.LM15:
+  94 0052 8091 0000 		lds r24,macInfo
+  95               	.LVL10:
+  96 0056 8230      		cpi r24,lo8(2)
+  97 0058 01F4      		brne .L41
+  98 005a 8091 0000 		lds r24,macInfo+1
+  99 005e 90E0      		ldi r25,lo8(0)
+ 100 0060 8230      		cpi r24,lo8(2)
+ 101 0062 01F0      		breq .L26
+ 102               	.L42:
+ 103 0064 91E0      		ldi r25,lo8(1)
+ 104               	.L26:
+ 105 0066 31E0      		ldi r19,lo8(1)
+ 106               	.LVL11:
+ 107 0068 3927      		eor r19,r25
+ 108 006a 00C0      		rjmp .L33
+ 109               	.LVL12:
+ 110               	.L46:
+ 111               	.LM16:
+ 112 006c 6430      		cpi r22,lo8(4)
+ 113 006e 01F4      		brne .L2
+ 114               	.LM17:
+ 115 0070 30E0      		ldi r19,lo8(0)
+ 116               	.LVL13:
+ 117 0072 8091 0000 		lds r24,macInfo
+ 118               	.LVL14:
+ 119 0076 8230      		cpi r24,lo8(2)
+ 120 0078 01F4      		brne .L33
+ 121 007a 31E0      		ldi r19,lo8(1)
+ 122 007c 00C0      		rjmp .L33
+ 123               	.LVL15:
+ 124               	.L31:
+ 125               	.LM18:
+ 126 007e 8091 0000 		lds r24,macInfo+1
+ 127               	.LVL16:
+ 128 0082 30E0      		ldi r19,lo8(0)
+ 129 0084 8130      		cpi r24,lo8(1)
+ 130 0086 01F0      		breq .L34
+ 131 0088 31E0      		ldi r19,lo8(1)
+ 132               	.L34:
+ 133 008a 3927      		eor r19,r25
+ 134               	.LVL17:
+ 135 008c 00C0      		rjmp .L33
+ 136               	.LVL18:
+ 137               	.L6:
+ 138               	.LM19:
+ 139 008e 8091 0000 		lds r24,macInfo
+ 140               	.LVL19:
+ 141 0092 8130      		cpi r24,lo8(1)
+ 142 0094 01F0      		breq .L40
+ 143 0096 30E0      		ldi r19,lo8(0)
+ 144               	.LVL20:
+ 145 0098 8091 0000 		lds r24,macInfo
+ 146 009c 8823      		tst r24
+ 147 009e 01F4      		brne .L33
+ 148               	.LM20:
+ 149 00a0 31E0      		ldi r19,lo8(1)
+ 150 00a2 00C0      		rjmp .L33
+ 151               	.LVL21:
+ 152               	.L8:
+ 153               	.LM21:
+ 154 00a4 8091 0000 		lds r24,macInfo
+ 155               	.LVL22:
+ 156 00a8 8230      		cpi r24,lo8(2)
+ 157 00aa 01F4      		brne .L41
+ 158 00ac 8091 0000 		lds r24,macInfo+1
+ 159 00b0 90E0      		ldi r25,lo8(0)
+ 160 00b2 8130      		cpi r24,lo8(1)
+ 161 00b4 01F4      		brne .L42
+ 162 00b6 00C0      		rjmp .L26
+ 163               	.LVL23:
+ 164               	.L7:
+ 165               	.LM22:
+ 166 00b8 8091 0000 		lds r24,macInfo
+ 167               	.LVL24:
+ 168 00bc 8230      		cpi r24,lo8(2)
+ 169 00be 01F0      		breq .+2
+ 170 00c0 00C0      		rjmp .L41
+ 171 00c2 8091 0000 		lds r24,macInfo+1
+ 172 00c6 90E0      		ldi r25,lo8(0)
+ 173 00c8 8111      		cpse r24,__zero_reg__
+ 174 00ca 91E0      		ldi r25,lo8(1)
+ 175               	.L18:
+ 176 00cc 392F      		mov r19,r25
+ 177               	.LVL25:
+ 178 00ce 3627      		eor r19,r22
+ 179 00d0 00C0      		rjmp .L33
+ 180               	/* epilogue: frame size=0 */
+ 181               	/* epilogue: noreturn */
+ 182               	/* epilogue end (size=0) */
+ 183               	/* function mac_requestState size 106 (106) */
+ 184               	.LFE3:
+ 186               	.global	mac_validateMacState
+ 188               	mac_validateMacState:
+ 189               	.LFB4:
+ 190               	.LM23:
+ 191               	/* prologue: frame size=0 */
+ 192               	/* prologue end (size=0) */
+ 193               	.LVL26:
+ 194               	.LM24:
+ 195 00d2 6230      		cpi r22,lo8(2)
+ 196 00d4 01F0      		breq .L49
+ 197               	.LM25:
+ 198 00d6 6330      		cpi r22,lo8(3)
+ 199 00d8 01F0      		breq .L67
+ 200               	.L48:
+ 201               	.LM26:
+ 202 00da 81E0      		ldi r24,lo8(1)
+ 203 00dc 90E0      		ldi r25,hi8(1)
+ 204               	.LVL27:
+ 205               	.LM27:
+ 206 00de 0895      		ret
+ 207               	.LVL28:
+ 208               	.L49:
+ 209               	.LM28:
+ 210 00e0 20E0      		ldi r18,lo8(0)
+ 211 00e2 30E0      		ldi r19,hi8(0)
+ 212 00e4 8091 0000 		lds r24,MacTx
+ 213               	.LVL29:
+ 214 00e8 8430      		cpi r24,lo8(4)
+ 215 00ea 01F0      		breq .L66
+ 216               	.L64:
+ 217 00ec C901      		movw r24,r18
+ 218 00ee 0895      		ret
+ 219               	.LVL30:
+ 220               	.L67:
+ 221               	.LM29:
+ 222 00f0 8830      		cpi r24,lo8(8)
+ 223 00f2 00F0      		brlo .L68
+ 224 00f4 8830      		cpi r24,lo8(8)
+ 225 00f6 01F0      		breq .L54
+ 226 00f8 8930      		cpi r24,lo8(9)
+ 227 00fa 01F4      		brne .L48
+ 228               	.L53:
+ 229               	.LM30:
+ 230 00fc 20E0      		ldi r18,lo8(0)
+ 231 00fe 30E0      		ldi r19,hi8(0)
+ 232 0100 8091 0000 		lds r24,macInfo+8
+ 233               	.LVL31:
+ 234 0104 8230      		cpi r24,lo8(2)
+ 235 0106 00F4      		brsh .L64
+ 236               	.L66:
+ 237 0108 21E0      		ldi r18,lo8(1)
+ 238 010a 30E0      		ldi r19,hi8(1)
+ 239 010c C901      		movw r24,r18
+ 240 010e 0895      		ret
+ 241               	.LVL32:
+ 242               	.L68:
+ 243               	.LM31:
+ 244 0110 8430      		cpi r24,lo8(4)
+ 245 0112 00F4      		brsh .L53
+ 246 0114 8230      		cpi r24,lo8(2)
+ 247 0116 01F0      		breq .L51
+ 248 0118 8330      		cpi r24,lo8(3)
+ 249 011a 01F4      		brne .L48
+ 250               	.LM32:
+ 251 011c 20E0      		ldi r18,lo8(0)
+ 252 011e 30E0      		ldi r19,hi8(0)
+ 253 0120 8091 0000 		lds r24,macInfo
+ 254               	.LVL33:
+ 255 0124 8330      		cpi r24,lo8(3)
+ 256 0126 01F4      		brne .L64
+ 257 0128 00C0      		rjmp .L66
+ 258               	.LVL34:
+ 259               	.L51:
+ 260               	.LM33:
+ 261 012a 8091 0000 		lds r24,macInfo
+ 262               	.LVL35:
+ 263 012e 8230      		cpi r24,lo8(2)
+ 264 0130 01F0      		breq .L56
+ 265 0132 80E0      		ldi r24,lo8(0)
+ 266               	.L58:
+ 267 0134 9927      		clr r25
+ 268 0136 0895      		ret
+ 269               	.LVL36:
+ 270               	.L54:
+ 271               	.LM34:
+ 272 0138 20E0      		ldi r18,lo8(0)
+ 273 013a 30E0      		ldi r19,hi8(0)
+ 274 013c 8091 0000 		lds r24,macInfo+8
+ 275               	.LVL37:
+ 276 0140 8150      		subi r24,lo8(-(-1))
+ 277 0142 8230      		cpi r24,lo8(2)
+ 278 0144 00F4      		brsh .L64
+ 279 0146 00C0      		rjmp .L66
+ 280               	.L56:
+ 281               	.LM35:
+ 282 0148 8091 0000 		lds r24,macInfo+1
+ 283 014c 90E0      		ldi r25,lo8(0)
+ 284 014e 8330      		cpi r24,lo8(3)
+ 285 0150 01F0      		breq .L59
+ 286 0152 91E0      		ldi r25,lo8(1)
+ 287               	.L59:
+ 288 0154 81E0      		ldi r24,lo8(1)
+ 289 0156 8927      		eor r24,r25
+ 290 0158 00C0      		rjmp .L58
+ 291               	/* epilogue: frame size=0 */
+ 292               	/* epilogue: noreturn */
+ 293               	/* epilogue end (size=0) */
+ 294               	/* function mac_validateMacState size 68 (68) */
+ 295               	.LFE4:
+ 297               	.global	mac_validateFrmData
+ 299               	mac_validateFrmData:
+ 300               	.LFB5:
+ 301               	.LM36:
+ 302               	/* prologue: frame size=0 */
+ 303               	/* prologue end (size=0) */
+ 304               	.LVL38:
+ 305 015a FC01      		movw r30,r24
+ 306               	.LM37:
+ 307 015c 8081      		ld r24,Z
+ 308               	.LVL39:
+ 309 015e 8770      		andi r24,lo8(7)
+ 310 0160 8330      		cpi r24,lo8(3)
+ 311 0162 01F0      		breq .L81
+ 312               	.L70:
+ 313               	.LM38:
+ 314 0164 81E0      		ldi r24,lo8(1)
+ 315 0166 90E0      		ldi r25,hi8(1)
+ 316               	.LM39:
+ 317 0168 0895      		ret
+ 318               	.L81:
+ 319               	.LM40:
+ 320 016a 808D      		ldd r24,Z+24
+ 321 016c 8130      		cpi r24,lo8(1)
+ 322 016e 01F0      		breq .L72
+ 323 0170 8830      		cpi r24,lo8(8)
+ 324 0172 01F4      		brne .L70
+ 325               	.LM41:
+ 326 0174 9181      		ldd r25,Z+1
+ 327 0176 892F      		mov r24,r25
+ 328 0178 807C      		andi r24,lo8(-64)
+ 329 017a 803C      		cpi r24,lo8(-64)
+ 330 017c 01F0      		breq .L75
+ 331 017e 80E0      		ldi r24,lo8(0)
+ 332 0180 90E0      		ldi r25,hi8(0)
+ 333 0182 0895      		ret
+ 334               	.L72:
+ 335               	.LM42:
+ 336 0184 8091 0000 		lds r24,mpib+1
+ 337 0188 9927      		clr r25
+ 338 018a 0895      		ret
+ 339               	.L75:
+ 340               	.LM43:
+ 341 018c 8091 0000 		lds r24,macInfo
+ 342 0190 8430      		cpi r24,lo8(4)
+ 343 0192 01F0      		breq .L82
+ 344               	.L77:
+ 345 0194 20E0      		ldi r18,lo8(0)
+ 346 0196 30E0      		ldi r19,hi8(0)
+ 347 0198 9785      		ldd r25,Z+15
+ 348 019a 8091 0000 		lds r24,mpib+14
+ 349 019e 9817      		cp r25,r24
+ 350 01a0 01F0      		breq .L83
+ 351               	.L79:
+ 352 01a2 C901      		movw r24,r18
+ 353 01a4 0895      		ret
+ 354               	.L82:
+ 355 01a6 9C70      		andi r25,lo8(12)
+ 356 01a8 9C30      		cpi r25,lo8(12)
+ 357 01aa 01F4      		brne .L77
+ 358 01ac 00C0      		rjmp .L70
+ 359               	.L83:
+ 360 01ae 9089      		ldd r25,Z+16
+ 361 01b0 8091 0000 		lds r24,mpib+15
+ 362 01b4 9817      		cp r25,r24
+ 363 01b6 01F4      		brne .L79
+ 364 01b8 9189      		ldd r25,Z+17
+ 365 01ba 8091 0000 		lds r24,mpib+16
+ 366 01be 9817      		cp r25,r24
+ 367 01c0 01F4      		brne .L79
+ 368 01c2 9289      		ldd r25,Z+18
+ 369 01c4 8091 0000 		lds r24,mpib+17
+ 370 01c8 9817      		cp r25,r24
+ 371 01ca 01F4      		brne .L79
+ 372 01cc 9389      		ldd r25,Z+19
+ 373 01ce 8091 0000 		lds r24,mpib+18
+ 374 01d2 9817      		cp r25,r24
+ 375 01d4 01F4      		brne .L79
+ 376 01d6 9489      		ldd r25,Z+20
+ 377 01d8 8091 0000 		lds r24,mpib+19
+ 378 01dc 9817      		cp r25,r24
+ 379 01de 01F4      		brne .L79
+ 380 01e0 9589      		ldd r25,Z+21
+ 381 01e2 8091 0000 		lds r24,mpib+20
+ 382 01e6 9817      		cp r25,r24
+ 383 01e8 01F4      		brne .L79
+ 384 01ea 9689      		ldd r25,Z+22
+ 385 01ec 8091 0000 		lds r24,mpib+21
+ 386 01f0 9817      		cp r25,r24
+ 387 01f2 01F4      		brne .L79
+ 388 01f4 21E0      		ldi r18,lo8(1)
+ 389 01f6 30E0      		ldi r19,hi8(1)
+ 390 01f8 00C0      		rjmp .L79
+ 391               	/* epilogue: frame size=0 */
+ 392               	/* epilogue: noreturn */
+ 393               	/* epilogue end (size=0) */
+ 394               	/* function mac_validateFrmData size 80 (80) */
+ 395               	.LFE5:
+ 397               	.global	mac_updateDelayedPib
+ 399               	mac_updateDelayedPib:
+ 400               	.LFB6:
+ 401               	.LM44:
+ 402               	/* prologue: frame size=0 */
+ 403               	/* prologue end (size=0) */
+ 404               	.LM45:
+ 405               	/* #APP */
+ 406 01fa F894      		cli
+ 407               		
+ 408               	.LM46:
+ 409               	/* #NOAPP */
+ 410 01fc 8091 0000 		lds r24,macInfo+7
+ 411 0200 282F      		mov r18,r24
+ 412 0202 3327      		clr r19
+ 413 0204 20FF      		sbrs r18,0
+ 414 0206 00C0      		rjmp .L85
+ 415               	.LM47:
+ 416 0208 8091 0000 		lds r24,macInfo+3
+ 417 020c 8093 0000 		sts mpib+3,r24
+ 418               	.L85:
+ 419               	.LM48:
+ 420 0210 21FF      		sbrs r18,1
+ 421 0212 00C0      		rjmp .L87
+ 422 0214 8091 0000 		lds r24,macInfo+4
+ 423 0218 8093 0000 		sts mpib+8,r24
+ 424               	.L87:
+ 425               	.LM49:
+ 426 021c 22FF      		sbrs r18,2
+ 427 021e 00C0      		rjmp .L89
+ 428 0220 8091 0000 		lds r24,macInfo+5
+ 429 0224 8093 0000 		sts mpib+31,r24
+ 430               	.L89:
+ 431               	.LM50:
+ 432 0228 23FF      		sbrs r18,3
+ 433 022a 00C0      		rjmp .L91
+ 434 022c 8091 0000 		lds r24,macInfo+6
+ 435 0230 8093 0000 		sts mpib+34,r24
+ 436               	.L91:
+ 437               	.LM51:
+ 438 0234 1092 0000 		sts macInfo+7,__zero_reg__
+ 439               	.LM52:
+ 440               	/* #APP */
+ 441 0238 7894      		sei
+ 442               		
+ 443               	/* #NOAPP */
+ 444               	/* epilogue: frame size=0 */
+ 445 023a 0895      		ret
+ 446               	/* epilogue end (size=1) */
+ 447               	/* function mac_updateDelayedPib size 39 (38) */
+ 448               	.LFE6:
+ 450               	.global	mac_forceOffTrx
+ 452               	mac_forceOffTrx:
+ 453               	.LFB9:
+ 454               	.LM53:
+ 455               	/* prologue: frame size=0 */
+ 456               	/* prologue end (size=0) */
+ 457               	.LVL40:
+ 458               	.LM54:
+ 459 023c 80E0      		ldi r24,lo8(0)
+ 460 023e 90E0      		ldi r25,hi8(0)
+ 461               	.LVL41:
+ 462 0240 0E94 0000 		call phyrx_turnOffTrx
+ 463               	.LVL42:
+ 464               	/* epilogue: frame size=0 */
+ 465 0244 0895      		ret
+ 466               	/* epilogue end (size=1) */
+ 467               	/* function mac_forceOffTrx size 5 (4) */
+ 468               	.LFE9:
+ 470               	.global	mac_manageTrxAfterTx
+ 472               	mac_manageTrxAfterTx:
+ 473               	.LFB7:
+ 474               	.LM55:
+ 475               	/* prologue: frame size=0 */
+ 476               	/* prologue end (size=0) */
+ 477               	.LVL43:
+ 478               	.LM56:
+ 479 0246 8091 0000 		lds r24,macInfo
+ 480               	.LVL44:
+ 481 024a 8230      		cpi r24,lo8(2)
+ 482 024c 01F0      		breq .L98
+ 483               	.LM57:
+ 484 024e 8430      		cpi r24,lo8(4)
+ 485 0250 01F0      		breq .L107
+ 486               	.L97:
+ 487               	.LM58:
+ 488 0252 8091 0000 		lds r24,mpib+31
+ 489 0256 8823      		tst r24
+ 490 0258 01F4      		brne .L103
+ 491 025a 8091 0000 		lds r24,BeaconInfo
+ 492 025e 8823      		tst r24
+ 493 0260 01F0      		breq .L105
+ 494               	.L103:
+ 495               	.LM59:
+ 496 0262 0E94 0000 		call phyrx_initOnRx
+ 497               	.LVL45:
+ 498 0266 0895      		ret
+ 499               	.LVL46:
+ 500               	.L98:
+ 501               	.LM60:
+ 502 0268 8091 0000 		lds r24,macInfo+1
+ 503 026c 8230      		cpi r24,lo8(2)
+ 504 026e 01F0      		breq .L103
+ 505               	.L105:
+ 506               	.LM61:
+ 507 0270 80E0      		ldi r24,lo8(0)
+ 508 0272 90E0      		ldi r25,hi8(0)
+ 509 0274 0E94 0000 		call phyrx_turnOffTrx
+ 510               	.LVL47:
+ 511 0278 0895      		ret
+ 512               	.LVL48:
+ 513               	.L107:
+ 514               	.LM62:
+ 515 027a 0E94 0000 		call phyrx_initOnRx
+ 516               	.LVL49:
+ 517 027e 00C0      		rjmp .L97
+ 518               	/* epilogue: frame size=0 */
+ 519               	/* epilogue: noreturn */
+ 520               	/* epilogue end (size=0) */
+ 521               	/* function mac_manageTrxAfterTx size 29 (29) */
+ 522               	.LFE7:
+ 524               	.global	mac_setTrxState
+ 526               	mac_setTrxState:
+ 527               	.LFB8:
+ 528               	.LM63:
+ 529               	/* prologue: frame size=0 */
+ 530               	/* prologue end (size=0) */
+ 531               	.LVL50:
+ 532               	.LM64:
+ 533 0280 9091 0000 		lds r25,PhyInfo+7
+ 534 0284 9630      		cpi r25,lo8(6)
+ 535 0286 01F0      		breq .L109
+ 536               	.LM65:
+ 537 0288 9830      		cpi r25,lo8(8)
+ 538 028a 01F0      		breq .L109
+ 539 028c 9930      		cpi r25,lo8(9)
+ 540 028e 01F0      		breq .L109
+ 541               	.LM66:
+ 542 0290 8330      		cpi r24,lo8(3)
+ 543 0292 01F0      		breq .L129
+ 544               	.L114:
+ 545               	.LM67:
+ 546 0294 8930      		cpi r24,lo8(9)
+ 547 0296 01F0      		breq .L130
+ 548               	.LM68:
+ 549 0298 8830      		cpi r24,lo8(8)
+ 550 029a 01F0      		breq .L131
+ 551               	.LM69:
+ 552 029c 9930      		cpi r25,lo8(9)
+ 553 029e 01F0      		breq .L132
+ 554               	.LM70:
+ 555 02a0 8630      		cpi r24,lo8(6)
+ 556 02a2 01F4      		brne .L113
+ 557 02a4 00C0      		rjmp .L134
+ 558               	.L109:
+ 559               	.LM71:
+ 560 02a6 9817      		cp r25,r24
+ 561 02a8 01F0      		breq .L113
+ 562               	.LM72:
+ 563 02aa 8330      		cpi r24,lo8(3)
+ 564 02ac 01F4      		brne .L114
+ 565               	.L129:
+ 566 02ae 9830      		cpi r25,lo8(8)
+ 567 02b0 01F0      		breq .L113
+ 568               	.L128:
+ 569               	.LM73:
+ 570 02b2 80E0      		ldi r24,lo8(0)
+ 571 02b4 90E0      		ldi r25,hi8(0)
+ 572               	.LVL51:
+ 573 02b6 0E94 0000 		call phyrx_turnOffTrx
+ 574 02ba 00C0      		rjmp .L113
+ 575               	.LVL52:
+ 576               	.L131:
+ 577               	.LM74:
+ 578 02bc 8091 0000 		lds r24,mpib+31
+ 579               	.LVL53:
+ 580 02c0 8823      		tst r24
+ 581 02c2 01F4      		brne .L113
+ 582 02c4 8091 0000 		lds r24,BeaconInfo
+ 583 02c8 8823      		tst r24
+ 584 02ca 01F4      		brne .L113
+ 585 02cc 00C0      		rjmp .L128
+ 586               	.LVL54:
+ 587               	.L134:
+ 588               	.LM75:
+ 589 02ce 80E0      		ldi r24,lo8(0)
+ 590 02d0 90E0      		ldi r25,hi8(0)
+ 591               	.LVL55:
+ 592 02d2 0E94 0000 		call phyrx_turnOnRx
+ 593 02d6 00C0      		rjmp .L113
+ 594               	.LVL56:
+ 595               	.L132:
+ 596               	.LM76:
+ 597 02d8 8630      		cpi r24,lo8(6)
+ 598 02da 01F4      		brne .L113
+ 599               	.LM77:
+ 600 02dc 0E94 0000 		call phyrx_initOnRx
+ 601               	.LVL57:
+ 602 02e0 00C0      		rjmp .L113
+ 603               	.LVL58:
+ 604               	.L130:
+ 605               	.LM78:
+ 606 02e2 0E94 0000 		call phytx_turnOnTx
+ 607               	.LVL59:
+ 608               	.L113:
+ 609               	.LM79:
+ 610 02e6 87E0      		ldi r24,lo8(7)
+ 611 02e8 90E0      		ldi r25,hi8(7)
+ 612               	.LVL60:
+ 613               	/* epilogue: frame size=0 */
+ 614 02ea 0895      		ret
+ 615               	/* epilogue end (size=1) */
+ 616               	/* function mac_setTrxState size 54 (53) */
+ 617               	.LFE8:
+ 619               	.global	mac_init
+ 621               	mac_init:
+ 622               	.LFB2:
+ 623               	.LM80:
+ 624               	/* prologue: frame size=0 */
+ 625               	/* prologue end (size=0) */
+ 626               	.LM81:
+ 627 02ec 1092 0000 		sts macInfo,__zero_reg__
+ 628               	.LM82:
+ 629 02f0 80E0      		ldi r24,lo8(0)
+ 630 02f2 0E94 0000 		call phytrx_setPwrMode
+ 631               	/* epilogue: frame size=0 */
+ 632 02f6 0895      		ret
+ 633               	/* epilogue end (size=1) */
+ 634               	/* function mac_init size 6 (5) */
+ 635               	.LFE2:
+ 637               		.comm mpib,37,1
+ 638               		.comm macInfo,9,1
+ 710               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 mac_state.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:20     .text:00000000 mac_requestState
+                            *COM*:00000009 macInfo
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:188    .text:000000d2 mac_validateMacState
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:299    .text:0000015a mac_validateFrmData
+                            *COM*:00000025 mpib
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:399    .text:000001fa mac_updateDelayedPib
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:452    .text:0000023c mac_forceOffTrx
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:472    .text:00000246 mac_manageTrxAfterTx
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:526    .text:00000280 mac_setTrxState
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKWaaaa.s:621    .text:000002ec mac_init
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+MacTx
+phyrx_turnOffTrx
+BeaconInfo
+phyrx_initOnRx
+PhyInfo
+phyrx_turnOnRx
+phytx_turnOnTx
+phytrx_setPwrMode

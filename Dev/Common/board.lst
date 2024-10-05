@@ -1,0 +1,670 @@
+   1               		.file	"board.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	Dimmer
+  20               	Dimmer:
+  21               	.LFB4:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26               	.LM2:
+  27 0000 94E6      		ldi r25,lo8(100)
+  28 0002 981B      		sub r25,r24
+  29 0004 8FEF      		ldi r24,lo8(-1)
+  30               	.LVL1:
+  31 0006 989F      		mul r25,r24
+  32 0008 C001      		movw r24,r0
+  33 000a 1124      		clr r1
+  34 000c 64E6      		ldi r22,lo8(100)
+  35 000e 70E0      		ldi r23,hi8(100)
+  36 0010 0E94 0000 		call __udivmodhi4
+  37               	.LM3:
+  38 0014 61BF      		out 81-0x20,r22
+  39               	/* epilogue: frame size=0 */
+  40 0016 0895      		ret
+  41               	/* epilogue end (size=1) */
+  42               	/* function Dimmer size 12 (11) */
+  43               	.LFE4:
+  45               	.global	LedOnOff
+  47               	LedOnOff:
+  48               	.LFB5:
+  49               	.LM4:
+  50               	/* prologue: frame size=0 */
+  51               	/* prologue end (size=0) */
+  52               	.LVL2:
+  53 0018 982F      		mov r25,r24
+  54               	.LM5:
+  55 001a 282F      		mov r18,r24
+  56 001c 3327      		clr r19
+  57 001e 20FF      		sbrs r18,0
+  58 0020 00C0      		rjmp .L4
+  59               	.LM6:
+  60 0022 6130      		cpi r22,lo8(1)
+  61 0024 01F0      		breq .L25
+  62               	.LM7:
+  63 0026 C798      		cbi 56-0x20,7
+  64               	.L4:
+  65               	.LM8:
+  66 0028 21FF      		sbrs r18,1
+  67 002a 00C0      		rjmp .L8
+  68               	.LM9:
+  69 002c 6130      		cpi r22,lo8(1)
+  70 002e 01F0      		breq .L26
+  71               	.LBB6:
+  72               	.LBB7:
+  73               	.LM10:
+  74 0030 8FEF      		ldi r24,lo8(-1)
+  75               	.LVL3:
+  76 0032 81BF      		out 81-0x20,r24
+  77               	.LVL4:
+  78               	.L8:
+  79               	.LBE7:
+  80               	.LBE6:
+  81               	.LM11:
+  82 0034 22FF      		sbrs r18,2
+  83 0036 00C0      		rjmp .L12
+  84               	.LM12:
+  85 0038 6130      		cpi r22,lo8(1)
+  86 003a 01F0      		breq .L27
+  87               	.LM13:
+  88 003c 1B98      		cbi 35-0x20,3
+  89               	.L12:
+  90               	.LM14:
+  91 003e 23FF      		sbrs r18,3
+  92 0040 00C0      		rjmp .L16
+  93               	.LM15:
+  94 0042 6130      		cpi r22,lo8(1)
+  95 0044 01F0      		breq .L28
+  96               	.LM16:
+  97 0046 1C98      		cbi 35-0x20,4
+  98               	.L16:
+  99               	.LM17:
+ 100 0048 6623      		tst r22
+ 101 004a 01F4      		brne .L20
+ 102               	.LM18:
+ 103 004c 9095      		com r25
+ 104 004e 8091 0000 		lds r24,ledState
+ 105 0052 8923      		and r24,r25
+ 106 0054 8093 0000 		sts ledState,r24
+ 107 0058 0895      		ret
+ 108               	.LVL5:
+ 109               	.L28:
+ 110               	.LM19:
+ 111 005a 1C9A      		sbi 35-0x20,4
+ 112               	.L20:
+ 113               	.LM20:
+ 114 005c 8091 0000 		lds r24,ledState
+ 115 0060 892B      		or r24,r25
+ 116 0062 8093 0000 		sts ledState,r24
+ 117 0066 0895      		ret
+ 118               	.LVL6:
+ 119               	.L26:
+ 120               	.LBB8:
+ 121               	.LBB9:
+ 122               	.LM21:
+ 123 0068 8AEA      		ldi r24,lo8(-86)
+ 124               	.LVL7:
+ 125 006a 81BF      		out 81-0x20,r24
+ 126 006c 00C0      		rjmp .L8
+ 127               	.LVL8:
+ 128               	.L27:
+ 129               	.LBE9:
+ 130               	.LBE8:
+ 131               	.LM22:
+ 132 006e 1B9A      		sbi 35-0x20,3
+ 133 0070 00C0      		rjmp .L12
+ 134               	.LVL9:
+ 135               	.L25:
+ 136               	.LM23:
+ 137 0072 C79A      		sbi 56-0x20,7
+ 138 0074 00C0      		rjmp .L4
+ 139               	/* epilogue: frame size=0 */
+ 140               	/* epilogue: noreturn */
+ 141               	/* epilogue end (size=0) */
+ 142               	/* function LedOnOff size 47 (47) */
+ 143               	.LFE5:
+ 145               	.global	RegisterEP
+ 147               	RegisterEP:
+ 148               	.LFB7:
+ 149               	.LM24:
+ 150               	/* prologue: frame size=0 */
+ 151               	/* prologue end (size=0) */
+ 152               	.LVL10:
+ 153               	.LM25:
+ 154 0076 8093 0000 		sts KeysEP,r24
+ 155               	/* epilogue: frame size=0 */
+ 156 007a 0895      		ret
+ 157               	/* epilogue end (size=1) */
+ 158               	/* function RegisterEP size 3 (2) */
+ 159               	.LFE7:
+ 161               	.global	__vector_7
+ 163               	__vector_7:
+ 164               	.LFB9:
+ 165               	.LM26:
+ 166               	/* prologue: frame size=0 */
+ 167 007c 1F92      		push __zero_reg__
+ 168 007e 0F92      		push __tmp_reg__
+ 169 0080 0FB6      		in __tmp_reg__,__SREG__
+ 170 0082 0F92      		push __tmp_reg__
+ 171 0084 1124      		clr __zero_reg__
+ 172               	/* prologue end (size=5) */
+ 173               	/* epilogue: frame size=0 */
+ 174 0086 0F90      		pop __tmp_reg__
+ 175 0088 0FBE      		out __SREG__,__tmp_reg__
+ 176 008a 0F90      		pop __tmp_reg__
+ 177 008c 1F90      		pop __zero_reg__
+ 178 008e 1895      		reti
+ 179               	/* epilogue end (size=5) */
+ 180               	/* function __vector_7 size 10 (0) */
+ 181               	.LFE9:
+ 183               	.global	createKeysPollingTimer
+ 185               	createKeysPollingTimer:
+ 186               	.LFB11:
+ 187               	.LM27:
+ 188               	/* prologue: frame size=4 */
+ 189 0090 0F93      		push r16
+ 190 0092 1F93      		push r17
+ 191 0094 CF93      		push r28
+ 192 0096 DF93      		push r29
+ 193 0098 CDB7      		in r28,__SP_L__
+ 194 009a DEB7      		in r29,__SP_H__
+ 195 009c 2497      		sbiw r28,4
+ 196 009e 0FB6      		in __tmp_reg__,__SREG__
+ 197 00a0 F894      		cli
+ 198 00a2 DEBF      		out __SP_H__,r29
+ 199 00a4 0FBE      		out __SREG__,__tmp_reg__
+ 200 00a6 CDBF      		out __SP_L__,r28
+ 201               	/* prologue end (size=12) */
+ 202               	.LM28:
+ 203 00a8 8091 0000 		lds r24,KeysEP
+ 204 00ac 8A83      		std Y+2,r24
+ 205               	.LM29:
+ 206 00ae 84E5      		ldi r24,lo8(84)
+ 207 00b0 8983      		std Y+1,r24
+ 208               	.LM30:
+ 209 00b2 05E0      		ldi r16,lo8(5)
+ 210 00b4 10E0      		ldi r17,hi8(5)
+ 211 00b6 21E0      		ldi r18,lo8(1)
+ 212 00b8 30E0      		ldi r19,hi8(1)
+ 213 00ba 48EC      		ldi r20,lo8(200)
+ 214 00bc 50E0      		ldi r21,hi8(200)
+ 215 00be 60E0      		ldi r22,hlo8(200)
+ 216 00c0 70E0      		ldi r23,hhi8(200)
+ 217 00c2 CE01      		movw r24,r28
+ 218 00c4 0196      		adiw r24,1
+ 219 00c6 0E94 0000 		call mtimer_creatTmr
+ 220               	/* epilogue: frame size=4 */
+ 221 00ca 2496      		adiw r28,4
+ 222 00cc 0FB6      		in __tmp_reg__,__SREG__
+ 223 00ce F894      		cli
+ 224 00d0 DEBF      		out __SP_H__,r29
+ 225 00d2 0FBE      		out __SREG__,__tmp_reg__
+ 226 00d4 CDBF      		out __SP_L__,r28
+ 227 00d6 DF91      		pop r29
+ 228 00d8 CF91      		pop r28
+ 229 00da 1F91      		pop r17
+ 230 00dc 0F91      		pop r16
+ 231 00de 0895      		ret
+ 232               	/* epilogue end (size=11) */
+ 233               	/* function createKeysPollingTimer size 40 (17) */
+ 234               	.LFE11:
+ 236               	.global	OnBoard_SendKeys
+ 238               	OnBoard_SendKeys:
+ 239               	.LFB8:
+ 240               	.LM31:
+ 241               	/* prologue: frame size=2 */
+ 242 00e0 CF93      		push r28
+ 243 00e2 DF93      		push r29
+ 244 00e4 CDB7      		in r28,__SP_L__
+ 245 00e6 DEB7      		in r29,__SP_H__
+ 246 00e8 2297      		sbiw r28,2
+ 247 00ea 0FB6      		in __tmp_reg__,__SREG__
+ 248 00ec F894      		cli
+ 249 00ee DEBF      		out __SP_H__,r29
+ 250 00f0 0FBE      		out __SREG__,__tmp_reg__
+ 251 00f2 CDBF      		out __SP_L__,r28
+ 252               	/* prologue end (size=10) */
+ 253               	.LVL11:
+ 254               	.LM32:
+ 255 00f4 8983      		std Y+1,r24
+ 256               	.LM33:
+ 257 00f6 6A83      		std Y+2,r22
+ 258               	.LVL12:
+ 259               	.LM34:
+ 260 00f8 4981      		ldd r20,Y+1
+ 261 00fa 5A81      		ldd r21,Y+2
+ 262 00fc 63E5      		ldi r22,lo8(83)
+ 263               	.LVL13:
+ 264 00fe 8091 0000 		lds r24,KeysEP
+ 265               	.LVL14:
+ 266 0102 0E94 0000 		call apf_sendAppMsg
+ 267               	/* epilogue: frame size=2 */
+ 268 0106 2296      		adiw r28,2
+ 269 0108 0FB6      		in __tmp_reg__,__SREG__
+ 270 010a F894      		cli
+ 271 010c DEBF      		out __SP_H__,r29
+ 272 010e 0FBE      		out __SREG__,__tmp_reg__
+ 273 0110 CDBF      		out __SP_L__,r28
+ 274 0112 DF91      		pop r29
+ 275 0114 CF91      		pop r28
+ 276 0116 0895      		ret
+ 277               	/* epilogue end (size=9) */
+ 278               	/* function OnBoard_SendKeys size 28 (9) */
+ 279               	.LFE8:
+ 281               	.global	pollBoard
+ 283               	pollBoard:
+ 284               	.LFB10:
+ 285               	.LM35:
+ 286               	/* prologue: frame size=2 */
+ 287 0118 CF93      		push r28
+ 288 011a DF93      		push r29
+ 289 011c CDB7      		in r28,__SP_L__
+ 290 011e DEB7      		in r29,__SP_H__
+ 291 0120 2297      		sbiw r28,2
+ 292 0122 0FB6      		in __tmp_reg__,__SREG__
+ 293 0124 F894      		cli
+ 294 0126 DEBF      		out __SP_H__,r29
+ 295 0128 0FBE      		out __SREG__,__tmp_reg__
+ 296 012a CDBF      		out __SP_L__,r28
+ 297               	/* prologue end (size=10) */
+ 298               	.LM36:
+ 299 012c 41B1      		in r20,33-0x20
+ 300               	.LVL15:
+ 301 012e 81B1      		in r24,33-0x20
+ 302 0130 20B1      		in r18,32-0x20
+ 303 0132 4770      		andi r20,lo8(7)
+ 304 0134 8095      		com r24
+ 305 0136 8072      		andi r24,lo8(32)
+ 306 0138 482B      		or r20,r24
+ 307 013a 3327      		clr r19
+ 308 013c 2670      		andi r18,lo8(6)
+ 309 013e 3070      		andi r19,hi8(6)
+ 310 0140 220F      		lsl r18
+ 311 0142 331F      		rol r19
+ 312 0144 220F      		lsl r18
+ 313 0146 331F      		rol r19
+ 314 0148 422B      		or r20,r18
+ 315               	.LM37:
+ 316 014a 8091 0000 		lds r24,lastKey
+ 317 014e 4817      		cp r20,r24
+ 318 0150 01F0      		breq .L42
+ 319               	.LM38:
+ 320 0152 4423      		tst r20
+ 321 0154 01F4      		brne .L40
+ 322               	.LM39:
+ 323 0156 1092 0000 		sts lastKey,__zero_reg__
+ 324 015a 00C0      		rjmp .L42
+ 325               	.L40:
+ 326               	.LM40:
+ 327 015c 4093 0000 		sts lastKey,r20
+ 328               	.LBB12:
+ 329               	.LBB13:
+ 330               	.LM41:
+ 331 0160 842F      		mov r24,r20
+ 332 0162 9927      		clr r25
+ 333 0164 9695      		lsr r25
+ 334 0166 8795      		ror r24
+ 335 0168 9295      		swap r25
+ 336 016a 8295      		swap r24
+ 337 016c 8F70      		andi r24,0x0f
+ 338 016e 8927      		eor r24,r25
+ 339 0170 9F70      		andi r25,0x0f
+ 340 0172 8927      		eor r24,r25
+ 341 0174 8170      		andi r24,lo8(1)
+ 342 0176 8983      		std Y+1,r24
+ 343               	.LM42:
+ 344 0178 4A83      		std Y+2,r20
+ 345               	.LVL16:
+ 346               	.LM43:
+ 347 017a 4981      		ldd r20,Y+1
+ 348 017c 5A81      		ldd r21,Y+2
+ 349               	.LVL17:
+ 350 017e 63E5      		ldi r22,lo8(83)
+ 351 0180 8091 0000 		lds r24,KeysEP
+ 352 0184 0E94 0000 		call apf_sendAppMsg
+ 353               	.LVL18:
+ 354               	.L42:
+ 355               	.LBE13:
+ 356               	.LBE12:
+ 357               	/* epilogue: frame size=2 */
+ 358 0188 2296      		adiw r28,2
+ 359 018a 0FB6      		in __tmp_reg__,__SREG__
+ 360 018c F894      		cli
+ 361 018e DEBF      		out __SP_H__,r29
+ 362 0190 0FBE      		out __SREG__,__tmp_reg__
+ 363 0192 CDBF      		out __SP_L__,r28
+ 364 0194 DF91      		pop r29
+ 365 0196 CF91      		pop r28
+ 366 0198 0895      		ret
+ 367               	/* epilogue end (size=9) */
+ 368               	/* function pollBoard size 65 (46) */
+ 369               	.LFE10:
+ 371               	.global	InitBoard
+ 373               	InitBoard:
+ 374               	.LFB2:
+ 375               	.LM44:
+ 376               	/* prologue: frame size=4 */
+ 377 019a 9F92      		push r9
+ 378 019c AF92      		push r10
+ 379 019e BF92      		push r11
+ 380 01a0 CF92      		push r12
+ 381 01a2 DF92      		push r13
+ 382 01a4 EF92      		push r14
+ 383 01a6 FF92      		push r15
+ 384 01a8 0F93      		push r16
+ 385 01aa 1F93      		push r17
+ 386 01ac CF93      		push r28
+ 387 01ae DF93      		push r29
+ 388 01b0 CDB7      		in r28,__SP_L__
+ 389 01b2 DEB7      		in r29,__SP_H__
+ 390 01b4 2497      		sbiw r28,4
+ 391 01b6 0FB6      		in __tmp_reg__,__SREG__
+ 392 01b8 F894      		cli
+ 393 01ba DEBF      		out __SP_H__,r29
+ 394 01bc 0FBE      		out __SREG__,__tmp_reg__
+ 395 01be CDBF      		out __SP_L__,r28
+ 396               	/* prologue end (size=19) */
+ 397               	.LM45:
+ 398 01c0 87B3      		in r24,55-0x20
+ 399 01c2 8069      		ori r24,lo8(-112)
+ 400 01c4 87BB      		out 55-0x20,r24
+ 401 01c6 8F9A      		sbi 49-0x20,7
+ 402 01c8 82B3      		in r24,50-0x20
+ 403 01ca 806A      		ori r24,lo8(-96)
+ 404 01cc 82BB      		out 50-0x20,r24
+ 405 01ce 82B1      		in r24,34-0x20
+ 406 01d0 8861      		ori r24,lo8(24)
+ 407 01d2 82B9      		out 34-0x20,r24
+ 408 01d4 83B1      		in r24,35-0x20
+ 409 01d6 877E      		andi r24,lo8(-25)
+ 410 01d8 83B9      		out 35-0x20,r24
+ 411               	.LM46:
+ 412 01da 1F9A      		sbi 35-0x20,7
+ 413               	.LM47:
+ 414 01dc 11BE      		out 81-0x20,__zero_reg__
+ 415 01de 80E7      		ldi r24,lo8(112)
+ 416 01e0 83BF      		out 83-0x20,r24
+ 417 01e2 83B7      		in r24,83-0x20
+ 418 01e4 887F      		andi r24,lo8(-8)
+ 419 01e6 8261      		ori r24,lo8(18)
+ 420 01e8 83BF      		out 83-0x20,r24
+ 421               	.LBB38:
+ 422               	.LBB39:
+ 423               	.LM48:
+ 424 01ea C798      		cbi 56-0x20,7
+ 425               	.LBB40:
+ 426               	.LBB41:
+ 427               	.LM49:
+ 428 01ec 8FEF      		ldi r24,lo8(-1)
+ 429 01ee 81BF      		out 81-0x20,r24
+ 430               	.LBE41:
+ 431               	.LBE40:
+ 432               	.LM50:
+ 433 01f0 1B98      		cbi 35-0x20,3
+ 434               	.LM51:
+ 435 01f2 1C98      		cbi 35-0x20,4
+ 436               	.LM52:
+ 437 01f4 4091 0000 		lds r20,ledState
+ 438 01f8 407F      		andi r20,lo8(-16)
+ 439 01fa 4093 0000 		sts ledState,r20
+ 440               	.LBE39:
+ 441               	.LBE38:
+ 442               	.LBB42:
+ 443               	.LBB43:
+ 444               	.LM53:
+ 445 01fe 94B7      		in r25,84-0x20
+ 446               	.LM54:
+ 447 0200 84B7      		in r24,84-0x20
+ 448 0202 807E      		andi r24,lo8(-32)
+ 449 0204 84BF      		out 84-0x20,r24
+ 450               	.LM55:
+ 451 0206 9F71      		andi r25,lo8(31)
+ 452 0208 9430      		cpi r25,lo8(4)
+ 453 020a 01F0      		breq .+2
+ 454 020c 00C0      		rjmp .L44
+ 455               	.LM56:
+ 456 020e A8E0      		ldi r26,lo8(8)
+ 457 0210 9A2E      		mov r9,r26
+ 458               	.LVL19:
+ 459               	.L71:
+ 460               	.LBB44:
+ 461               	.LBB45:
+ 462               	.LM57:
+ 463 0212 292D      		mov r18,r9
+ 464 0214 3327      		clr r19
+ 465 0216 F1E0      		ldi r31,lo8(1)
+ 466 0218 AF2E      		mov r10,r31
+ 467 021a B12C      		mov r11,__zero_reg__
+ 468 021c A222      		and r10,r18
+ 469 021e B322      		and r11,r19
+ 470 0220 20FD      		sbrc r18,0
+ 471               	.LM58:
+ 472 0222 C79A      		sbi 56-0x20,7
+ 473               	.L47:
+ 474               	.LM59:
+ 475 0224 E2E0      		ldi r30,lo8(2)
+ 476 0226 CE2E      		mov r12,r30
+ 477 0228 D12C      		mov r13,__zero_reg__
+ 478 022a C222      		and r12,r18
+ 479 022c D322      		and r13,r19
+ 480 022e 21FF      		sbrs r18,1
+ 481 0230 00C0      		rjmp .L49
+ 482               	.LBB46:
+ 483               	.LBB47:
+ 484               	.LM60:
+ 485 0232 8AEA      		ldi r24,lo8(-86)
+ 486 0234 81BF      		out 81-0x20,r24
+ 487               	.L49:
+ 488               	.LBE47:
+ 489               	.LBE46:
+ 490               	.LM61:
+ 491 0236 74E0      		ldi r23,lo8(4)
+ 492 0238 E72E      		mov r14,r23
+ 493 023a F12C      		mov r15,__zero_reg__
+ 494 023c E222      		and r14,r18
+ 495 023e F322      		and r15,r19
+ 496 0240 22FD      		sbrc r18,2
+ 497               	.LM62:
+ 498 0242 1B9A      		sbi 35-0x20,3
+ 499               	.L51:
+ 500               	.LM63:
+ 501 0244 8901      		movw r16,r18
+ 502 0246 0870      		andi r16,lo8(8)
+ 503 0248 1070      		andi r17,hi8(8)
+ 504 024a 23FD      		sbrc r18,3
+ 505               	.LM64:
+ 506 024c 1C9A      		sbi 35-0x20,4
+ 507               	.L53:
+ 508               	.LM65:
+ 509 024e 4929      		or r20,r9
+ 510 0250 4093 0000 		sts ledState,r20
+ 511               	.LBE45:
+ 512               	.LBE44:
+ 513               	.LM66:
+ 514 0254 64E2      		ldi r22,lo8(62500)
+ 515 0256 74EF      		ldi r23,hi8(62500)
+ 516 0258 80E0      		ldi r24,hlo8(62500)
+ 517 025a 90E0      		ldi r25,hhi8(62500)
+ 518 025c 0E94 0000 		call wait
+ 519               	.LM67:
+ 520 0260 64E2      		ldi r22,lo8(62500)
+ 521 0262 74EF      		ldi r23,hi8(62500)
+ 522 0264 80E0      		ldi r24,hlo8(62500)
+ 523 0266 90E0      		ldi r25,hhi8(62500)
+ 524 0268 0E94 0000 		call wait
+ 525               	.LBB48:
+ 526               	.LBB49:
+ 527               	.LM68:
+ 528 026c A110      		cpse r10,__zero_reg__
+ 529               	.LM69:
+ 530 026e C798      		cbi 56-0x20,7
+ 531               	.L55:
+ 532               	.LM70:
+ 533 0270 CD28      		or r12,r13
+ 534 0272 01F0      		breq .L57
+ 535               	.LBB50:
+ 536               	.LBB51:
+ 537               	.LM71:
+ 538 0274 8FEF      		ldi r24,lo8(-1)
+ 539 0276 81BF      		out 81-0x20,r24
+ 540               	.L57:
+ 541               	.LBE51:
+ 542               	.LBE50:
+ 543               	.LM72:
+ 544 0278 EF28      		or r14,r15
+ 545 027a 01F0      		breq .L59
+ 546               	.LM73:
+ 547 027c 1B98      		cbi 35-0x20,3
+ 548               	.L59:
+ 549               	.LM74:
+ 550 027e 012B      		or r16,r17
+ 551 0280 01F0      		breq .L61
+ 552               	.LM75:
+ 553 0282 1C98      		cbi 35-0x20,4
+ 554               	.L61:
+ 555               	.LM76:
+ 556 0284 992D      		mov r25,r9
+ 557 0286 9095      		com r25
+ 558 0288 8091 0000 		lds r24,ledState
+ 559 028c 8923      		and r24,r25
+ 560 028e 8093 0000 		sts ledState,r24
+ 561               	.LBE49:
+ 562               	.LBE48:
+ 563               	.LM77:
+ 564 0292 6CE7      		ldi r22,lo8(37500)
+ 565 0294 72E9      		ldi r23,hi8(37500)
+ 566 0296 80E0      		ldi r24,hlo8(37500)
+ 567 0298 90E0      		ldi r25,hhi8(37500)
+ 568 029a 0E94 0000 		call wait
+ 569               	.LM78:
+ 570 029e 6CE7      		ldi r22,lo8(37500)
+ 571 02a0 72E9      		ldi r23,hi8(37500)
+ 572 02a2 80E0      		ldi r24,hlo8(37500)
+ 573 02a4 90E0      		ldi r25,hhi8(37500)
+ 574 02a6 0E94 0000 		call wait
+ 575               	.LM79:
+ 576 02aa 9694      		lsr r9
+ 577 02ac 01F4      		brne .L66
+ 578 02ae 68E0      		ldi r22,lo8(8)
+ 579 02b0 962E      		mov r9,r22
+ 580 02b2 4091 0000 		lds r20,ledState
+ 581 02b6 00C0      		rjmp .L71
+ 582               	.L66:
+ 583 02b8 4091 0000 		lds r20,ledState
+ 584 02bc 00C0      		rjmp .L71
+ 585               	.LVL20:
+ 586               	.L44:
+ 587               	.LM80:
+ 588 02be 84B7      		in r24,84-0x20
+ 589 02c0 807E      		andi r24,lo8(-32)
+ 590 02c2 84BF      		out 84-0x20,r24
+ 591               	.LBE43:
+ 592               	.LBE42:
+ 593               	.LBB52:
+ 594               	.LBB53:
+ 595               	.LM81:
+ 596 02c4 83B1      		in r24,35-0x20
+ 597 02c6 8764      		ori r24,lo8(71)
+ 598 02c8 83B9      		out 35-0x20,r24
+ 599               	.LM82:
+ 600 02ca 82B1      		in r24,34-0x20
+ 601 02cc 887B      		andi r24,lo8(-72)
+ 602 02ce 82B9      		out 34-0x20,r24
+ 603               	.LM83:
+ 604 02d0 8091 6200 		lds r24,98
+ 605 02d4 8660      		ori r24,lo8(6)
+ 606 02d6 8093 6200 		sts 98,r24
+ 607               	.LM84:
+ 608 02da 8091 6100 		lds r24,97
+ 609 02de 897F      		andi r24,lo8(-7)
+ 610 02e0 8093 6100 		sts 97,r24
+ 611               	.LM85:
+ 612 02e4 89B7      		in r24,89-0x20
+ 613 02e6 8F7B      		andi r24,lo8(-65)
+ 614 02e8 89BF      		out 89-0x20,r24
+ 615               	.LBE53:
+ 616               	.LBE52:
+ 617               	.LBB54:
+ 618               	.LBB55:
+ 619               	.LM86:
+ 620 02ea 8091 0000 		lds r24,KeysEP
+ 621 02ee 8A83      		std Y+2,r24
+ 622               	.LM87:
+ 623 02f0 84E5      		ldi r24,lo8(84)
+ 624 02f2 8983      		std Y+1,r24
+ 625               	.LM88:
+ 626 02f4 05E0      		ldi r16,lo8(5)
+ 627 02f6 10E0      		ldi r17,hi8(5)
+ 628 02f8 21E0      		ldi r18,lo8(1)
+ 629 02fa 30E0      		ldi r19,hi8(1)
+ 630 02fc 48EC      		ldi r20,lo8(200)
+ 631 02fe 50E0      		ldi r21,hi8(200)
+ 632 0300 60E0      		ldi r22,hlo8(200)
+ 633 0302 70E0      		ldi r23,hhi8(200)
+ 634 0304 CE01      		movw r24,r28
+ 635 0306 0196      		adiw r24,1
+ 636 0308 0E94 0000 		call mtimer_creatTmr
+ 637               	.LBE55:
+ 638               	.LBE54:
+ 639               	/* epilogue: frame size=4 */
+ 640 030c 2496      		adiw r28,4
+ 641 030e 0FB6      		in __tmp_reg__,__SREG__
+ 642 0310 F894      		cli
+ 643 0312 DEBF      		out __SP_H__,r29
+ 644 0314 0FBE      		out __SREG__,__tmp_reg__
+ 645 0316 CDBF      		out __SP_L__,r28
+ 646 0318 DF91      		pop r29
+ 647 031a CF91      		pop r28
+ 648 031c 1F91      		pop r17
+ 649 031e 0F91      		pop r16
+ 650 0320 FF90      		pop r15
+ 651 0322 EF90      		pop r14
+ 652 0324 DF90      		pop r13
+ 653 0326 CF90      		pop r12
+ 654 0328 BF90      		pop r11
+ 655 032a AF90      		pop r10
+ 656 032c 9F90      		pop r9
+ 657 032e 0895      		ret
+ 658               	/* epilogue end (size=18) */
+ 659               	/* function InitBoard size 208 (171) */
+ 660               	.LFE2:
+ 662               		.data
+ 665               	KeysEP:
+ 666 0000 FF        		.byte	-1
+ 667               		.lcomm ledState,1
+ 668               		.lcomm lastKey,1
+ 740               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 board.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:20     .text:00000000 Dimmer
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:47     .text:00000018 LedOnOff
+                             .bss:00000000 ledState
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:147    .text:00000076 RegisterEP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:665    .data:00000000 KeysEP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:163    .text:0000007c __vector_7
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:185    .text:00000090 createKeysPollingTimer
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:238    .text:000000e0 OnBoard_SendKeys
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:283    .text:00000118 pollBoard
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:667    .bss:00000001 lastKey
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccqQaaaa.s:373    .text:0000019a InitBoard
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__udivmodhi4
+mtimer_creatTmr
+apf_sendAppMsg
+wait

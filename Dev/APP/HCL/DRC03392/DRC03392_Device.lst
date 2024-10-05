@@ -1,0 +1,536 @@
+   1               		.file	"DRC03392_Device.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	DRC03392_InitVars
+  20               	DRC03392_InitVars:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LM2:
+  26 0000 1092 0000 		sts DRC03392_transID,__zero_reg__
+  27               	/* epilogue: frame size=0 */
+  28 0004 0895      		ret
+  29               	/* epilogue end (size=1) */
+  30               	/* function DRC03392_InitVars size 3 (2) */
+  31               	.LFE2:
+  33               	.global	DRC03392_ProcessMSGCmd
+  35               	DRC03392_ProcessMSGCmd:
+  36               	.LFB4:
+  37               	.LM3:
+  38               	/* prologue: frame size=0 */
+  39               	/* prologue end (size=0) */
+  40               	.LVL0:
+  41               	/* epilogue: frame size=0 */
+  42 0006 0895      		ret
+  43               	/* epilogue end (size=1) */
+  44               	/* function DRC03392_ProcessMSGCmd size 1 (0) */
+  45               	.LFE4:
+  47               	.global	DRC03392_RcvSETRESP
+  49               	DRC03392_RcvSETRESP:
+  50               	.LFB6:
+  51               	.LM4:
+  52               	/* prologue: frame size=0 */
+  53               	/* prologue end (size=0) */
+  54               	.LVL1:
+  55               	/* epilogue: frame size=0 */
+  56 0008 0895      		ret
+  57               	/* epilogue end (size=1) */
+  58               	/* function DRC03392_RcvSETRESP size 1 (0) */
+  59               	.LFE6:
+  61               	.global	DRC03392_RcvGET
+  63               	DRC03392_RcvGET:
+  64               	.LFB7:
+  65               	.LM5:
+  66               	/* prologue: frame size=0 */
+  67               	/* prologue end (size=0) */
+  68               	.LVL2:
+  69               	/* epilogue: frame size=0 */
+  70 000a 0895      		ret
+  71               	/* epilogue end (size=1) */
+  72               	/* function DRC03392_RcvGET size 1 (0) */
+  73               	.LFE7:
+  75               	.global	DRC03392_RcvGETRESP
+  77               	DRC03392_RcvGETRESP:
+  78               	.LFB8:
+  79               	.LM6:
+  80               	/* prologue: frame size=0 */
+  81               	/* prologue end (size=0) */
+  82               	.LVL3:
+  83               	/* epilogue: frame size=0 */
+  84 000c 0895      		ret
+  85               	/* epilogue end (size=1) */
+  86               	/* function DRC03392_RcvGETRESP size 1 (0) */
+  87               	.LFE8:
+  89               	.global	DRC03392_RcvEVENTRESP
+  91               	DRC03392_RcvEVENTRESP:
+  92               	.LFB10:
+  93               	.LM7:
+  94               	/* prologue: frame size=0 */
+  95               	/* prologue end (size=0) */
+  96               	.LVL4:
+  97               	/* epilogue: frame size=0 */
+  98 000e 0895      		ret
+  99               	/* epilogue end (size=1) */
+ 100               	/* function DRC03392_RcvEVENTRESP size 1 (0) */
+ 101               	.LFE10:
+ 103               	.global	DRC03392_Set_Preset
+ 105               	DRC03392_Set_Preset:
+ 106               	.LFB13:
+ 107               	.LM8:
+ 108               	/* prologue: frame size=0 */
+ 109 0010 8F92      		push r8
+ 110 0012 AF92      		push r10
+ 111 0014 BF92      		push r11
+ 112 0016 CF92      		push r12
+ 113 0018 EF92      		push r14
+ 114 001a FF92      		push r15
+ 115 001c 0F93      		push r16
+ 116               	/* prologue end (size=7) */
+ 117               	.LVL5:
+ 118 001e 5C01      		movw r10,r24
+ 119 0020 FB01      		movw r30,r22
+ 120 0022 9A01      		movw r18,r20
+ 121               	.LM9:
+ 122 0024 9081      		ld r25,Z
+ 123 0026 8091 0000 		lds r24,DRC03392_transID
+ 124               	.LVL6:
+ 125 002a 8F5F      		subi r24,lo8(-(1))
+ 126 002c 8093 0000 		sts DRC03392_transID,r24
+ 127 0030 8150      		subi r24,lo8(-(-1))
+ 128 0032 1F92      		push __zero_reg__
+ 129 0034 9F93      		push r25
+ 130 0036 93E0      		ldi r25,lo8(3)
+ 131 0038 892E      		mov r8,r25
+ 132 003a CC24      		clr r12
+ 133 003c EE24      		clr r14
+ 134 003e FF24      		clr r15
+ 135 0040 00E0      		ldi r16,lo8(0)
+ 136 0042 40E0      		ldi r20,lo8(0)
+ 137               	.LVL7:
+ 138 0044 61E0      		ldi r22,lo8(1)
+ 139               	.LVL8:
+ 140 0046 0E94 0000 		call apf_sendSingleKVP
+ 141               	.LVL9:
+ 142 004a 0F90      		pop __tmp_reg__
+ 143 004c 0F90      		pop __tmp_reg__
+ 144               	.LM10:
+ 145 004e 9927      		clr r25
+ 146               	/* epilogue: frame size=0 */
+ 147 0050 0F91      		pop r16
+ 148 0052 FF90      		pop r15
+ 149 0054 EF90      		pop r14
+ 150 0056 CF90      		pop r12
+ 151 0058 BF90      		pop r11
+ 152 005a AF90      		pop r10
+ 153 005c 8F90      		pop r8
+ 154 005e 0895      		ret
+ 155               	/* epilogue end (size=8) */
+ 156               	/* function DRC03392_Set_Preset size 40 (25) */
+ 157               	.LFE13:
+ 159               	.global	DRC03392_Set_DimBright
+ 161               	DRC03392_Set_DimBright:
+ 162               	.LFB12:
+ 163               	.LM11:
+ 164               	/* prologue: frame size=1 */
+ 165 0060 8F92      		push r8
+ 166 0062 AF92      		push r10
+ 167 0064 BF92      		push r11
+ 168 0066 CF92      		push r12
+ 169 0068 EF92      		push r14
+ 170 006a FF92      		push r15
+ 171 006c 0F93      		push r16
+ 172 006e CF93      		push r28
+ 173 0070 DF93      		push r29
+ 174 0072 CDB7      		in r28,__SP_L__
+ 175 0074 DEB7      		in r29,__SP_H__
+ 176 0076 2197      		sbiw r28,1
+ 177 0078 0FB6      		in __tmp_reg__,__SREG__
+ 178 007a F894      		cli
+ 179 007c DEBF      		out __SP_H__,r29
+ 180 007e 0FBE      		out __SREG__,__tmp_reg__
+ 181 0080 CDBF      		out __SP_L__,r28
+ 182               	/* prologue end (size=17) */
+ 183               	.LVL10:
+ 184 0082 5C01      		movw r10,r24
+ 185 0084 FB01      		movw r30,r22
+ 186 0086 2983      		std Y+1,r18
+ 187               	.LM12:
+ 188 0088 9081      		ld r25,Z
+ 189 008a 8091 0000 		lds r24,DRC03392_transID
+ 190               	.LVL11:
+ 191 008e 8F5F      		subi r24,lo8(-(1))
+ 192 0090 8093 0000 		sts DRC03392_transID,r24
+ 193 0094 8150      		subi r24,lo8(-(-1))
+ 194 0096 1F92      		push __zero_reg__
+ 195 0098 9F93      		push r25
+ 196 009a 32E0      		ldi r19,lo8(2)
+ 197 009c 832E      		mov r8,r19
+ 198 009e 21E0      		ldi r18,lo8(1)
+ 199 00a0 C22E      		mov r12,r18
+ 200               	.LVL12:
+ 201 00a2 7E01      		movw r14,r28
+ 202 00a4 0894      		sec
+ 203 00a6 E11C      		adc r14,__zero_reg__
+ 204 00a8 F11C      		adc r15,__zero_reg__
+ 205 00aa 00E0      		ldi r16,lo8(0)
+ 206 00ac 9A01      		movw r18,r20
+ 207 00ae 41E0      		ldi r20,lo8(1)
+ 208               	.LVL13:
+ 209 00b0 61E0      		ldi r22,lo8(1)
+ 210               	.LVL14:
+ 211 00b2 0E94 0000 		call apf_sendSingleKVP
+ 212               	.LVL15:
+ 213 00b6 0F90      		pop __tmp_reg__
+ 214 00b8 0F90      		pop __tmp_reg__
+ 215               	.LM13:
+ 216 00ba 9927      		clr r25
+ 217               	/* epilogue: frame size=1 */
+ 218 00bc 2196      		adiw r28,1
+ 219 00be 0FB6      		in __tmp_reg__,__SREG__
+ 220 00c0 F894      		cli
+ 221 00c2 DEBF      		out __SP_H__,r29
+ 222 00c4 0FBE      		out __SREG__,__tmp_reg__
+ 223 00c6 CDBF      		out __SP_L__,r28
+ 224 00c8 DF91      		pop r29
+ 225 00ca CF91      		pop r28
+ 226 00cc 0F91      		pop r16
+ 227 00ce FF90      		pop r15
+ 228 00d0 EF90      		pop r14
+ 229 00d2 CF90      		pop r12
+ 230 00d4 BF90      		pop r11
+ 231 00d6 AF90      		pop r10
+ 232 00d8 8F90      		pop r8
+ 233 00da 0895      		ret
+ 234               	/* epilogue end (size=16) */
+ 235               	/* function DRC03392_Set_DimBright size 62 (29) */
+ 236               	.LFE12:
+ 238               	.global	DRC03392_Set_OnOff
+ 240               	DRC03392_Set_OnOff:
+ 241               	.LFB11:
+ 242               	.LM14:
+ 243               	/* prologue: frame size=1 */
+ 244 00dc 8F92      		push r8
+ 245 00de AF92      		push r10
+ 246 00e0 BF92      		push r11
+ 247 00e2 CF92      		push r12
+ 248 00e4 EF92      		push r14
+ 249 00e6 FF92      		push r15
+ 250 00e8 0F93      		push r16
+ 251 00ea CF93      		push r28
+ 252 00ec DF93      		push r29
+ 253 00ee CDB7      		in r28,__SP_L__
+ 254 00f0 DEB7      		in r29,__SP_H__
+ 255 00f2 2197      		sbiw r28,1
+ 256 00f4 0FB6      		in __tmp_reg__,__SREG__
+ 257 00f6 F894      		cli
+ 258 00f8 DEBF      		out __SP_H__,r29
+ 259 00fa 0FBE      		out __SREG__,__tmp_reg__
+ 260 00fc CDBF      		out __SP_L__,r28
+ 261               	/* prologue end (size=17) */
+ 262               	.LVL16:
+ 263 00fe 5C01      		movw r10,r24
+ 264 0100 FB01      		movw r30,r22
+ 265 0102 2983      		std Y+1,r18
+ 266               	.LM15:
+ 267 0104 9081      		ld r25,Z
+ 268 0106 8091 0000 		lds r24,DRC03392_transID
+ 269               	.LVL17:
+ 270 010a 8F5F      		subi r24,lo8(-(1))
+ 271 010c 8093 0000 		sts DRC03392_transID,r24
+ 272 0110 8150      		subi r24,lo8(-(-1))
+ 273 0112 1F92      		push __zero_reg__
+ 274 0114 9F93      		push r25
+ 275 0116 71E0      		ldi r23,lo8(1)
+ 276 0118 872E      		mov r8,r23
+ 277 011a 61E0      		ldi r22,lo8(1)
+ 278 011c C62E      		mov r12,r22
+ 279               	.LVL18:
+ 280 011e 7E01      		movw r14,r28
+ 281 0120 0894      		sec
+ 282 0122 E11C      		adc r14,__zero_reg__
+ 283 0124 F11C      		adc r15,__zero_reg__
+ 284 0126 00E0      		ldi r16,lo8(0)
+ 285 0128 9A01      		movw r18,r20
+ 286               	.LVL19:
+ 287 012a 41E0      		ldi r20,lo8(1)
+ 288               	.LVL20:
+ 289 012c 61E0      		ldi r22,lo8(1)
+ 290 012e 0E94 0000 		call apf_sendSingleKVP
+ 291               	.LVL21:
+ 292 0132 0F90      		pop __tmp_reg__
+ 293 0134 0F90      		pop __tmp_reg__
+ 294               	.LM16:
+ 295 0136 9927      		clr r25
+ 296               	/* epilogue: frame size=1 */
+ 297 0138 2196      		adiw r28,1
+ 298 013a 0FB6      		in __tmp_reg__,__SREG__
+ 299 013c F894      		cli
+ 300 013e DEBF      		out __SP_H__,r29
+ 301 0140 0FBE      		out __SREG__,__tmp_reg__
+ 302 0142 CDBF      		out __SP_L__,r28
+ 303 0144 DF91      		pop r29
+ 304 0146 CF91      		pop r28
+ 305 0148 0F91      		pop r16
+ 306 014a FF90      		pop r15
+ 307 014c EF90      		pop r14
+ 308 014e CF90      		pop r12
+ 309 0150 BF90      		pop r11
+ 310 0152 AF90      		pop r10
+ 311 0154 8F90      		pop r8
+ 312 0156 0895      		ret
+ 313               	/* epilogue end (size=16) */
+ 314               	/* function DRC03392_Set_OnOff size 62 (29) */
+ 315               	.LFE11:
+ 317               	.global	DRC03392_RcvEVENT
+ 319               	DRC03392_RcvEVENT:
+ 320               	.LFB9:
+ 321               	.LM17:
+ 322               	/* prologue: frame size=0 */
+ 323 0158 8F92      		push r8
+ 324 015a AF92      		push r10
+ 325 015c BF92      		push r11
+ 326 015e CF92      		push r12
+ 327 0160 EF92      		push r14
+ 328 0162 FF92      		push r15
+ 329 0164 0F93      		push r16
+ 330 0166 CF93      		push r28
+ 331 0168 DF93      		push r29
+ 332               	/* prologue end (size=9) */
+ 333               	.LVL22:
+ 334 016a DC01      		movw r26,r24
+ 335 016c FB01      		movw r30,r22
+ 336               	.LM18:
+ 337 016e EC01      		movw r28,r24
+ 338 0170 2A81      		ldd r18,Y+2
+ 339 0172 3B81      		ldd r19,Y+3
+ 340 0174 4981      		ldd r20,Y+1
+ 341               	.LVL23:
+ 342 0176 4295      		swap r20
+ 343 0178 4F70      		andi r20,0x0f
+ 344 017a 1F92      		push __zero_reg__
+ 345 017c 8081      		ld r24,Z
+ 346               	.LVL24:
+ 347 017e 8F93      		push r24
+ 348 0180 8484      		ldd r8,Z+12
+ 349 0182 3196      		adiw r30,1
+ 350 0184 5F01      		movw r10,r30
+ 351 0186 CC24      		clr r12
+ 352 0188 EE24      		clr r14
+ 353 018a FF24      		clr r15
+ 354 018c 03E0      		ldi r16,lo8(3)
+ 355 018e 6AE0      		ldi r22,lo8(10)
+ 356               	.LVL25:
+ 357 0190 8C91      		ld r24,X
+ 358 0192 0E94 0000 		call apf_sendSingleKVP
+ 359               	.LVL26:
+ 360 0196 0F90      		pop __tmp_reg__
+ 361 0198 0F90      		pop __tmp_reg__
+ 362               	/* epilogue: frame size=0 */
+ 363 019a DF91      		pop r29
+ 364 019c CF91      		pop r28
+ 365 019e 0F91      		pop r16
+ 366 01a0 FF90      		pop r15
+ 367 01a2 EF90      		pop r14
+ 368 01a4 CF90      		pop r12
+ 369 01a6 BF90      		pop r11
+ 370 01a8 AF90      		pop r10
+ 371 01aa 8F90      		pop r8
+ 372 01ac 0895      		ret
+ 373               	/* epilogue end (size=10) */
+ 374               	/* function DRC03392_RcvEVENT size 43 (24) */
+ 375               	.LFE9:
+ 377               	.global	DRC03392_RcvSET
+ 379               	DRC03392_RcvSET:
+ 380               	.LFB5:
+ 381               	.LM19:
+ 382               	/* prologue: frame size=0 */
+ 383 01ae 8F92      		push r8
+ 384 01b0 AF92      		push r10
+ 385 01b2 BF92      		push r11
+ 386 01b4 CF92      		push r12
+ 387 01b6 EF92      		push r14
+ 388 01b8 FF92      		push r15
+ 389 01ba 0F93      		push r16
+ 390 01bc CF93      		push r28
+ 391 01be DF93      		push r29
+ 392               	/* prologue end (size=9) */
+ 393               	.LVL27:
+ 394 01c0 DC01      		movw r26,r24
+ 395 01c2 FB01      		movw r30,r22
+ 396               	.LM20:
+ 397 01c4 EC01      		movw r28,r24
+ 398 01c6 2A81      		ldd r18,Y+2
+ 399 01c8 3B81      		ldd r19,Y+3
+ 400 01ca 4981      		ldd r20,Y+1
+ 401               	.LVL28:
+ 402 01cc 4295      		swap r20
+ 403 01ce 4F70      		andi r20,0x0f
+ 404 01d0 1F92      		push __zero_reg__
+ 405 01d2 8081      		ld r24,Z
+ 406               	.LVL29:
+ 407 01d4 8F93      		push r24
+ 408 01d6 8484      		ldd r8,Z+12
+ 409 01d8 3196      		adiw r30,1
+ 410 01da 5F01      		movw r10,r30
+ 411 01dc CC24      		clr r12
+ 412 01de EE24      		clr r14
+ 413 01e0 FF24      		clr r15
+ 414 01e2 03E0      		ldi r16,lo8(3)
+ 415 01e4 69E0      		ldi r22,lo8(9)
+ 416               	.LVL30:
+ 417 01e6 8C91      		ld r24,X
+ 418 01e8 0E94 0000 		call apf_sendSingleKVP
+ 419               	.LVL31:
+ 420 01ec 0F90      		pop __tmp_reg__
+ 421 01ee 0F90      		pop __tmp_reg__
+ 422               	/* epilogue: frame size=0 */
+ 423 01f0 DF91      		pop r29
+ 424 01f2 CF91      		pop r28
+ 425 01f4 0F91      		pop r16
+ 426 01f6 FF90      		pop r15
+ 427 01f8 EF90      		pop r14
+ 428 01fa CF90      		pop r12
+ 429 01fc BF90      		pop r11
+ 430 01fe AF90      		pop r10
+ 431 0200 8F90      		pop r8
+ 432 0202 0895      		ret
+ 433               	/* epilogue end (size=10) */
+ 434               	/* function DRC03392_RcvSET size 43 (24) */
+ 435               	.LFE5:
+ 437               	.global	DRC03392_ProcessKVPCmd
+ 439               	DRC03392_ProcessKVPCmd:
+ 440               	.LFB3:
+ 441               	.LM21:
+ 442               	/* prologue: frame size=8 */
+ 443 0204 EF92      		push r14
+ 444 0206 FF92      		push r15
+ 445 0208 0F93      		push r16
+ 446 020a 1F93      		push r17
+ 447 020c CF93      		push r28
+ 448 020e DF93      		push r29
+ 449 0210 CDB7      		in r28,__SP_L__
+ 450 0212 DEB7      		in r29,__SP_H__
+ 451 0214 2897      		sbiw r28,8
+ 452 0216 0FB6      		in __tmp_reg__,__SREG__
+ 453 0218 F894      		cli
+ 454 021a DEBF      		out __SP_H__,r29
+ 455 021c 0FBE      		out __SREG__,__tmp_reg__
+ 456 021e CDBF      		out __SP_L__,r28
+ 457               	/* prologue end (size=14) */
+ 458               	.LVL32:
+ 459 0220 8C01      		movw r16,r24
+ 460               	.LM22:
+ 461 0222 41E0      		ldi r20,lo8(1)
+ 462 0224 7E01      		movw r14,r28
+ 463 0226 0894      		sec
+ 464 0228 E11C      		adc r14,__zero_reg__
+ 465 022a F11C      		adc r15,__zero_reg__
+ 466 022c B701      		movw r22,r14
+ 467 022e 0E94 0000 		call apf_getKVPTrans
+ 468               	.LVL33:
+ 469 0232 8823      		tst r24
+ 470 0234 01F0      		breq .L31
+ 471               	.LM23:
+ 472 0236 8A81      		ldd r24,Y+2
+ 473 0238 8F70      		andi r24,lo8(15)
+ 474 023a 9927      		clr r25
+ 475 023c 8230      		cpi r24,2
+ 476 023e 9105      		cpc r25,__zero_reg__
+ 477 0240 01F0      		breq .L27
+ 478 0242 8330      		cpi r24,3
+ 479 0244 9105      		cpc r25,__zero_reg__
+ 480 0246 04F4      		brge .L30
+ 481 0248 0197      		sbiw r24,1
+ 482 024a 01F4      		brne .L31
+ 483 024c 00C0      		rjmp .L26
+ 484               	.L30:
+ 485 024e 8530      		cpi r24,5
+ 486 0250 9105      		cpc r25,__zero_reg__
+ 487 0252 01F0      		breq .L28
+ 488 0254 0697      		sbiw r24,6
+ 489 0256 01F4      		brne .L31
+ 490 0258 00C0      		rjmp .L29
+ 491               	.L28:
+ 492               	.LM24:
+ 493 025a 41E0      		ldi r20,lo8(1)
+ 494 025c 00C0      		rjmp .L32
+ 495               	.L26:
+ 496               	.LM25:
+ 497 025e 40E0      		ldi r20,lo8(0)
+ 498               	.L32:
+ 499 0260 B801      		movw r22,r16
+ 500 0262 C701      		movw r24,r14
+ 501 0264 0E94 0000 		call DRC03392_RcvSET
+ 502 0268 00C0      		rjmp .L31
+ 503               	.L27:
+ 504               	.LM26:
+ 505 026a 40E0      		ldi r20,lo8(0)
+ 506 026c 00C0      		rjmp .L33
+ 507               	.L29:
+ 508               	.LM27:
+ 509 026e 41E0      		ldi r20,lo8(1)
+ 510               	.L33:
+ 511 0270 B801      		movw r22,r16
+ 512 0272 C701      		movw r24,r14
+ 513 0274 0E94 0000 		call DRC03392_RcvEVENT
+ 514               	.L31:
+ 515               	/* epilogue: frame size=8 */
+ 516 0278 2896      		adiw r28,8
+ 517 027a 0FB6      		in __tmp_reg__,__SREG__
+ 518 027c F894      		cli
+ 519 027e DEBF      		out __SP_H__,r29
+ 520 0280 0FBE      		out __SREG__,__tmp_reg__
+ 521 0282 CDBF      		out __SP_L__,r28
+ 522 0284 DF91      		pop r29
+ 523 0286 CF91      		pop r28
+ 524 0288 1F91      		pop r17
+ 525 028a 0F91      		pop r16
+ 526 028c FF90      		pop r15
+ 527 028e EF90      		pop r14
+ 528 0290 0895      		ret
+ 529               	/* epilogue end (size=13) */
+ 530               	/* function DRC03392_ProcessKVPCmd size 73 (46) */
+ 531               	.LFE3:
+ 533               	.global	DRC03392_MandatoryOutClusters
+ 534               		.data
+ 537               	DRC03392_MandatoryOutClusters:
+ 538 0000 01        		.byte	1
+ 539 0001 02        		.byte	2
+ 540 0002 03        		.byte	3
+ 541               		.comm DRC03392_transID,1,1
+ 641               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 DRC03392_Device.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:20     .text:00000000 DRC03392_InitVars
+                            *COM*:00000001 DRC03392_transID
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:35     .text:00000006 DRC03392_ProcessMSGCmd
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:49     .text:00000008 DRC03392_RcvSETRESP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:63     .text:0000000a DRC03392_RcvGET
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:77     .text:0000000c DRC03392_RcvGETRESP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:91     .text:0000000e DRC03392_RcvEVENTRESP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:105    .text:00000010 DRC03392_Set_Preset
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:161    .text:00000060 DRC03392_Set_DimBright
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:240    .text:000000dc DRC03392_Set_OnOff
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:319    .text:00000158 DRC03392_RcvEVENT
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:379    .text:000001ae DRC03392_RcvSET
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:439    .text:00000204 DRC03392_ProcessKVPCmd
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccu6aaaa.s:537    .data:00000000 DRC03392_MandatoryOutClusters
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+apf_sendSingleKVP
+apf_getKVPTrans

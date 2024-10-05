@@ -1,0 +1,930 @@
+   1               		.file	"app_framework.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	app_finEp
+  20               	app_finEp:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26 0000 982F      		mov r25,r24
+  27               	.LBB2:
+  28               	.LM2:
+  29 0002 E091 0000 		lds r30,EndpointDescriptors
+  30 0006 F091 0000 		lds r31,(EndpointDescriptors)+1
+  31 000a 3097      		sbiw r30,0
+  32 000c 01F0      		breq .L2
+  33               	.LVL1:
+  34               	.LM3:
+  35 000e 8081      		ld r24,Z
+  36 0010 8917      		cp r24,r25
+  37 0012 01F0      		breq .L4
+  38               	.LVL2:
+  39               	.L2:
+  40 0014 E091 0000 		lds r30,EndpointDescriptors+2
+  41 0018 F091 0000 		lds r31,(EndpointDescriptors+2)+1
+  42 001c 3097      		sbiw r30,0
+  43 001e 01F0      		breq .L4
+  44 0020 8081      		ld r24,Z
+  45 0022 8917      		cp r24,r25
+  46 0024 01F0      		breq .L4
+  47 0026 E0E0      		ldi r30,lo8(0)
+  48 0028 F0E0      		ldi r31,hi8(0)
+  49               	.LVL3:
+  50               	.L4:
+  51               	.LBE2:
+  52               	.LM4:
+  53 002a CF01      		movw r24,r30
+  54               	/* epilogue: frame size=0 */
+  55 002c 0895      		ret
+  56               	/* epilogue end (size=1) */
+  57               	/* function app_finEp size 23 (22) */
+  58               	.LFE2:
+  60               	.global	app_addEP
+  62               	app_addEP:
+  63               	.LFB3:
+  64               	.LM5:
+  65               	/* prologue: frame size=0 */
+  66               	/* prologue end (size=0) */
+  67               	.LVL4:
+  68 002e 9C01      		movw r18,r24
+  69               	.LBB3:
+  70               	.LM6:
+  71 0030 8091 0000 		lds r24,EndpointDescriptors
+  72 0034 9091 0000 		lds r25,(EndpointDescriptors)+1
+  73               	.LVL5:
+  74 0038 892B      		or r24,r25
+  75 003a 01F0      		breq .L17
+  76               	.LM7:
+  77 003c 8091 0000 		lds r24,EndpointDescriptors+2
+  78 0040 9091 0000 		lds r25,(EndpointDescriptors+2)+1
+  79 0044 892B      		or r24,r25
+  80 0046 01F0      		breq .L13
+  81 0048 80E0      		ldi r24,lo8(0)
+  82 004a 90E0      		ldi r25,hi8(0)
+  83 004c 0895      		ret
+  84               	.L17:
+  85 004e E0E0      		ldi r30,lo8(0)
+  86 0050 F0E0      		ldi r31,hi8(0)
+  87               	.L12:
+  88               	.LM8:
+  89 0052 EE0F      		lsl r30
+  90 0054 FF1F      		rol r31
+  91 0056 E050      		subi r30,lo8(-(EndpointDescriptors))
+  92 0058 F040      		sbci r31,hi8(-(EndpointDescriptors))
+  93 005a 3183      		std Z+1,r19
+  94 005c 2083      		st Z,r18
+  95 005e 81E0      		ldi r24,lo8(1)
+  96 0060 90E0      		ldi r25,hi8(1)
+  97               	.LBE3:
+  98               	.LM9:
+  99 0062 0895      		ret
+ 100               	.L13:
+ 101               	.LBB4:
+ 102               	.LM10:
+ 103 0064 E1E0      		ldi r30,lo8(1)
+ 104 0066 F0E0      		ldi r31,hi8(1)
+ 105 0068 00C0      		rjmp .L12
+ 106               	.LBE4:
+ 107               	/* epilogue: frame size=0 */
+ 108               	/* epilogue: noreturn */
+ 109               	/* epilogue end (size=0) */
+ 110               	/* function app_addEP size 30 (30) */
+ 111               	.LFE3:
+ 113               	.global	apf_sendMsg
+ 115               	apf_sendMsg:
+ 116               	.LFB5:
+ 117               	.LM11:
+ 118               	/* prologue: frame size=0 */
+ 119               	/* prologue end (size=0) */
+ 120               	.LVL6:
+ 121 006a FC01      		movw r30,r24
+ 122               	.LM12:
+ 123 006c 8181      		ldd r24,Z+1
+ 124               	.LVL7:
+ 125 006e 8823      		tst r24
+ 126 0070 01F4      		brne .L19
+ 127               	.LM13:
+ 128 0072 BF01      		movw r22,r30
+ 129 0074 84E0      		ldi r24,lo8(4)
+ 130 0076 90E0      		ldi r25,hi8(4)
+ 131 0078 0E94 0000 		call schedul_sendMsg
+ 132               	.LVL8:
+ 133 007c 0895      		ret
+ 134               	.LVL9:
+ 135               	.L19:
+ 136               	.LM14:
+ 137 007e BF01      		movw r22,r30
+ 138 0080 85E0      		ldi r24,lo8(5)
+ 139 0082 90E0      		ldi r25,hi8(5)
+ 140 0084 0E94 0000 		call schedul_sendMsg
+ 141               	.LVL10:
+ 142 0088 0895      		ret
+ 143               	/* epilogue: frame size=0 */
+ 144               	/* epilogue: noreturn */
+ 145               	/* epilogue end (size=0) */
+ 146               	/* function apf_sendMsg size 16 (16) */
+ 147               	.LFE5:
+ 149               	.global	apf_sendAppMsg
+ 151               	apf_sendAppMsg:
+ 152               	.LFB4:
+ 153               	.LM15:
+ 154               	/* prologue: frame size=4 */
+ 155 008a CF93      		push r28
+ 156 008c DF93      		push r29
+ 157 008e CDB7      		in r28,__SP_L__
+ 158 0090 DEB7      		in r29,__SP_H__
+ 159 0092 2497      		sbiw r28,4
+ 160 0094 0FB6      		in __tmp_reg__,__SREG__
+ 161 0096 F894      		cli
+ 162 0098 DEBF      		out __SP_H__,r29
+ 163 009a 0FBE      		out __SREG__,__tmp_reg__
+ 164 009c CDBF      		out __SP_L__,r28
+ 165               	/* prologue end (size=10) */
+ 166               	.LVL11:
+ 167               	.LM16:
+ 168 009e 8A83      		std Y+2,r24
+ 169               	.LM17:
+ 170 00a0 6983      		std Y+1,r22
+ 171               	.LM18:
+ 172 00a2 5C83      		std Y+4,r21
+ 173 00a4 4B83      		std Y+3,r20
+ 174               	.LM19:
+ 175 00a6 8823      		tst r24
+ 176 00a8 01F4      		brne .L24
+ 177               	.LM20:
+ 178 00aa BE01      		movw r22,r28
+ 179               	.LVL12:
+ 180 00ac 6F5F      		subi r22,lo8(-(1))
+ 181 00ae 7F4F      		sbci r23,hi8(-(1))
+ 182 00b0 84E0      		ldi r24,lo8(4)
+ 183 00b2 90E0      		ldi r25,hi8(4)
+ 184               	.LVL13:
+ 185 00b4 0E94 0000 		call schedul_sendMsg
+ 186               	.LVL14:
+ 187 00b8 00C0      		rjmp .L27
+ 188               	.LVL15:
+ 189               	.L24:
+ 190               	.LM21:
+ 191 00ba BE01      		movw r22,r28
+ 192               	.LVL16:
+ 193 00bc 6F5F      		subi r22,lo8(-(1))
+ 194 00be 7F4F      		sbci r23,hi8(-(1))
+ 195 00c0 85E0      		ldi r24,lo8(5)
+ 196 00c2 90E0      		ldi r25,hi8(5)
+ 197               	.LVL17:
+ 198 00c4 0E94 0000 		call schedul_sendMsg
+ 199               	.LVL18:
+ 200               	.L27:
+ 201               	/* epilogue: frame size=4 */
+ 202 00c8 2496      		adiw r28,4
+ 203 00ca 0FB6      		in __tmp_reg__,__SREG__
+ 204 00cc F894      		cli
+ 205 00ce DEBF      		out __SP_H__,r29
+ 206 00d0 0FBE      		out __SREG__,__tmp_reg__
+ 207 00d2 CDBF      		out __SP_L__,r28
+ 208 00d4 DF91      		pop r29
+ 209 00d6 CF91      		pop r28
+ 210 00d8 0895      		ret
+ 211               	/* epilogue end (size=9) */
+ 212               	/* function apf_sendAppMsg size 40 (21) */
+ 213               	.LFE4:
+ 215               	.global	apf_dispatchEvent
+ 217               	apf_dispatchEvent:
+ 218               	.LFB6:
+ 219               	.LM22:
+ 220               	/* prologue: frame size=0 */
+ 221               	/* prologue end (size=0) */
+ 222               	.LVL19:
+ 223 00da FC01      		movw r30,r24
+ 224               	.LM23:
+ 225 00dc 8181      		ldd r24,Z+1
+ 226               	.LVL20:
+ 227 00de 8F3F      		cpi r24,lo8(-1)
+ 228 00e0 01F0      		breq .L36
+ 229               	.LM24:
+ 230 00e2 8823      		tst r24
+ 231 00e4 01F0      		breq .L37
+ 232               	.LM25:
+ 233 00e6 BF01      		movw r22,r30
+ 234 00e8 85E0      		ldi r24,lo8(5)
+ 235 00ea 90E0      		ldi r25,hi8(5)
+ 236 00ec 0E94 0000 		call schedul_sendMsg
+ 237               	.LVL21:
+ 238               	.LVL22:
+ 239               	.L35:
+ 240 00f0 0895      		ret
+ 241               	.L37:
+ 242               	.LM26:
+ 243 00f2 CF01      		movw r24,r30
+ 244 00f4 0E94 0000 		call zdo_processEvent
+ 245               	.LVL23:
+ 246 00f8 0895      		ret
+ 247               	.LVL24:
+ 248               	.L36:
+ 249               	.LBB5:
+ 250               	.LM27:
+ 251 00fa A091 0000 		lds r26,EndpointDescriptors+2
+ 252 00fe B091 0000 		lds r27,(EndpointDescriptors+2)+1
+ 253 0102 1097      		sbiw r26,0
+ 254 0104 01F0      		breq .L35
+ 255               	.LM28:
+ 256 0106 8C91      		ld r24,X
+ 257 0108 8183      		std Z+1,r24
+ 258               	.LM29:
+ 259 010a BF01      		movw r22,r30
+ 260 010c 85E0      		ldi r24,lo8(5)
+ 261 010e 90E0      		ldi r25,hi8(5)
+ 262 0110 0E94 0000 		call schedul_sendMsg
+ 263               	.LVL25:
+ 264 0114 0895      		ret
+ 265               	.LBE5:
+ 266               	/* epilogue: frame size=0 */
+ 267               	/* epilogue: noreturn */
+ 268               	/* epilogue end (size=0) */
+ 269               	/* function apf_dispatchEvent size 30 (30) */
+ 270               	.LFE6:
+ 272               	.global	apf_sendFrm
+ 274               	apf_sendFrm:
+ 275               	.LFB7:
+ 276               	.LM30:
+ 277               	/* prologue: frame size=0 */
+ 278 0116 8F92      		push r8
+ 279 0118 AF92      		push r10
+ 280 011a BF92      		push r11
+ 281 011c CF92      		push r12
+ 282 011e EF92      		push r14
+ 283 0120 0F93      		push r16
+ 284 0122 CF93      		push r28
+ 285 0124 DF93      		push r29
+ 286               	/* prologue end (size=8) */
+ 287               	.LVL26:
+ 288 0126 EC01      		movw r28,r24
+ 289 0128 962F      		mov r25,r22
+ 290 012a BA01      		movw r22,r20
+ 291               	.LVL27:
+ 292 012c 422F      		mov r20,r18
+ 293               	.LVL28:
+ 294 012e 8C2C      		mov r8,r12
+ 295               	.LBB9:
+ 296               	.LBB10:
+ 297               	.LBB11:
+ 298               	.LM31:
+ 299 0130 A091 0000 		lds r26,EndpointDescriptors
+ 300 0134 B091 0000 		lds r27,(EndpointDescriptors)+1
+ 301               	.LVL29:
+ 302 0138 1097      		sbiw r26,0
+ 303 013a 01F0      		breq .L39
+ 304               	.LVL30:
+ 305               	.LM32:
+ 306 013c 8C91      		ld r24,X
+ 307 013e E816      		cp r14,r24
+ 308 0140 01F0      		breq .L41
+ 309               	.LVL31:
+ 310               	.L39:
+ 311 0142 A091 0000 		lds r26,EndpointDescriptors+2
+ 312 0146 B091 0000 		lds r27,(EndpointDescriptors+2)+1
+ 313 014a 1097      		sbiw r26,0
+ 314 014c 01F0      		breq .L41
+ 315 014e 8C91      		ld r24,X
+ 316 0150 E816      		cp r14,r24
+ 317 0152 01F0      		breq .L41
+ 318 0154 A0E0      		ldi r26,lo8(0)
+ 319 0156 B0E0      		ldi r27,hi8(0)
+ 320               	.LVL32:
+ 321               	.L41:
+ 322               	.LBE11:
+ 323               	.LBE10:
+ 324               	.LBE9:
+ 325               	.LM33:
+ 326 0158 EB81      		ldd r30,Y+3
+ 327 015a FC81      		ldd r31,Y+4
+ 328 015c 8A81      		ldd r24,Y+2
+ 329 015e 8083      		st Z,r24
+ 330               	.LM34:
+ 331 0160 AB80      		ldd r10,Y+3
+ 332 0162 BC80      		ldd r11,Y+4
+ 333 0164 FD01      		movw r30,r26
+ 334 0166 2181      		ldd r18,Z+1
+ 335 0168 3281      		ldd r19,Z+2
+ 336 016a 87E0      		ldi r24,lo8(7)
+ 337 016c 8F93      		push r24
+ 338 016e 1F92      		push __zero_reg__
+ 339 0170 C980      		ldd r12,Y+1
+ 340 0172 892F      		mov r24,r25
+ 341 0174 0E94 0000 		call apsdeDataRequest
+ 342               	.LVL33:
+ 343 0178 0F90      		pop __tmp_reg__
+ 344 017a 0F90      		pop __tmp_reg__
+ 345               	.LM35:
+ 346 017c 9927      		clr r25
+ 347               	/* epilogue: frame size=0 */
+ 348 017e DF91      		pop r29
+ 349 0180 CF91      		pop r28
+ 350 0182 0F91      		pop r16
+ 351 0184 EF90      		pop r14
+ 352 0186 CF90      		pop r12
+ 353 0188 BF90      		pop r11
+ 354 018a AF90      		pop r10
+ 355 018c 8F90      		pop r8
+ 356 018e 0895      		ret
+ 357               	/* epilogue end (size=9) */
+ 358               	/* function apf_sendFrm size 61 (44) */
+ 359               	.LFE7:
+ 361               	.global	apf_sendSingleKVP
+ 363               	apf_sendSingleKVP:
+ 364               	.LFB9:
+ 365               	.LM36:
+ 366               	/* prologue: frame size=1 */
+ 367 0190 2F92      		push r2
+ 368 0192 3F92      		push r3
+ 369 0194 4F92      		push r4
+ 370 0196 5F92      		push r5
+ 371 0198 6F92      		push r6
+ 372 019a 7F92      		push r7
+ 373 019c 8F92      		push r8
+ 374 019e 9F92      		push r9
+ 375 01a0 AF92      		push r10
+ 376 01a2 BF92      		push r11
+ 377 01a4 CF92      		push r12
+ 378 01a6 DF92      		push r13
+ 379 01a8 EF92      		push r14
+ 380 01aa FF92      		push r15
+ 381 01ac 0F93      		push r16
+ 382 01ae 1F93      		push r17
+ 383 01b0 CF93      		push r28
+ 384 01b2 DF93      		push r29
+ 385 01b4 CDB7      		in r28,__SP_L__
+ 386 01b6 DEB7      		in r29,__SP_H__
+ 387 01b8 2197      		sbiw r28,1
+ 388 01ba 0FB6      		in __tmp_reg__,__SREG__
+ 389 01bc F894      		cli
+ 390 01be DEBF      		out __SP_H__,r29
+ 391 01c0 0FBE      		out __SREG__,__tmp_reg__
+ 392 01c2 CDBF      		out __SP_L__,r28
+ 393               	/* prologue end (size=26) */
+ 394               	.LVL34:
+ 395 01c4 D82E      		mov r13,r24
+ 396 01c6 062F      		mov r16,r22
+ 397               	.LVL35:
+ 398 01c8 142F      		mov r17,r20
+ 399 01ca 2901      		movw r4,r18
+ 400 01cc 1501      		movw r2,r10
+ 401 01ce 8982      		std Y+1,r8
+ 402               	.LM37:
+ 403 01d0 25E0      		ldi r18,lo8(5)
+ 404 01d2 922E      		mov r9,r18
+ 405               	.LVL36:
+ 406 01d4 9C0C      		add r9,r12
+ 407               	.LM38:
+ 408 01d6 892D      		mov r24,r9
+ 409 01d8 9927      		clr r25
+ 410               	.LVL37:
+ 411 01da 0E94 0000 		call mem_getMem
+ 412               	.LVL38:
+ 413 01de 3C01      		movw r6,r24
+ 414               	.LM39:
+ 415 01e0 892B      		or r24,r25
+ 416 01e2 01F4      		brne .L46
+ 417               	.LVL39:
+ 418               	.LM40:
+ 419 01e4 01EF      		ldi r16,lo8(241)
+ 420 01e6 10E0      		ldi r17,hi8(241)
+ 421               	.LVL40:
+ 422 01e8 00C0      		rjmp .L48
+ 423               	.LVL41:
+ 424               	.L46:
+ 425               	.LM41:
+ 426 01ea 81E1      		ldi r24,lo8(17)
+ 427               	.LVL42:
+ 428 01ec F301      		movw r30,r6
+ 429 01ee 8193      		st Z+,r24
+ 430 01f0 9F01      		movw r18,r30
+ 431               	.LVL43:
+ 432               	.LM42:
+ 433 01f2 F301      		movw r30,r6
+ 434 01f4 D182      		std Z+1,r13
+ 435 01f6 D901      		movw r26,r18
+ 436               	.LVL44:
+ 437 01f8 1196      		adiw r26,1
+ 438               	.LM43:
+ 439 01fa 1F70      		andi r17,lo8(15)
+ 440 01fc 0295      		swap r16
+ 441 01fe 007F      		andi r16,0xf0
+ 442 0200 100F      		add r17,r16
+ 443 0202 F901      		movw r30,r18
+ 444 0204 1183      		std Z+1,r17
+ 445 0206 9D01      		movw r18,r26
+ 446               	.LVL45:
+ 447 0208 2F5F      		subi r18,lo8(-(1))
+ 448 020a 3F4F      		sbci r19,hi8(-(1))
+ 449               	.LM44:
+ 450 020c FD01      		movw r30,r26
+ 451 020e 4182      		std Z+1,r4
+ 452               	.LM45:
+ 453 0210 852D      		mov r24,r5
+ 454 0212 9927      		clr r25
+ 455 0214 F901      		movw r30,r18
+ 456 0216 8183      		std Z+1,r24
+ 457               	.LM46:
+ 458 0218 4C2D      		mov r20,r12
+ 459 021a 5527      		clr r21
+ 460 021c B701      		movw r22,r14
+ 461 021e C901      		movw r24,r18
+ 462 0220 0296      		adiw r24,2
+ 463 0222 0E94 0000 		call mem_cpy
+ 464               	.LVL46:
+ 465               	.LBB15:
+ 466               	.LBB16:
+ 467               	.LBB17:
+ 468               	.LM47:
+ 469 0226 E091 0000 		lds r30,EndpointDescriptors
+ 470 022a F091 0000 		lds r31,(EndpointDescriptors)+1
+ 471               	.LVL47:
+ 472 022e 3097      		sbiw r30,0
+ 473 0230 01F0      		breq .L49
+ 474 0232 8081      		ld r24,Z
+ 475 0234 9E89      		ldd r25,Y+22
+ 476 0236 9817      		cp r25,r24
+ 477 0238 01F0      		breq .L51
+ 478               	.L49:
+ 479 023a E091 0000 		lds r30,EndpointDescriptors+2
+ 480 023e F091 0000 		lds r31,(EndpointDescriptors+2)+1
+ 481 0242 3097      		sbiw r30,0
+ 482 0244 01F0      		breq .L52
+ 483 0246 8081      		ld r24,Z
+ 484 0248 9E89      		ldd r25,Y+22
+ 485 024a 9817      		cp r25,r24
+ 486 024c 01F0      		breq .L51
+ 487               	.L52:
+ 488               	.LBE17:
+ 489               	.LBE16:
+ 490               	.LBE15:
+ 491               	.LM48:
+ 492 024e 02E8      		ldi r16,lo8(130)
+ 493 0250 10E0      		ldi r17,hi8(130)
+ 494               	.LVL48:
+ 495               	.L54:
+ 496               	.LM49:
+ 497 0252 C301      		movw r24,r6
+ 498 0254 0E94 0000 		call mem_freeMem
+ 499               	.LVL49:
+ 500 0258 00C0      		rjmp .L48
+ 501               	.LVL50:
+ 502               	.L51:
+ 503               	.LM50:
+ 504 025a 2181      		ldd r18,Z+1
+ 505 025c 3281      		ldd r19,Z+2
+ 506 025e B101      		movw r22,r2
+ 507 0260 6F5F      		subi r22,lo8(-(1))
+ 508 0262 7F4F      		sbci r23,hi8(-(1))
+ 509 0264 87E0      		ldi r24,lo8(7)
+ 510 0266 8F93      		push r24
+ 511 0268 1F92      		push __zero_reg__
+ 512 026a 8F88      		ldd r8,Y+23
+ 513 026c 5301      		movw r10,r6
+ 514               	.LVL51:
+ 515 026e C92C      		mov r12,r9
+ 516               	.LVL52:
+ 517 0270 EE88      		ldd r14,Y+22
+ 518               	.LVL53:
+ 519 0272 0981      		ldd r16,Y+1
+ 520               	.LVL54:
+ 521 0274 F101      		movw r30,r2
+ 522               	.LVL55:
+ 523 0276 4185      		ldd r20,Z+9
+ 524 0278 8081      		ld r24,Z
+ 525 027a 0E94 0000 		call apsdeDataRequest
+ 526 027e 082F      		mov r16,r24
+ 527 0280 1127      		clr r17
+ 528 0282 0F90      		pop __tmp_reg__
+ 529 0284 0F90      		pop __tmp_reg__
+ 530 0286 00C0      		rjmp .L54
+ 531               	.LVL56:
+ 532               	.L48:
+ 533               	.LM51:
+ 534 0288 C801      		movw r24,r16
+ 535               	/* epilogue: frame size=1 */
+ 536 028a 2196      		adiw r28,1
+ 537 028c 0FB6      		in __tmp_reg__,__SREG__
+ 538 028e F894      		cli
+ 539 0290 DEBF      		out __SP_H__,r29
+ 540 0292 0FBE      		out __SREG__,__tmp_reg__
+ 541 0294 CDBF      		out __SP_L__,r28
+ 542 0296 DF91      		pop r29
+ 543 0298 CF91      		pop r28
+ 544 029a 1F91      		pop r17
+ 545 029c 0F91      		pop r16
+ 546 029e FF90      		pop r15
+ 547 02a0 EF90      		pop r14
+ 548 02a2 DF90      		pop r13
+ 549 02a4 CF90      		pop r12
+ 550 02a6 BF90      		pop r11
+ 551 02a8 AF90      		pop r10
+ 552 02aa 9F90      		pop r9
+ 553 02ac 8F90      		pop r8
+ 554 02ae 7F90      		pop r7
+ 555 02b0 6F90      		pop r6
+ 556 02b2 5F90      		pop r5
+ 557 02b4 4F90      		pop r4
+ 558 02b6 3F90      		pop r3
+ 559 02b8 2F90      		pop r2
+ 560 02ba 0895      		ret
+ 561               	/* epilogue end (size=25) */
+ 562               	/* function apf_sendSingleKVP size 150 (99) */
+ 563               	.LFE9:
+ 565               	.global	apf_sendSingleMsg
+ 567               	apf_sendSingleMsg:
+ 568               	.LFB8:
+ 569               	.LM52:
+ 570               	/* prologue: frame size=0 */
+ 571 02bc 2F92      		push r2
+ 572 02be 3F92      		push r3
+ 573 02c0 4F92      		push r4
+ 574 02c2 5F92      		push r5
+ 575 02c4 6F92      		push r6
+ 576 02c6 7F92      		push r7
+ 577 02c8 8F92      		push r8
+ 578 02ca AF92      		push r10
+ 579 02cc BF92      		push r11
+ 580 02ce CF92      		push r12
+ 581 02d0 DF92      		push r13
+ 582 02d2 EF92      		push r14
+ 583 02d4 FF92      		push r15
+ 584 02d6 0F93      		push r16
+ 585 02d8 1F93      		push r17
+ 586 02da CF93      		push r28
+ 587 02dc DF93      		push r29
+ 588               	/* prologue end (size=17) */
+ 589               	.LVL57:
+ 590 02de 1C01      		movw r2,r24
+ 591 02e0 162F      		mov r17,r22
+ 592 02e2 B42E      		mov r11,r20
+ 593 02e4 2901      		movw r4,r18
+ 594 02e6 D02E      		mov r13,r16
+ 595 02e8 FE2C      		mov r15,r14
+ 596 02ea EC2C      		mov r14,r12
+ 597               	.LVL58:
+ 598 02ec 8A2C      		mov r8,r10
+ 599               	.LM53:
+ 600 02ee 062F      		mov r16,r22
+ 601               	.LVL59:
+ 602 02f0 0D5F      		subi r16,lo8(-(3))
+ 603               	.LM54:
+ 604 02f2 802F      		mov r24,r16
+ 605 02f4 9927      		clr r25
+ 606               	.LVL60:
+ 607 02f6 0E94 0000 		call mem_getMem
+ 608               	.LVL61:
+ 609 02fa 3C01      		movw r6,r24
+ 610               	.LM55:
+ 611 02fc 0097      		sbiw r24,0
+ 612 02fe 01F4      		brne .L57
+ 613               	.LVL62:
+ 614               	.LM56:
+ 615 0300 C1EF      		ldi r28,lo8(241)
+ 616 0302 D0E0      		ldi r29,hi8(241)
+ 617 0304 00C0      		rjmp .L59
+ 618               	.L57:
+ 619               	.LM57:
+ 620 0306 FC01      		movw r30,r24
+ 621               	.LVL63:
+ 622 0308 81E2      		ldi r24,lo8(33)
+ 623 030a 8193      		st Z+,r24
+ 624               	.LM58:
+ 625 030c E301      		movw r28,r6
+ 626 030e B982      		std Y+1,r11
+ 627               	.LM59:
+ 628 0310 1183      		std Z+1,r17
+ 629               	.LM60:
+ 630 0312 412F      		mov r20,r17
+ 631 0314 5527      		clr r21
+ 632 0316 B101      		movw r22,r2
+ 633 0318 CF01      		movw r24,r30
+ 634 031a 0296      		adiw r24,2
+ 635 031c 0E94 0000 		call mem_cpy
+ 636               	.LVL64:
+ 637               	.LBB21:
+ 638               	.LBB22:
+ 639               	.LBB23:
+ 640               	.LM61:
+ 641 0320 E091 0000 		lds r30,EndpointDescriptors
+ 642 0324 F091 0000 		lds r31,(EndpointDescriptors)+1
+ 643               	.LVL65:
+ 644 0328 3097      		sbiw r30,0
+ 645 032a 01F0      		breq .L60
+ 646 032c 8081      		ld r24,Z
+ 647 032e C816      		cp r12,r24
+ 648 0330 01F0      		breq .L62
+ 649               	.L60:
+ 650 0332 E091 0000 		lds r30,EndpointDescriptors+2
+ 651 0336 F091 0000 		lds r31,(EndpointDescriptors+2)+1
+ 652 033a 3097      		sbiw r30,0
+ 653 033c 01F0      		breq .L63
+ 654 033e 8081      		ld r24,Z
+ 655 0340 E816      		cp r14,r24
+ 656 0342 01F0      		breq .L62
+ 657               	.L63:
+ 658               	.LBE23:
+ 659               	.LBE22:
+ 660               	.LBE21:
+ 661               	.LM62:
+ 662 0344 C2E8      		ldi r28,lo8(130)
+ 663 0346 D0E0      		ldi r29,hi8(130)
+ 664               	.LVL66:
+ 665               	.L65:
+ 666               	.LM63:
+ 667 0348 C301      		movw r24,r6
+ 668 034a 0E94 0000 		call mem_freeMem
+ 669               	.LVL67:
+ 670 034e 00C0      		rjmp .L59
+ 671               	.LVL68:
+ 672               	.L62:
+ 673               	.LM64:
+ 674 0350 2181      		ldd r18,Z+1
+ 675 0352 3281      		ldd r19,Z+2
+ 676 0354 B201      		movw r22,r4
+ 677 0356 6F5F      		subi r22,lo8(-(1))
+ 678 0358 7F4F      		sbci r23,hi8(-(1))
+ 679 035a 87E0      		ldi r24,lo8(7)
+ 680 035c 8F93      		push r24
+ 681 035e 1F92      		push __zero_reg__
+ 682 0360 5301      		movw r10,r6
+ 683               	.LVL69:
+ 684 0362 C02E      		mov r12,r16
+ 685               	.LVL70:
+ 686 0364 0F2D      		mov r16,r15
+ 687               	.LVL71:
+ 688 0366 4D2D      		mov r20,r13
+ 689 0368 F201      		movw r30,r4
+ 690               	.LVL72:
+ 691 036a 8081      		ld r24,Z
+ 692 036c 0E94 0000 		call apsdeDataRequest
+ 693 0370 C82F      		mov r28,r24
+ 694 0372 DD27      		clr r29
+ 695 0374 0F90      		pop __tmp_reg__
+ 696 0376 0F90      		pop __tmp_reg__
+ 697 0378 00C0      		rjmp .L65
+ 698               	.LVL73:
+ 699               	.L59:
+ 700               	.LM65:
+ 701 037a CE01      		movw r24,r28
+ 702               	/* epilogue: frame size=0 */
+ 703 037c DF91      		pop r29
+ 704 037e CF91      		pop r28
+ 705 0380 1F91      		pop r17
+ 706 0382 0F91      		pop r16
+ 707 0384 FF90      		pop r15
+ 708 0386 EF90      		pop r14
+ 709 0388 DF90      		pop r13
+ 710 038a CF90      		pop r12
+ 711 038c BF90      		pop r11
+ 712 038e AF90      		pop r10
+ 713 0390 8F90      		pop r8
+ 714 0392 7F90      		pop r7
+ 715 0394 6F90      		pop r6
+ 716 0396 5F90      		pop r5
+ 717 0398 4F90      		pop r4
+ 718 039a 3F90      		pop r3
+ 719 039c 2F90      		pop r2
+ 720 039e 0895      		ret
+ 721               	/* epilogue end (size=18) */
+ 722               	/* function apf_sendSingleMsg size 114 (79) */
+ 723               	.LFE8:
+ 725               	.global	apsdDataIndication
+ 727               	apsdDataIndication:
+ 728               	.LFB11:
+ 729               	.LM66:
+ 730               	/* prologue: frame size=4 */
+ 731 03a0 CF92      		push r12
+ 732 03a2 DF92      		push r13
+ 733 03a4 EF92      		push r14
+ 734 03a6 0F93      		push r16
+ 735 03a8 CF93      		push r28
+ 736 03aa DF93      		push r29
+ 737 03ac CDB7      		in r28,__SP_L__
+ 738 03ae DEB7      		in r29,__SP_H__
+ 739 03b0 2497      		sbiw r28,4
+ 740 03b2 0FB6      		in __tmp_reg__,__SREG__
+ 741 03b4 F894      		cli
+ 742 03b6 DEBF      		out __SP_H__,r29
+ 743 03b8 0FBE      		out __SREG__,__tmp_reg__
+ 744 03ba CDBF      		out __SP_L__,r28
+ 745               	/* prologue end (size=14) */
+ 746               	.LVL74:
+ 747 03bc 6C01      		movw r12,r24
+ 748               	.LM67:
+ 749 03be 0E94 0000 		call apf_buildIncomFrm
+ 750               	.LVL75:
+ 751 03c2 AC01      		movw r20,r24
+ 752               	.LVL76:
+ 753               	.LM68:
+ 754 03c4 892B      		or r24,r25
+ 755 03c6 01F0      		breq .L75
+ 756               	.LVL77:
+ 757               	.LM69:
+ 758 03c8 F601      		movw r30,r12
+ 759 03ca 2181      		ldd r18,Z+1
+ 760 03cc 2A83      		std Y+2,r18
+ 761               	.LM70:
+ 762 03ce 81E5      		ldi r24,lo8(81)
+ 763               	.LVL78:
+ 764 03d0 8983      		std Y+1,r24
+ 765               	.LM71:
+ 766 03d2 5C83      		std Y+4,r21
+ 767 03d4 4B83      		std Y+3,r20
+ 768               	.LBB27:
+ 769               	.LBB28:
+ 770               	.LM72:
+ 771 03d6 2F3F      		cpi r18,lo8(-1)
+ 772 03d8 01F0      		breq .L76
+ 773               	.LM73:
+ 774 03da 2223      		tst r18
+ 775 03dc 01F0      		breq .L77
+ 776               	.LM74:
+ 777 03de BE01      		movw r22,r28
+ 778 03e0 6F5F      		subi r22,lo8(-(1))
+ 779 03e2 7F4F      		sbci r23,hi8(-(1))
+ 780 03e4 85E0      		ldi r24,lo8(5)
+ 781 03e6 90E0      		ldi r25,hi8(5)
+ 782 03e8 0E94 0000 		call schedul_sendMsg
+ 783               	.LVL79:
+ 784 03ec 00C0      		rjmp .L75
+ 785               	.LVL80:
+ 786               	.L77:
+ 787               	.LM75:
+ 788 03ee CE01      		movw r24,r28
+ 789 03f0 0196      		adiw r24,1
+ 790 03f2 0E94 0000 		call zdo_processEvent
+ 791               	.LVL81:
+ 792 03f6 00C0      		rjmp .L75
+ 793               	.LVL82:
+ 794               	.L76:
+ 795               	.LBB29:
+ 796               	.LM76:
+ 797 03f8 E091 0000 		lds r30,EndpointDescriptors+2
+ 798 03fc F091 0000 		lds r31,(EndpointDescriptors+2)+1
+ 799 0400 3097      		sbiw r30,0
+ 800 0402 01F0      		breq .L75
+ 801               	.LM77:
+ 802 0404 8081      		ld r24,Z
+ 803 0406 8A83      		std Y+2,r24
+ 804               	.LM78:
+ 805 0408 BE01      		movw r22,r28
+ 806 040a 6F5F      		subi r22,lo8(-(1))
+ 807 040c 7F4F      		sbci r23,hi8(-(1))
+ 808 040e 85E0      		ldi r24,lo8(5)
+ 809 0410 90E0      		ldi r25,hi8(5)
+ 810 0412 0E94 0000 		call schedul_sendMsg
+ 811               	.LVL83:
+ 812               	.LVL84:
+ 813               	.L75:
+ 814               	.LBE29:
+ 815               	.LBE28:
+ 816               	.LBE27:
+ 817               	/* epilogue: frame size=4 */
+ 818 0416 2496      		adiw r28,4
+ 819 0418 0FB6      		in __tmp_reg__,__SREG__
+ 820 041a F894      		cli
+ 821 041c DEBF      		out __SP_H__,r29
+ 822 041e 0FBE      		out __SREG__,__tmp_reg__
+ 823 0420 CDBF      		out __SP_L__,r28
+ 824 0422 DF91      		pop r29
+ 825 0424 CF91      		pop r28
+ 826 0426 0F91      		pop r16
+ 827 0428 EF90      		pop r14
+ 828 042a DF90      		pop r13
+ 829 042c CF90      		pop r12
+ 830 042e 0895      		ret
+ 831               	/* epilogue end (size=13) */
+ 832               	/* function apsdDataIndication size 72 (45) */
+ 833               	.LFE11:
+ 835               	.global	apsdeDataConfirm
+ 837               	apsdeDataConfirm:
+ 838               	.LFB10:
+ 839               	.LM79:
+ 840               	/* prologue: frame size=4 */
+ 841 0430 CF93      		push r28
+ 842 0432 DF93      		push r29
+ 843 0434 CDB7      		in r28,__SP_L__
+ 844 0436 DEB7      		in r29,__SP_H__
+ 845 0438 2497      		sbiw r28,4
+ 846 043a 0FB6      		in __tmp_reg__,__SREG__
+ 847 043c F894      		cli
+ 848 043e DEBF      		out __SP_H__,r29
+ 849 0440 0FBE      		out __SREG__,__tmp_reg__
+ 850 0442 CDBF      		out __SP_L__,r28
+ 851               	/* prologue end (size=10) */
+ 852               	.LVL85:
+ 853               	.LM80:
+ 854 0444 2A83      		std Y+2,r18
+ 855               	.LM81:
+ 856 0446 82E5      		ldi r24,lo8(82)
+ 857               	.LVL86:
+ 858 0448 8983      		std Y+1,r24
+ 859               	.LM82:
+ 860 044a 5527      		clr r21
+ 861 044c 5C83      		std Y+4,r21
+ 862 044e 4B83      		std Y+3,r20
+ 863               	.LBB33:
+ 864               	.LBB34:
+ 865               	.LM83:
+ 866 0450 2F3F      		cpi r18,lo8(-1)
+ 867 0452 01F0      		breq .L86
+ 868               	.LM84:
+ 869 0454 2223      		tst r18
+ 870 0456 01F4      		brne .L83
+ 871               	.LM85:
+ 872 0458 CE01      		movw r24,r28
+ 873 045a 0196      		adiw r24,1
+ 874 045c 0E94 0000 		call zdo_processEvent
+ 875               	.LVL87:
+ 876 0460 00C0      		rjmp .L85
+ 877               	.LVL88:
+ 878               	.L83:
+ 879               	.LM86:
+ 880 0462 BE01      		movw r22,r28
+ 881               	.LVL89:
+ 882 0464 6F5F      		subi r22,lo8(-(1))
+ 883 0466 7F4F      		sbci r23,hi8(-(1))
+ 884 0468 85E0      		ldi r24,lo8(5)
+ 885 046a 90E0      		ldi r25,hi8(5)
+ 886 046c 0E94 0000 		call schedul_sendMsg
+ 887               	.LVL90:
+ 888 0470 00C0      		rjmp .L85
+ 889               	.LVL91:
+ 890               	.L86:
+ 891               	.LBB35:
+ 892               	.LM87:
+ 893 0472 E091 0000 		lds r30,EndpointDescriptors+2
+ 894 0476 F091 0000 		lds r31,(EndpointDescriptors+2)+1
+ 895 047a 3097      		sbiw r30,0
+ 896 047c 01F0      		breq .L85
+ 897               	.LM88:
+ 898 047e 8081      		ld r24,Z
+ 899 0480 8A83      		std Y+2,r24
+ 900               	.LM89:
+ 901 0482 BE01      		movw r22,r28
+ 902               	.LVL92:
+ 903 0484 6F5F      		subi r22,lo8(-(1))
+ 904 0486 7F4F      		sbci r23,hi8(-(1))
+ 905 0488 85E0      		ldi r24,lo8(5)
+ 906 048a 90E0      		ldi r25,hi8(5)
+ 907 048c 0E94 0000 		call schedul_sendMsg
+ 908               	.LVL93:
+ 909               	.LVL94:
+ 910               	.L85:
+ 911               	.LBE35:
+ 912               	.LBE34:
+ 913               	.LBE33:
+ 914               	/* epilogue: frame size=4 */
+ 915 0490 2496      		adiw r28,4
+ 916 0492 0FB6      		in __tmp_reg__,__SREG__
+ 917 0494 F894      		cli
+ 918 0496 DEBF      		out __SP_H__,r29
+ 919 0498 0FBE      		out __SREG__,__tmp_reg__
+ 920 049a CDBF      		out __SP_L__,r28
+ 921 049c DF91      		pop r29
+ 922 049e CF91      		pop r28
+ 923 04a0 0895      		ret
+ 924               	/* epilogue end (size=9) */
+ 925               	/* function apsdeDataConfirm size 57 (38) */
+ 926               	.LFE10:
+ 1013               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 app_framework.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:20     .text:00000000 app_finEp
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:62     .text:0000002e app_addEP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:115    .text:0000006a apf_sendMsg
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:151    .text:0000008a apf_sendAppMsg
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:217    .text:000000da apf_dispatchEvent
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:274    .text:00000116 apf_sendFrm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:363    .text:00000190 apf_sendSingleKVP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:567    .text:000002bc apf_sendSingleMsg
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:727    .text:000003a0 apsdDataIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccEraaaa.s:837    .text:00000430 apsdeDataConfirm
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+EndpointDescriptors
+schedul_sendMsg
+zdo_processEvent
+apsdeDataRequest
+mem_getMem
+mem_cpy
+mem_freeMem
+apf_buildIncomFrm

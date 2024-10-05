@@ -1,0 +1,1112 @@
+   1               		.file	"aps_ib.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	ib_cmpAddrMap
+  20               	ib_cmpAddrMap:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24 0000 CF93      		push r28
+  25 0002 DF93      		push r29
+  26               	/* prologue end (size=2) */
+  27               	.LVL0:
+  28 0004 FC01      		movw r30,r24
+  29 0006 DB01      		movw r26,r22
+  30               	.LM2:
+  31 0008 4230      		cpi r20,lo8(2)
+  32 000a 01F0      		breq .L12
+  33               	.LVL1:
+  34               	.LM3:
+  35 000c 4330      		cpi r20,lo8(3)
+  36 000e 01F0      		breq .L6
+  37 0010 40E0      		ldi r20,lo8(0)
+  38 0012 50E0      		ldi r21,hi8(0)
+  39               	.LVL2:
+  40 0014 00C0      		rjmp .L5
+  41               	.LVL3:
+  42               	.L6:
+  43               	.LM4:
+  44 0016 40E0      		ldi r20,lo8(0)
+  45 0018 50E0      		ldi r21,hi8(0)
+  46               	.LVL4:
+  47 001a 9481      		ldd r25,Z+4
+  48 001c 8C91      		ld r24,X
+  49 001e 9817      		cp r25,r24
+  50 0020 01F4      		brne .L5
+  51 0022 9581      		ldd r25,Z+5
+  52 0024 EB01      		movw r28,r22
+  53 0026 8981      		ldd r24,Y+1
+  54 0028 9817      		cp r25,r24
+  55 002a 01F4      		brne .L5
+  56               	.LVL5:
+  57 002c 9681      		ldd r25,Z+6
+  58 002e 8A81      		ldd r24,Y+2
+  59 0030 9817      		cp r25,r24
+  60 0032 01F4      		brne .L5
+  61 0034 9781      		ldd r25,Z+7
+  62 0036 8B81      		ldd r24,Y+3
+  63 0038 9817      		cp r25,r24
+  64 003a 01F4      		brne .L5
+  65 003c 9085      		ldd r25,Z+8
+  66 003e 8C81      		ldd r24,Y+4
+  67 0040 9817      		cp r25,r24
+  68 0042 01F4      		brne .L5
+  69 0044 9185      		ldd r25,Z+9
+  70 0046 8D81      		ldd r24,Y+5
+  71 0048 9817      		cp r25,r24
+  72 004a 01F4      		brne .L5
+  73 004c 9285      		ldd r25,Z+10
+  74 004e 8E81      		ldd r24,Y+6
+  75 0050 9817      		cp r25,r24
+  76 0052 01F4      		brne .L5
+  77 0054 9385      		ldd r25,Z+11
+  78 0056 8F81      		ldd r24,Y+7
+  79 0058 9817      		cp r25,r24
+  80 005a 01F4      		brne .L5
+  81               	.L10:
+  82 005c 41E0      		ldi r20,lo8(1)
+  83 005e 50E0      		ldi r21,hi8(1)
+  84 0060 00C0      		rjmp .L5
+  85               	.LVL6:
+  86               	.L12:
+  87               	.LM5:
+  88 0062 40E0      		ldi r20,lo8(0)
+  89 0064 50E0      		ldi r21,hi8(0)
+  90               	.LVL7:
+  91 0066 2281      		ldd r18,Z+2
+  92 0068 3381      		ldd r19,Z+3
+  93 006a 8D91      		ld r24,X+
+  94 006c 9C91      		ld r25,X
+  95 006e 2817      		cp r18,r24
+  96 0070 3907      		cpc r19,r25
+  97 0072 01F0      		breq .L10
+  98               	.LVL8:
+  99               	.L5:
+ 100               	.LM6:
+ 101 0074 CA01      		movw r24,r20
+ 102               	/* epilogue: frame size=0 */
+ 103 0076 DF91      		pop r29
+ 104 0078 CF91      		pop r28
+ 105 007a 0895      		ret
+ 106               	/* epilogue end (size=3) */
+ 107               	/* function ib_cmpAddrMap size 62 (57) */
+ 108               	.LFE2:
+ 110               	.global	ib_cmpBindingEntry
+ 112               	ib_cmpBindingEntry:
+ 113               	.LFB3:
+ 114               	.LM7:
+ 115               	/* prologue: frame size=0 */
+ 116               	/* prologue end (size=0) */
+ 117               	.LVL9:
+ 118               	.LM8:
+ 119 007c 80E0      		ldi r24,lo8(0)
+ 120 007e 90E0      		ldi r25,hi8(0)
+ 121               	.LVL10:
+ 122               	/* epilogue: frame size=0 */
+ 123 0080 0895      		ret
+ 124               	/* epilogue end (size=1) */
+ 125               	/* function ib_cmpBindingEntry size 3 (2) */
+ 126               	.LFE3:
+ 128               	.global	ib_addCluster
+ 130               	ib_addCluster:
+ 131               	.LFB12:
+ 132               	.LM9:
+ 133               	/* prologue: frame size=0 */
+ 134               	/* prologue end (size=0) */
+ 135               	.LVL11:
+ 136 0082 DC01      		movw r26,r24
+ 137               	.LM10:
+ 138 0084 FC01      		movw r30,r24
+ 139 0086 3085      		ldd r19,Z+8
+ 140 0088 3323      		tst r19
+ 141 008a 01F0      		breq .L29
+ 142               	.LM11:
+ 143 008c FC01      		movw r30,r24
+ 144 008e 8185      		ldd r24,Z+9
+ 145               	.LVL12:
+ 146 0090 9927      		clr r25
+ 147 0092 6817      		cp r22,r24
+ 148 0094 7907      		cpc r23,r25
+ 149 0096 01F0      		breq .L19
+ 150               	.LM12:
+ 151 0098 20E0      		ldi r18,lo8(0)
+ 152               	.LVL13:
+ 153 009a 00C0      		rjmp .L21
+ 154               	.L22:
+ 155               	.LM13:
+ 156 009c FD01      		movw r30,r26
+ 157 009e E20F      		add r30,r18
+ 158 00a0 F11D      		adc r31,__zero_reg__
+ 159 00a2 8185      		ldd r24,Z+9
+ 160 00a4 9927      		clr r25
+ 161 00a6 6817      		cp r22,r24
+ 162 00a8 7907      		cpc r23,r25
+ 163 00aa 01F0      		breq .L19
+ 164               	.L21:
+ 165               	.LM14:
+ 166 00ac 2F5F      		subi r18,lo8(-(1))
+ 167 00ae 2317      		cp r18,r19
+ 168 00b0 01F4      		brne .L22
+ 169 00b2 E32F      		mov r30,r19
+ 170 00b4 FF27      		clr r31
+ 171               	.LVL14:
+ 172               	.L18:
+ 173               	.LM15:
+ 174 00b6 EA0F      		add r30,r26
+ 175 00b8 FB1F      		adc r31,r27
+ 176 00ba 8185      		ldd r24,Z+9
+ 177 00bc 9927      		clr r25
+ 178 00be 8617      		cp r24,r22
+ 179 00c0 9707      		cpc r25,r23
+ 180 00c2 01F0      		breq .L19
+ 181               	.LM16:
+ 182 00c4 3330      		cpi r19,lo8(3)
+ 183 00c6 00F4      		brsh .L30
+ 184               	.LM17:
+ 185 00c8 FD01      		movw r30,r26
+ 186 00ca E30F      		add r30,r19
+ 187 00cc F11D      		adc r31,__zero_reg__
+ 188 00ce 6187      		std Z+9,r22
+ 189               	.LM18:
+ 190 00d0 3F5F      		subi r19,lo8(-(1))
+ 191 00d2 FD01      		movw r30,r26
+ 192 00d4 3087      		std Z+8,r19
+ 193 00d6 81E0      		ldi r24,lo8(1)
+ 194 00d8 90E0      		ldi r25,hi8(1)
+ 195 00da 0895      		ret
+ 196               	.L19:
+ 197               	.LM19:
+ 198 00dc 81E0      		ldi r24,lo8(1)
+ 199 00de 90E0      		ldi r25,hi8(1)
+ 200               	.LM20:
+ 201 00e0 0895      		ret
+ 202               	.L30:
+ 203               	.LM21:
+ 204 00e2 80E0      		ldi r24,lo8(0)
+ 205 00e4 90E0      		ldi r25,hi8(0)
+ 206 00e6 0895      		ret
+ 207               	.LVL15:
+ 208               	.L29:
+ 209               	.LM22:
+ 210 00e8 E0E0      		ldi r30,lo8(0)
+ 211 00ea F0E0      		ldi r31,hi8(0)
+ 212 00ec 00C0      		rjmp .L18
+ 213               	/* epilogue: frame size=0 */
+ 214               	/* epilogue: noreturn */
+ 215               	/* epilogue end (size=0) */
+ 216               	/* function ib_addCluster size 54 (54) */
+ 217               	.LFE12:
+ 219               	.global	ib_removeCluster
+ 221               	ib_removeCluster:
+ 222               	.LFB13:
+ 223               	.LM23:
+ 224               	/* prologue: frame size=0 */
+ 225               	/* prologue end (size=0) */
+ 226               	.LVL16:
+ 227 00ee DC01      		movw r26,r24
+ 228               	.LM24:
+ 229 00f0 FC01      		movw r30,r24
+ 230 00f2 3085      		ldd r19,Z+8
+ 231 00f4 3323      		tst r19
+ 232 00f6 01F0      		breq .L47
+ 233               	.LM25:
+ 234 00f8 FC01      		movw r30,r24
+ 235 00fa 8185      		ldd r24,Z+9
+ 236               	.LVL17:
+ 237 00fc 9927      		clr r25
+ 238 00fe 6817      		cp r22,r24
+ 239 0100 7907      		cpc r23,r25
+ 240 0102 01F0      		breq .L35
+ 241               	.LM26:
+ 242 0104 20E0      		ldi r18,lo8(0)
+ 243               	.LVL18:
+ 244 0106 00C0      		rjmp .L37
+ 245               	.L38:
+ 246               	.LM27:
+ 247 0108 FD01      		movw r30,r26
+ 248 010a E20F      		add r30,r18
+ 249 010c F11D      		adc r31,__zero_reg__
+ 250 010e 8185      		ldd r24,Z+9
+ 251 0110 9927      		clr r25
+ 252 0112 6817      		cp r22,r24
+ 253 0114 7907      		cpc r23,r25
+ 254 0116 01F0      		breq .L39
+ 255               	.L37:
+ 256               	.LM28:
+ 257 0118 2F5F      		subi r18,lo8(-(1))
+ 258 011a 2317      		cp r18,r19
+ 259 011c 01F4      		brne .L38
+ 260 011e E22F      		mov r30,r18
+ 261 0120 FF27      		clr r31
+ 262               	.LVL19:
+ 263               	.L34:
+ 264               	.LM29:
+ 265 0122 EA0F      		add r30,r26
+ 266 0124 FB1F      		adc r31,r27
+ 267 0126 8185      		ldd r24,Z+9
+ 268 0128 9927      		clr r25
+ 269 012a 8617      		cp r24,r22
+ 270 012c 9707      		cpc r25,r23
+ 271 012e 01F4      		brne .L41
+ 272               	.L39:
+ 273               	.LM30:
+ 274 0130 2317      		cp r18,r19
+ 275 0132 00F4      		brsh .L43
+ 276               	.L45:
+ 277               	.LM31:
+ 278 0134 FD01      		movw r30,r26
+ 279 0136 E20F      		add r30,r18
+ 280 0138 F11D      		adc r31,__zero_reg__
+ 281 013a 8285      		ldd r24,Z+10
+ 282 013c 8187      		std Z+9,r24
+ 283               	.LM32:
+ 284 013e 2F5F      		subi r18,lo8(-(1))
+ 285 0140 2317      		cp r18,r19
+ 286 0142 00F0      		brlo .L45
+ 287               	.L43:
+ 288               	.LM33:
+ 289 0144 3150      		subi r19,lo8(-(-1))
+ 290 0146 FD01      		movw r30,r26
+ 291 0148 3087      		std Z+8,r19
+ 292 014a 00C0      		rjmp .L41
+ 293               	.LVL20:
+ 294               	.L47:
+ 295               	.LM34:
+ 296 014c 20E0      		ldi r18,lo8(0)
+ 297               	.LVL21:
+ 298 014e E0E0      		ldi r30,lo8(0)
+ 299 0150 F0E0      		ldi r31,hi8(0)
+ 300 0152 00C0      		rjmp .L34
+ 301               	.LVL22:
+ 302               	.L35:
+ 303               	.LM35:
+ 304 0154 20E0      		ldi r18,lo8(0)
+ 305               	.LVL23:
+ 306 0156 00C0      		rjmp .L39
+ 307               	.L41:
+ 308               	.LM36:
+ 309 0158 81E0      		ldi r24,lo8(1)
+ 310 015a 90E0      		ldi r25,hi8(1)
+ 311               	/* epilogue: frame size=0 */
+ 312 015c 0895      		ret
+ 313               	/* epilogue end (size=1) */
+ 314               	/* function ib_removeCluster size 56 (55) */
+ 315               	.LFE13:
+ 317               	.global	ib_searchBindingEntry
+ 319               	ib_searchBindingEntry:
+ 320               	.LFB15:
+ 321               	.LM37:
+ 322               	/* prologue: frame size=0 */
+ 323               	/* prologue end (size=0) */
+ 324               	.LVL24:
+ 325 015e DC01      		movw r26,r24
+ 326               	.LM38:
+ 327 0160 8091 0000 		lds r24,BindingTbl
+ 328 0164 9091 0000 		lds r25,(BindingTbl)+1
+ 329               	.LVL25:
+ 330               	.LM39:
+ 331 0168 0097      		sbiw r24,0
+ 332 016a 01F4      		brne .L59
+ 333 016c 00C0      		rjmp .L49
+ 334               	.LVL26:
+ 335               	.L52:
+ 336               	.LM40:
+ 337 016e 8081      		ld r24,Z
+ 338 0170 9181      		ldd r25,Z+1
+ 339               	.LM41:
+ 340 0172 0097      		sbiw r24,0
+ 341 0174 01F0      		breq .L49
+ 342               	.L59:
+ 343               	.LM42:
+ 344 0176 FC01      		movw r30,r24
+ 345               	.LM43:
+ 346 0178 8281      		ldd r24,Z+2
+ 347 017a 9381      		ldd r25,Z+3
+ 348 017c 8A17      		cp r24,r26
+ 349 017e 9B07      		cpc r25,r27
+ 350 0180 01F4      		brne .L52
+ 351 0182 8481      		ldd r24,Z+4
+ 352 0184 8617      		cp r24,r22
+ 353 0186 01F4      		brne .L52
+ 354 0188 8581      		ldd r24,Z+5
+ 355 018a 9681      		ldd r25,Z+6
+ 356 018c 8417      		cp r24,r20
+ 357 018e 9507      		cpc r25,r21
+ 358 0190 01F4      		brne .L52
+ 359 0192 8781      		ldd r24,Z+7
+ 360 0194 8217      		cp r24,r18
+ 361 0196 01F0      		breq .L56
+ 362               	.LM44:
+ 363 0198 8081      		ld r24,Z
+ 364 019a 9181      		ldd r25,Z+1
+ 365               	.LM45:
+ 366 019c 0097      		sbiw r24,0
+ 367 019e 01F4      		brne .L59
+ 368               	.L49:
+ 369               	.LM46:
+ 370 01a0 E0E0      		ldi r30,lo8(0)
+ 371 01a2 F0E0      		ldi r31,hi8(0)
+ 372               	.L56:
+ 373               	.LM47:
+ 374 01a4 CF01      		movw r24,r30
+ 375               	/* epilogue: frame size=0 */
+ 376 01a6 0895      		ret
+ 377               	/* epilogue end (size=1) */
+ 378               	/* function ib_searchBindingEntry size 37 (36) */
+ 379               	.LFE15:
+ 381               	.global	ib_searchBindingLink
+ 383               	ib_searchBindingLink:
+ 384               	.LFB16:
+ 385               	.LM48:
+ 386               	/* prologue: frame size=0 */
+ 387 01a8 0F93      		push r16
+ 388 01aa CF93      		push r28
+ 389 01ac DF93      		push r29
+ 390               	/* prologue end (size=3) */
+ 391               	.LVL27:
+ 392 01ae EC01      		movw r28,r24
+ 393               	.LM49:
+ 394 01b0 8091 0000 		lds r24,BindingTbl
+ 395 01b4 9091 0000 		lds r25,(BindingTbl)+1
+ 396               	.LVL28:
+ 397               	.LM50:
+ 398 01b8 0097      		sbiw r24,0
+ 399 01ba 01F4      		brne .L76
+ 400 01bc 00C0      		rjmp .L61
+ 401               	.LVL29:
+ 402               	.L64:
+ 403               	.LM51:
+ 404 01be 8D91      		ld r24,X+
+ 405 01c0 9C91      		ld r25,X
+ 406               	.LM52:
+ 407 01c2 0097      		sbiw r24,0
+ 408 01c4 01F0      		breq .L61
+ 409               	.L76:
+ 410               	.LM53:
+ 411 01c6 DC01      		movw r26,r24
+ 412               	.LM54:
+ 413 01c8 FC01      		movw r30,r24
+ 414 01ca 8281      		ldd r24,Z+2
+ 415 01cc 9381      		ldd r25,Z+3
+ 416 01ce 8C17      		cp r24,r28
+ 417 01d0 9D07      		cpc r25,r29
+ 418 01d2 01F4      		brne .L64
+ 419 01d4 8481      		ldd r24,Z+4
+ 420 01d6 8617      		cp r24,r22
+ 421 01d8 01F4      		brne .L64
+ 422 01da 8581      		ldd r24,Z+5
+ 423 01dc 9681      		ldd r25,Z+6
+ 424 01de 8217      		cp r24,r18
+ 425 01e0 9307      		cpc r25,r19
+ 426 01e2 01F4      		brne .L64
+ 427 01e4 8781      		ldd r24,Z+7
+ 428 01e6 8017      		cp r24,r16
+ 429 01e8 01F4      		brne .L64
+ 430               	.LM55:
+ 431 01ea 5085      		ldd r21,Z+8
+ 432 01ec 5523      		tst r21
+ 433 01ee 01F0      		breq .L64
+ 434               	.LM56:
+ 435 01f0 8185      		ldd r24,Z+9
+ 436 01f2 4817      		cp r20,r24
+ 437 01f4 01F0      		breq .L70
+ 438 01f6 90E0      		ldi r25,lo8(0)
+ 439 01f8 00C0      		rjmp .L72
+ 440               	.L73:
+ 441 01fa FD01      		movw r30,r26
+ 442 01fc E90F      		add r30,r25
+ 443 01fe F11D      		adc r31,__zero_reg__
+ 444 0200 8185      		ldd r24,Z+9
+ 445 0202 8417      		cp r24,r20
+ 446 0204 01F0      		breq .L70
+ 447               	.L72:
+ 448               	.LM57:
+ 449 0206 9F5F      		subi r25,lo8(-(1))
+ 450 0208 9517      		cp r25,r21
+ 451 020a 01F4      		brne .L73
+ 452 020c 00C0      		rjmp .L64
+ 453               	.L61:
+ 454               	.LM58:
+ 455 020e A0E0      		ldi r26,lo8(0)
+ 456 0210 B0E0      		ldi r27,hi8(0)
+ 457               	.L70:
+ 458               	.LM59:
+ 459 0212 CD01      		movw r24,r26
+ 460               	/* epilogue: frame size=0 */
+ 461 0214 DF91      		pop r29
+ 462 0216 CF91      		pop r28
+ 463 0218 0F91      		pop r16
+ 464 021a 0895      		ret
+ 465               	/* epilogue end (size=4) */
+ 466               	/* function ib_searchBindingLink size 58 (51) */
+ 467               	.LFE16:
+ 469               	.global	ib_searchIterativeBindingEntry
+ 471               	ib_searchIterativeBindingEntry:
+ 472               	.LFB17:
+ 473               	.LM60:
+ 474               	/* prologue: frame size=0 */
+ 475               	/* prologue end (size=0) */
+ 476               	.LVL30:
+ 477 021c 9C01      		movw r18,r24
+ 478 021e FA01      		movw r30,r20
+ 479               	.LM61:
+ 480 0220 452B      		or r20,r21
+ 481 0222 01F0      		breq .L78
+ 482               	.LVL31:
+ 483               	.LM62:
+ 484 0224 8281      		ldd r24,Z+2
+ 485 0226 9381      		ldd r25,Z+3
+ 486 0228 2817      		cp r18,r24
+ 487 022a 3907      		cpc r19,r25
+ 488 022c 01F0      		breq .L91
+ 489               	.LVL32:
+ 490               	.L78:
+ 491               	.LM63:
+ 492 022e E091 0000 		lds r30,BindingTbl
+ 493 0232 F091 0000 		lds r31,(BindingTbl)+1
+ 494               	.LVL33:
+ 495               	.L82:
+ 496               	.LM64:
+ 497 0236 3097      		sbiw r30,0
+ 498 0238 01F4      		brne .L90
+ 499 023a 00C0      		rjmp .L84
+ 500               	.LVL34:
+ 501               	.L85:
+ 502               	.LM65:
+ 503 023c 8081      		ld r24,Z
+ 504 023e 9181      		ldd r25,Z+1
+ 505               	.LM66:
+ 506 0240 0097      		sbiw r24,0
+ 507 0242 01F0      		breq .L87
+ 508               	.LM67:
+ 509 0244 FC01      		movw r30,r24
+ 510               	.LVL35:
+ 511               	.L90:
+ 512               	.LM68:
+ 513 0246 8281      		ldd r24,Z+2
+ 514 0248 9381      		ldd r25,Z+3
+ 515 024a 8217      		cp r24,r18
+ 516 024c 9307      		cpc r25,r19
+ 517 024e 01F4      		brne .L85
+ 518 0250 8481      		ldd r24,Z+4
+ 519 0252 8617      		cp r24,r22
+ 520 0254 01F4      		brne .L85
+ 521 0256 00C0      		rjmp .L84
+ 522               	.L87:
+ 523               	.LM69:
+ 524 0258 E0E0      		ldi r30,lo8(0)
+ 525 025a F0E0      		ldi r31,hi8(0)
+ 526 025c 00C0      		rjmp .L84
+ 527               	.LVL36:
+ 528               	.L91:
+ 529               	.LM70:
+ 530 025e 8481      		ldd r24,Z+4
+ 531 0260 6817      		cp r22,r24
+ 532 0262 01F4      		brne .L78
+ 533               	.LM71:
+ 534 0264 0190      		ld __tmp_reg__,Z+
+ 535 0266 F081      		ld r31,Z
+ 536 0268 E02D      		mov r30,__tmp_reg__
+ 537               	.LVL37:
+ 538 026a 00C0      		rjmp .L82
+ 539               	.LVL38:
+ 540               	.L84:
+ 541               	.LM72:
+ 542 026c CF01      		movw r24,r30
+ 543               	/* epilogue: frame size=0 */
+ 544 026e 0895      		ret
+ 545               	/* epilogue end (size=1) */
+ 546               	/* function ib_searchIterativeBindingEntry size 42 (41) */
+ 547               	.LFE17:
+ 549               	.global	ib_removeBindingEntry
+ 551               	ib_removeBindingEntry:
+ 552               	.LFB14:
+ 553               	.LM73:
+ 554               	/* prologue: frame size=0 */
+ 555 0270 CF93      		push r28
+ 556 0272 DF93      		push r29
+ 557               	/* prologue end (size=2) */
+ 558               	.LVL39:
+ 559 0274 EC01      		movw r28,r24
+ 560               	.LM74:
+ 561 0276 892B      		or r24,r25
+ 562 0278 01F0      		breq .L95
+ 563               	.LM75:
+ 564 027a 8091 0000 		lds r24,nNumofBindingEntry
+ 565               	.LVL40:
+ 566 027e 8150      		subi r24,lo8(-(-1))
+ 567 0280 8093 0000 		sts nNumofBindingEntry,r24
+ 568               	.LM76:
+ 569 0284 BE01      		movw r22,r28
+ 570 0286 80E0      		ldi r24,lo8(BindingTbl)
+ 571 0288 90E0      		ldi r25,hi8(BindingTbl)
+ 572 028a 0E94 0000 		call llist_removeRec
+ 573               	.LM77:
+ 574 028e CE01      		movw r24,r28
+ 575 0290 0E94 0000 		call mem_freeMem
+ 576               	.LVL41:
+ 577               	.L95:
+ 578               	/* epilogue: frame size=0 */
+ 579 0294 DF91      		pop r29
+ 580 0296 CF91      		pop r28
+ 581 0298 0895      		ret
+ 582               	/* epilogue end (size=3) */
+ 583               	/* function ib_removeBindingEntry size 21 (16) */
+ 584               	.LFE14:
+ 586               	.global	ib_addBindingEntry
+ 588               	ib_addBindingEntry:
+ 589               	.LFB11:
+ 590               	.LM78:
+ 591               	/* prologue: frame size=0 */
+ 592 029a 9F92      		push r9
+ 593 029c AF92      		push r10
+ 594 029e BF92      		push r11
+ 595 02a0 CF92      		push r12
+ 596 02a2 DF92      		push r13
+ 597 02a4 EF92      		push r14
+ 598 02a6 FF92      		push r15
+ 599 02a8 0F93      		push r16
+ 600 02aa 1F93      		push r17
+ 601 02ac CF93      		push r28
+ 602 02ae DF93      		push r29
+ 603               	/* prologue end (size=11) */
+ 604               	.LVL42:
+ 605 02b0 6C01      		movw r12,r24
+ 606 02b2 162F      		mov r17,r22
+ 607 02b4 5A01      		movw r10,r20
+ 608 02b6 922E      		mov r9,r18
+ 609               	.LM79:
+ 610 02b8 0430      		cpi r16,lo8(4)
+ 611 02ba 00F0      		brlo .L106
+ 612               	.LVL43:
+ 613               	.L97:
+ 614               	.LM80:
+ 615 02bc 80E0      		ldi r24,lo8(0)
+ 616 02be 90E0      		ldi r25,hi8(0)
+ 617 02c0 00C0      		rjmp .L103
+ 618               	.LVL44:
+ 619               	.L106:
+ 620               	.LM81:
+ 621 02c2 8CE0      		ldi r24,lo8(12)
+ 622 02c4 0E94 0000 		call mem_getMem
+ 623 02c8 EC01      		movw r28,r24
+ 624               	.LM82:
+ 625 02ca 892B      		or r24,r25
+ 626 02cc 01F0      		breq .L97
+ 627               	.LM83:
+ 628 02ce 8091 0000 		lds r24,nNumofBindingEntry
+ 629 02d2 8F5F      		subi r24,lo8(-(1))
+ 630 02d4 8093 0000 		sts nNumofBindingEntry,r24
+ 631               	.LM84:
+ 632 02d8 DB82      		std Y+3,r13
+ 633 02da CA82      		std Y+2,r12
+ 634               	.LM85:
+ 635 02dc 1C83      		std Y+4,r17
+ 636               	.LM86:
+ 637 02de BE82      		std Y+6,r11
+ 638 02e0 AD82      		std Y+5,r10
+ 639               	.LM87:
+ 640 02e2 9F82      		std Y+7,r9
+ 641               	.LM88:
+ 642 02e4 0887      		std Y+8,r16
+ 643               	.LBB2:
+ 644               	.LM89:
+ 645 02e6 402F      		mov r20,r16
+ 646 02e8 5527      		clr r21
+ 647 02ea 1416      		cp __zero_reg__,r20
+ 648 02ec 1506      		cpc __zero_reg__,r21
+ 649 02ee 04F4      		brge .L100
+ 650 02f0 FE01      		movw r30,r28
+ 651 02f2 20E0      		ldi r18,lo8(0)
+ 652 02f4 30E0      		ldi r19,hi8(0)
+ 653               	.LVL45:
+ 654 02f6 D701      		movw r26,r14
+ 655               	.LVL46:
+ 656               	.L102:
+ 657               	.LM90:
+ 658 02f8 8D91      		ld r24,X+
+ 659 02fa 8187      		std Z+9,r24
+ 660               	.LM91:
+ 661 02fc 2F5F      		subi r18,lo8(-(1))
+ 662 02fe 3F4F      		sbci r19,hi8(-(1))
+ 663 0300 3196      		adiw r30,1
+ 664 0302 2417      		cp r18,r20
+ 665 0304 3507      		cpc r19,r21
+ 666 0306 01F4      		brne .L102
+ 667               	.LVL47:
+ 668               	.L100:
+ 669               	.LBE2:
+ 670               	.LM92:
+ 671 0308 BE01      		movw r22,r28
+ 672               	.LVL48:
+ 673 030a 80E0      		ldi r24,lo8(BindingTbl)
+ 674 030c 90E0      		ldi r25,hi8(BindingTbl)
+ 675 030e 0E94 0000 		call llist_add
+ 676               	.LVL49:
+ 677 0312 81E0      		ldi r24,lo8(1)
+ 678 0314 90E0      		ldi r25,hi8(1)
+ 679               	.LVL50:
+ 680               	.L103:
+ 681               	/* epilogue: frame size=0 */
+ 682 0316 DF91      		pop r29
+ 683 0318 CF91      		pop r28
+ 684 031a 1F91      		pop r17
+ 685 031c 0F91      		pop r16
+ 686 031e FF90      		pop r15
+ 687 0320 EF90      		pop r14
+ 688 0322 DF90      		pop r13
+ 689 0324 CF90      		pop r12
+ 690 0326 BF90      		pop r11
+ 691 0328 AF90      		pop r10
+ 692 032a 9F90      		pop r9
+ 693 032c 0895      		ret
+ 694               	/* epilogue end (size=12) */
+ 695               	/* function ib_addBindingEntry size 74 (51) */
+ 696               	.LFE11:
+ 698               	.global	ib_addAddrEntry
+ 700               	ib_addAddrEntry:
+ 701               	.LFB5:
+ 702               	.LM93:
+ 703               	/* prologue: frame size=0 */
+ 704 032e 0F93      		push r16
+ 705 0330 1F93      		push r17
+ 706 0332 CF93      		push r28
+ 707 0334 DF93      		push r29
+ 708               	/* prologue end (size=4) */
+ 709               	.LVL51:
+ 710 0336 8C01      		movw r16,r24
+ 711 0338 EB01      		movw r28,r22
+ 712               	.LM94:
+ 713 033a 8CE0      		ldi r24,lo8(12)
+ 714               	.LVL52:
+ 715 033c 0E94 0000 		call mem_getMem
+ 716               	.LVL53:
+ 717 0340 FC01      		movw r30,r24
+ 718               	.LM95:
+ 719 0342 892B      		or r24,r25
+ 720 0344 01F0      		breq .L112
+ 721               	.LM96:
+ 722 0346 8881      		ld r24,Y
+ 723 0348 8483      		std Z+4,r24
+ 724 034a 8981      		ldd r24,Y+1
+ 725 034c 8583      		std Z+5,r24
+ 726 034e 8A81      		ldd r24,Y+2
+ 727 0350 8683      		std Z+6,r24
+ 728 0352 8B81      		ldd r24,Y+3
+ 729 0354 8783      		std Z+7,r24
+ 730 0356 8C81      		ldd r24,Y+4
+ 731 0358 8087      		std Z+8,r24
+ 732 035a 8D81      		ldd r24,Y+5
+ 733 035c 8187      		std Z+9,r24
+ 734 035e 8E81      		ldd r24,Y+6
+ 735 0360 8287      		std Z+10,r24
+ 736 0362 8F81      		ldd r24,Y+7
+ 737 0364 8387      		std Z+11,r24
+ 738               	.LM97:
+ 739 0366 1383      		std Z+3,r17
+ 740 0368 0283      		std Z+2,r16
+ 741               	.LM98:
+ 742 036a BF01      		movw r22,r30
+ 743               	.LVL54:
+ 744 036c 80E0      		ldi r24,lo8(AddrMap)
+ 745 036e 90E0      		ldi r25,hi8(AddrMap)
+ 746 0370 0E94 0000 		call llist_add
+ 747               	.LVL55:
+ 748               	.LM99:
+ 749 0374 8091 0000 		lds r24,nNumofAddrEntry
+ 750 0378 8F5F      		subi r24,lo8(-(1))
+ 751 037a 8093 0000 		sts nNumofAddrEntry,r24
+ 752 037e 81E0      		ldi r24,lo8(1)
+ 753 0380 90E0      		ldi r25,hi8(1)
+ 754 0382 00C0      		rjmp .L110
+ 755               	.L112:
+ 756               	.LM100:
+ 757 0384 80E0      		ldi r24,lo8(0)
+ 758 0386 90E0      		ldi r25,hi8(0)
+ 759               	.L110:
+ 760               	/* epilogue: frame size=0 */
+ 761 0388 DF91      		pop r29
+ 762 038a CF91      		pop r28
+ 763 038c 1F91      		pop r17
+ 764 038e 0F91      		pop r16
+ 765 0390 0895      		ret
+ 766               	/* epilogue end (size=5) */
+ 767               	/* function ib_addAddrEntry size 50 (41) */
+ 768               	.LFE5:
+ 770               	.global	ib_initBindingTbl
+ 772               	ib_initBindingTbl:
+ 773               	.LFB10:
+ 774               	.LM101:
+ 775               	/* prologue: frame size=0 */
+ 776               	/* prologue end (size=0) */
+ 777               	.LM102:
+ 778 0392 80E0      		ldi r24,lo8(BindingTbl)
+ 779 0394 90E0      		ldi r25,hi8(BindingTbl)
+ 780 0396 0E94 0000 		call llist_init
+ 781               	.LM103:
+ 782 039a 1092 0000 		sts nNumofBindingEntry,__zero_reg__
+ 783               	/* epilogue: frame size=0 */
+ 784 039e 0895      		ret
+ 785               	/* epilogue end (size=1) */
+ 786               	/* function ib_initBindingTbl size 7 (6) */
+ 787               	.LFE10:
+ 789               	.global	ib_initAddrMap
+ 791               	ib_initAddrMap:
+ 792               	.LFB4:
+ 793               	.LM104:
+ 794               	/* prologue: frame size=0 */
+ 795               	/* prologue end (size=0) */
+ 796               	.LM105:
+ 797 03a0 80E0      		ldi r24,lo8(AddrMap)
+ 798 03a2 90E0      		ldi r25,hi8(AddrMap)
+ 799 03a4 0E94 0000 		call llist_init
+ 800               	.LM106:
+ 801 03a8 1092 0000 		sts nNumofAddrEntry,__zero_reg__
+ 802               	/* epilogue: frame size=0 */
+ 803 03ac 0895      		ret
+ 804               	/* epilogue end (size=1) */
+ 805               	/* function ib_initAddrMap size 7 (6) */
+ 806               	.LFE4:
+ 808               	.global	ib_removeAddrEntry
+ 810               	ib_removeAddrEntry:
+ 811               	.LFB7:
+ 812               	.LM107:
+ 813               	/* prologue: frame size=2 */
+ 814 03ae 0F93      		push r16
+ 815 03b0 1F93      		push r17
+ 816 03b2 CF93      		push r28
+ 817 03b4 DF93      		push r29
+ 818 03b6 CDB7      		in r28,__SP_L__
+ 819 03b8 DEB7      		in r29,__SP_H__
+ 820 03ba 2297      		sbiw r28,2
+ 821 03bc 0FB6      		in __tmp_reg__,__SREG__
+ 822 03be F894      		cli
+ 823 03c0 DEBF      		out __SP_H__,r29
+ 824 03c2 0FBE      		out __SREG__,__tmp_reg__
+ 825 03c4 CDBF      		out __SP_L__,r28
+ 826               	/* prologue end (size=12) */
+ 827               	.LVL56:
+ 828 03c6 9A83      		std Y+2,r25
+ 829 03c8 8983      		std Y+1,r24
+ 830 03ca 8B01      		movw r16,r22
+ 831               	.LM108:
+ 832 03cc 8F5F      		subi r24,lo8(-1)
+ 833 03ce 9F4F      		sbci r25,hi8(-1)
+ 834 03d0 01F0      		breq .L118
+ 835               	.LVL57:
+ 836               	.LM109:
+ 837 03d2 22E0      		ldi r18,lo8(2)
+ 838 03d4 AE01      		movw r20,r28
+ 839 03d6 4F5F      		subi r20,lo8(-(1))
+ 840 03d8 5F4F      		sbci r21,hi8(-(1))
+ 841 03da 60E0      		ldi r22,lo8(gs(ib_cmpAddrMap))
+ 842 03dc 70E0      		ldi r23,hi8(gs(ib_cmpAddrMap))
+ 843 03de 80E0      		ldi r24,lo8(AddrMap)
+ 844 03e0 90E0      		ldi r25,hi8(AddrMap)
+ 845               	.LVL58:
+ 846 03e2 0E94 0000 		call llist_remove
+ 847 03e6 9C01      		movw r18,r24
+ 848               	.LM110:
+ 849 03e8 892B      		or r24,r25
+ 850 03ea 01F0      		breq .L118
+ 851               	.LM111:
+ 852 03ec 8091 0000 		lds r24,nNumofAddrEntry
+ 853 03f0 8150      		subi r24,lo8(-(-1))
+ 854 03f2 8093 0000 		sts nNumofAddrEntry,r24
+ 855               	.LM112:
+ 856 03f6 C901      		movw r24,r18
+ 857 03f8 0E94 0000 		call mem_freeMem
+ 858               	.LVL59:
+ 859               	.L118:
+ 860               	.LM113:
+ 861 03fc 0115      		cp r16,__zero_reg__
+ 862 03fe 1105      		cpc r17,__zero_reg__
+ 863 0400 01F0      		breq .L124
+ 864               	.LM114:
+ 865 0402 23E0      		ldi r18,lo8(3)
+ 866 0404 A801      		movw r20,r16
+ 867 0406 60E0      		ldi r22,lo8(gs(ib_cmpAddrMap))
+ 868 0408 70E0      		ldi r23,hi8(gs(ib_cmpAddrMap))
+ 869 040a 80E0      		ldi r24,lo8(AddrMap)
+ 870 040c 90E0      		ldi r25,hi8(AddrMap)
+ 871 040e 0E94 0000 		call llist_remove
+ 872 0412 9C01      		movw r18,r24
+ 873               	.LM115:
+ 874 0414 892B      		or r24,r25
+ 875 0416 01F0      		breq .L124
+ 876               	.LM116:
+ 877 0418 8091 0000 		lds r24,nNumofAddrEntry
+ 878 041c 8150      		subi r24,lo8(-(-1))
+ 879 041e 8093 0000 		sts nNumofAddrEntry,r24
+ 880               	.LM117:
+ 881 0422 C901      		movw r24,r18
+ 882 0424 0E94 0000 		call mem_freeMem
+ 883               	.LVL60:
+ 884               	.L124:
+ 885               	/* epilogue: frame size=2 */
+ 886 0428 2296      		adiw r28,2
+ 887 042a 0FB6      		in __tmp_reg__,__SREG__
+ 888 042c F894      		cli
+ 889 042e DEBF      		out __SP_H__,r29
+ 890 0430 0FBE      		out __SREG__,__tmp_reg__
+ 891 0432 CDBF      		out __SP_L__,r28
+ 892 0434 DF91      		pop r29
+ 893 0436 CF91      		pop r28
+ 894 0438 1F91      		pop r17
+ 895 043a 0F91      		pop r16
+ 896 043c 0895      		ret
+ 897               	/* epilogue end (size=11) */
+ 898               	/* function ib_removeAddrEntry size 73 (50) */
+ 899               	.LFE7:
+ 901               	.global	ib_searchAddrEntry
+ 903               	ib_searchAddrEntry:
+ 904               	.LFB6:
+ 905               	.LM118:
+ 906               	/* prologue: frame size=2 */
+ 907 043e CF93      		push r28
+ 908 0440 DF93      		push r29
+ 909 0442 CDB7      		in r28,__SP_L__
+ 910 0444 DEB7      		in r29,__SP_H__
+ 911 0446 2297      		sbiw r28,2
+ 912 0448 0FB6      		in __tmp_reg__,__SREG__
+ 913 044a F894      		cli
+ 914 044c DEBF      		out __SP_H__,r29
+ 915 044e 0FBE      		out __SREG__,__tmp_reg__
+ 916 0450 CDBF      		out __SP_L__,r28
+ 917               	/* prologue end (size=10) */
+ 918               	.LVL61:
+ 919 0452 9A83      		std Y+2,r25
+ 920 0454 8983      		std Y+1,r24
+ 921 0456 AB01      		movw r20,r22
+ 922               	.LM119:
+ 923 0458 8F5F      		subi r24,lo8(-1)
+ 924 045a 9F4F      		sbci r25,hi8(-1)
+ 925 045c 01F0      		breq .L126
+ 926               	.LVL62:
+ 927               	.LM120:
+ 928 045e 22E0      		ldi r18,lo8(2)
+ 929 0460 AE01      		movw r20,r28
+ 930               	.LVL63:
+ 931 0462 4F5F      		subi r20,lo8(-(1))
+ 932 0464 5F4F      		sbci r21,hi8(-(1))
+ 933 0466 60E0      		ldi r22,lo8(gs(ib_cmpAddrMap))
+ 934 0468 70E0      		ldi r23,hi8(gs(ib_cmpAddrMap))
+ 935               	.LVL64:
+ 936 046a 80E0      		ldi r24,lo8(AddrMap)
+ 937 046c 90E0      		ldi r25,hi8(AddrMap)
+ 938               	.LVL65:
+ 939 046e 0E94 0000 		call llist_search
+ 940 0472 00C0      		rjmp .L128
+ 941               	.LVL66:
+ 942               	.L126:
+ 943               	.LM121:
+ 944 0474 672B      		or r22,r23
+ 945 0476 01F0      		breq .L132
+ 946               	.LVL67:
+ 947               	.LM122:
+ 948 0478 23E0      		ldi r18,lo8(3)
+ 949 047a 60E0      		ldi r22,lo8(gs(ib_cmpAddrMap))
+ 950 047c 70E0      		ldi r23,hi8(gs(ib_cmpAddrMap))
+ 951               	.LVL68:
+ 952 047e 80E0      		ldi r24,lo8(AddrMap)
+ 953 0480 90E0      		ldi r25,hi8(AddrMap)
+ 954               	.LVL69:
+ 955 0482 0E94 0000 		call llist_search
+ 956               	.LVL70:
+ 957 0486 00C0      		rjmp .L128
+ 958               	.LVL71:
+ 959               	.L132:
+ 960               	.LM123:
+ 961 0488 80E0      		ldi r24,lo8(0)
+ 962 048a 90E0      		ldi r25,hi8(0)
+ 963               	.LVL72:
+ 964               	.L128:
+ 965               	/* epilogue: frame size=2 */
+ 966 048c 2296      		adiw r28,2
+ 967 048e 0FB6      		in __tmp_reg__,__SREG__
+ 968 0490 F894      		cli
+ 969 0492 DEBF      		out __SP_H__,r29
+ 970 0494 0FBE      		out __SREG__,__tmp_reg__
+ 971 0496 CDBF      		out __SP_L__,r28
+ 972 0498 DF91      		pop r29
+ 973 049a CF91      		pop r28
+ 974 049c 0895      		ret
+ 975               	/* epilogue end (size=9) */
+ 976               	/* function ib_searchAddrEntry size 49 (30) */
+ 977               	.LFE6:
+ 979               	.global	ib_mappedToNwkAddr
+ 981               	ib_mappedToNwkAddr:
+ 982               	.LFB8:
+ 983               	.LM124:
+ 984               	/* prologue: frame size=0 */
+ 985 049e CF93      		push r28
+ 986 04a0 DF93      		push r29
+ 987               	/* prologue end (size=2) */
+ 988               	.LVL73:
+ 989 04a2 EC01      		movw r28,r24
+ 990               	.LM125:
+ 991 04a4 0E94 0000 		call nwk_getShortAddInNT
+ 992               	.LVL74:
+ 993               	.LM126:
+ 994 04a8 2FEF      		ldi r18,hi8(-1)
+ 995 04aa 8F3F      		cpi r24,lo8(-1)
+ 996 04ac 9207      		cpc r25,r18
+ 997 04ae 01F4      		brne .L136
+ 998               	.LBB5:
+ 999               	.LBB6:
+ 1000               	.LM127:
+ 1001 04b0 2097      		sbiw r28,0
+ 1002 04b2 01F0      		breq .L137
+ 1003               	.LBE6:
+ 1004               	.LM128:
+ 1005 04b4 23E0      		ldi r18,lo8(3)
+ 1006 04b6 AE01      		movw r20,r28
+ 1007 04b8 60E0      		ldi r22,lo8(gs(ib_cmpAddrMap))
+ 1008 04ba 70E0      		ldi r23,hi8(gs(ib_cmpAddrMap))
+ 1009 04bc 80E0      		ldi r24,lo8(AddrMap)
+ 1010 04be 90E0      		ldi r25,hi8(AddrMap)
+ 1011 04c0 0E94 0000 		call llist_search
+ 1012 04c4 FC01      		movw r30,r24
+ 1013               	.LBE5:
+ 1014               	.LM129:
+ 1015 04c6 892B      		or r24,r25
+ 1016 04c8 01F0      		breq .L137
+ 1017               	.LM130:
+ 1018 04ca 8281      		ldd r24,Z+2
+ 1019 04cc 9381      		ldd r25,Z+3
+ 1020 04ce 00C0      		rjmp .L136
+ 1021               	.L137:
+ 1022 04d0 8FEF      		ldi r24,lo8(-1)
+ 1023 04d2 9FEF      		ldi r25,hi8(-1)
+ 1024               	.L136:
+ 1025               	/* epilogue: frame size=0 */
+ 1026 04d4 DF91      		pop r29
+ 1027 04d6 CF91      		pop r28
+ 1028 04d8 0895      		ret
+ 1029               	/* epilogue end (size=3) */
+ 1030               	/* function ib_mappedToNwkAddr size 30 (25) */
+ 1031               	.LFE8:
+ 1033               	.global	ib_mappedToIEEEAddr
+ 1035               	ib_mappedToIEEEAddr:
+ 1036               	.LFB9:
+ 1037               	.LM131:
+ 1038               	/* prologue: frame size=2 */
+ 1039 04da 0F93      		push r16
+ 1040 04dc 1F93      		push r17
+ 1041 04de CF93      		push r28
+ 1042 04e0 DF93      		push r29
+ 1043 04e2 CDB7      		in r28,__SP_L__
+ 1044 04e4 DEB7      		in r29,__SP_H__
+ 1045 04e6 2297      		sbiw r28,2
+ 1046 04e8 0FB6      		in __tmp_reg__,__SREG__
+ 1047 04ea F894      		cli
+ 1048 04ec DEBF      		out __SP_H__,r29
+ 1049 04ee 0FBE      		out __SREG__,__tmp_reg__
+ 1050 04f0 CDBF      		out __SP_L__,r28
+ 1051               	/* prologue end (size=12) */
+ 1052               	.LVL75:
+ 1053 04f2 8C01      		movw r16,r24
+ 1054               	.LM132:
+ 1055 04f4 0E94 0000 		call nwk_getExAddInNT
+ 1056               	.LVL76:
+ 1057               	.LM133:
+ 1058 04f8 012B      		or r16,r17
+ 1059 04fa 01F4      		brne .L144
+ 1060               	.LM134:
+ 1061 04fc 1A82      		std Y+2,__zero_reg__
+ 1062 04fe 1982      		std Y+1,__zero_reg__
+ 1063               	.LVL77:
+ 1064               	.LBB9:
+ 1065               	.LM135:
+ 1066 0500 22E0      		ldi r18,lo8(2)
+ 1067 0502 AE01      		movw r20,r28
+ 1068 0504 4F5F      		subi r20,lo8(-(1))
+ 1069 0506 5F4F      		sbci r21,hi8(-(1))
+ 1070 0508 60E0      		ldi r22,lo8(gs(ib_cmpAddrMap))
+ 1071 050a 70E0      		ldi r23,hi8(gs(ib_cmpAddrMap))
+ 1072 050c 80E0      		ldi r24,lo8(AddrMap)
+ 1073 050e 90E0      		ldi r25,hi8(AddrMap)
+ 1074 0510 0E94 0000 		call llist_search
+ 1075               	.LBE9:
+ 1076               	.LM136:
+ 1077 0514 0097      		sbiw r24,0
+ 1078 0516 01F0      		breq .L148
+ 1079               	.LM137:
+ 1080 0518 0496      		adiw r24,4
+ 1081               	.LVL78:
+ 1082 051a 00C0      		rjmp .L144
+ 1083               	.LVL79:
+ 1084               	.L148:
+ 1085               	.LM138:
+ 1086 051c 80E0      		ldi r24,lo8(0)
+ 1087 051e 90E0      		ldi r25,hi8(0)
+ 1088               	.LVL80:
+ 1089               	.L144:
+ 1090               	.LVL81:
+ 1091               	/* epilogue: frame size=2 */
+ 1092 0520 2296      		adiw r28,2
+ 1093 0522 0FB6      		in __tmp_reg__,__SREG__
+ 1094 0524 F894      		cli
+ 1095 0526 DEBF      		out __SP_H__,r29
+ 1096 0528 0FBE      		out __SREG__,__tmp_reg__
+ 1097 052a CDBF      		out __SP_L__,r28
+ 1098 052c DF91      		pop r29
+ 1099 052e CF91      		pop r28
+ 1100 0530 1F91      		pop r17
+ 1101 0532 0F91      		pop r16
+ 1102 0534 0895      		ret
+ 1103               	/* epilogue end (size=11) */
+ 1104               	/* function ib_mappedToIEEEAddr size 46 (23) */
+ 1105               	.LFE9:
+ 1107               		.comm AddrMap,4,1
+ 1108               		.comm nNumofAddrEntry,1,1
+ 1109               		.comm BindingTbl,4,1
+ 1110               		.comm nNumofBindingEntry,1,1
+ 1238               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 aps_ib.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:20     .text:00000000 ib_cmpAddrMap
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:112    .text:0000007c ib_cmpBindingEntry
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:130    .text:00000082 ib_addCluster
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:221    .text:000000ee ib_removeCluster
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:319    .text:0000015e ib_searchBindingEntry
+                            *COM*:00000004 BindingTbl
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:383    .text:000001a8 ib_searchBindingLink
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:471    .text:0000021c ib_searchIterativeBindingEntry
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:551    .text:00000270 ib_removeBindingEntry
+                            *COM*:00000001 nNumofBindingEntry
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:588    .text:0000029a ib_addBindingEntry
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:700    .text:0000032e ib_addAddrEntry
+                            *COM*:00000004 AddrMap
+                            *COM*:00000001 nNumofAddrEntry
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:772    .text:00000392 ib_initBindingTbl
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:791    .text:000003a0 ib_initAddrMap
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:810    .text:000003ae ib_removeAddrEntry
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:903    .text:0000043e ib_searchAddrEntry
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:981    .text:0000049e ib_mappedToNwkAddr
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsbbaaa.s:1035   .text:000004da ib_mappedToIEEEAddr
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+llist_removeRec
+mem_freeMem
+mem_getMem
+llist_add
+llist_init
+llist_remove
+llist_search
+nwk_getShortAddInNT
+nwk_getExAddInNT

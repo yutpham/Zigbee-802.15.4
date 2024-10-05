@@ -1,0 +1,401 @@
+   1               		.file	"SRC03391_Device.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	SRC03391_InitVars
+  20               	SRC03391_InitVars:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LM2:
+  26 0000 1092 0000 		sts SRC03391_TransSeqNumber,__zero_reg__
+  27               	/* epilogue: frame size=0 */
+  28 0004 0895      		ret
+  29               	/* epilogue end (size=1) */
+  30               	/* function SRC03391_InitVars size 3 (2) */
+  31               	.LFE2:
+  33               	.global	SRC03391_ProcessMSGCmd
+  35               	SRC03391_ProcessMSGCmd:
+  36               	.LFB4:
+  37               	.LM3:
+  38               	/* prologue: frame size=0 */
+  39               	/* prologue end (size=0) */
+  40               	.LVL0:
+  41               	/* epilogue: frame size=0 */
+  42 0006 0895      		ret
+  43               	/* epilogue end (size=1) */
+  44               	/* function SRC03391_ProcessMSGCmd size 1 (0) */
+  45               	.LFE4:
+  47               	.global	SRC03391_RcvSETRESP
+  49               	SRC03391_RcvSETRESP:
+  50               	.LFB6:
+  51               	.LM4:
+  52               	/* prologue: frame size=0 */
+  53               	/* prologue end (size=0) */
+  54               	.LVL1:
+  55               	/* epilogue: frame size=0 */
+  56 0008 0895      		ret
+  57               	/* epilogue end (size=1) */
+  58               	/* function SRC03391_RcvSETRESP size 1 (0) */
+  59               	.LFE6:
+  61               	.global	SRC03391_RcvGET
+  63               	SRC03391_RcvGET:
+  64               	.LFB7:
+  65               	.LM5:
+  66               	/* prologue: frame size=0 */
+  67               	/* prologue end (size=0) */
+  68               	.LVL2:
+  69               	/* epilogue: frame size=0 */
+  70 000a 0895      		ret
+  71               	/* epilogue end (size=1) */
+  72               	/* function SRC03391_RcvGET size 1 (0) */
+  73               	.LFE7:
+  75               	.global	SRC03391_RcvGETRESP
+  77               	SRC03391_RcvGETRESP:
+  78               	.LFB8:
+  79               	.LM6:
+  80               	/* prologue: frame size=0 */
+  81               	/* prologue end (size=0) */
+  82               	.LVL3:
+  83               	/* epilogue: frame size=0 */
+  84 000c 0895      		ret
+  85               	/* epilogue end (size=1) */
+  86               	/* function SRC03391_RcvGETRESP size 1 (0) */
+  87               	.LFE8:
+  89               	.global	SRC03391_RcvEVENTRESP
+  91               	SRC03391_RcvEVENTRESP:
+  92               	.LFB10:
+  93               	.LM7:
+  94               	/* prologue: frame size=0 */
+  95               	/* prologue end (size=0) */
+  96               	.LVL4:
+  97               	/* epilogue: frame size=0 */
+  98 000e 0895      		ret
+  99               	/* epilogue end (size=1) */
+ 100               	/* function SRC03391_RcvEVENTRESP size 1 (0) */
+ 101               	.LFE10:
+ 103               	.global	SRC03391_Set_OnOffSRC
+ 105               	SRC03391_Set_OnOffSRC:
+ 106               	.LFB11:
+ 107               	.LM8:
+ 108               	/* prologue: frame size=1 */
+ 109 0010 8F92      		push r8
+ 110 0012 AF92      		push r10
+ 111 0014 BF92      		push r11
+ 112 0016 CF92      		push r12
+ 113 0018 EF92      		push r14
+ 114 001a FF92      		push r15
+ 115 001c 0F93      		push r16
+ 116 001e CF93      		push r28
+ 117 0020 DF93      		push r29
+ 118 0022 CDB7      		in r28,__SP_L__
+ 119 0024 DEB7      		in r29,__SP_H__
+ 120 0026 2197      		sbiw r28,1
+ 121 0028 0FB6      		in __tmp_reg__,__SREG__
+ 122 002a F894      		cli
+ 123 002c DEBF      		out __SP_H__,r29
+ 124 002e 0FBE      		out __SREG__,__tmp_reg__
+ 125 0030 CDBF      		out __SP_L__,r28
+ 126               	/* prologue end (size=17) */
+ 127               	.LVL5:
+ 128 0032 5C01      		movw r10,r24
+ 129 0034 FB01      		movw r30,r22
+ 130 0036 4983      		std Y+1,r20
+ 131               	.LM9:
+ 132 0038 9081      		ld r25,Z
+ 133 003a 8091 0000 		lds r24,SRC03391_TransSeqNumber
+ 134               	.LVL6:
+ 135 003e 8F5F      		subi r24,lo8(-(1))
+ 136 0040 8093 0000 		sts SRC03391_TransSeqNumber,r24
+ 137 0044 8150      		subi r24,lo8(-(-1))
+ 138 0046 1F92      		push __zero_reg__
+ 139 0048 9F93      		push r25
+ 140 004a 23E1      		ldi r18,lo8(19)
+ 141 004c 822E      		mov r8,r18
+ 142 004e 91E0      		ldi r25,lo8(1)
+ 143 0050 C92E      		mov r12,r25
+ 144 0052 7E01      		movw r14,r28
+ 145 0054 0894      		sec
+ 146 0056 E11C      		adc r14,__zero_reg__
+ 147 0058 F11C      		adc r15,__zero_reg__
+ 148 005a 00E0      		ldi r16,lo8(0)
+ 149 005c 20E0      		ldi r18,lo8(0)
+ 150 005e 30E0      		ldi r19,hi8(0)
+ 151 0060 41E0      		ldi r20,lo8(1)
+ 152               	.LVL7:
+ 153 0062 61E0      		ldi r22,lo8(1)
+ 154               	.LVL8:
+ 155 0064 0E94 0000 		call apf_sendSingleKVP
+ 156               	.LVL9:
+ 157 0068 0F90      		pop __tmp_reg__
+ 158 006a 0F90      		pop __tmp_reg__
+ 159               	.LM10:
+ 160 006c 9927      		clr r25
+ 161               	/* epilogue: frame size=1 */
+ 162 006e 2196      		adiw r28,1
+ 163 0070 0FB6      		in __tmp_reg__,__SREG__
+ 164 0072 F894      		cli
+ 165 0074 DEBF      		out __SP_H__,r29
+ 166 0076 0FBE      		out __SREG__,__tmp_reg__
+ 167 0078 CDBF      		out __SP_L__,r28
+ 168 007a DF91      		pop r29
+ 169 007c CF91      		pop r28
+ 170 007e 0F91      		pop r16
+ 171 0080 FF90      		pop r15
+ 172 0082 EF90      		pop r14
+ 173 0084 CF90      		pop r12
+ 174 0086 BF90      		pop r11
+ 175 0088 AF90      		pop r10
+ 176 008a 8F90      		pop r8
+ 177 008c 0895      		ret
+ 178               	/* epilogue end (size=16) */
+ 179               	/* function SRC03391_Set_OnOffSRC size 63 (30) */
+ 180               	.LFE11:
+ 182               	.global	SRC03391_RcvEVENT
+ 184               	SRC03391_RcvEVENT:
+ 185               	.LFB9:
+ 186               	.LM11:
+ 187               	/* prologue: frame size=0 */
+ 188 008e 8F92      		push r8
+ 189 0090 AF92      		push r10
+ 190 0092 BF92      		push r11
+ 191 0094 CF92      		push r12
+ 192 0096 EF92      		push r14
+ 193 0098 FF92      		push r15
+ 194 009a 0F93      		push r16
+ 195 009c CF93      		push r28
+ 196 009e DF93      		push r29
+ 197               	/* prologue end (size=9) */
+ 198               	.LVL10:
+ 199 00a0 DC01      		movw r26,r24
+ 200 00a2 FB01      		movw r30,r22
+ 201               	.LM12:
+ 202 00a4 EC01      		movw r28,r24
+ 203 00a6 2A81      		ldd r18,Y+2
+ 204 00a8 3B81      		ldd r19,Y+3
+ 205 00aa 4981      		ldd r20,Y+1
+ 206               	.LVL11:
+ 207 00ac 4295      		swap r20
+ 208 00ae 4F70      		andi r20,0x0f
+ 209 00b0 1F92      		push __zero_reg__
+ 210 00b2 8081      		ld r24,Z
+ 211               	.LVL12:
+ 212 00b4 8F93      		push r24
+ 213 00b6 8484      		ldd r8,Z+12
+ 214 00b8 3196      		adiw r30,1
+ 215 00ba 5F01      		movw r10,r30
+ 216 00bc CC24      		clr r12
+ 217 00be EE24      		clr r14
+ 218 00c0 FF24      		clr r15
+ 219 00c2 03E0      		ldi r16,lo8(3)
+ 220 00c4 6AE0      		ldi r22,lo8(10)
+ 221               	.LVL13:
+ 222 00c6 8C91      		ld r24,X
+ 223 00c8 0E94 0000 		call apf_sendSingleKVP
+ 224               	.LVL14:
+ 225 00cc 0F90      		pop __tmp_reg__
+ 226 00ce 0F90      		pop __tmp_reg__
+ 227               	/* epilogue: frame size=0 */
+ 228 00d0 DF91      		pop r29
+ 229 00d2 CF91      		pop r28
+ 230 00d4 0F91      		pop r16
+ 231 00d6 FF90      		pop r15
+ 232 00d8 EF90      		pop r14
+ 233 00da CF90      		pop r12
+ 234 00dc BF90      		pop r11
+ 235 00de AF90      		pop r10
+ 236 00e0 8F90      		pop r8
+ 237 00e2 0895      		ret
+ 238               	/* epilogue end (size=10) */
+ 239               	/* function SRC03391_RcvEVENT size 43 (24) */
+ 240               	.LFE9:
+ 242               	.global	SRC03391_RcvSET
+ 244               	SRC03391_RcvSET:
+ 245               	.LFB5:
+ 246               	.LM13:
+ 247               	/* prologue: frame size=0 */
+ 248 00e4 8F92      		push r8
+ 249 00e6 AF92      		push r10
+ 250 00e8 BF92      		push r11
+ 251 00ea CF92      		push r12
+ 252 00ec EF92      		push r14
+ 253 00ee FF92      		push r15
+ 254 00f0 0F93      		push r16
+ 255 00f2 CF93      		push r28
+ 256 00f4 DF93      		push r29
+ 257               	/* prologue end (size=9) */
+ 258               	.LVL15:
+ 259 00f6 DC01      		movw r26,r24
+ 260 00f8 FB01      		movw r30,r22
+ 261               	.LM14:
+ 262 00fa EC01      		movw r28,r24
+ 263 00fc 2A81      		ldd r18,Y+2
+ 264 00fe 3B81      		ldd r19,Y+3
+ 265 0100 4981      		ldd r20,Y+1
+ 266               	.LVL16:
+ 267 0102 4295      		swap r20
+ 268 0104 4F70      		andi r20,0x0f
+ 269 0106 1F92      		push __zero_reg__
+ 270 0108 8081      		ld r24,Z
+ 271               	.LVL17:
+ 272 010a 8F93      		push r24
+ 273 010c 8484      		ldd r8,Z+12
+ 274 010e 3196      		adiw r30,1
+ 275 0110 5F01      		movw r10,r30
+ 276 0112 CC24      		clr r12
+ 277 0114 EE24      		clr r14
+ 278 0116 FF24      		clr r15
+ 279 0118 03E0      		ldi r16,lo8(3)
+ 280 011a 69E0      		ldi r22,lo8(9)
+ 281               	.LVL18:
+ 282 011c 8C91      		ld r24,X
+ 283 011e 0E94 0000 		call apf_sendSingleKVP
+ 284               	.LVL19:
+ 285 0122 0F90      		pop __tmp_reg__
+ 286 0124 0F90      		pop __tmp_reg__
+ 287               	/* epilogue: frame size=0 */
+ 288 0126 DF91      		pop r29
+ 289 0128 CF91      		pop r28
+ 290 012a 0F91      		pop r16
+ 291 012c FF90      		pop r15
+ 292 012e EF90      		pop r14
+ 293 0130 CF90      		pop r12
+ 294 0132 BF90      		pop r11
+ 295 0134 AF90      		pop r10
+ 296 0136 8F90      		pop r8
+ 297 0138 0895      		ret
+ 298               	/* epilogue end (size=10) */
+ 299               	/* function SRC03391_RcvSET size 43 (24) */
+ 300               	.LFE5:
+ 302               	.global	SRC03391_ProcessKVPCmd
+ 304               	SRC03391_ProcessKVPCmd:
+ 305               	.LFB3:
+ 306               	.LM15:
+ 307               	/* prologue: frame size=8 */
+ 308 013a EF92      		push r14
+ 309 013c FF92      		push r15
+ 310 013e 0F93      		push r16
+ 311 0140 1F93      		push r17
+ 312 0142 CF93      		push r28
+ 313 0144 DF93      		push r29
+ 314 0146 CDB7      		in r28,__SP_L__
+ 315 0148 DEB7      		in r29,__SP_H__
+ 316 014a 2897      		sbiw r28,8
+ 317 014c 0FB6      		in __tmp_reg__,__SREG__
+ 318 014e F894      		cli
+ 319 0150 DEBF      		out __SP_H__,r29
+ 320 0152 0FBE      		out __SREG__,__tmp_reg__
+ 321 0154 CDBF      		out __SP_L__,r28
+ 322               	/* prologue end (size=14) */
+ 323               	.LVL20:
+ 324 0156 8C01      		movw r16,r24
+ 325               	.LM16:
+ 326 0158 41E0      		ldi r20,lo8(1)
+ 327 015a 7E01      		movw r14,r28
+ 328 015c 0894      		sec
+ 329 015e E11C      		adc r14,__zero_reg__
+ 330 0160 F11C      		adc r15,__zero_reg__
+ 331 0162 B701      		movw r22,r14
+ 332 0164 0E94 0000 		call apf_getKVPTrans
+ 333               	.LVL21:
+ 334 0168 8823      		tst r24
+ 335 016a 01F0      		breq .L27
+ 336               	.LM17:
+ 337 016c 8A81      		ldd r24,Y+2
+ 338 016e 8F70      		andi r24,lo8(15)
+ 339 0170 9927      		clr r25
+ 340 0172 8230      		cpi r24,2
+ 341 0174 9105      		cpc r25,__zero_reg__
+ 342 0176 01F0      		breq .L23
+ 343 0178 8330      		cpi r24,3
+ 344 017a 9105      		cpc r25,__zero_reg__
+ 345 017c 04F4      		brge .L26
+ 346 017e 0197      		sbiw r24,1
+ 347 0180 01F4      		brne .L27
+ 348 0182 00C0      		rjmp .L22
+ 349               	.L26:
+ 350 0184 8530      		cpi r24,5
+ 351 0186 9105      		cpc r25,__zero_reg__
+ 352 0188 01F0      		breq .L24
+ 353 018a 0697      		sbiw r24,6
+ 354 018c 01F4      		brne .L27
+ 355 018e 00C0      		rjmp .L25
+ 356               	.L24:
+ 357               	.LM18:
+ 358 0190 41E0      		ldi r20,lo8(1)
+ 359 0192 00C0      		rjmp .L28
+ 360               	.L22:
+ 361               	.LM19:
+ 362 0194 40E0      		ldi r20,lo8(0)
+ 363               	.L28:
+ 364 0196 B801      		movw r22,r16
+ 365 0198 C701      		movw r24,r14
+ 366 019a 0E94 0000 		call SRC03391_RcvSET
+ 367 019e 00C0      		rjmp .L27
+ 368               	.L23:
+ 369               	.LM20:
+ 370 01a0 40E0      		ldi r20,lo8(0)
+ 371 01a2 00C0      		rjmp .L29
+ 372               	.L25:
+ 373               	.LM21:
+ 374 01a4 41E0      		ldi r20,lo8(1)
+ 375               	.L29:
+ 376 01a6 B801      		movw r22,r16
+ 377 01a8 C701      		movw r24,r14
+ 378 01aa 0E94 0000 		call SRC03391_RcvEVENT
+ 379               	.L27:
+ 380               	/* epilogue: frame size=8 */
+ 381 01ae 2896      		adiw r28,8
+ 382 01b0 0FB6      		in __tmp_reg__,__SREG__
+ 383 01b2 F894      		cli
+ 384 01b4 DEBF      		out __SP_H__,r29
+ 385 01b6 0FBE      		out __SREG__,__tmp_reg__
+ 386 01b8 CDBF      		out __SP_L__,r28
+ 387 01ba DF91      		pop r29
+ 388 01bc CF91      		pop r28
+ 389 01be 1F91      		pop r17
+ 390 01c0 0F91      		pop r16
+ 391 01c2 FF90      		pop r15
+ 392 01c4 EF90      		pop r14
+ 393 01c6 0895      		ret
+ 394               	/* epilogue end (size=13) */
+ 395               	/* function SRC03391_ProcessKVPCmd size 73 (46) */
+ 396               	.LFE3:
+ 398               	.global	SRC03391_MandatoryOutClusters
+ 399               		.data
+ 402               	SRC03391_MandatoryOutClusters:
+ 403 0000 13        		.byte	19
+ 404               		.comm SRC03391_TransSeqNumber,1,1
+ 490               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 SRC03391_Device.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:20     .text:00000000 SRC03391_InitVars
+                            *COM*:00000001 SRC03391_TransSeqNumber
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:35     .text:00000006 SRC03391_ProcessMSGCmd
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:49     .text:00000008 SRC03391_RcvSETRESP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:63     .text:0000000a SRC03391_RcvGET
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:77     .text:0000000c SRC03391_RcvGETRESP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:91     .text:0000000e SRC03391_RcvEVENTRESP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:105    .text:00000010 SRC03391_Set_OnOffSRC
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:184    .text:0000008e SRC03391_RcvEVENT
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:244    .text:000000e4 SRC03391_RcvSET
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:304    .text:0000013a SRC03391_ProcessKVPCmd
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccE5aaaa.s:402    .data:00000000 SRC03391_MandatoryOutClusters
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+apf_sendSingleKVP
+apf_getKVPTrans

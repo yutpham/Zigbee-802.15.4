@@ -1,0 +1,1800 @@
+   1               		.file	"zdo.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	zdo_cmpClusterLists
+  20               	zdo_cmpClusterLists:
+  21               	.LFB7:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24 0000 FF92      		push r15
+  25 0002 0F93      		push r16
+  26 0004 1F93      		push r17
+  27 0006 CF93      		push r28
+  28 0008 DF93      		push r29
+  29               	/* prologue end (size=5) */
+  30               	.LVL0:
+  31 000a F82E      		mov r15,r24
+  32               	.LM2:
+  33 000c 8823      		tst r24
+  34 000e 01F0      		breq .L18
+  35               	.LM3:
+  36 0010 90E0      		ldi r25,lo8(0)
+  37               	.LVL1:
+  38 0012 B0E0      		ldi r27,lo8(0)
+  39               	.LVL2:
+  40               	.L8:
+  41               	.LM4:
+  42 0014 4423      		tst r20
+  43 0016 01F0      		breq .L7
+  44 0018 EB01      		movw r28,r22
+  45 001a CB0F      		add r28,r27
+  46 001c D11D      		adc r29,__zero_reg__
+  47 001e 50E0      		ldi r21,lo8(0)
+  48 0020 00C0      		rjmp .L4
+  49               	.LVL3:
+  50               	.L5:
+  51 0022 5F5F      		subi r21,lo8(-(1))
+  52 0024 4517      		cp r20,r21
+  53 0026 01F0      		breq .L7
+  54               	.LVL4:
+  55               	.L4:
+  56               	.LM5:
+  57 0028 F901      		movw r30,r18
+  58 002a E50F      		add r30,r21
+  59 002c F11D      		adc r31,__zero_reg__
+  60 002e A081      		ld r26,Z
+  61               	.LM6:
+  62 0030 8881      		ld r24,Y
+  63 0032 A817      		cp r26,r24
+  64 0034 01F4      		brne .L5
+  65               	.LM7:
+  66 0036 F801      		movw r30,r16
+  67 0038 E90F      		add r30,r25
+  68 003a F11D      		adc r31,__zero_reg__
+  69 003c A083      		st Z,r26
+  70 003e 9F5F      		subi r25,lo8(-(1))
+  71               	.LM8:
+  72 0040 5F5F      		subi r21,lo8(-(1))
+  73 0042 4517      		cp r20,r21
+  74 0044 01F4      		brne .L4
+  75               	.LVL5:
+  76               	.L7:
+  77               	.LM9:
+  78 0046 BF5F      		subi r27,lo8(-(1))
+  79 0048 FB16      		cp r15,r27
+  80 004a 01F4      		brne .L8
+  81 004c 892F      		mov r24,r25
+  82 004e 9927      		clr r25
+  83 0050 00C0      		rjmp .L10
+  84               	.LVL6:
+  85               	.L18:
+  86               	.LM10:
+  87 0052 80E0      		ldi r24,lo8(0)
+  88 0054 90E0      		ldi r25,hi8(0)
+  89               	.LVL7:
+  90               	.L10:
+  91               	/* epilogue: frame size=0 */
+  92 0056 DF91      		pop r29
+  93 0058 CF91      		pop r28
+  94 005a 1F91      		pop r17
+  95 005c 0F91      		pop r16
+  96 005e FF90      		pop r15
+  97 0060 0895      		ret
+  98               	/* epilogue end (size=6) */
+  99               	/* function zdo_cmpClusterLists size 49 (38) */
+ 100               	.LFE7:
+ 102               	.global	zdo_processBind_UnBind
+ 104               	zdo_processBind_UnBind:
+ 105               	.LFB9:
+ 106               	.LM11:
+ 107               	/* prologue: frame size=0 */
+ 108 0062 CF93      		push r28
+ 109 0064 DF93      		push r29
+ 110               	/* prologue end (size=2) */
+ 111               	.LVL8:
+ 112 0066 DC01      		movw r26,r24
+ 113 0068 EB01      		movw r28,r22
+ 114               	.LM12:
+ 115 006a 20E0      		ldi r18,lo8(0)
+ 116 006c FC01      		movw r30,r24
+ 117 006e 4281      		ldd r20,Z+2
+ 118 0070 5381      		ldd r21,Z+3
+ 119 0072 FA01      		movw r30,r20
+ 120 0074 8185      		ldd r24,Z+9
+ 121               	.LVL9:
+ 122 0076 8132      		cpi r24,lo8(33)
+ 123 0078 01F4      		brne .L20
+ 124               	.LVL10:
+ 125               	.LM13:
+ 126 007a 21E0      		ldi r18,lo8(1)
+ 127               	.L20:
+ 128 007c 44E8      		ldi r20,lo8(-124)
+ 129 007e 6C91      		ld r22,X
+ 130 0080 CE01      		movw r24,r28
+ 131 0082 0E94 0000 		call zdp_BindUnBindRes
+ 132               	.LVL11:
+ 133               	/* epilogue: frame size=0 */
+ 134 0086 DF91      		pop r29
+ 135 0088 CF91      		pop r28
+ 136 008a 0895      		ret
+ 137               	/* epilogue end (size=3) */
+ 138               	/* function zdo_processBind_UnBind size 21 (16) */
+ 139               	.LFE9:
+ 141               	.global	zdo_processEDBindTimeout
+ 143               	zdo_processEDBindTimeout:
+ 144               	.LFB6:
+ 145               	.LM14:
+ 146               	/* prologue: frame size=10 */
+ 147 008c CF93      		push r28
+ 148 008e DF93      		push r29
+ 149 0090 CDB7      		in r28,__SP_L__
+ 150 0092 DEB7      		in r29,__SP_H__
+ 151 0094 2A97      		sbiw r28,10
+ 152 0096 0FB6      		in __tmp_reg__,__SREG__
+ 153 0098 F894      		cli
+ 154 009a DEBF      		out __SP_H__,r29
+ 155 009c 0FBE      		out __SREG__,__tmp_reg__
+ 156 009e CDBF      		out __SP_L__,r28
+ 157               	/* prologue end (size=10) */
+ 158               	.LVL12:
+ 159               	.LM15:
+ 160 00a0 E091 0000 		lds r30,pCurrBindReq
+ 161 00a4 F091 0000 		lds r31,(pCurrBindReq)+1
+ 162 00a8 8681      		ldd r24,Z+6
+ 163 00aa 9781      		ldd r25,Z+7
+ 164               	.LVL13:
+ 165 00ac 9B83      		std Y+3,r25
+ 166 00ae 8A83      		std Y+2,r24
+ 167               	.LM16:
+ 168 00b0 8085      		ldd r24,Z+8
+ 169 00b2 8A87      		std Y+10,r24
+ 170               	.LM17:
+ 171 00b4 81E0      		ldi r24,lo8(1)
+ 172 00b6 8983      		std Y+1,r24
+ 173               	.LM18:
+ 174 00b8 4485      		ldd r20,Z+12
+ 175 00ba 6385      		ldd r22,Z+11
+ 176 00bc CE01      		movw r24,r28
+ 177 00be 0196      		adiw r24,1
+ 178 00c0 0E94 0000 		call zdp_EDBindRes
+ 179               	.LM19:
+ 180 00c4 8091 0000 		lds r24,pCurrBindReq
+ 181 00c8 9091 0000 		lds r25,(pCurrBindReq)+1
+ 182 00cc 0E94 0000 		call mem_freeMem
+ 183               	.LM20:
+ 184 00d0 1092 0000 		sts (pCurrBindReq)+1,__zero_reg__
+ 185 00d4 1092 0000 		sts pCurrBindReq,__zero_reg__
+ 186               	/* epilogue: frame size=10 */
+ 187 00d8 2A96      		adiw r28,10
+ 188 00da 0FB6      		in __tmp_reg__,__SREG__
+ 189 00dc F894      		cli
+ 190 00de DEBF      		out __SP_H__,r29
+ 191 00e0 0FBE      		out __SREG__,__tmp_reg__
+ 192 00e2 CDBF      		out __SP_L__,r28
+ 193 00e4 DF91      		pop r29
+ 194 00e6 CF91      		pop r28
+ 195 00e8 0895      		ret
+ 196               	/* epilogue end (size=9) */
+ 197               	/* function zdo_processEDBindTimeout size 47 (28) */
+ 198               	.LFE6:
+ 200               	.global	zdo_processEDBind
+ 202               	zdo_processEDBind:
+ 203               	.LFB8:
+ 204               	.LM21:
+ 205               	/* prologue: frame size=4 */
+ 206 00ea 7F92      		push r7
+ 207 00ec 8F92      		push r8
+ 208 00ee 9F92      		push r9
+ 209 00f0 AF92      		push r10
+ 210 00f2 BF92      		push r11
+ 211 00f4 CF92      		push r12
+ 212 00f6 DF92      		push r13
+ 213 00f8 EF92      		push r14
+ 214 00fa FF92      		push r15
+ 215 00fc 0F93      		push r16
+ 216 00fe 1F93      		push r17
+ 217 0100 CF93      		push r28
+ 218 0102 DF93      		push r29
+ 219 0104 CDB7      		in r28,__SP_L__
+ 220 0106 DEB7      		in r29,__SP_H__
+ 221 0108 2497      		sbiw r28,4
+ 222 010a 0FB6      		in __tmp_reg__,__SREG__
+ 223 010c F894      		cli
+ 224 010e DEBF      		out __SP_H__,r29
+ 225 0110 0FBE      		out __SREG__,__tmp_reg__
+ 226 0112 CDBF      		out __SP_L__,r28
+ 227               	/* prologue end (size=21) */
+ 228               	.LVL14:
+ 229 0114 5C01      		movw r10,r24
+ 230 0116 4B01      		movw r8,r22
+ 231               	.LM22:
+ 232 0118 A091 0000 		lds r26,pCurrBindReq
+ 233 011c B091 0000 		lds r27,(pCurrBindReq)+1
+ 234 0120 1097      		sbiw r26,0
+ 235 0122 01F4      		brne .+2
+ 236 0124 00C0      		rjmp .L25
+ 237               	.LVL15:
+ 238               	.LM23:
+ 239 0126 FD01      		movw r30,r26
+ 240 0128 2681      		ldd r18,Z+6
+ 241 012a 3781      		ldd r19,Z+7
+ 242 012c FB01      		movw r30,r22
+ 243 012e 8181      		ldd r24,Z+1
+ 244 0130 9281      		ldd r25,Z+2
+ 245 0132 2817      		cp r18,r24
+ 246 0134 3907      		cpc r19,r25
+ 247 0136 01F4      		brne .+2
+ 248 0138 00C0      		rjmp .L65
+ 249               	.LVL16:
+ 250               	.LM24:
+ 251 013a FD01      		movw r30,r26
+ 252 013c 9281      		ldd r25,Z+2
+ 253 013e 8581      		ldd r24,Z+5
+ 254 0140 9817      		cp r25,r24
+ 255 0142 00F0      		brlo .+2
+ 256 0144 00C0      		rjmp .L29
+ 257 0146 9927      		clr r25
+ 258 0148 0E94 0000 		call mem_getMem
+ 259               	.LVL17:
+ 260 014c 6C01      		movw r12,r24
+ 261               	.LM25:
+ 262 014e 892B      		or r24,r25
+ 263 0150 01F4      		brne .+2
+ 264 0152 00C0      		rjmp .L70
+ 265               	.L73:
+ 266               	.LM26:
+ 267 0154 F501      		movw r30,r10
+ 268 0156 0281      		ldd r16,Z+2
+ 269 0158 1381      		ldd r17,Z+3
+ 270 015a F801      		movw r30,r16
+ 271 015c 3581      		ldd r19,Z+5
+ 272               	.LVL18:
+ 273               	.LM27:
+ 274 015e A801      		movw r20,r16
+ 275               	.LVL19:
+ 276 0160 4A5F      		subi r20,lo8(-(6))
+ 277 0162 5F4F      		sbci r21,hi8(-(6))
+ 278 0164 A091 0000 		lds r26,pCurrBindReq
+ 279 0168 B091 0000 		lds r27,(pCurrBindReq)+1
+ 280 016c FD01      		movw r30,r26
+ 281 016e E380      		ldd r14,Z+3
+ 282 0170 F480      		ldd r15,Z+4
+ 283               	.LVL20:
+ 284 0172 7581      		ldd r23,Z+5
+ 285               	.LBB8:
+ 286               	.LBB9:
+ 287               	.LM28:
+ 288 0174 7723      		tst r23
+ 289 0176 01F0      		breq .L34
+ 290 0178 00E0      		ldi r16,lo8(0)
+ 291               	.LVL21:
+ 292 017a 60E0      		ldi r22,lo8(0)
+ 293               	.LVL22:
+ 294               	.L36:
+ 295               	.LM29:
+ 296 017c 3323      		tst r19
+ 297 017e 01F0      		breq .L40
+ 298 0180 D701      		movw r26,r14
+ 299 0182 A60F      		add r26,r22
+ 300 0184 B11D      		adc r27,__zero_reg__
+ 301 0186 90E0      		ldi r25,lo8(0)
+ 302 0188 00C0      		rjmp .L37
+ 303               	.L38:
+ 304 018a 9F5F      		subi r25,lo8(-(1))
+ 305 018c 3917      		cp r19,r25
+ 306 018e 01F0      		breq .L40
+ 307               	.L37:
+ 308               	.LM30:
+ 309 0190 FA01      		movw r30,r20
+ 310 0192 E90F      		add r30,r25
+ 311 0194 F11D      		adc r31,__zero_reg__
+ 312 0196 2081      		ld r18,Z
+ 313               	.LM31:
+ 314 0198 8C91      		ld r24,X
+ 315 019a 2817      		cp r18,r24
+ 316 019c 01F4      		brne .L38
+ 317               	.LM32:
+ 318 019e F601      		movw r30,r12
+ 319 01a0 E00F      		add r30,r16
+ 320 01a2 F11D      		adc r31,__zero_reg__
+ 321 01a4 2083      		st Z,r18
+ 322 01a6 0F5F      		subi r16,lo8(-(1))
+ 323               	.LM33:
+ 324 01a8 9F5F      		subi r25,lo8(-(1))
+ 325 01aa 3917      		cp r19,r25
+ 326 01ac 01F4      		brne .L37
+ 327               	.L40:
+ 328               	.LM34:
+ 329 01ae 6F5F      		subi r22,lo8(-(1))
+ 330 01b0 7617      		cp r23,r22
+ 331 01b2 01F4      		brne .L36
+ 332               	.LBE9:
+ 333               	.LBE8:
+ 334               	.LM35:
+ 335 01b4 1127      		clr r17
+ 336               	.LM36:
+ 337 01b6 0023      		tst r16
+ 338 01b8 01F0      		breq .+2
+ 339 01ba 00C0      		rjmp .L71
+ 340 01bc A091 0000 		lds r26,pCurrBindReq
+ 341 01c0 B091 0000 		lds r27,(pCurrBindReq)+1
+ 342 01c4 F501      		movw r30,r10
+ 343 01c6 0281      		ldd r16,Z+2
+ 344 01c8 1381      		ldd r17,Z+3
+ 345               	.LVL23:
+ 346               	.L34:
+ 347               	.LM37:
+ 348 01ca F801      		movw r30,r16
+ 349 01cc 8581      		ldd r24,Z+5
+ 350               	.LVL24:
+ 351               	.LM38:
+ 352 01ce 080F      		add r16,r24
+ 353 01d0 111D      		adc r17,__zero_reg__
+ 354 01d2 F801      		movw r30,r16
+ 355 01d4 7681      		ldd r23,Z+6
+ 356               	.LVL25:
+ 357               	.LM39:
+ 358 01d6 4D91      		ld r20,X+
+ 359 01d8 5C91      		ld r21,X
+ 360 01da 1197      		sbiw r26,1
+ 361               	.LVL26:
+ 362 01dc FD01      		movw r30,r26
+ 363 01de 3281      		ldd r19,Z+2
+ 364               	.LVL27:
+ 365 01e0 27E0      		ldi r18,lo8(7)
+ 366 01e2 E22E      		mov r14,r18
+ 367 01e4 F12C      		mov r15,__zero_reg__
+ 368               	.LVL28:
+ 369 01e6 E00E      		add r14,r16
+ 370 01e8 F11E      		adc r15,r17
+ 371               	.LBB10:
+ 372               	.LBB11:
+ 373               	.LM40:
+ 374 01ea 7723      		tst r23
+ 375 01ec 01F0      		breq .L48
+ 376 01ee 00E0      		ldi r16,lo8(0)
+ 377               	.LVL29:
+ 378 01f0 60E0      		ldi r22,lo8(0)
+ 379               	.LVL30:
+ 380               	.L50:
+ 381               	.LM41:
+ 382 01f2 3323      		tst r19
+ 383 01f4 01F0      		breq .L54
+ 384 01f6 D701      		movw r26,r14
+ 385 01f8 A60F      		add r26,r22
+ 386 01fa B11D      		adc r27,__zero_reg__
+ 387 01fc 90E0      		ldi r25,lo8(0)
+ 388               	.LVL31:
+ 389 01fe 00C0      		rjmp .L51
+ 390               	.LVL32:
+ 391               	.L52:
+ 392 0200 9F5F      		subi r25,lo8(-(1))
+ 393 0202 3917      		cp r19,r25
+ 394 0204 01F0      		breq .L54
+ 395               	.LVL33:
+ 396               	.L51:
+ 397               	.LM42:
+ 398 0206 FA01      		movw r30,r20
+ 399 0208 E90F      		add r30,r25
+ 400 020a F11D      		adc r31,__zero_reg__
+ 401 020c 2081      		ld r18,Z
+ 402               	.LM43:
+ 403 020e 8C91      		ld r24,X
+ 404               	.LVL34:
+ 405 0210 2817      		cp r18,r24
+ 406 0212 01F4      		brne .L52
+ 407               	.LM44:
+ 408 0214 F601      		movw r30,r12
+ 409 0216 E00F      		add r30,r16
+ 410 0218 F11D      		adc r31,__zero_reg__
+ 411 021a 2083      		st Z,r18
+ 412 021c 0F5F      		subi r16,lo8(-(1))
+ 413               	.LM45:
+ 414 021e 9F5F      		subi r25,lo8(-(1))
+ 415 0220 3917      		cp r19,r25
+ 416 0222 01F4      		brne .L51
+ 417               	.LVL35:
+ 418               	.L54:
+ 419               	.LM46:
+ 420 0224 6F5F      		subi r22,lo8(-(1))
+ 421 0226 7617      		cp r23,r22
+ 422 0228 01F4      		brne .L50
+ 423               	.LBE11:
+ 424               	.LBE10:
+ 425               	.LM47:
+ 426 022a 1127      		clr r17
+ 427               	.LM48:
+ 428 022c 0023      		tst r16
+ 429 022e 01F0      		breq .+2
+ 430 0230 00C0      		rjmp .L72
+ 431               	.LVL36:
+ 432               	.L48:
+ 433               	.LM49:
+ 434 0232 C601      		movw r24,r12
+ 435               	.LVL37:
+ 436 0234 0E94 0000 		call mem_freeMem
+ 437               	.LVL38:
+ 438               	.LM50:
+ 439 0238 E091 0000 		lds r30,pCurrBindReq
+ 440 023c F091 0000 		lds r31,(pCurrBindReq)+1
+ 441 0240 7486      		std Z+12,r7
+ 442               	.LM51:
+ 443 0242 472D      		mov r20,r7
+ 444 0244 F501      		movw r30,r10
+ 445 0246 6081      		ld r22,Z
+ 446 0248 C401      		movw r24,r8
+ 447 024a 0E94 0000 		call zdp_EDBindRes
+ 448               	.LM52:
+ 449 024e 7720      		tst r7
+ 450 0250 01F0      		breq .+2
+ 451 0252 00C0      		rjmp .L65
+ 452               	.LVL39:
+ 453               	.L62:
+ 454               	.LM53:
+ 455 0254 83B1      		in r24,35-0x20
+ 456 0256 98E0      		ldi r25,lo8(8)
+ 457 0258 8927      		eor r24,r25
+ 458 025a 83B9      		out 35-0x20,r24
+ 459 025c 00C0      		rjmp .L65
+ 460               	.LVL40:
+ 461               	.L29:
+ 462               	.LM54:
+ 463 025e 892F      		mov r24,r25
+ 464 0260 9927      		clr r25
+ 465 0262 0E94 0000 		call mem_getMem
+ 466               	.LVL41:
+ 467 0266 6C01      		movw r12,r24
+ 468               	.LM55:
+ 469 0268 892B      		or r24,r25
+ 470 026a 01F0      		breq .+2
+ 471 026c 00C0      		rjmp .L73
+ 472               	.LVL42:
+ 473               	.L70:
+ 474               	.LM56:
+ 475 026e E091 0000 		lds r30,pCurrBindReq
+ 476 0272 F091 0000 		lds r31,(pCurrBindReq)+1
+ 477 0276 87E8      		ldi r24,lo8(-121)
+ 478 0278 8487      		std Z+12,r24
+ 479               	.LM57:
+ 480 027a 47E8      		ldi r20,lo8(-121)
+ 481 027c F501      		movw r30,r10
+ 482 027e 6081      		ld r22,Z
+ 483 0280 C401      		movw r24,r8
+ 484 0282 0E94 0000 		call zdp_EDBindRes
+ 485 0286 00C0      		rjmp .L65
+ 486               	.LVL43:
+ 487               	.L71:
+ 488               	.LM58:
+ 489 0288 F501      		movw r30,r10
+ 490 028a A281      		ldd r26,Z+2
+ 491 028c B381      		ldd r27,Z+3
+ 492 028e FD01      		movw r30,r26
+ 493 0290 2281      		ldd r18,Z+2
+ 494               	.LVL44:
+ 495 0292 A091 0000 		lds r26,pCurrBindReq
+ 496 0296 B091 0000 		lds r27,(pCurrBindReq)+1
+ 497 029a F401      		movw r30,r8
+ 498 029c 4181      		ldd r20,Z+1
+ 499 029e 5281      		ldd r21,Z+2
+ 500               	.LVL45:
+ 501 02a0 FD01      		movw r30,r26
+ 502 02a2 6085      		ldd r22,Z+8
+ 503               	.LVL46:
+ 504 02a4 8681      		ldd r24,Z+6
+ 505 02a6 9781      		ldd r25,Z+7
+ 506 02a8 0E94 0000 		call ib_searchBindingEntry
+ 507               	.LVL47:
+ 508               	.LVL48:
+ 509               	.LM59:
+ 510 02ac 0097      		sbiw r24,0
+ 511 02ae 01F4      		brne .+2
+ 512 02b0 00C0      		rjmp .L44
+ 513               	.LM60:
+ 514 02b2 0E94 0000 		call ib_removeBindingEntry
+ 515               	.LVL49:
+ 516 02b6 7724      		clr r7
+ 517               	.LVL50:
+ 518 02b8 A091 0000 		lds r26,pCurrBindReq
+ 519 02bc B091 0000 		lds r27,(pCurrBindReq)+1
+ 520 02c0 F501      		movw r30,r10
+ 521 02c2 0281      		ldd r16,Z+2
+ 522 02c4 1381      		ldd r17,Z+3
+ 523               	.LVL51:
+ 524 02c6 00C0      		rjmp .L34
+ 525               	.LVL52:
+ 526               	.L72:
+ 527               	.LM61:
+ 528 02c8 A091 0000 		lds r26,pCurrBindReq
+ 529 02cc B091 0000 		lds r27,(pCurrBindReq)+1
+ 530 02d0 F501      		movw r30,r10
+ 531 02d2 8281      		ldd r24,Z+2
+ 532 02d4 9381      		ldd r25,Z+3
+ 533               	.LVL53:
+ 534 02d6 FC01      		movw r30,r24
+ 535 02d8 6281      		ldd r22,Z+2
+ 536               	.LVL54:
+ 537 02da FD01      		movw r30,r26
+ 538 02dc 4681      		ldd r20,Z+6
+ 539 02de 5781      		ldd r21,Z+7
+ 540               	.LVL55:
+ 541 02e0 2085      		ldd r18,Z+8
+ 542               	.LVL56:
+ 543 02e2 F401      		movw r30,r8
+ 544 02e4 8181      		ldd r24,Z+1
+ 545 02e6 9281      		ldd r25,Z+2
+ 546 02e8 0E94 0000 		call ib_searchBindingEntry
+ 547               	.LVL57:
+ 548               	.LVL58:
+ 549               	.LM62:
+ 550 02ec 0097      		sbiw r24,0
+ 551 02ee 01F4      		brne .+2
+ 552 02f0 00C0      		rjmp .L58
+ 553               	.LM63:
+ 554 02f2 0E94 0000 		call ib_removeBindingEntry
+ 555               	.LVL59:
+ 556               	.LVL60:
+ 557               	.L60:
+ 558               	.LM64:
+ 559 02f6 C601      		movw r24,r12
+ 560 02f8 0E94 0000 		call mem_freeMem
+ 561               	.LM65:
+ 562 02fc E091 0000 		lds r30,pCurrBindReq
+ 563 0300 F091 0000 		lds r31,(pCurrBindReq)+1
+ 564 0304 1486      		std Z+12,__zero_reg__
+ 565               	.LM66:
+ 566 0306 40E0      		ldi r20,lo8(0)
+ 567 0308 F501      		movw r30,r10
+ 568 030a 6081      		ld r22,Z
+ 569 030c C401      		movw r24,r8
+ 570 030e 0E94 0000 		call zdp_EDBindRes
+ 571 0312 00C0      		rjmp .L62
+ 572               	.LVL61:
+ 573               	.L25:
+ 574               	.LM67:
+ 575 0314 FC01      		movw r30,r24
+ 576 0316 8181      		ldd r24,Z+1
+ 577 0318 9927      		clr r25
+ 578 031a 0696      		adiw r24,6
+ 579 031c 0E94 0000 		call mem_getMem
+ 580 0320 DC01      		movw r26,r24
+ 581 0322 9093 0000 		sts (pCurrBindReq)+1,r25
+ 582 0326 8093 0000 		sts pCurrBindReq,r24
+ 583               	.LM68:
+ 584 032a 892B      		or r24,r25
+ 585 032c 01F4      		brne .+2
+ 586 032e 00C0      		rjmp .L63
+ 587               	.LM69:
+ 588 0330 F501      		movw r30,r10
+ 589 0332 8281      		ldd r24,Z+2
+ 590 0334 9381      		ldd r25,Z+3
+ 591 0336 FC01      		movw r30,r24
+ 592 0338 8281      		ldd r24,Z+2
+ 593 033a FD01      		movw r30,r26
+ 594 033c 8087      		std Z+8,r24
+ 595               	.LM70:
+ 596 033e A091 0000 		lds r26,pCurrBindReq
+ 597 0342 B091 0000 		lds r27,(pCurrBindReq)+1
+ 598 0346 F501      		movw r30,r10
+ 599 0348 2281      		ldd r18,Z+2
+ 600 034a 3381      		ldd r19,Z+3
+ 601 034c F901      		movw r30,r18
+ 602 034e 8381      		ldd r24,Z+3
+ 603 0350 9481      		ldd r25,Z+4
+ 604 0352 FD01      		movw r30,r26
+ 605 0354 9287      		std Z+10,r25
+ 606 0356 8187      		std Z+9,r24
+ 607               	.LM71:
+ 608 0358 F901      		movw r30,r18
+ 609 035a 8581      		ldd r24,Z+5
+ 610 035c FD01      		movw r30,r26
+ 611 035e 8283      		std Z+2,r24
+ 612               	.LM72:
+ 613 0360 A091 0000 		lds r26,pCurrBindReq
+ 614 0364 B091 0000 		lds r27,(pCurrBindReq)+1
+ 615 0368 FD01      		movw r30,r26
+ 616 036a 8281      		ldd r24,Z+2
+ 617 036c F501      		movw r30,r10
+ 618 036e 2281      		ldd r18,Z+2
+ 619 0370 3381      		ldd r19,Z+3
+ 620 0372 280F      		add r18,r24
+ 621 0374 311D      		adc r19,__zero_reg__
+ 622 0376 F901      		movw r30,r18
+ 623 0378 8681      		ldd r24,Z+6
+ 624 037a FD01      		movw r30,r26
+ 625 037c 8583      		std Z+5,r24
+ 626               	.LM73:
+ 627 037e E091 0000 		lds r30,pCurrBindReq
+ 628 0382 F091 0000 		lds r31,(pCurrBindReq)+1
+ 629 0386 CF01      		movw r24,r30
+ 630 0388 0D96      		adiw r24,13
+ 631 038a 9183      		std Z+1,r25
+ 632 038c 8083      		st Z,r24
+ 633               	.LM74:
+ 634 038e 4281      		ldd r20,Z+2
+ 635 0390 5527      		clr r21
+ 636 0392 9A01      		movw r18,r20
+ 637 0394 2E0F      		add r18,r30
+ 638 0396 3F1F      		adc r19,r31
+ 639 0398 235F      		subi r18,lo8(-(13))
+ 640 039a 3F4F      		sbci r19,hi8(-(13))
+ 641 039c 3483      		std Z+4,r19
+ 642 039e 2383      		std Z+3,r18
+ 643               	.LM75:
+ 644 03a0 F501      		movw r30,r10
+ 645 03a2 6281      		ldd r22,Z+2
+ 646 03a4 7381      		ldd r23,Z+3
+ 647 03a6 6A5F      		subi r22,lo8(-(6))
+ 648 03a8 7F4F      		sbci r23,hi8(-(6))
+ 649 03aa 0E94 0000 		call mem_cpy
+ 650               	.LM76:
+ 651 03ae A091 0000 		lds r26,pCurrBindReq
+ 652 03b2 B091 0000 		lds r27,(pCurrBindReq)+1
+ 653 03b6 FD01      		movw r30,r26
+ 654 03b8 4581      		ldd r20,Z+5
+ 655 03ba 5527      		clr r21
+ 656 03bc 8281      		ldd r24,Z+2
+ 657 03be F501      		movw r30,r10
+ 658 03c0 6281      		ldd r22,Z+2
+ 659 03c2 7381      		ldd r23,Z+3
+ 660 03c4 680F      		add r22,r24
+ 661 03c6 711D      		adc r23,__zero_reg__
+ 662 03c8 695F      		subi r22,lo8(-(7))
+ 663 03ca 7F4F      		sbci r23,hi8(-(7))
+ 664 03cc FD01      		movw r30,r26
+ 665 03ce 8381      		ldd r24,Z+3
+ 666 03d0 9481      		ldd r25,Z+4
+ 667 03d2 0E94 0000 		call mem_cpy
+ 668               	.LM77:
+ 669 03d6 A091 0000 		lds r26,pCurrBindReq
+ 670 03da B091 0000 		lds r27,(pCurrBindReq)+1
+ 671 03de F401      		movw r30,r8
+ 672 03e0 8181      		ldd r24,Z+1
+ 673 03e2 9281      		ldd r25,Z+2
+ 674 03e4 FD01      		movw r30,r26
+ 675 03e6 9783      		std Z+7,r25
+ 676 03e8 8683      		std Z+6,r24
+ 677               	.LM78:
+ 678 03ea F501      		movw r30,r10
+ 679 03ec 8081      		ld r24,Z
+ 680 03ee FD01      		movw r30,r26
+ 681 03f0 8387      		std Z+11,r24
+ 682               	.LM79:
+ 683 03f2 E091 0000 		lds r30,pCurrBindReq
+ 684 03f6 F091 0000 		lds r31,(pCurrBindReq)+1
+ 685 03fa 85E8      		ldi r24,lo8(-123)
+ 686 03fc 8487      		std Z+12,r24
+ 687               	.LM80:
+ 688 03fe 8AE2      		ldi r24,lo8(42)
+ 689 0400 8983      		std Y+1,r24
+ 690               	.LM81:
+ 691 0402 1A82      		std Y+2,__zero_reg__
+ 692               	.LM82:
+ 693 0404 1C82      		std Y+4,__zero_reg__
+ 694 0406 1B82      		std Y+3,__zero_reg__
+ 695               	.LM83:
+ 696 0408 04E0      		ldi r16,lo8(4)
+ 697 040a 10E0      		ldi r17,hi8(4)
+ 698 040c 20E0      		ldi r18,lo8(0)
+ 699 040e 30E0      		ldi r19,hi8(0)
+ 700 0410 40E1      		ldi r20,lo8(10000)
+ 701 0412 57E2      		ldi r21,hi8(10000)
+ 702 0414 60E0      		ldi r22,hlo8(10000)
+ 703 0416 70E0      		ldi r23,hhi8(10000)
+ 704 0418 CE01      		movw r24,r28
+ 705 041a 0196      		adiw r24,1
+ 706 041c 0E94 0000 		call mtimer_creatTmr
+ 707 0420 00C0      		rjmp .L65
+ 708               	.L63:
+ 709               	.LM84:
+ 710 0422 20E0      		ldi r18,lo8(0)
+ 711 0424 30E0      		ldi r19,hi8(0)
+ 712 0426 40E0      		ldi r20,lo8(0)
+ 713 0428 50E0      		ldi r21,hi8(0)
+ 714 042a 60E0      		ldi r22,lo8(0)
+ 715 042c 70E0      		ldi r23,hi8(0)
+ 716 042e 82E0      		ldi r24,lo8(2)
+ 717 0430 90E0      		ldi r25,hi8(2)
+ 718 0432 0E94 0000 		call err
+ 719 0436 00C0      		rjmp .L65
+ 720               	.LVL62:
+ 721               	.L44:
+ 722               	.LM85:
+ 723 0438 F501      		movw r30,r10
+ 724 043a A281      		ldd r26,Z+2
+ 725 043c B381      		ldd r27,Z+3
+ 726 043e FD01      		movw r30,r26
+ 727 0440 2281      		ldd r18,Z+2
+ 728 0442 A091 0000 		lds r26,pCurrBindReq
+ 729 0446 B091 0000 		lds r27,(pCurrBindReq)+1
+ 730 044a F401      		movw r30,r8
+ 731 044c 4181      		ldd r20,Z+1
+ 732 044e 5281      		ldd r21,Z+2
+ 733 0450 7601      		movw r14,r12
+ 734               	.LVL63:
+ 735 0452 FD01      		movw r30,r26
+ 736 0454 6085      		ldd r22,Z+8
+ 737 0456 8681      		ldd r24,Z+6
+ 738 0458 9781      		ldd r25,Z+7
+ 739               	.LVL64:
+ 740 045a 0E94 0000 		call ib_addBindingEntry
+ 741 045e 8823      		tst r24
+ 742 0460 01F0      		breq .L46
+ 743 0462 7724      		clr r7
+ 744               	.LVL65:
+ 745 0464 A091 0000 		lds r26,pCurrBindReq
+ 746 0468 B091 0000 		lds r27,(pCurrBindReq)+1
+ 747 046c F501      		movw r30,r10
+ 748 046e 0281      		ldd r16,Z+2
+ 749 0470 1381      		ldd r17,Z+3
+ 750               	.LVL66:
+ 751 0472 00C0      		rjmp .L34
+ 752               	.LVL67:
+ 753               	.L58:
+ 754               	.LM86:
+ 755 0474 A091 0000 		lds r26,pCurrBindReq
+ 756 0478 B091 0000 		lds r27,(pCurrBindReq)+1
+ 757 047c F501      		movw r30,r10
+ 758 047e 8281      		ldd r24,Z+2
+ 759 0480 9381      		ldd r25,Z+3
+ 760               	.LVL68:
+ 761 0482 FC01      		movw r30,r24
+ 762 0484 6281      		ldd r22,Z+2
+ 763 0486 FD01      		movw r30,r26
+ 764 0488 4681      		ldd r20,Z+6
+ 765 048a 5781      		ldd r21,Z+7
+ 766 048c 7601      		movw r14,r12
+ 767               	.LVL69:
+ 768 048e 2085      		ldd r18,Z+8
+ 769 0490 F401      		movw r30,r8
+ 770 0492 8181      		ldd r24,Z+1
+ 771 0494 9281      		ldd r25,Z+2
+ 772 0496 0E94 0000 		call ib_addBindingEntry
+ 773 049a 8823      		tst r24
+ 774 049c 01F0      		breq .+2
+ 775 049e 00C0      		rjmp .L60
+ 776               	.LM87:
+ 777 04a0 C601      		movw r24,r12
+ 778 04a2 0E94 0000 		call mem_freeMem
+ 779 04a6 00C0      		rjmp .L70
+ 780               	.LVL70:
+ 781               	.L46:
+ 782               	.LM88:
+ 783 04a8 37E8      		ldi r19,lo8(-121)
+ 784 04aa 732E      		mov r7,r19
+ 785               	.LVL71:
+ 786 04ac A091 0000 		lds r26,pCurrBindReq
+ 787 04b0 B091 0000 		lds r27,(pCurrBindReq)+1
+ 788 04b4 F501      		movw r30,r10
+ 789 04b6 0281      		ldd r16,Z+2
+ 790 04b8 1381      		ldd r17,Z+3
+ 791               	.LVL72:
+ 792 04ba 00C0      		rjmp .L34
+ 793               	.LVL73:
+ 794               	.L65:
+ 795               	/* epilogue: frame size=4 */
+ 796 04bc 2496      		adiw r28,4
+ 797 04be 0FB6      		in __tmp_reg__,__SREG__
+ 798 04c0 F894      		cli
+ 799 04c2 DEBF      		out __SP_H__,r29
+ 800 04c4 0FBE      		out __SREG__,__tmp_reg__
+ 801 04c6 CDBF      		out __SP_L__,r28
+ 802 04c8 DF91      		pop r29
+ 803 04ca CF91      		pop r28
+ 804 04cc 1F91      		pop r17
+ 805 04ce 0F91      		pop r16
+ 806 04d0 FF90      		pop r15
+ 807 04d2 EF90      		pop r14
+ 808 04d4 DF90      		pop r13
+ 809 04d6 CF90      		pop r12
+ 810 04d8 BF90      		pop r11
+ 811 04da AF90      		pop r10
+ 812 04dc 9F90      		pop r9
+ 813 04de 8F90      		pop r8
+ 814 04e0 7F90      		pop r7
+ 815 04e2 0895      		ret
+ 816               	/* epilogue end (size=20) */
+ 817               	/* function zdo_processEDBind size 509 (468) */
+ 818               	.LFE8:
+ 820               	.global	zdo_processData
+ 822               	zdo_processData:
+ 823               	.LFB10:
+ 824               	.LM89:
+ 825               	/* prologue: frame size=4 */
+ 826 04e4 6F92      		push r6
+ 827 04e6 7F92      		push r7
+ 828 04e8 8F92      		push r8
+ 829 04ea 9F92      		push r9
+ 830 04ec AF92      		push r10
+ 831 04ee BF92      		push r11
+ 832 04f0 CF92      		push r12
+ 833 04f2 DF92      		push r13
+ 834 04f4 EF92      		push r14
+ 835 04f6 FF92      		push r15
+ 836 04f8 0F93      		push r16
+ 837 04fa 1F93      		push r17
+ 838 04fc CF93      		push r28
+ 839 04fe DF93      		push r29
+ 840 0500 CDB7      		in r28,__SP_L__
+ 841 0502 DEB7      		in r29,__SP_H__
+ 842 0504 2497      		sbiw r28,4
+ 843 0506 0FB6      		in __tmp_reg__,__SREG__
+ 844 0508 F894      		cli
+ 845 050a DEBF      		out __SP_H__,r29
+ 846 050c 0FBE      		out __SREG__,__tmp_reg__
+ 847 050e CDBF      		out __SP_L__,r28
+ 848               	/* prologue end (size=22) */
+ 849               	.LVL74:
+ 850               	.LM90:
+ 851 0510 FC01      		movw r30,r24
+ 852 0512 6280      		ldd r6,Z+2
+ 853 0514 7380      		ldd r7,Z+3
+ 854               	.LVL75:
+ 855               	.LM91:
+ 856 0516 41E0      		ldi r20,lo8(1)
+ 857 0518 8E01      		movw r16,r28
+ 858 051a 0F5F      		subi r16,lo8(-(1))
+ 859 051c 1F4F      		sbci r17,hi8(-(1))
+ 860 051e B801      		movw r22,r16
+ 861 0520 C301      		movw r24,r6
+ 862               	.LVL76:
+ 863 0522 0E94 0000 		call apf_getMSGTrans
+ 864 0526 8823      		tst r24
+ 865 0528 01F4      		brne .+2
+ 866 052a 00C0      		rjmp .L88
+ 867               	.LM92:
+ 868 052c F301      		movw r30,r6
+ 869 052e 8485      		ldd r24,Z+12
+ 870 0530 8032      		cpi r24,lo8(32)
+ 871 0532 01F4      		brne .+2
+ 872 0534 00C0      		rjmp .L80
+ 873 0536 8132      		cpi r24,lo8(33)
+ 874 0538 00F0      		brlo .+2
+ 875 053a 00C0      		rjmp .L83
+ 876 053c 8823      		tst r24
+ 877 053e 01F0      		breq .+2
+ 878 0540 00C0      		rjmp .L89
+ 879               	.LM93:
+ 880 0542 EB81      		ldd r30,Y+3
+ 881 0544 FC81      		ldd r31,Y+4
+ 882 0546 9081      		ld r25,Z
+ 883 0548 8091 0000 		lds r24,aExtendedAddress
+ 884 054c 9817      		cp r25,r24
+ 885 054e 01F0      		breq .+2
+ 886 0550 00C0      		rjmp .L77
+ 887 0552 9181      		ldd r25,Z+1
+ 888 0554 8091 0000 		lds r24,aExtendedAddress+1
+ 889 0558 9817      		cp r25,r24
+ 890 055a 01F0      		breq .+2
+ 891 055c 00C0      		rjmp .L77
+ 892 055e 9281      		ldd r25,Z+2
+ 893 0560 8091 0000 		lds r24,aExtendedAddress+2
+ 894 0564 9817      		cp r25,r24
+ 895 0566 01F4      		brne .L77
+ 896 0568 9381      		ldd r25,Z+3
+ 897 056a 8091 0000 		lds r24,aExtendedAddress+3
+ 898 056e 9817      		cp r25,r24
+ 899 0570 01F4      		brne .L77
+ 900 0572 9481      		ldd r25,Z+4
+ 901 0574 8091 0000 		lds r24,aExtendedAddress+4
+ 902 0578 9817      		cp r25,r24
+ 903 057a 01F4      		brne .L77
+ 904 057c 9581      		ldd r25,Z+5
+ 905 057e 8091 0000 		lds r24,aExtendedAddress+5
+ 906 0582 9817      		cp r25,r24
+ 907 0584 01F4      		brne .L77
+ 908 0586 9681      		ldd r25,Z+6
+ 909 0588 8091 0000 		lds r24,aExtendedAddress+6
+ 910 058c 9817      		cp r25,r24
+ 911 058e 01F4      		brne .L77
+ 912 0590 9781      		ldd r25,Z+7
+ 913 0592 8091 0000 		lds r24,aExtendedAddress+7
+ 914 0596 9817      		cp r25,r24
+ 915 0598 01F4      		brne .L77
+ 916               	.LM94:
+ 917 059a 0091 0000 		lds r16,NwkInfo+8
+ 918 059e 1091 0000 		lds r17,(NwkInfo+8)+1
+ 919 05a2 B301      		movw r22,r6
+ 920 05a4 6F5F      		subi r22,lo8(-(1))
+ 921 05a6 7F4F      		sbci r23,hi8(-(1))
+ 922 05a8 1F92      		push __zero_reg__
+ 923 05aa 1F92      		push __zero_reg__
+ 924 05ac 8824      		clr r8
+ 925 05ae 9924      		clr r9
+ 926 05b0 AA24      		clr r10
+ 927 05b2 BB24      		clr r11
+ 928 05b4 CC24      		clr r12
+ 929 05b6 DD24      		clr r13
+ 930 05b8 EE24      		clr r14
+ 931 05ba FF24      		clr r15
+ 932 05bc 20E0      		ldi r18,lo8(aExtendedAddress)
+ 933 05be 30E0      		ldi r19,hi8(aExtendedAddress)
+ 934 05c0 40E0      		ldi r20,lo8(0)
+ 935 05c2 50E0      		ldi r21,hi8(0)
+ 936 05c4 80E0      		ldi r24,lo8(0)
+ 937 05c6 90E0      		ldi r25,hi8(0)
+ 938 05c8 0E94 0000 		call zdp_NwkAddrRes
+ 939 05cc 0F90      		pop __tmp_reg__
+ 940 05ce 0F90      		pop __tmp_reg__
+ 941 05d0 00C0      		rjmp .L77
+ 942               	.L80:
+ 943               	.LM95:
+ 944 05d2 B301      		movw r22,r6
+ 945 05d4 6F5F      		subi r22,lo8(-(1))
+ 946 05d6 7F4F      		sbci r23,hi8(-(1))
+ 947 05d8 C801      		movw r24,r16
+ 948 05da 0E94 0000 		call zdo_processEDBind
+ 949               	.L77:
+ 950               	.LM96:
+ 951 05de C301      		movw r24,r6
+ 952 05e0 0E94 0000 		call apf_releaseInComFrm
+ 953 05e4 00C0      		rjmp .L88
+ 954               	.L83:
+ 955               	.LM97:
+ 956 05e6 8332      		cpi r24,lo8(35)
+ 957 05e8 00F4      		brsh .L90
+ 958               	.LBB12:
+ 959               	.LBB13:
+ 960               	.LM98:
+ 961 05ea 20E0      		ldi r18,lo8(0)
+ 962 05ec EB81      		ldd r30,Y+3
+ 963 05ee FC81      		ldd r31,Y+4
+ 964 05f0 8185      		ldd r24,Z+9
+ 965 05f2 8132      		cpi r24,lo8(33)
+ 966 05f4 01F0      		breq .L91
+ 967               	.L86:
+ 968 05f6 44E8      		ldi r20,lo8(-124)
+ 969 05f8 6981      		ldd r22,Y+1
+ 970 05fa C301      		movw r24,r6
+ 971 05fc 0196      		adiw r24,1
+ 972 05fe 0E94 0000 		call zdp_BindUnBindRes
+ 973 0602 00C0      		rjmp .L77
+ 974               	.L89:
+ 975               	.LBE13:
+ 976               	.LBE12:
+ 977               	.LM99:
+ 978 0604 8331      		cpi r24,lo8(19)
+ 979 0606 01F4      		brne .L77
+ 980               	.LM100:
+ 981 0608 6B81      		ldd r22,Y+3
+ 982 060a 7C81      		ldd r23,Y+4
+ 983 060c 6E5F      		subi r22,lo8(-(2))
+ 984 060e 7F4F      		sbci r23,hi8(-(2))
+ 985 0610 8FEF      		ldi r24,lo8(-1)
+ 986 0612 9FEF      		ldi r25,hi8(-1)
+ 987 0614 0E94 0000 		call ib_searchAddrEntry
+ 988               	.LM101:
+ 989 0618 892B      		or r24,r25
+ 990 061a 01F4      		brne .L77
+ 991               	.LM102:
+ 992 061c EB81      		ldd r30,Y+3
+ 993 061e FC81      		ldd r31,Y+4
+ 994 0620 BF01      		movw r22,r30
+ 995 0622 6E5F      		subi r22,lo8(-(2))
+ 996 0624 7F4F      		sbci r23,hi8(-(2))
+ 997 0626 8081      		ld r24,Z
+ 998 0628 9181      		ldd r25,Z+1
+ 999 062a 0E94 0000 		call ib_addAddrEntry
+ 1000 062e 00C0      		rjmp .L77
+ 1001               	.L90:
+ 1002               	.LM103:
+ 1003 0630 8038      		cpi r24,lo8(-128)
+ 1004 0632 01F4      		brne .L77
+ 1005               	.LM104:
+ 1006 0634 EB81      		ldd r30,Y+3
+ 1007 0636 FC81      		ldd r31,Y+4
+ 1008 0638 8081      		ld r24,Z
+ 1009 063a 8823      		tst r24
+ 1010 063c 01F4      		brne .L77
+ 1011               	.LM105:
+ 1012 063e BF01      		movw r22,r30
+ 1013 0640 6F5F      		subi r22,lo8(-(1))
+ 1014 0642 7F4F      		sbci r23,hi8(-(1))
+ 1015 0644 8185      		ldd r24,Z+9
+ 1016 0646 9285      		ldd r25,Z+10
+ 1017 0648 0E94 0000 		call ib_addAddrEntry
+ 1018 064c 00C0      		rjmp .L77
+ 1019               	.L91:
+ 1020               	.LBB14:
+ 1021               	.LBB15:
+ 1022               	.LM106:
+ 1023 064e 21E0      		ldi r18,lo8(1)
+ 1024 0650 00C0      		rjmp .L86
+ 1025               	.L88:
+ 1026               	.LBE15:
+ 1027               	.LBE14:
+ 1028               	/* epilogue: frame size=4 */
+ 1029 0652 2496      		adiw r28,4
+ 1030 0654 0FB6      		in __tmp_reg__,__SREG__
+ 1031 0656 F894      		cli
+ 1032 0658 DEBF      		out __SP_H__,r29
+ 1033 065a 0FBE      		out __SREG__,__tmp_reg__
+ 1034 065c CDBF      		out __SP_L__,r28
+ 1035 065e DF91      		pop r29
+ 1036 0660 CF91      		pop r28
+ 1037 0662 1F91      		pop r17
+ 1038 0664 0F91      		pop r16
+ 1039 0666 FF90      		pop r15
+ 1040 0668 EF90      		pop r14
+ 1041 066a DF90      		pop r13
+ 1042 066c CF90      		pop r12
+ 1043 066e BF90      		pop r11
+ 1044 0670 AF90      		pop r10
+ 1045 0672 9F90      		pop r9
+ 1046 0674 8F90      		pop r8
+ 1047 0676 7F90      		pop r7
+ 1048 0678 6F90      		pop r6
+ 1049 067a 0895      		ret
+ 1050               	/* epilogue end (size=21) */
+ 1051               	/* function zdo_processData size 204 (161) */
+ 1052               	.LFE10:
+ 1054               	.global	zdo_init
+ 1056               	zdo_init:
+ 1057               	.LFB4:
+ 1058               	.LM107:
+ 1059               	/* prologue: frame size=4 */
+ 1060 067c CF93      		push r28
+ 1061 067e DF93      		push r29
+ 1062 0680 CDB7      		in r28,__SP_L__
+ 1063 0682 DEB7      		in r29,__SP_H__
+ 1064 0684 2497      		sbiw r28,4
+ 1065 0686 0FB6      		in __tmp_reg__,__SREG__
+ 1066 0688 F894      		cli
+ 1067 068a DEBF      		out __SP_H__,r29
+ 1068 068c 0FBE      		out __SREG__,__tmp_reg__
+ 1069 068e CDBF      		out __SP_L__,r28
+ 1070               	/* prologue end (size=10) */
+ 1071               	.LVL77:
+ 1072               	.LM108:
+ 1073 0690 1092 0000 		sts (pCurrBindReq)+1,__zero_reg__
+ 1074 0694 1092 0000 		sts pCurrBindReq,__zero_reg__
+ 1075               	.LM109:
+ 1076 0698 80E2      		ldi r24,lo8(32)
+ 1077               	.LVL78:
+ 1078 069a 8983      		std Y+1,r24
+ 1079               	.LM110:
+ 1080 069c 1A82      		std Y+2,__zero_reg__
+ 1081               	.LM111:
+ 1082 069e BE01      		movw r22,r28
+ 1083               	.LVL79:
+ 1084 06a0 6F5F      		subi r22,lo8(-(1))
+ 1085 06a2 7F4F      		sbci r23,hi8(-(1))
+ 1086 06a4 84E0      		ldi r24,lo8(4)
+ 1087 06a6 90E0      		ldi r25,hi8(4)
+ 1088 06a8 0E94 0000 		call schedul_sendMsg
+ 1089               	/* epilogue: frame size=4 */
+ 1090 06ac 2496      		adiw r28,4
+ 1091 06ae 0FB6      		in __tmp_reg__,__SREG__
+ 1092 06b0 F894      		cli
+ 1093 06b2 DEBF      		out __SP_H__,r29
+ 1094 06b4 0FBE      		out __SREG__,__tmp_reg__
+ 1095 06b6 CDBF      		out __SP_L__,r28
+ 1096 06b8 DF91      		pop r29
+ 1097 06ba CF91      		pop r28
+ 1098 06bc 0895      		ret
+ 1099               	/* epilogue end (size=9) */
+ 1100               	/* function zdo_init size 33 (14) */
+ 1101               	.LFE4:
+ 1103               	.global	zdo_retryInit
+ 1105               	zdo_retryInit:
+ 1106               	.LFB5:
+ 1107               	.LM112:
+ 1108               	/* prologue: frame size=5 */
+ 1109 06be 6F92      		push r6
+ 1110 06c0 7F92      		push r7
+ 1111 06c2 8F92      		push r8
+ 1112 06c4 9F92      		push r9
+ 1113 06c6 AF92      		push r10
+ 1114 06c8 BF92      		push r11
+ 1115 06ca CF92      		push r12
+ 1116 06cc DF92      		push r13
+ 1117 06ce EF92      		push r14
+ 1118 06d0 FF92      		push r15
+ 1119 06d2 0F93      		push r16
+ 1120 06d4 CF93      		push r28
+ 1121 06d6 DF93      		push r29
+ 1122 06d8 CDB7      		in r28,__SP_L__
+ 1123 06da DEB7      		in r29,__SP_H__
+ 1124 06dc 2597      		sbiw r28,5
+ 1125 06de 0FB6      		in __tmp_reg__,__SREG__
+ 1126 06e0 F894      		cli
+ 1127 06e2 DEBF      		out __SP_H__,r29
+ 1128 06e4 0FBE      		out __SREG__,__tmp_reg__
+ 1129 06e6 CDBF      		out __SP_L__,r28
+ 1130               	/* prologue end (size=21) */
+ 1131               	.LVL80:
+ 1132 06e8 7C01      		movw r14,r24
+ 1133               	.LM113:
+ 1134 06ea 8091 0000 		lds r24,NunRetries
+ 1135               	.LVL81:
+ 1136 06ee 8F5F      		subi r24,lo8(-(1))
+ 1137 06f0 8093 0000 		sts NunRetries,r24
+ 1138 06f4 8150      		subi r24,lo8(-(-1))
+ 1139 06f6 8330      		cpi r24,lo8(3)
+ 1140 06f8 00F4      		brsh .L101
+ 1141               	.LM114:
+ 1142 06fa E114      		cp r14,__zero_reg__
+ 1143 06fc F104      		cpc r15,__zero_reg__
+ 1144 06fe 01F0      		breq .L102
+ 1145               	.L97:
+ 1146               	.LM115:
+ 1147 0700 BE01      		movw r22,r28
+ 1148               	.LVL82:
+ 1149 0702 6F5F      		subi r22,lo8(-(1))
+ 1150 0704 7F4F      		sbci r23,hi8(-(1))
+ 1151 0706 C701      		movw r24,r14
+ 1152 0708 0E94 0000 		call OSTmrDel
+ 1153               	.LBB18:
+ 1154               	.LBB19:
+ 1155               	.LM116:
+ 1156 070c 1092 0000 		sts (pCurrBindReq)+1,__zero_reg__
+ 1157 0710 1092 0000 		sts pCurrBindReq,__zero_reg__
+ 1158               	.LM117:
+ 1159 0714 80E2      		ldi r24,lo8(32)
+ 1160 0716 8A83      		std Y+2,r24
+ 1161               	.LM118:
+ 1162 0718 1B82      		std Y+3,__zero_reg__
+ 1163               	.LM119:
+ 1164 071a BE01      		movw r22,r28
+ 1165 071c 6E5F      		subi r22,lo8(-(2))
+ 1166 071e 7F4F      		sbci r23,hi8(-(2))
+ 1167 0720 84E0      		ldi r24,lo8(4)
+ 1168 0722 90E0      		ldi r25,hi8(4)
+ 1169 0724 0E94 0000 		call schedul_sendMsg
+ 1170 0728 00C0      		rjmp .L100
+ 1171               	.LVL83:
+ 1172               	.L101:
+ 1173               	.LBE19:
+ 1174               	.LBE18:
+ 1175               	.LM120:
+ 1176 072a 20E0      		ldi r18,lo8(0)
+ 1177 072c 30E0      		ldi r19,hi8(0)
+ 1178 072e 40E0      		ldi r20,lo8(0)
+ 1179 0730 50E0      		ldi r21,hi8(0)
+ 1180 0732 60E0      		ldi r22,lo8(0)
+ 1181 0734 70E0      		ldi r23,hi8(0)
+ 1182               	.LVL84:
+ 1183 0736 82E0      		ldi r24,lo8(2)
+ 1184 0738 90E0      		ldi r25,hi8(2)
+ 1185 073a 0E94 0000 		call err
+ 1186               	.LM121:
+ 1187 073e E114      		cp r14,__zero_reg__
+ 1188 0740 F104      		cpc r15,__zero_reg__
+ 1189 0742 01F4      		brne .L97
+ 1190               	.LVL85:
+ 1191               	.L102:
+ 1192               	.LM122:
+ 1193 0744 3E01      		movw r6,r28
+ 1194 0746 0894      		sec
+ 1195 0748 611C      		adc r6,__zero_reg__
+ 1196 074a 711C      		adc r7,__zero_reg__
+ 1197 074c 4301      		movw r8,r6
+ 1198 074e AA24      		clr r10
+ 1199 0750 BB24      		clr r11
+ 1200 0752 CC24      		clr r12
+ 1201 0754 DD24      		clr r13
+ 1202 0756 40E0      		ldi r20,lo8(gs(zdo_retryInit))
+ 1203 0758 E42E      		mov r14,r20
+ 1204 075a 40E0      		ldi r20,hi8(gs(zdo_retryInit))
+ 1205 075c F42E      		mov r15,r20
+ 1206               	.LVL86:
+ 1207 075e 01E0      		ldi r16,lo8(1)
+ 1208 0760 29E0      		ldi r18,lo8(15625)
+ 1209 0762 3DE3      		ldi r19,hi8(15625)
+ 1210 0764 40E0      		ldi r20,hlo8(15625)
+ 1211 0766 50E0      		ldi r21,hhi8(15625)
+ 1212 0768 60E0      		ldi r22,lo8(0)
+ 1213 076a 70E0      		ldi r23,hi8(0)
+ 1214 076c 80E0      		ldi r24,hlo8(0)
+ 1215 076e 90E0      		ldi r25,hhi8(0)
+ 1216               	.LVL87:
+ 1217 0770 0E94 0000 		call OSTmrCreate
+ 1218               	.LM123:
+ 1219 0774 B301      		movw r22,r6
+ 1220 0776 0E94 0000 		call OSTmrStart
+ 1221               	.LVL88:
+ 1222               	.L100:
+ 1223               	/* epilogue: frame size=5 */
+ 1224 077a 2596      		adiw r28,5
+ 1225 077c 0FB6      		in __tmp_reg__,__SREG__
+ 1226 077e F894      		cli
+ 1227 0780 DEBF      		out __SP_H__,r29
+ 1228 0782 0FBE      		out __SREG__,__tmp_reg__
+ 1229 0784 CDBF      		out __SP_L__,r28
+ 1230 0786 DF91      		pop r29
+ 1231 0788 CF91      		pop r28
+ 1232 078a 0F91      		pop r16
+ 1233 078c FF90      		pop r15
+ 1234 078e EF90      		pop r14
+ 1235 0790 DF90      		pop r13
+ 1236 0792 CF90      		pop r12
+ 1237 0794 BF90      		pop r11
+ 1238 0796 AF90      		pop r10
+ 1239 0798 9F90      		pop r9
+ 1240 079a 8F90      		pop r8
+ 1241 079c 7F90      		pop r7
+ 1242 079e 6F90      		pop r6
+ 1243 07a0 0895      		ret
+ 1244               	/* epilogue end (size=20) */
+ 1245               	/* function zdo_retryInit size 114 (73) */
+ 1246               	.LFE5:
+ 1248               	.global	zdo_startRouter
+ 1250               	zdo_startRouter:
+ 1251               	.LFB2:
+ 1252               	.LM124:
+ 1253               	/* prologue: frame size=1 */
+ 1254 07a2 6F92      		push r6
+ 1255 07a4 7F92      		push r7
+ 1256 07a6 8F92      		push r8
+ 1257 07a8 9F92      		push r9
+ 1258 07aa AF92      		push r10
+ 1259 07ac BF92      		push r11
+ 1260 07ae CF92      		push r12
+ 1261 07b0 DF92      		push r13
+ 1262 07b2 EF92      		push r14
+ 1263 07b4 FF92      		push r15
+ 1264 07b6 0F93      		push r16
+ 1265 07b8 1F93      		push r17
+ 1266 07ba CF93      		push r28
+ 1267 07bc DF93      		push r29
+ 1268 07be CDB7      		in r28,__SP_L__
+ 1269 07c0 DEB7      		in r29,__SP_H__
+ 1270 07c2 2197      		sbiw r28,1
+ 1271 07c4 0FB6      		in __tmp_reg__,__SREG__
+ 1272 07c6 F894      		cli
+ 1273 07c8 DEBF      		out __SP_H__,r29
+ 1274 07ca 0FBE      		out __SREG__,__tmp_reg__
+ 1275 07cc CDBF      		out __SP_L__,r28
+ 1276               	/* prologue end (size=22) */
+ 1277               	.LVL89:
+ 1278 07ce FC01      		movw r30,r24
+ 1279               	.LM125:
+ 1280 07d0 8081      		ld r24,Z
+ 1281               	.LVL90:
+ 1282 07d2 8332      		cpi r24,lo8(35)
+ 1283 07d4 01F0      		breq .L107
+ 1284               	.LM126:
+ 1285 07d6 8432      		cpi r24,lo8(36)
+ 1286 07d8 00F0      		brlo .L128
+ 1287 07da 8432      		cpi r24,lo8(36)
+ 1288 07dc 01F4      		brne .+2
+ 1289 07de 00C0      		rjmp .L108
+ 1290 07e0 8532      		cpi r24,lo8(37)
+ 1291 07e2 01F0      		breq .+2
+ 1292 07e4 00C0      		rjmp .L125
+ 1293 07e6 00C0      		rjmp .L132
+ 1294               	.L128:
+ 1295 07e8 8032      		cpi r24,lo8(32)
+ 1296 07ea 01F4      		brne .+2
+ 1297 07ec 00C0      		rjmp .L105
+ 1298 07ee 8132      		cpi r24,lo8(33)
+ 1299 07f0 01F0      		breq .+2
+ 1300 07f2 00C0      		rjmp .L125
+ 1301               	.LM127:
+ 1302 07f4 6091 0000 		lds r22,confChannelList
+ 1303 07f8 7091 0000 		lds r23,(confChannelList)+1
+ 1304 07fc 8091 0000 		lds r24,(confChannelList)+2
+ 1305 0800 9091 0000 		lds r25,(confChannelList)+3
+ 1306 0804 6070      		andi r22,lo8(134215680)
+ 1307 0806 787F      		andi r23,hi8(134215680)
+ 1308 0808 9770      		andi r25,hhi8(134215680)
+ 1309 080a 4091 0000 		lds r20,confScanDuration
+ 1310 080e 0E94 0000 		call nlmeNetworkDiscoveryRequest
+ 1311               	.LVL91:
+ 1312 0812 00C0      		rjmp .L125
+ 1313               	.LVL92:
+ 1314               	.L107:
+ 1315               	.LM128:
+ 1316 0814 0280      		ldd __tmp_reg__,Z+2
+ 1317 0816 F381      		ldd r31,Z+3
+ 1318 0818 E02D      		mov r30,__tmp_reg__
+ 1319               	.LVL93:
+ 1320 081a 8081      		ld r24,Z
+ 1321 081c 8823      		tst r24
+ 1322 081e 01F4      		brne .+2
+ 1323 0820 00C0      		rjmp .L130
+ 1324               	.LVL94:
+ 1325               	.L127:
+ 1326               	.LBB32:
+ 1327               	.LBB33:
+ 1328               	.LM129:
+ 1329 0822 8091 0000 		lds r24,NunRetries
+ 1330 0826 8F5F      		subi r24,lo8(-(1))
+ 1331 0828 8093 0000 		sts NunRetries,r24
+ 1332 082c 8150      		subi r24,lo8(-(-1))
+ 1333 082e 8330      		cpi r24,lo8(3)
+ 1334 0830 00F4      		brsh .L131
+ 1335               	.L123:
+ 1336               	.LBE33:
+ 1337               	.LM130:
+ 1338 0832 3E01      		movw r6,r28
+ 1339 0834 0894      		sec
+ 1340 0836 611C      		adc r6,__zero_reg__
+ 1341 0838 711C      		adc r7,__zero_reg__
+ 1342 083a 4301      		movw r8,r6
+ 1343 083c AA24      		clr r10
+ 1344 083e BB24      		clr r11
+ 1345 0840 CC24      		clr r12
+ 1346 0842 DD24      		clr r13
+ 1347 0844 50E0      		ldi r21,lo8(gs(zdo_retryInit))
+ 1348 0846 E52E      		mov r14,r21
+ 1349 0848 50E0      		ldi r21,hi8(gs(zdo_retryInit))
+ 1350 084a F52E      		mov r15,r21
+ 1351 084c 01E0      		ldi r16,lo8(1)
+ 1352 084e 29E0      		ldi r18,lo8(15625)
+ 1353 0850 3DE3      		ldi r19,hi8(15625)
+ 1354 0852 40E0      		ldi r20,hlo8(15625)
+ 1355 0854 50E0      		ldi r21,hhi8(15625)
+ 1356 0856 60E0      		ldi r22,lo8(0)
+ 1357 0858 70E0      		ldi r23,hi8(0)
+ 1358 085a 80E0      		ldi r24,hlo8(0)
+ 1359 085c 90E0      		ldi r25,hhi8(0)
+ 1360 085e 0E94 0000 		call OSTmrCreate
+ 1361               	.LVL95:
+ 1362               	.LBB34:
+ 1363               	.LM131:
+ 1364 0862 B301      		movw r22,r6
+ 1365 0864 0E94 0000 		call OSTmrStart
+ 1366 0868 00C0      		rjmp .L125
+ 1367               	.LVL96:
+ 1368               	.L132:
+ 1369               	.LBE34:
+ 1370               	.LBE32:
+ 1371               	.LM132:
+ 1372 086a 8281      		ldd r24,Z+2
+ 1373 086c 9381      		ldd r25,Z+3
+ 1374 086e 892B      		or r24,r25
+ 1375 0870 01F4      		brne .L127
+ 1376               	.LM133:
+ 1377 0872 81E0      		ldi r24,lo8(1)
+ 1378 0874 0E94 0000 		call nlmeSyncRequest
+ 1379               	.LVL97:
+ 1380               	.LM134:
+ 1381 0878 0E94 0000 		call aps_init
+ 1382               	.LM135:
+ 1383 087c 0E94 0000 		call zdo_app_DeviceStart
+ 1384               	.LM136:
+ 1385 0880 40E0      		ldi r20,lo8(0)
+ 1386 0882 50E0      		ldi r21,hi8(0)
+ 1387 0884 69E2      		ldi r22,lo8(41)
+ 1388 0886 80E0      		ldi r24,lo8(0)
+ 1389 0888 0E94 0000 		call apf_sendAppMsg
+ 1390               	.LM137:
+ 1391 088c 82E0      		ldi r24,lo8(2)
+ 1392 088e 8093 0000 		sts DevState,r24
+ 1393 0892 00C0      		rjmp .L125
+ 1394               	.LVL98:
+ 1395               	.L131:
+ 1396               	.LBB35:
+ 1397               	.LBB36:
+ 1398               	.LM138:
+ 1399 0894 20E0      		ldi r18,lo8(0)
+ 1400 0896 30E0      		ldi r19,hi8(0)
+ 1401 0898 40E0      		ldi r20,lo8(0)
+ 1402 089a 50E0      		ldi r21,hi8(0)
+ 1403 089c 60E0      		ldi r22,lo8(0)
+ 1404 089e 70E0      		ldi r23,hi8(0)
+ 1405 08a0 82E0      		ldi r24,lo8(2)
+ 1406 08a2 90E0      		ldi r25,hi8(2)
+ 1407 08a4 0E94 0000 		call err
+ 1408               	.LVL99:
+ 1409 08a8 00C0      		rjmp .L123
+ 1410               	.LVL100:
+ 1411               	.L108:
+ 1412               	.LBE36:
+ 1413               	.LBE35:
+ 1414               	.LM139:
+ 1415 08aa 8281      		ldd r24,Z+2
+ 1416 08ac 9381      		ldd r25,Z+3
+ 1417 08ae 892B      		or r24,r25
+ 1418 08b0 01F0      		breq .+2
+ 1419 08b2 00C0      		rjmp .L127
+ 1420               	.LM140:
+ 1421 08b4 4091 0000 		lds r20,confBattLifeExt
+ 1422 08b8 6091 0000 		lds r22,confSuperFrmOrder
+ 1423 08bc 8091 0000 		lds r24,confBeaconOrder
+ 1424 08c0 0E94 0000 		call nlmeStartRouterRequest
+ 1425               	.LVL101:
+ 1426 08c4 00C0      		rjmp .L125
+ 1427               	.LVL102:
+ 1428               	.L105:
+ 1429               	.LM141:
+ 1430 08c6 0E94 0000 		call nlmeResetRequest
+ 1431               	.LVL103:
+ 1432 08ca 00C0      		rjmp .L125
+ 1433               	.L130:
+ 1434               	.LM142:
+ 1435 08cc 4091 0000 		lds r20,confChannelList
+ 1436 08d0 5091 0000 		lds r21,(confChannelList)+1
+ 1437 08d4 6091 0000 		lds r22,(confChannelList)+2
+ 1438 08d8 7091 0000 		lds r23,(confChannelList)+3
+ 1439 08dc 8091 0000 		lds r24,confPandId
+ 1440 08e0 9091 0000 		lds r25,(confPandId)+1
+ 1441 08e4 0E94 0000 		call nwk_checkNwk
+ 1442 08e8 8823      		tst r24
+ 1443 08ea 01F4      		brne .+2
+ 1444 08ec 00C0      		rjmp .L127
+ 1445               	.LM143:
+ 1446 08ee 8091 0000 		lds r24,NodeDescriptor+2
+ 1447 08f2 9927      		clr r25
+ 1448 08f4 9695      		lsr r25
+ 1449 08f6 8795      		ror r24
+ 1450 08f8 9695      		lsr r25
+ 1451 08fa 8795      		ror r24
+ 1452 08fc 9695      		lsr r25
+ 1453 08fe 8795      		ror r24
+ 1454 0900 982F      		mov r25,r24
+ 1455 0902 9170      		andi r25,lo8(1)
+ 1456 0904 40E0      		ldi r20,lo8(0)
+ 1457 0906 8091 0000 		lds r24,NodePowerDescriptor+1
+ 1458 090a 8F70      		andi r24,lo8(15)
+ 1459 090c 01F4      		brne .L114
+ 1460 090e 41E0      		ldi r20,lo8(1)
+ 1461               	.L114:
+ 1462 0910 0091 0000 		lds r16,confChannelList
+ 1463 0914 1091 0000 		lds r17,(confChannelList)+1
+ 1464 0918 2091 0000 		lds r18,(confChannelList)+2
+ 1465 091c 3091 0000 		lds r19,(confChannelList)+3
+ 1466 0920 8824      		clr r8
+ 1467 0922 A92E      		mov r10,r25
+ 1468 0924 C42E      		mov r12,r20
+ 1469 0926 E090 0000 		lds r14,confScanDuration
+ 1470 092a 40E0      		ldi r20,lo8(0)
+ 1471 092c 61E0      		ldi r22,lo8(1)
+ 1472 092e 8091 0000 		lds r24,confPandId
+ 1473 0932 9091 0000 		lds r25,(confPandId)+1
+ 1474 0936 0E94 0000 		call nlmeJoinRequest
+ 1475               	.LVL104:
+ 1476               	.L125:
+ 1477               	/* epilogue: frame size=1 */
+ 1478 093a 2196      		adiw r28,1
+ 1479 093c 0FB6      		in __tmp_reg__,__SREG__
+ 1480 093e F894      		cli
+ 1481 0940 DEBF      		out __SP_H__,r29
+ 1482 0942 0FBE      		out __SREG__,__tmp_reg__
+ 1483 0944 CDBF      		out __SP_L__,r28
+ 1484 0946 DF91      		pop r29
+ 1485 0948 CF91      		pop r28
+ 1486 094a 1F91      		pop r17
+ 1487 094c 0F91      		pop r16
+ 1488 094e FF90      		pop r15
+ 1489 0950 EF90      		pop r14
+ 1490 0952 DF90      		pop r13
+ 1491 0954 CF90      		pop r12
+ 1492 0956 BF90      		pop r11
+ 1493 0958 AF90      		pop r10
+ 1494 095a 9F90      		pop r9
+ 1495 095c 8F90      		pop r8
+ 1496 095e 7F90      		pop r7
+ 1497 0960 6F90      		pop r6
+ 1498 0962 0895      		ret
+ 1499               	/* epilogue end (size=21) */
+ 1500               	/* function zdo_startRouter size 226 (183) */
+ 1501               	.LFE2:
+ 1503               	.global	zdo_startDevice
+ 1505               	zdo_startDevice:
+ 1506               	.LFB3:
+ 1507               	.LM144:
+ 1508               	/* prologue: frame size=0 */
+ 1509               	/* prologue end (size=0) */
+ 1510               	.LVL105:
+ 1511               	.LM145:
+ 1512 0964 0E94 0000 		call zdo_startRouter
+ 1513               	.LVL106:
+ 1514               	/* epilogue: frame size=0 */
+ 1515 0968 0895      		ret
+ 1516               	/* epilogue end (size=1) */
+ 1517               	/* function zdo_startDevice size 3 (2) */
+ 1518               	.LFE3:
+ 1520               	.global	zdo_processEvent
+ 1522               	zdo_processEvent:
+ 1523               	.LFB11:
+ 1524               	.LM146:
+ 1525               	/* prologue: frame size=10 */
+ 1526 096a CF93      		push r28
+ 1527 096c DF93      		push r29
+ 1528 096e CDB7      		in r28,__SP_L__
+ 1529 0970 DEB7      		in r29,__SP_H__
+ 1530 0972 2A97      		sbiw r28,10
+ 1531 0974 0FB6      		in __tmp_reg__,__SREG__
+ 1532 0976 F894      		cli
+ 1533 0978 DEBF      		out __SP_H__,r29
+ 1534 097a 0FBE      		out __SREG__,__tmp_reg__
+ 1535 097c CDBF      		out __SP_L__,r28
+ 1536               	/* prologue end (size=10) */
+ 1537               	.LVL107:
+ 1538 097e FC01      		movw r30,r24
+ 1539               	.LM147:
+ 1540 0980 9081      		ld r25,Z
+ 1541 0982 9032      		cpi r25,lo8(32)
+ 1542 0984 01F0      		breq .L147
+ 1543               	.LVL108:
+ 1544               	.LM148:
+ 1545 0986 8091 0000 		lds r24,DevState
+ 1546 098a 8130      		cpi r24,lo8(1)
+ 1547 098c 01F0      		breq .L138
+ 1548               	.LM149:
+ 1549 098e 9732      		cpi r25,lo8(39)
+ 1550 0990 01F0      		breq .L142
+ 1551 0992 9832      		cpi r25,lo8(40)
+ 1552 0994 00F0      		brlo .L148
+ 1553 0996 9A32      		cpi r25,lo8(42)
+ 1554 0998 01F0      		breq .L143
+ 1555 099a 9135      		cpi r25,lo8(81)
+ 1556 099c 01F4      		brne .L146
+ 1557               	.LM150:
+ 1558 099e CF01      		movw r24,r30
+ 1559 09a0 0E94 0000 		call zdo_processData
+ 1560               	.LVL109:
+ 1561 09a4 00C0      		rjmp .L146
+ 1562               	.LVL110:
+ 1563               	.L147:
+ 1564               	.LM151:
+ 1565 09a6 81E0      		ldi r24,lo8(1)
+ 1566 09a8 8093 0000 		sts DevState,r24
+ 1567               	.L138:
+ 1568               	.LBB41:
+ 1569               	.LBB42:
+ 1570               	.LM152:
+ 1571 09ac CF01      		movw r24,r30
+ 1572 09ae 0E94 0000 		call zdo_startRouter
+ 1573               	.LVL111:
+ 1574 09b2 00C0      		rjmp .L146
+ 1575               	.LVL112:
+ 1576               	.L148:
+ 1577               	.LBE42:
+ 1578               	.LBE41:
+ 1579               	.LM153:
+ 1580 09b4 9132      		cpi r25,lo8(33)
+ 1581 09b6 00F0      		brlo .L146
+ 1582 09b8 9332      		cpi r25,lo8(35)
+ 1583 09ba 00F4      		brsh .L149
+ 1584               	.L141:
+ 1585               	.LM154:
+ 1586 09bc 40E0      		ldi r20,lo8(0)
+ 1587 09be 50E0      		ldi r21,hi8(0)
+ 1588 09c0 60E0      		ldi r22,lo8(0)
+ 1589 09c2 70E0      		ldi r23,hi8(0)
+ 1590 09c4 82E0      		ldi r24,lo8(2)
+ 1591 09c6 90E0      		ldi r25,hi8(2)
+ 1592 09c8 0E94 0000 		call err
+ 1593               	.LVL113:
+ 1594 09cc 00C0      		rjmp .L146
+ 1595               	.LVL114:
+ 1596               	.L142:
+ 1597               	.LM155:
+ 1598 09ce 8281      		ldd r24,Z+2
+ 1599 09d0 9381      		ldd r25,Z+3
+ 1600 09d2 0E94 0000 		call mem_freeMem
+ 1601               	.LVL115:
+ 1602 09d6 00C0      		rjmp .L146
+ 1603               	.LVL116:
+ 1604               	.L143:
+ 1605               	.LBB43:
+ 1606               	.LBB44:
+ 1607               	.LM156:
+ 1608 09d8 E091 0000 		lds r30,pCurrBindReq
+ 1609 09dc F091 0000 		lds r31,(pCurrBindReq)+1
+ 1610               	.LVL117:
+ 1611 09e0 8681      		ldd r24,Z+6
+ 1612 09e2 9781      		ldd r25,Z+7
+ 1613 09e4 9B83      		std Y+3,r25
+ 1614 09e6 8A83      		std Y+2,r24
+ 1615               	.LM157:
+ 1616 09e8 8085      		ldd r24,Z+8
+ 1617 09ea 8A87      		std Y+10,r24
+ 1618               	.LM158:
+ 1619 09ec 81E0      		ldi r24,lo8(1)
+ 1620 09ee 8983      		std Y+1,r24
+ 1621               	.LM159:
+ 1622 09f0 4485      		ldd r20,Z+12
+ 1623 09f2 6385      		ldd r22,Z+11
+ 1624 09f4 CE01      		movw r24,r28
+ 1625 09f6 0196      		adiw r24,1
+ 1626 09f8 0E94 0000 		call zdp_EDBindRes
+ 1627               	.LM160:
+ 1628 09fc 8091 0000 		lds r24,pCurrBindReq
+ 1629 0a00 9091 0000 		lds r25,(pCurrBindReq)+1
+ 1630 0a04 0E94 0000 		call mem_freeMem
+ 1631               	.LM161:
+ 1632 0a08 1092 0000 		sts (pCurrBindReq)+1,__zero_reg__
+ 1633 0a0c 1092 0000 		sts pCurrBindReq,__zero_reg__
+ 1634 0a10 00C0      		rjmp .L146
+ 1635               	.LVL118:
+ 1636               	.L149:
+ 1637               	.LBE44:
+ 1638               	.LBE43:
+ 1639               	.LM162:
+ 1640 0a12 9432      		cpi r25,lo8(36)
+ 1641 0a14 01F0      		breq .L141
+ 1642               	.L146:
+ 1643               	/* epilogue: frame size=10 */
+ 1644 0a16 2A96      		adiw r28,10
+ 1645 0a18 0FB6      		in __tmp_reg__,__SREG__
+ 1646 0a1a F894      		cli
+ 1647 0a1c DEBF      		out __SP_H__,r29
+ 1648 0a1e 0FBE      		out __SREG__,__tmp_reg__
+ 1649 0a20 CDBF      		out __SP_L__,r28
+ 1650 0a22 DF91      		pop r29
+ 1651 0a24 CF91      		pop r28
+ 1652 0a26 0895      		ret
+ 1653               	/* epilogue end (size=9) */
+ 1654               	/* function zdo_processEvent size 95 (76) */
+ 1655               	.LFE11:
+ 1657               	.global	confDeviceType
+ 1658               		.data
+ 1661               	confDeviceType:
+ 1662 0000 01        		.byte	1
+ 1663               	.global	confChannelList
+ 1666               	confChannelList:
+ 1667 0001 00        		.byte	0
+ 1668 0002 00        		.byte	0
+ 1669 0003 08        		.byte	8
+ 1670 0004 00        		.byte	0
+ 1671               	.global	confScanDuration
+ 1674               	confScanDuration:
+ 1675 0005 06        		.byte	6
+ 1676               	.global	confPandId
+ 1679               	confPandId:
+ 1680 0006 2024      		.word	9248
+ 1681               	.global	confProtocolVers
+ 1684               	confProtocolVers:
+ 1685 0008 01        		.byte	1
+ 1686               	.global	confStackProfile
+ 1687               	.global	confStackProfile
+ 1688               		.section .bss
+ 1691               	confStackProfile:
+ 1692 0000 0000      		.skip 2,0
+ 1693               	.global	confBeaconOrder
+ 1694               		.data
+ 1697               	confBeaconOrder:
+ 1698 0009 0F        		.byte	15
+ 1699               	.global	confSuperFrmOrder
+ 1702               	confSuperFrmOrder:
+ 1703 000a 0F        		.byte	15
+ 1704               	.global	confBattLifeExt
+ 1705               	.global	confBattLifeExt
+ 1706               		.section .bss
+ 1709               	confBattLifeExt:
+ 1710 0002 00        		.skip 1,0
+ 1711               	.global	confScanAttempts
+ 1712               		.data
+ 1715               	confScanAttempts:
+ 1716 000b 03        		.byte	3
+ 1717               	.global	confTimeBetweenScans
+ 1720               	confTimeBetweenScans:
+ 1721 000c 03        		.byte	3
+ 1722               	.global	confMaxBind
+ 1725               	confMaxBind:
+ 1726 000d 05        		.byte	5
+ 1727               	.global	confBindingTimeout
+ 1730               	confBindingTimeout:
+ 1731 000e 05        		.byte	5
+ 1732               	.global	confPermitJoinDuration
+ 1735               	confPermitJoinDuration:
+ 1736 000f 05        		.byte	5
+ 1737               	.global	confLeaveRemoveChildrens
+ 1738               	.global	confLeaveRemoveChildrens
+ 1739               		.section .bss
+ 1742               	confLeaveRemoveChildrens:
+ 1743 0003 00        		.skip 1,0
+ 1744               	.global	confTransPersistenceTime
+ 1745               		.data
+ 1748               	confTransPersistenceTime:
+ 1749 0010 03        		.byte	3
+ 1750               	.global	confIndirectPollRate
+ 1753               	confIndirectPollRate:
+ 1754 0011 03        		.byte	3
+ 1755               	.global	confMaxAssoc
+ 1758               	confMaxAssoc:
+ 1759 0012 05        		.byte	5
+ 1760               	.global	confJoinDirectAddrs
+ 1761               	.global	confJoinDirectAddrs
+ 1762               		.section .bss
+ 1765               	confJoinDirectAddrs:
+ 1766 0004 0000      		.skip 2,0
+ 1767               		.comm confBroacastDelivTime,1,1
+ 1768               		.comm OSIntNesting,1,1
+ 1769               		.comm OSMemFreeList,2,1
+ 1770               		.comm OSMemTbl,96,1
+ 1771               		.comm OSTmrFree,2,1
+ 1772               		.comm OSTmrUsed,2,1
+ 1773               		.comm OSTmrTime,4,1
+ 1774               		.comm OSTmrTbl,240,1
+ 1775               		.comm OSTmrFreeList,2,1
+ 1776               		.comm OSTmrWheelTbl,32,1
+ 1777               		.comm DevState,1,1
+ 1778               		.comm NunRetries,1,1
+ 1779               		.comm pCurrBindReq,2,1
+ 1865               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 zdo.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:20     .text:00000000 zdo_cmpClusterLists
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:104    .text:00000062 zdo_processBind_UnBind
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:143    .text:0000008c zdo_processEDBindTimeout
+                            *COM*:00000002 pCurrBindReq
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:202    .text:000000ea zdo_processEDBind
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:822    .text:000004e4 zdo_processData
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1056   .text:0000067c zdo_init
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1105   .text:000006be zdo_retryInit
+                            *COM*:00000001 NunRetries
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1250   .text:000007a2 zdo_startRouter
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1666   .data:00000001 confChannelList
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1674   .data:00000005 confScanDuration
+                            *COM*:00000001 DevState
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1709   .bss:00000002 confBattLifeExt
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1702   .data:0000000a confSuperFrmOrder
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1697   .data:00000009 confBeaconOrder
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1679   .data:00000006 confPandId
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1505   .text:00000964 zdo_startDevice
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1522   .text:0000096a zdo_processEvent
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1661   .data:00000000 confDeviceType
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1684   .data:00000008 confProtocolVers
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1691   .bss:00000000 confStackProfile
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1715   .data:0000000b confScanAttempts
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1720   .data:0000000c confTimeBetweenScans
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1725   .data:0000000d confMaxBind
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1730   .data:0000000e confBindingTimeout
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1735   .data:0000000f confPermitJoinDuration
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1742   .bss:00000003 confLeaveRemoveChildrens
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1748   .data:00000010 confTransPersistenceTime
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1753   .data:00000011 confIndirectPollRate
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1758   .data:00000012 confMaxAssoc
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccAdbaaa.s:1765   .bss:00000004 confJoinDirectAddrs
+                            *COM*:00000001 confBroacastDelivTime
+                            *COM*:00000001 OSIntNesting
+                            *COM*:00000002 OSMemFreeList
+                            *COM*:00000060 OSMemTbl
+                            *COM*:00000002 OSTmrFree
+                            *COM*:00000002 OSTmrUsed
+                            *COM*:00000004 OSTmrTime
+                            *COM*:000000f0 OSTmrTbl
+                            *COM*:00000002 OSTmrFreeList
+                            *COM*:00000020 OSTmrWheelTbl
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+zdp_BindUnBindRes
+zdp_EDBindRes
+mem_freeMem
+mem_getMem
+ib_searchBindingEntry
+ib_removeBindingEntry
+mem_cpy
+mtimer_creatTmr
+err
+ib_addBindingEntry
+apf_getMSGTrans
+aExtendedAddress
+NwkInfo
+zdp_NwkAddrRes
+apf_releaseInComFrm
+ib_searchAddrEntry
+ib_addAddrEntry
+schedul_sendMsg
+OSTmrDel
+OSTmrCreate
+OSTmrStart
+nlmeNetworkDiscoveryRequest
+nlmeSyncRequest
+aps_init
+zdo_app_DeviceStart
+apf_sendAppMsg
+nlmeStartRouterRequest
+nlmeResetRequest
+nwk_checkNwk
+NodeDescriptor
+NodePowerDescriptor
+nlmeJoinRequest

@@ -1,0 +1,1018 @@
+   1               		.file	"zdp.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	zdp_IEEEAddrReq
+  20               	zdp_IEEEAddrReq:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26               	.LM2:
+  27 0000 80E0      		ldi r24,lo8(0)
+  28 0002 90E0      		ldi r25,hi8(0)
+  29               	.LVL1:
+  30               	/* epilogue: frame size=0 */
+  31 0004 0895      		ret
+  32               	/* epilogue end (size=1) */
+  33               	/* function zdp_IEEEAddrReq size 3 (2) */
+  34               	.LFE2:
+  36               	.global	zdp_BindUnBindRes
+  38               	zdp_BindUnBindRes:
+  39               	.LFB10:
+  40               	.LM3:
+  41               	/* prologue: frame size=1 */
+  42 0006 AF92      		push r10
+  43 0008 CF92      		push r12
+  44 000a EF92      		push r14
+  45 000c 0F93      		push r16
+  46 000e CF93      		push r28
+  47 0010 DF93      		push r29
+  48 0012 CDB7      		in r28,__SP_L__
+  49 0014 DEB7      		in r29,__SP_H__
+  50 0016 2197      		sbiw r28,1
+  51 0018 0FB6      		in __tmp_reg__,__SREG__
+  52 001a F894      		cli
+  53 001c DEBF      		out __SP_H__,r29
+  54 001e 0FBE      		out __SREG__,__tmp_reg__
+  55 0020 CDBF      		out __SP_L__,r28
+  56               	/* prologue end (size=14) */
+  57               	.LVL2:
+  58 0022 4983      		std Y+1,r20
+  59               	.LM4:
+  60 0024 2130      		cpi r18,lo8(1)
+  61 0026 01F0      		breq .L9
+  62               	.LVL3:
+  63               	.LM5:
+  64 0028 22EA      		ldi r18,lo8(-94)
+  65               	.LVL4:
+  66 002a 00C0      		rjmp .L6
+  67               	.LVL5:
+  68               	.L9:
+  69 002c 21EA      		ldi r18,lo8(-95)
+  70               	.LVL6:
+  71               	.L6:
+  72 002e AA24      		clr r10
+  73 0030 CC24      		clr r12
+  74 0032 E22E      		mov r14,r18
+  75 0034 00E0      		ldi r16,lo8(0)
+  76 0036 9C01      		movw r18,r24
+  77 0038 462F      		mov r20,r22
+  78 003a 61E0      		ldi r22,lo8(1)
+  79               	.LVL7:
+  80 003c CE01      		movw r24,r28
+  81               	.LVL8:
+  82 003e 0196      		adiw r24,1
+  83 0040 0E94 0000 		call apf_sendSingleMsg
+  84               	.LVL9:
+  85               	.LM6:
+  86 0044 9927      		clr r25
+  87               	/* epilogue: frame size=1 */
+  88 0046 2196      		adiw r28,1
+  89 0048 0FB6      		in __tmp_reg__,__SREG__
+  90 004a F894      		cli
+  91 004c DEBF      		out __SP_H__,r29
+  92 004e 0FBE      		out __SREG__,__tmp_reg__
+  93 0050 CDBF      		out __SP_L__,r28
+  94 0052 DF91      		pop r29
+  95 0054 CF91      		pop r28
+  96 0056 0F91      		pop r16
+  97 0058 EF90      		pop r14
+  98 005a CF90      		pop r12
+  99 005c AF90      		pop r10
+ 100 005e 0895      		ret
+ 101               	/* epilogue end (size=13) */
+ 102               	/* function zdp_BindUnBindRes size 45 (18) */
+ 103               	.LFE10:
+ 105               	.global	zdp_EDBindRes
+ 107               	zdp_EDBindRes:
+ 108               	.LFB8:
+ 109               	.LM7:
+ 110               	/* prologue: frame size=1 */
+ 111 0060 AF92      		push r10
+ 112 0062 CF92      		push r12
+ 113 0064 EF92      		push r14
+ 114 0066 0F93      		push r16
+ 115 0068 CF93      		push r28
+ 116 006a DF93      		push r29
+ 117 006c CDB7      		in r28,__SP_L__
+ 118 006e DEB7      		in r29,__SP_H__
+ 119 0070 2197      		sbiw r28,1
+ 120 0072 0FB6      		in __tmp_reg__,__SREG__
+ 121 0074 F894      		cli
+ 122 0076 DEBF      		out __SP_H__,r29
+ 123 0078 0FBE      		out __SREG__,__tmp_reg__
+ 124 007a CDBF      		out __SP_L__,r28
+ 125               	/* prologue end (size=14) */
+ 126               	.LVL10:
+ 127 007c 4983      		std Y+1,r20
+ 128               	.LM8:
+ 129 007e AA24      		clr r10
+ 130 0080 CC24      		clr r12
+ 131 0082 20EA      		ldi r18,lo8(-96)
+ 132 0084 E22E      		mov r14,r18
+ 133 0086 00E0      		ldi r16,lo8(0)
+ 134 0088 9C01      		movw r18,r24
+ 135 008a 462F      		mov r20,r22
+ 136               	.LVL11:
+ 137 008c 61E0      		ldi r22,lo8(1)
+ 138               	.LVL12:
+ 139 008e CE01      		movw r24,r28
+ 140               	.LVL13:
+ 141 0090 0196      		adiw r24,1
+ 142 0092 0E94 0000 		call apf_sendSingleMsg
+ 143               	.LVL14:
+ 144               	.LM9:
+ 145 0096 9927      		clr r25
+ 146               	/* epilogue: frame size=1 */
+ 147 0098 2196      		adiw r28,1
+ 148 009a 0FB6      		in __tmp_reg__,__SREG__
+ 149 009c F894      		cli
+ 150 009e DEBF      		out __SP_H__,r29
+ 151 00a0 0FBE      		out __SREG__,__tmp_reg__
+ 152 00a2 CDBF      		out __SP_L__,r28
+ 153 00a4 DF91      		pop r29
+ 154 00a6 CF91      		pop r28
+ 155 00a8 0F91      		pop r16
+ 156 00aa EF90      		pop r14
+ 157 00ac CF90      		pop r12
+ 158 00ae AF90      		pop r10
+ 159 00b0 0895      		ret
+ 160               	/* epilogue end (size=13) */
+ 161               	/* function zdp_EDBindRes size 41 (14) */
+ 162               	.LFE8:
+ 164               	.global	zdp_EndDeviceAnnce
+ 166               	zdp_EndDeviceAnnce:
+ 167               	.LFB5:
+ 168               	.LM10:
+ 169               	/* prologue: frame size=20 */
+ 170 00b2 AF92      		push r10
+ 171 00b4 CF92      		push r12
+ 172 00b6 EF92      		push r14
+ 173 00b8 0F93      		push r16
+ 174 00ba CF93      		push r28
+ 175 00bc DF93      		push r29
+ 176 00be CDB7      		in r28,__SP_L__
+ 177 00c0 DEB7      		in r29,__SP_H__
+ 178 00c2 6497      		sbiw r28,20
+ 179 00c4 0FB6      		in __tmp_reg__,__SREG__
+ 180 00c6 F894      		cli
+ 181 00c8 DEBF      		out __SP_H__,r29
+ 182 00ca 0FBE      		out __SREG__,__tmp_reg__
+ 183 00cc CDBF      		out __SP_L__,r28
+ 184               	/* prologue end (size=14) */
+ 185               	.LVL15:
+ 186               	.LM11:
+ 187 00ce 8B87      		std Y+11,r24
+ 188               	.LM12:
+ 189 00d0 892F      		mov r24,r25
+ 190 00d2 9927      		clr r25
+ 191               	.LVL16:
+ 192 00d4 8C87      		std Y+12,r24
+ 193               	.LM13:
+ 194 00d6 48E0      		ldi r20,lo8(8)
+ 195 00d8 50E0      		ldi r21,hi8(8)
+ 196 00da CE01      		movw r24,r28
+ 197 00dc 0D96      		adiw r24,13
+ 198 00de 0E94 0000 		call mem_cpy
+ 199               	.LVL17:
+ 200               	.LM14:
+ 201 00e2 8FEF      		ldi r24,lo8(-1)
+ 202 00e4 9FEF      		ldi r25,hi8(-1)
+ 203 00e6 9B83      		std Y+3,r25
+ 204 00e8 8A83      		std Y+2,r24
+ 205               	.LM15:
+ 206 00ea 81E0      		ldi r24,lo8(1)
+ 207 00ec 8983      		std Y+1,r24
+ 208               	.LM16:
+ 209 00ee AA24      		clr r10
+ 210 00f0 CC24      		clr r12
+ 211 00f2 33E1      		ldi r19,lo8(19)
+ 212 00f4 E32E      		mov r14,r19
+ 213 00f6 00E0      		ldi r16,lo8(0)
+ 214 00f8 9E01      		movw r18,r28
+ 215 00fa 2F5F      		subi r18,lo8(-(1))
+ 216 00fc 3F4F      		sbci r19,hi8(-(1))
+ 217 00fe 4091 0000 		lds r20,zdp_trans
+ 218 0102 6AE0      		ldi r22,lo8(10)
+ 219 0104 CE01      		movw r24,r28
+ 220 0106 0B96      		adiw r24,11
+ 221 0108 0E94 0000 		call apf_sendSingleMsg
+ 222               	.LM17:
+ 223 010c 9927      		clr r25
+ 224               	/* epilogue: frame size=20 */
+ 225 010e 6496      		adiw r28,20
+ 226 0110 0FB6      		in __tmp_reg__,__SREG__
+ 227 0112 F894      		cli
+ 228 0114 DEBF      		out __SP_H__,r29
+ 229 0116 0FBE      		out __SREG__,__tmp_reg__
+ 230 0118 CDBF      		out __SP_L__,r28
+ 231 011a DF91      		pop r29
+ 232 011c CF91      		pop r28
+ 233 011e 0F91      		pop r16
+ 234 0120 EF90      		pop r14
+ 235 0122 CF90      		pop r12
+ 236 0124 AF90      		pop r10
+ 237 0126 0895      		ret
+ 238               	/* epilogue end (size=13) */
+ 239               	/* function zdp_EndDeviceAnnce size 59 (32) */
+ 240               	.LFE5:
+ 242               	.global	zdp_BindUnbindReq
+ 244               	zdp_BindUnbindReq:
+ 245               	.LFB9:
+ 246               	.LM18:
+ 247               	/* prologue: frame size=0 */
+ 248 0128 6F92      		push r6
+ 249 012a 7F92      		push r7
+ 250 012c 8F92      		push r8
+ 251 012e 9F92      		push r9
+ 252 0130 AF92      		push r10
+ 253 0132 BF92      		push r11
+ 254 0134 CF92      		push r12
+ 255 0136 DF92      		push r13
+ 256 0138 EF92      		push r14
+ 257 013a FF92      		push r15
+ 258 013c 0F93      		push r16
+ 259 013e 1F93      		push r17
+ 260 0140 CF93      		push r28
+ 261 0142 DF93      		push r29
+ 262               	/* prologue end (size=14) */
+ 263               	.LVL18:
+ 264 0144 882E      		mov r8,r24
+ 265 0146 3B01      		movw r6,r22
+ 266 0148 5A01      		movw r10,r20
+ 267               	.LVL19:
+ 268 014a D22E      		mov r13,r18
+ 269 014c 902E      		mov r9,r16
+ 270               	.LM19:
+ 271 014e 83E1      		ldi r24,lo8(19)
+ 272 0150 90E0      		ldi r25,hi8(19)
+ 273               	.LVL20:
+ 274 0152 0E94 0000 		call mem_getMem
+ 275               	.LVL21:
+ 276               	.LM20:
+ 277 0156 8823      		tst r24
+ 278 0158 01F4      		brne .L15
+ 279               	.LVL22:
+ 280               	.LM21:
+ 281 015a 81EF      		ldi r24,lo8(241)
+ 282 015c 90E0      		ldi r25,hi8(241)
+ 283 015e 00C0      		rjmp .L17
+ 284               	.L15:
+ 285               	.LVL23:
+ 286               	.LM22:
+ 287 0160 C82F      		mov r28,r24
+ 288 0162 DD27      		clr r29
+ 289               	.LM23:
+ 290 0164 B501      		movw r22,r10
+ 291 0166 CE01      		movw r24,r28
+ 292               	.LVL24:
+ 293 0168 0E94 0000 		call mem_cpy
+ 294               	.LVL25:
+ 295               	.LVL26:
+ 296               	.LM24:
+ 297 016c FE01      		movw r30,r28
+ 298 016e D192      		st Z+,r13
+ 299 0170 8F01      		movw r16,r30
+ 300               	.LVL27:
+ 301               	.LM25:
+ 302 0172 9982      		std Y+1,r9
+ 303               	.LM26:
+ 304 0174 48E0      		ldi r20,lo8(8)
+ 305 0176 50E0      		ldi r21,hi8(8)
+ 306 0178 B701      		movw r22,r14
+ 307 017a CF01      		movw r24,r30
+ 308               	.LVL28:
+ 309 017c 0196      		adiw r24,1
+ 310 017e 0E94 0000 		call mem_cpy
+ 311               	.LVL29:
+ 312               	.LM27:
+ 313 0182 F801      		movw r30,r16
+ 314 0184 C182      		std Z+1,r12
+ 315               	.LM28:
+ 316 0186 F1E0      		ldi r31,lo8(1)
+ 317 0188 8F16      		cp r8,r31
+ 318 018a 01F0      		breq .L22
+ 319 018c 82E2      		ldi r24,lo8(34)
+ 320               	.L20:
+ 321 018e AA24      		clr r10
+ 322               	.LVL30:
+ 323 0190 CC24      		clr r12
+ 324               	.LVL31:
+ 325 0192 E82E      		mov r14,r24
+ 326               	.LVL32:
+ 327 0194 00E0      		ldi r16,lo8(0)
+ 328               	.LVL33:
+ 329 0196 9301      		movw r18,r6
+ 330 0198 4091 0000 		lds r20,zdp_trans
+ 331 019c 63E1      		ldi r22,lo8(19)
+ 332 019e CE01      		movw r24,r28
+ 333               	.LVL34:
+ 334 01a0 0E94 0000 		call apf_sendSingleMsg
+ 335               	.LVL35:
+ 336 01a4 182F      		mov r17,r24
+ 337               	.LVL36:
+ 338               	.LM29:
+ 339 01a6 CE01      		movw r24,r28
+ 340 01a8 0E94 0000 		call mem_freeMem
+ 341 01ac 812F      		mov r24,r17
+ 342 01ae 9927      		clr r25
+ 343 01b0 00C0      		rjmp .L17
+ 344               	.LVL37:
+ 345               	.L22:
+ 346               	.LM30:
+ 347 01b2 81E2      		ldi r24,lo8(33)
+ 348 01b4 00C0      		rjmp .L20
+ 349               	.LVL38:
+ 350               	.L17:
+ 351               	/* epilogue: frame size=0 */
+ 352 01b6 DF91      		pop r29
+ 353 01b8 CF91      		pop r28
+ 354 01ba 1F91      		pop r17
+ 355 01bc 0F91      		pop r16
+ 356 01be FF90      		pop r15
+ 357 01c0 EF90      		pop r14
+ 358 01c2 DF90      		pop r13
+ 359 01c4 CF90      		pop r12
+ 360 01c6 BF90      		pop r11
+ 361 01c8 AF90      		pop r10
+ 362 01ca 9F90      		pop r9
+ 363 01cc 8F90      		pop r8
+ 364 01ce 7F90      		pop r7
+ 365 01d0 6F90      		pop r6
+ 366 01d2 0895      		ret
+ 367               	/* epilogue end (size=15) */
+ 368               	/* function zdp_BindUnbindReq size 86 (57) */
+ 369               	.LFE9:
+ 371               	.global	zdp_EndDeviceBindReq
+ 373               	zdp_EndDeviceBindReq:
+ 374               	.LFB7:
+ 375               	.LM31:
+ 376               	/* prologue: frame size=6 */
+ 377 01d4 2F92      		push r2
+ 378 01d6 3F92      		push r3
+ 379 01d8 4F92      		push r4
+ 380 01da 5F92      		push r5
+ 381 01dc 6F92      		push r6
+ 382 01de 7F92      		push r7
+ 383 01e0 8F92      		push r8
+ 384 01e2 9F92      		push r9
+ 385 01e4 AF92      		push r10
+ 386 01e6 BF92      		push r11
+ 387 01e8 CF92      		push r12
+ 388 01ea DF92      		push r13
+ 389 01ec EF92      		push r14
+ 390 01ee FF92      		push r15
+ 391 01f0 0F93      		push r16
+ 392 01f2 1F93      		push r17
+ 393 01f4 CF93      		push r28
+ 394 01f6 DF93      		push r29
+ 395 01f8 CDB7      		in r28,__SP_L__
+ 396 01fa DEB7      		in r29,__SP_H__
+ 397 01fc 2697      		sbiw r28,6
+ 398 01fe 0FB6      		in __tmp_reg__,__SREG__
+ 399 0200 F894      		cli
+ 400 0202 DEBF      		out __SP_H__,r29
+ 401 0204 0FBE      		out __SREG__,__tmp_reg__
+ 402 0206 CDBF      		out __SP_L__,r28
+ 403               	/* prologue end (size=26) */
+ 404               	.LVL39:
+ 405 0208 9C83      		std Y+4,r25
+ 406 020a 8B83      		std Y+3,r24
+ 407 020c 3B01      		movw r6,r22
+ 408 020e D42E      		mov r13,r20
+ 409 0210 1901      		movw r2,r18
+ 410 0212 102F      		mov r17,r16
+ 411 0214 FE82      		std Y+6,r15
+ 412 0216 ED82      		std Y+5,r14
+ 413 0218 5C2C      		mov r5,r12
+ 414               	.LM32:
+ 415 021a 195F      		subi r17,lo8(-(7))
+ 416 021c 4C2C      		mov r4,r12
+ 417               	.LVL40:
+ 418 021e 410E      		add r4,r17
+ 419 0220 1750      		subi r17,lo8(-(-7))
+ 420               	.LM33:
+ 421 0222 842D      		mov r24,r4
+ 422 0224 9927      		clr r25
+ 423               	.LVL41:
+ 424 0226 0E94 0000 		call mem_getMem
+ 425               	.LVL42:
+ 426 022a 4C01      		movw r8,r24
+ 427               	.LVL43:
+ 428               	.LM34:
+ 429 022c 0097      		sbiw r24,0
+ 430 022e 01F4      		brne .L24
+ 431               	.LVL44:
+ 432               	.LM35:
+ 433 0230 81EF      		ldi r24,lo8(241)
+ 434 0232 90E0      		ldi r25,hi8(241)
+ 435 0234 00C0      		rjmp .L26
+ 436               	.L24:
+ 437               	.LVL45:
+ 438               	.LM36:
+ 439 0236 FC01      		movw r30,r24
+ 440 0238 6192      		st Z+,r6
+ 441 023a 9F01      		movw r18,r30
+ 442               	.LM37:
+ 443 023c 872D      		mov r24,r7
+ 444 023e 9927      		clr r25
+ 445               	.LVL46:
+ 446 0240 F401      		movw r30,r8
+ 447 0242 8183      		std Z+1,r24
+ 448 0244 D901      		movw r26,r18
+ 449               	.LVL47:
+ 450 0246 1196      		adiw r26,1
+ 451               	.LM38:
+ 452 0248 F901      		movw r30,r18
+ 453 024a D182      		std Z+1,r13
+ 454 024c 9D01      		movw r18,r26
+ 455               	.LVL48:
+ 456 024e 2F5F      		subi r18,lo8(-(1))
+ 457 0250 3F4F      		sbci r19,hi8(-(1))
+ 458               	.LM39:
+ 459 0252 FD01      		movw r30,r26
+ 460 0254 2182      		std Z+1,r2
+ 461 0256 D901      		movw r26,r18
+ 462               	.LVL49:
+ 463 0258 1196      		adiw r26,1
+ 464               	.LM40:
+ 465 025a 832D      		mov r24,r3
+ 466 025c 9927      		clr r25
+ 467 025e F901      		movw r30,r18
+ 468 0260 8183      		std Z+1,r24
+ 469               	.LM41:
+ 470 0262 FD01      		movw r30,r26
+ 471 0264 1183      		std Z+1,r17
+ 472 0266 62E0      		ldi r22,lo8(2)
+ 473 0268 C62E      		mov r12,r22
+ 474 026a D12C      		mov r13,__zero_reg__
+ 475               	.LVL50:
+ 476 026c CA0E      		add r12,r26
+ 477 026e DB1E      		adc r13,r27
+ 478               	.LM42:
+ 479 0270 E12E      		mov r14,r17
+ 480 0272 FF24      		clr r15
+ 481 0274 A701      		movw r20,r14
+ 482 0276 6D81      		ldd r22,Y+5
+ 483 0278 7E81      		ldd r23,Y+6
+ 484 027a C601      		movw r24,r12
+ 485 027c 0E94 0000 		call mem_cpy
+ 486               	.LVL51:
+ 487               	.LM43:
+ 488 0280 CE0C      		add r12,r14
+ 489 0282 DF1C      		adc r13,r15
+ 490               	.LM44:
+ 491 0284 F601      		movw r30,r12
+ 492 0286 5192      		st Z+,r5
+ 493 0288 FA83      		std Y+2,r31
+ 494 028a E983      		std Y+1,r30
+ 495               	.LVL52:
+ 496               	.LM45:
+ 497 028c 452D      		mov r20,r5
+ 498 028e 5527      		clr r21
+ 499 0290 B501      		movw r22,r10
+ 500 0292 CF01      		movw r24,r30
+ 501 0294 0E94 0000 		call mem_cpy
+ 502               	.LM46:
+ 503 0298 AA24      		clr r10
+ 504               	.LVL53:
+ 505 029a CC24      		clr r12
+ 506               	.LVL54:
+ 507 029c 50E2      		ldi r21,lo8(32)
+ 508 029e E52E      		mov r14,r21
+ 509 02a0 00E0      		ldi r16,lo8(0)
+ 510 02a2 2B81      		ldd r18,Y+3
+ 511 02a4 3C81      		ldd r19,Y+4
+ 512 02a6 4091 0000 		lds r20,zdp_trans
+ 513 02aa 642D      		mov r22,r4
+ 514 02ac C401      		movw r24,r8
+ 515               	.LVL55:
+ 516 02ae 0E94 0000 		call apf_sendSingleMsg
+ 517               	.LVL56:
+ 518 02b2 082F      		mov r16,r24
+ 519               	.LVL57:
+ 520               	.LM47:
+ 521 02b4 C401      		movw r24,r8
+ 522               	.LVL58:
+ 523 02b6 0E94 0000 		call mem_freeMem
+ 524               	.LVL59:
+ 525 02ba 802F      		mov r24,r16
+ 526 02bc 9927      		clr r25
+ 527               	.LVL60:
+ 528               	.L26:
+ 529               	/* epilogue: frame size=6 */
+ 530 02be 2696      		adiw r28,6
+ 531 02c0 0FB6      		in __tmp_reg__,__SREG__
+ 532 02c2 F894      		cli
+ 533 02c4 DEBF      		out __SP_H__,r29
+ 534 02c6 0FBE      		out __SREG__,__tmp_reg__
+ 535 02c8 CDBF      		out __SP_L__,r28
+ 536 02ca DF91      		pop r29
+ 537 02cc CF91      		pop r28
+ 538 02ce 1F91      		pop r17
+ 539 02d0 0F91      		pop r16
+ 540 02d2 FF90      		pop r15
+ 541 02d4 EF90      		pop r14
+ 542 02d6 DF90      		pop r13
+ 543 02d8 CF90      		pop r12
+ 544 02da BF90      		pop r11
+ 545 02dc AF90      		pop r10
+ 546 02de 9F90      		pop r9
+ 547 02e0 8F90      		pop r8
+ 548 02e2 7F90      		pop r7
+ 549 02e4 6F90      		pop r6
+ 550 02e6 5F90      		pop r5
+ 551 02e8 4F90      		pop r4
+ 552 02ea 3F90      		pop r3
+ 553 02ec 2F90      		pop r2
+ 554 02ee 0895      		ret
+ 555               	/* epilogue end (size=25) */
+ 556               	/* function zdp_EndDeviceBindReq size 142 (91) */
+ 557               	.LFE7:
+ 559               	.global	zdp_NwkAddrRes
+ 561               	zdp_NwkAddrRes:
+ 562               	.LFB4:
+ 563               	.LM48:
+ 564               	/* prologue: frame size=1 */
+ 565 02f0 2F92      		push r2
+ 566 02f2 3F92      		push r3
+ 567 02f4 4F92      		push r4
+ 568 02f6 5F92      		push r5
+ 569 02f8 6F92      		push r6
+ 570 02fa 7F92      		push r7
+ 571 02fc 8F92      		push r8
+ 572 02fe 9F92      		push r9
+ 573 0300 AF92      		push r10
+ 574 0302 BF92      		push r11
+ 575 0304 CF92      		push r12
+ 576 0306 DF92      		push r13
+ 577 0308 EF92      		push r14
+ 578 030a FF92      		push r15
+ 579 030c 0F93      		push r16
+ 580 030e 1F93      		push r17
+ 581 0310 CF93      		push r28
+ 582 0312 DF93      		push r29
+ 583 0314 CDB7      		in r28,__SP_L__
+ 584 0316 DEB7      		in r29,__SP_H__
+ 585 0318 2197      		sbiw r28,1
+ 586 031a 0FB6      		in __tmp_reg__,__SREG__
+ 587 031c F894      		cli
+ 588 031e DEBF      		out __SP_H__,r29
+ 589 0320 0FBE      		out __SREG__,__tmp_reg__
+ 590 0322 CDBF      		out __SP_L__,r28
+ 591               	/* prologue end (size=26) */
+ 592               	.LVL61:
+ 593 0324 8983      		std Y+1,r24
+ 594 0326 1B01      		movw r2,r22
+ 595 0328 D42E      		mov r13,r20
+ 596 032a 2901      		movw r4,r18
+ 597 032c 3801      		movw r6,r16
+ 598 032e FE2C      		mov r15,r14
+ 599 0330 EC2C      		mov r14,r12
+ 600               	.LVL62:
+ 601 0332 8401      		movw r16,r8
+ 602               	.LVL63:
+ 603               	.LM49:
+ 604 0334 81E0      		ldi r24,lo8(1)
+ 605               	.LVL64:
+ 606 0336 F816      		cp r15,r24
+ 607 0338 01F0      		breq .L29
+ 608               	.LVL65:
+ 609               	.LM50:
+ 610 033a EE24      		clr r14
+ 611 033c 3DE0      		ldi r19,lo8(13)
+ 612 033e B32E      		mov r11,r19
+ 613               	.LVL66:
+ 614 0340 8DE0      		ldi r24,lo8(13)
+ 615 0342 90E0      		ldi r25,hi8(13)
+ 616               	.L31:
+ 617               	.LM51:
+ 618 0344 0E94 0000 		call mem_getMem
+ 619 0348 4C01      		movw r8,r24
+ 620               	.LM52:
+ 621 034a 0097      		sbiw r24,0
+ 622 034c 01F4      		brne .+2
+ 623 034e 00C0      		rjmp .L43
+ 624               	.LM53:
+ 625 0350 FC01      		movw r30,r24
+ 626               	.LVL67:
+ 627 0352 D192      		st Z+,r13
+ 628               	.LM54:
+ 629 0354 48E0      		ldi r20,lo8(8)
+ 630 0356 50E0      		ldi r21,hi8(8)
+ 631 0358 B201      		movw r22,r4
+ 632 035a CF01      		movw r24,r30
+ 633 035c 0E94 0000 		call mem_cpy
+ 634               	.LVL68:
+ 635               	.LM55:
+ 636 0360 F401      		movw r30,r8
+ 637 0362 6186      		std Z+9,r6
+ 638               	.LM56:
+ 639 0364 872D      		mov r24,r7
+ 640 0366 9927      		clr r25
+ 641 0368 8287      		std Z+10,r24
+ 642               	.LM57:
+ 643 036a E386      		std Z+11,r14
+ 644               	.LM58:
+ 645 036c A486      		std Z+12,r10
+ 646               	.LM59:
+ 647 036e F1E0      		ldi r31,lo8(1)
+ 648 0370 FF16      		cp r15,r31
+ 649 0372 01F0      		breq .L45
+ 650               	.LVL69:
+ 651               	.L34:
+ 652               	.LM60:
+ 653 0374 B981      		ldd r27,Y+1
+ 654 0376 BB23      		tst r27
+ 655 0378 01F0      		breq .L40
+ 656 037a 81E8      		ldi r24,lo8(-127)
+ 657               	.LVL70:
+ 658               	.L42:
+ 659               	.LM61:
+ 660 037c AA24      		clr r10
+ 661               	.LVL71:
+ 662 037e CC24      		clr r12
+ 663 0380 E82E      		mov r14,r24
+ 664               	.LVL72:
+ 665 0382 00E0      		ldi r16,lo8(0)
+ 666               	.LVL73:
+ 667 0384 9101      		movw r18,r2
+ 668 0386 4091 0000 		lds r20,zdp_trans
+ 669               	.LVL74:
+ 670 038a 6B2D      		mov r22,r11
+ 671 038c C401      		movw r24,r8
+ 672               	.LVL75:
+ 673 038e 0E94 0000 		call apf_sendSingleMsg
+ 674               	.LVL76:
+ 675               	.LM62:
+ 676 0392 C401      		movw r24,r8
+ 677               	.LVL77:
+ 678 0394 0E94 0000 		call mem_freeMem
+ 679               	.LVL78:
+ 680 0398 00C0      		rjmp .L43
+ 681               	.LVL79:
+ 682               	.L29:
+ 683               	.LM63:
+ 684 039a 8C2D      		mov r24,r12
+ 685 039c 9927      		clr r25
+ 686 039e 8A19      		sub r24,r10
+ 687 03a0 9109      		sbc r25,__zero_reg__
+ 688 03a2 880F      		lsl r24
+ 689 03a4 991F      		rol r25
+ 690 03a6 9DE0      		ldi r25,lo8(13)
+ 691 03a8 B92E      		mov r11,r25
+ 692               	.LVL80:
+ 693 03aa B80E      		add r11,r24
+ 694 03ac 8B2D      		mov r24,r11
+ 695 03ae 9927      		clr r25
+ 696 03b0 00C0      		rjmp .L31
+ 697               	.LVL81:
+ 698               	.L40:
+ 699               	.LM64:
+ 700 03b2 80E8      		ldi r24,lo8(-128)
+ 701               	.LVL82:
+ 702 03b4 00C0      		rjmp .L42
+ 703               	.LVL83:
+ 704               	.L45:
+ 705               	.LM65:
+ 706 03b6 AA20      		tst r10
+ 707 03b8 01F0      		breq .L36
+ 708 03ba AA94      		dec r10
+ 709 03bc 8A2D      		mov r24,r10
+ 710 03be 9927      		clr r25
+ 711 03c0 A394      		inc r10
+ 712 03c2 880F      		lsl r24
+ 713 03c4 991F      		rol r25
+ 714 03c6 080F      		add r16,r24
+ 715 03c8 191F      		adc r17,r25
+ 716 03ca 0E5F      		subi r16,lo8(-(2))
+ 717 03cc 1F4F      		sbci r17,hi8(-(2))
+ 718               	.L36:
+ 719               	.LM66:
+ 720 03ce 2E2D      		mov r18,r14
+ 721 03d0 3327      		clr r19
+ 722 03d2 2A19      		sub r18,r10
+ 723 03d4 3109      		sbc r19,__zero_reg__
+ 724 03d6 1216      		cp __zero_reg__,r18
+ 725 03d8 1306      		cpc __zero_reg__,r19
+ 726 03da 04F4      		brge .L34
+ 727 03dc F401      		movw r30,r8
+ 728 03de 40E0      		ldi r20,lo8(0)
+ 729               	.LVL84:
+ 730               	.L39:
+ 731               	.LM67:
+ 732 03e0 D801      		movw r26,r16
+ 733 03e2 8C91      		ld r24,X
+ 734 03e4 8587      		std Z+13,r24
+ 735               	.LM68:
+ 736 03e6 8D91      		ld r24,X+
+ 737 03e8 9D91      		ld r25,X+
+ 738 03ea 8D01      		movw r16,r26
+ 739 03ec 892F      		mov r24,r25
+ 740 03ee 9927      		clr r25
+ 741 03f0 8687      		std Z+14,r24
+ 742               	.LM69:
+ 743 03f2 4F5F      		subi r20,lo8(-(1))
+ 744 03f4 3296      		adiw r30,2
+ 745 03f6 842F      		mov r24,r20
+ 746 03f8 9927      		clr r25
+ 747 03fa 8217      		cp r24,r18
+ 748 03fc 9307      		cpc r25,r19
+ 749 03fe 04F0      		brlt .L39
+ 750               	.LVL85:
+ 751 0400 00C0      		rjmp .L34
+ 752               	.LVL86:
+ 753               	.L43:
+ 754               	/* epilogue: frame size=1 */
+ 755 0402 2196      		adiw r28,1
+ 756 0404 0FB6      		in __tmp_reg__,__SREG__
+ 757 0406 F894      		cli
+ 758 0408 DEBF      		out __SP_H__,r29
+ 759 040a 0FBE      		out __SREG__,__tmp_reg__
+ 760 040c CDBF      		out __SP_L__,r28
+ 761 040e DF91      		pop r29
+ 762 0410 CF91      		pop r28
+ 763 0412 1F91      		pop r17
+ 764 0414 0F91      		pop r16
+ 765 0416 FF90      		pop r15
+ 766 0418 EF90      		pop r14
+ 767 041a DF90      		pop r13
+ 768 041c CF90      		pop r12
+ 769 041e BF90      		pop r11
+ 770 0420 AF90      		pop r10
+ 771 0422 9F90      		pop r9
+ 772 0424 8F90      		pop r8
+ 773 0426 7F90      		pop r7
+ 774 0428 6F90      		pop r6
+ 775 042a 5F90      		pop r5
+ 776 042c 4F90      		pop r4
+ 777 042e 3F90      		pop r3
+ 778 0430 2F90      		pop r2
+ 779 0432 0895      		ret
+ 780               	/* epilogue end (size=25) */
+ 781               	/* function zdp_NwkAddrRes size 162 (111) */
+ 782               	.LFE4:
+ 784               	.global	zdp_sendEDBindReq
+ 786               	zdp_sendEDBindReq:
+ 787               	.LFB6:
+ 788               	.LM70:
+ 789               	/* prologue: frame size=10 */
+ 790 0434 8F92      		push r8
+ 791 0436 AF92      		push r10
+ 792 0438 BF92      		push r11
+ 793 043a CF92      		push r12
+ 794 043c EF92      		push r14
+ 795 043e FF92      		push r15
+ 796 0440 0F93      		push r16
+ 797 0442 1F93      		push r17
+ 798 0444 CF93      		push r28
+ 799 0446 DF93      		push r29
+ 800 0448 CDB7      		in r28,__SP_L__
+ 801 044a DEB7      		in r29,__SP_H__
+ 802 044c 2A97      		sbiw r28,10
+ 803 044e 0FB6      		in __tmp_reg__,__SREG__
+ 804 0450 F894      		cli
+ 805 0452 DEBF      		out __SP_H__,r29
+ 806 0454 0FBE      		out __SREG__,__tmp_reg__
+ 807 0456 CDBF      		out __SP_L__,r28
+ 808               	/* prologue end (size=18) */
+ 809               	.LVL87:
+ 810 0458 182F      		mov r17,r24
+ 811               	.LM71:
+ 812 045a 8823      		tst r24
+ 813 045c 01F0      		breq .L50
+ 814               	.LM72:
+ 815 045e 9927      		clr r25
+ 816 0460 0E94 0000 		call app_finEp
+ 817               	.LVL88:
+ 818 0464 FC01      		movw r30,r24
+ 819               	.LM73:
+ 820 0466 892B      		or r24,r25
+ 821 0468 01F0      		breq .L50
+ 822               	.LM74:
+ 823 046a 81E0      		ldi r24,lo8(1)
+ 824 046c 8983      		std Y+1,r24
+ 825               	.LM75:
+ 826 046e 1B82      		std Y+3,__zero_reg__
+ 827 0470 1A82      		std Y+2,__zero_reg__
+ 828               	.LM76:
+ 829 0472 A284      		ldd r10,Z+10
+ 830 0474 B384      		ldd r11,Z+11
+ 831 0476 E780      		ldd r14,Z+7
+ 832 0478 F084      		ldd r15,Z+8
+ 833 047a 2181      		ldd r18,Z+1
+ 834 047c 3281      		ldd r19,Z+2
+ 835 047e 8824      		clr r8
+ 836 0480 C184      		ldd r12,Z+9
+ 837 0482 0681      		ldd r16,Z+6
+ 838 0484 412F      		mov r20,r17
+ 839 0486 60E0      		ldi r22,lo8(0)
+ 840 0488 70E0      		ldi r23,hi8(0)
+ 841 048a CE01      		movw r24,r28
+ 842 048c 0196      		adiw r24,1
+ 843 048e 0E94 0000 		call zdp_EndDeviceBindReq
+ 844               	.LVL89:
+ 845               	.L50:
+ 846               	/* epilogue: frame size=10 */
+ 847 0492 2A96      		adiw r28,10
+ 848 0494 0FB6      		in __tmp_reg__,__SREG__
+ 849 0496 F894      		cli
+ 850 0498 DEBF      		out __SP_H__,r29
+ 851 049a 0FBE      		out __SREG__,__tmp_reg__
+ 852 049c CDBF      		out __SP_L__,r28
+ 853 049e DF91      		pop r29
+ 854 04a0 CF91      		pop r28
+ 855 04a2 1F91      		pop r17
+ 856 04a4 0F91      		pop r16
+ 857 04a6 FF90      		pop r15
+ 858 04a8 EF90      		pop r14
+ 859 04aa CF90      		pop r12
+ 860 04ac BF90      		pop r11
+ 861 04ae AF90      		pop r10
+ 862 04b0 8F90      		pop r8
+ 863 04b2 0895      		ret
+ 864               	/* epilogue end (size=17) */
+ 865               	/* function zdp_sendEDBindReq size 64 (29) */
+ 866               	.LFE6:
+ 868               	.global	zdp_NwkAddrReq
+ 870               	zdp_NwkAddrReq:
+ 871               	.LFB3:
+ 872               	.LM77:
+ 873               	/* prologue: frame size=6 */
+ 874 04b4 AF92      		push r10
+ 875 04b6 BF92      		push r11
+ 876 04b8 CF92      		push r12
+ 877 04ba EF92      		push r14
+ 878 04bc 0F93      		push r16
+ 879 04be CF93      		push r28
+ 880 04c0 DF93      		push r29
+ 881 04c2 CDB7      		in r28,__SP_L__
+ 882 04c4 DEB7      		in r29,__SP_H__
+ 883 04c6 2697      		sbiw r28,6
+ 884 04c8 0FB6      		in __tmp_reg__,__SREG__
+ 885 04ca F894      		cli
+ 886 04cc DEBF      		out __SP_H__,r29
+ 887 04ce 0FBE      		out __SREG__,__tmp_reg__
+ 888 04d0 CDBF      		out __SP_L__,r28
+ 889               	/* prologue end (size=15) */
+ 890               	.LVL90:
+ 891 04d2 5C01      		movw r10,r24
+ 892 04d4 062F      		mov r16,r22
+ 893 04d6 E42E      		mov r14,r20
+ 894               	.LM78:
+ 895 04d8 80E1      		ldi r24,lo8(16)
+ 896 04da 90E0      		ldi r25,hi8(16)
+ 897               	.LVL91:
+ 898 04dc 0E94 0000 		call mem_getMem
+ 899               	.LVL92:
+ 900 04e0 9C01      		movw r18,r24
+ 901               	.LM79:
+ 902 04e2 892B      		or r24,r25
+ 903 04e4 01F0      		breq .L52
+ 904               	.LM80:
+ 905 04e6 8091 0000 		lds r24,zdp_trans
+ 906 04ea 8B83      		std Y+3,r24
+ 907 04ec 8F5F      		subi r24,lo8(-(1))
+ 908 04ee 8093 0000 		sts zdp_trans,r24
+ 909               	.LM81:
+ 910 04f2 3E83      		std Y+6,r19
+ 911 04f4 2D83      		std Y+5,r18
+ 912               	.LM82:
+ 913 04f6 48E0      		ldi r20,lo8(8)
+ 914 04f8 50E0      		ldi r21,hi8(8)
+ 915 04fa B501      		movw r22,r10
+ 916 04fc C901      		movw r24,r18
+ 917 04fe 0E94 0000 		call mem_cpy
+ 918               	.LM83:
+ 919 0502 ED81      		ldd r30,Y+5
+ 920 0504 FE81      		ldd r31,Y+6
+ 921 0506 0087      		std Z+8,r16
+ 922               	.LM84:
+ 923 0508 ED81      		ldd r30,Y+5
+ 924 050a FE81      		ldd r31,Y+6
+ 925 050c E186      		std Z+9,r14
+ 926               	.LM85:
+ 927 050e 8AE0      		ldi r24,lo8(10)
+ 928 0510 8C83      		std Y+4,r24
+ 929               	.LM86:
+ 930 0512 82E0      		ldi r24,lo8(2)
+ 931 0514 0E94 0000 		call apf_initFrm
+ 932 0518 5C01      		movw r10,r24
+ 933               	.LVL93:
+ 934               	.LM87:
+ 935 051a 0097      		sbiw r24,0
+ 936 051c 01F0      		breq .L52
+ 937               	.LVL94:
+ 938               	.LM88:
+ 939 051e BE01      		movw r22,r28
+ 940 0520 6D5F      		subi r22,lo8(-(3))
+ 941 0522 7F4F      		sbci r23,hi8(-(3))
+ 942 0524 0E94 0000 		call apf_addMsg
+ 943               	.LVL95:
+ 944 0528 8823      		tst r24
+ 945 052a 01F4      		brne .L59
+ 946               	.LVL96:
+ 947               	.L55:
+ 948               	.LM89:
+ 949 052c C501      		movw r24,r10
+ 950 052e 0E94 0000 		call apf_releaseFrm
+ 951               	.LM90:
+ 952 0532 8D81      		ldd r24,Y+5
+ 953 0534 9E81      		ldd r25,Y+6
+ 954 0536 0E94 0000 		call mem_freeMem
+ 955 053a 80E0      		ldi r24,lo8(0)
+ 956 053c 90E0      		ldi r25,hi8(0)
+ 957 053e 00C0      		rjmp .L57
+ 958               	.LVL97:
+ 959               	.L52:
+ 960               	.LM91:
+ 961 0540 81EF      		ldi r24,lo8(241)
+ 962 0542 90E0      		ldi r25,hi8(241)
+ 963               	.LVL98:
+ 964 0544 00C0      		rjmp .L57
+ 965               	.LVL99:
+ 966               	.L59:
+ 967               	.LM92:
+ 968 0546 8FEF      		ldi r24,lo8(-1)
+ 969 0548 9FEF      		ldi r25,hi8(-1)
+ 970 054a 9A83      		std Y+2,r25
+ 971 054c 8983      		std Y+1,r24
+ 972               	.LVL100:
+ 973               	.LM93:
+ 974 054e CC24      		clr r12
+ 975 0550 EE24      		clr r14
+ 976               	.LVL101:
+ 977 0552 00E0      		ldi r16,lo8(0)
+ 978               	.LVL102:
+ 979 0554 20E0      		ldi r18,lo8(0)
+ 980 0556 AE01      		movw r20,r28
+ 981 0558 4F5F      		subi r20,lo8(-(1))
+ 982 055a 5F4F      		sbci r21,hi8(-(1))
+ 983 055c 61E0      		ldi r22,lo8(1)
+ 984 055e C501      		movw r24,r10
+ 985 0560 0E94 0000 		call apf_sendFrm
+ 986 0564 00C0      		rjmp .L55
+ 987               	.LVL103:
+ 988               	.L57:
+ 989               	/* epilogue: frame size=6 */
+ 990 0566 2696      		adiw r28,6
+ 991 0568 0FB6      		in __tmp_reg__,__SREG__
+ 992 056a F894      		cli
+ 993 056c DEBF      		out __SP_H__,r29
+ 994 056e 0FBE      		out __SREG__,__tmp_reg__
+ 995 0570 CDBF      		out __SP_L__,r28
+ 996 0572 DF91      		pop r29
+ 997 0574 CF91      		pop r28
+ 998 0576 0F91      		pop r16
+ 999 0578 EF90      		pop r14
+ 1000 057a CF90      		pop r12
+ 1001 057c BF90      		pop r11
+ 1002 057e AF90      		pop r10
+ 1003 0580 0895      		ret
+ 1004               	/* epilogue end (size=14) */
+ 1005               	/* function zdp_NwkAddrReq size 103 (74) */
+ 1006               	.LFE3:
+ 1008               	.global	zdp_trans
+ 1009               	.global	zdp_trans
+ 1010               		.section .bss
+ 1013               	zdp_trans:
+ 1014 0000 00        		.skip 1,0
+ 1093               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 zdp.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:20     .text:00000000 zdp_IEEEAddrReq
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:38     .text:00000006 zdp_BindUnBindRes
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:107    .text:00000060 zdp_EDBindRes
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:166    .text:000000b2 zdp_EndDeviceAnnce
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:1013   .bss:00000000 zdp_trans
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:244    .text:00000128 zdp_BindUnbindReq
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:373    .text:000001d4 zdp_EndDeviceBindReq
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:561    .text:000002f0 zdp_NwkAddrRes
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:786    .text:00000434 zdp_sendEDBindReq
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccQbbaaa.s:870    .text:000004b4 zdp_NwkAddrReq
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+apf_sendSingleMsg
+mem_cpy
+mem_getMem
+mem_freeMem
+app_finEp
+apf_initFrm
+apf_addMsg
+apf_releaseFrm
+apf_sendFrm

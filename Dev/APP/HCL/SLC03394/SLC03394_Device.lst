@@ -1,0 +1,387 @@
+   1               		.file	"SLC03394_Device.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	SLC03394_InitVars
+  20               	SLC03394_InitVars:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LM2:
+  26 0000 1092 0000 		sts SLC03394_transID,__zero_reg__
+  27               	/* epilogue: frame size=0 */
+  28 0004 0895      		ret
+  29               	/* epilogue end (size=1) */
+  30               	/* function SLC03394_InitVars size 3 (2) */
+  31               	.LFE2:
+  33               	.global	SLC03394_ProcessMSGCmd
+  35               	SLC03394_ProcessMSGCmd:
+  36               	.LFB4:
+  37               	.LM3:
+  38               	/* prologue: frame size=0 */
+  39               	/* prologue end (size=0) */
+  40               	.LVL0:
+  41               	/* epilogue: frame size=0 */
+  42 0006 0895      		ret
+  43               	/* epilogue end (size=1) */
+  44               	/* function SLC03394_ProcessMSGCmd size 1 (0) */
+  45               	.LFE4:
+  47               	.global	SLC03394_RcvSETRESP
+  49               	SLC03394_RcvSETRESP:
+  50               	.LFB6:
+  51               	.LM4:
+  52               	/* prologue: frame size=0 */
+  53               	/* prologue end (size=0) */
+  54               	.LVL1:
+  55               	/* epilogue: frame size=0 */
+  56 0008 0895      		ret
+  57               	/* epilogue end (size=1) */
+  58               	/* function SLC03394_RcvSETRESP size 1 (0) */
+  59               	.LFE6:
+  61               	.global	SLC03394_RcvGETRESP
+  63               	SLC03394_RcvGETRESP:
+  64               	.LFB8:
+  65               	.LM5:
+  66               	/* prologue: frame size=0 */
+  67               	/* prologue end (size=0) */
+  68               	.LVL2:
+  69               	/* epilogue: frame size=0 */
+  70 000a 0895      		ret
+  71               	/* epilogue end (size=1) */
+  72               	/* function SLC03394_RcvGETRESP size 1 (0) */
+  73               	.LFE8:
+  75               	.global	SLC03394_RcvEVENTRESP
+  77               	SLC03394_RcvEVENTRESP:
+  78               	.LFB10:
+  79               	.LM6:
+  80               	/* prologue: frame size=0 */
+  81               	/* prologue end (size=0) */
+  82               	.LVL3:
+  83               	/* epilogue: frame size=0 */
+  84 000c 0895      		ret
+  85               	/* epilogue end (size=1) */
+  86               	/* function SLC03394_RcvEVENTRESP size 1 (0) */
+  87               	.LFE10:
+  89               	.global	SLC03394_RcvEVENT
+  91               	SLC03394_RcvEVENT:
+  92               	.LFB9:
+  93               	.LM7:
+  94               	/* prologue: frame size=0 */
+  95 000e 8F92      		push r8
+  96 0010 AF92      		push r10
+  97 0012 BF92      		push r11
+  98 0014 CF92      		push r12
+  99 0016 EF92      		push r14
+ 100 0018 FF92      		push r15
+ 101 001a 0F93      		push r16
+ 102 001c CF93      		push r28
+ 103 001e DF93      		push r29
+ 104               	/* prologue end (size=9) */
+ 105               	.LVL4:
+ 106 0020 DC01      		movw r26,r24
+ 107 0022 FB01      		movw r30,r22
+ 108               	.LM8:
+ 109 0024 EC01      		movw r28,r24
+ 110 0026 2A81      		ldd r18,Y+2
+ 111 0028 3B81      		ldd r19,Y+3
+ 112 002a 4981      		ldd r20,Y+1
+ 113               	.LVL5:
+ 114 002c 4295      		swap r20
+ 115 002e 4F70      		andi r20,0x0f
+ 116 0030 1F92      		push __zero_reg__
+ 117 0032 8081      		ld r24,Z
+ 118               	.LVL6:
+ 119 0034 8F93      		push r24
+ 120 0036 8484      		ldd r8,Z+12
+ 121 0038 3196      		adiw r30,1
+ 122 003a 5F01      		movw r10,r30
+ 123 003c CC24      		clr r12
+ 124 003e EE24      		clr r14
+ 125 0040 FF24      		clr r15
+ 126 0042 03E0      		ldi r16,lo8(3)
+ 127 0044 6AE0      		ldi r22,lo8(10)
+ 128               	.LVL7:
+ 129 0046 8C91      		ld r24,X
+ 130 0048 0E94 0000 		call apf_sendSingleKVP
+ 131               	.LVL8:
+ 132 004c 0F90      		pop __tmp_reg__
+ 133 004e 0F90      		pop __tmp_reg__
+ 134               	/* epilogue: frame size=0 */
+ 135 0050 DF91      		pop r29
+ 136 0052 CF91      		pop r28
+ 137 0054 0F91      		pop r16
+ 138 0056 FF90      		pop r15
+ 139 0058 EF90      		pop r14
+ 140 005a CF90      		pop r12
+ 141 005c BF90      		pop r11
+ 142 005e AF90      		pop r10
+ 143 0060 8F90      		pop r8
+ 144 0062 0895      		ret
+ 145               	/* epilogue end (size=10) */
+ 146               	/* function SLC03394_RcvEVENT size 43 (24) */
+ 147               	.LFE9:
+ 149               	.global	SLC03394_RcvGET
+ 151               	SLC03394_RcvGET:
+ 152               	.LFB7:
+ 153               	.LM9:
+ 154               	/* prologue: frame size=0 */
+ 155               	/* prologue end (size=0) */
+ 156               	.LVL9:
+ 157 0064 9C01      		movw r18,r24
+ 158 0066 FB01      		movw r30,r22
+ 159               	.LM10:
+ 160 0068 8485      		ldd r24,Z+12
+ 161               	.LVL10:
+ 162 006a 8331      		cpi r24,lo8(19)
+ 163 006c 01F4      		brne .L16
+ 164               	.LVL11:
+ 165               	.LM11:
+ 166 006e C901      		movw r24,r18
+ 167 0070 0E94 0000 		call SLC03394_RcvGET_OnOffSRC
+ 168               	.LVL12:
+ 169               	.LVL13:
+ 170               	.L16:
+ 171 0074 0895      		ret
+ 172               	/* epilogue: frame size=0 */
+ 173               	/* epilogue: noreturn */
+ 174               	/* epilogue end (size=0) */
+ 175               	/* function SLC03394_RcvGET size 9 (9) */
+ 176               	.LFE7:
+ 178               	.global	SLC03394_RcvSET
+ 180               	SLC03394_RcvSET:
+ 181               	.LFB5:
+ 182               	.LM12:
+ 183               	/* prologue: frame size=0 */
+ 184 0076 6F92      		push r6
+ 185 0078 7F92      		push r7
+ 186 007a 8F92      		push r8
+ 187 007c AF92      		push r10
+ 188 007e BF92      		push r11
+ 189 0080 CF92      		push r12
+ 190 0082 EF92      		push r14
+ 191 0084 FF92      		push r15
+ 192 0086 0F93      		push r16
+ 193 0088 CF93      		push r28
+ 194 008a DF93      		push r29
+ 195               	/* prologue end (size=11) */
+ 196               	.LVL14:
+ 197 008c 3C01      		movw r6,r24
+ 198 008e EB01      		movw r28,r22
+ 199 0090 F42E      		mov r15,r20
+ 200               	.LM13:
+ 201 0092 9881      		ld r25,Y
+ 202               	.LVL15:
+ 203               	.LM14:
+ 204 0094 F301      		movw r30,r6
+ 205 0096 6281      		ldd r22,Z+2
+ 206 0098 7381      		ldd r23,Z+3
+ 207               	.LVL16:
+ 208               	.LM15:
+ 209 009a 8C85      		ldd r24,Y+12
+ 210               	.LVL17:
+ 211 009c 8331      		cpi r24,lo8(19)
+ 212 009e 01F0      		breq .L19
+ 213               	.LVL18:
+ 214               	.LM16:
+ 215 00a0 03E0      		ldi r16,lo8(3)
+ 216               	.LVL19:
+ 217 00a2 00C0      		rjmp .L24
+ 218               	.LVL20:
+ 219               	.L19:
+ 220               	.LM17:
+ 221 00a4 F301      		movw r30,r6
+ 222 00a6 A681      		ldd r26,Z+6
+ 223 00a8 B781      		ldd r27,Z+7
+ 224 00aa 4C91      		ld r20,X
+ 225 00ac 892F      		mov r24,r25
+ 226 00ae 0E94 0000 		call SLC03394_RcvSET_OnOffSRC
+ 227               	.LVL21:
+ 228 00b2 082F      		mov r16,r24
+ 229               	.LVL22:
+ 230               	.LM18:
+ 231 00b4 FF20      		tst r15
+ 232 00b6 01F0      		breq .L23
+ 233               	.LVL23:
+ 234               	.L24:
+ 235               	.LM19:
+ 236 00b8 F301      		movw r30,r6
+ 237 00ba 2281      		ldd r18,Z+2
+ 238 00bc 3381      		ldd r19,Z+3
+ 239 00be 4181      		ldd r20,Z+1
+ 240 00c0 4295      		swap r20
+ 241 00c2 4F70      		andi r20,0x0f
+ 242 00c4 1F92      		push __zero_reg__
+ 243 00c6 8881      		ld r24,Y
+ 244 00c8 8F93      		push r24
+ 245 00ca 8C84      		ldd r8,Y+12
+ 246 00cc 2196      		adiw r28,1
+ 247 00ce 5E01      		movw r10,r28
+ 248 00d0 CC24      		clr r12
+ 249 00d2 EE24      		clr r14
+ 250 00d4 FF24      		clr r15
+ 251 00d6 69E0      		ldi r22,lo8(9)
+ 252               	.LVL24:
+ 253 00d8 8081      		ld r24,Z
+ 254 00da 0E94 0000 		call apf_sendSingleKVP
+ 255               	.LVL25:
+ 256 00de 0F90      		pop __tmp_reg__
+ 257 00e0 0F90      		pop __tmp_reg__
+ 258               	.L23:
+ 259               	/* epilogue: frame size=0 */
+ 260 00e2 DF91      		pop r29
+ 261 00e4 CF91      		pop r28
+ 262 00e6 0F91      		pop r16
+ 263 00e8 FF90      		pop r15
+ 264 00ea EF90      		pop r14
+ 265 00ec CF90      		pop r12
+ 266 00ee BF90      		pop r11
+ 267 00f0 AF90      		pop r10
+ 268 00f2 8F90      		pop r8
+ 269 00f4 7F90      		pop r7
+ 270 00f6 6F90      		pop r6
+ 271 00f8 0895      		ret
+ 272               	/* epilogue end (size=12) */
+ 273               	/* function SLC03394_RcvSET size 66 (43) */
+ 274               	.LFE5:
+ 276               	.global	SLC03394_ProcessKVPCmd
+ 278               	SLC03394_ProcessKVPCmd:
+ 279               	.LFB3:
+ 280               	.LM20:
+ 281               	/* prologue: frame size=8 */
+ 282 00fa EF92      		push r14
+ 283 00fc FF92      		push r15
+ 284 00fe 0F93      		push r16
+ 285 0100 1F93      		push r17
+ 286 0102 CF93      		push r28
+ 287 0104 DF93      		push r29
+ 288 0106 CDB7      		in r28,__SP_L__
+ 289 0108 DEB7      		in r29,__SP_H__
+ 290 010a 2897      		sbiw r28,8
+ 291 010c 0FB6      		in __tmp_reg__,__SREG__
+ 292 010e F894      		cli
+ 293 0110 DEBF      		out __SP_H__,r29
+ 294 0112 0FBE      		out __SREG__,__tmp_reg__
+ 295 0114 CDBF      		out __SP_L__,r28
+ 296               	/* prologue end (size=14) */
+ 297               	.LVL26:
+ 298 0116 8C01      		movw r16,r24
+ 299               	.LM21:
+ 300 0118 41E0      		ldi r20,lo8(1)
+ 301 011a 7E01      		movw r14,r28
+ 302 011c 0894      		sec
+ 303 011e E11C      		adc r14,__zero_reg__
+ 304 0120 F11C      		adc r15,__zero_reg__
+ 305 0122 B701      		movw r22,r14
+ 306 0124 0E94 0000 		call apf_getKVPTrans
+ 307               	.LVL27:
+ 308 0128 8823      		tst r24
+ 309 012a 01F0      		breq .L34
+ 310               	.LM22:
+ 311 012c 8A81      		ldd r24,Y+2
+ 312 012e 8F70      		andi r24,lo8(15)
+ 313 0130 9927      		clr r25
+ 314 0132 8430      		cpi r24,4
+ 315 0134 9105      		cpc r25,__zero_reg__
+ 316 0136 01F0      		breq .L30
+ 317 0138 8530      		cpi r24,5
+ 318 013a 9105      		cpc r25,__zero_reg__
+ 319 013c 04F4      		brge .L33
+ 320 013e 8130      		cpi r24,1
+ 321 0140 9105      		cpc r25,__zero_reg__
+ 322 0142 01F0      		breq .L28
+ 323 0144 0297      		sbiw r24,2
+ 324 0146 01F4      		brne .L34
+ 325 0148 00C0      		rjmp .L29
+ 326               	.L33:
+ 327 014a 8530      		cpi r24,5
+ 328 014c 9105      		cpc r25,__zero_reg__
+ 329 014e 01F0      		breq .L31
+ 330 0150 0697      		sbiw r24,6
+ 331 0152 01F4      		brne .L34
+ 332 0154 00C0      		rjmp .L32
+ 333               	.L31:
+ 334               	.LM23:
+ 335 0156 41E0      		ldi r20,lo8(1)
+ 336 0158 00C0      		rjmp .L35
+ 337               	.L28:
+ 338               	.LM24:
+ 339 015a 40E0      		ldi r20,lo8(0)
+ 340               	.L35:
+ 341 015c B801      		movw r22,r16
+ 342 015e C701      		movw r24,r14
+ 343 0160 0E94 0000 		call SLC03394_RcvSET
+ 344 0164 00C0      		rjmp .L34
+ 345               	.L30:
+ 346               	.LM25:
+ 347 0166 B801      		movw r22,r16
+ 348 0168 C701      		movw r24,r14
+ 349 016a 0E94 0000 		call SLC03394_RcvGET
+ 350 016e 00C0      		rjmp .L34
+ 351               	.L29:
+ 352               	.LM26:
+ 353 0170 40E0      		ldi r20,lo8(0)
+ 354 0172 00C0      		rjmp .L36
+ 355               	.L32:
+ 356               	.LM27:
+ 357 0174 41E0      		ldi r20,lo8(1)
+ 358               	.L36:
+ 359 0176 B801      		movw r22,r16
+ 360 0178 C701      		movw r24,r14
+ 361 017a 0E94 0000 		call SLC03394_RcvEVENT
+ 362               	.L34:
+ 363               	/* epilogue: frame size=8 */
+ 364 017e 2896      		adiw r28,8
+ 365 0180 0FB6      		in __tmp_reg__,__SREG__
+ 366 0182 F894      		cli
+ 367 0184 DEBF      		out __SP_H__,r29
+ 368 0186 0FBE      		out __SREG__,__tmp_reg__
+ 369 0188 CDBF      		out __SP_L__,r28
+ 370 018a DF91      		pop r29
+ 371 018c CF91      		pop r28
+ 372 018e 1F91      		pop r17
+ 373 0190 0F91      		pop r16
+ 374 0192 FF90      		pop r15
+ 375 0194 EF90      		pop r14
+ 376 0196 0895      		ret
+ 377               	/* epilogue end (size=13) */
+ 378               	/* function SLC03394_ProcessKVPCmd size 81 (54) */
+ 379               	.LFE3:
+ 381               	.global	SLC03394_MandatoryInClusters
+ 382               		.data
+ 385               	SLC03394_MandatoryInClusters:
+ 386 0000 13        		.byte	19
+ 387               		.comm SLC03394_transID,1,1
+ 466               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 SLC03394_Device.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:20     .text:00000000 SLC03394_InitVars
+                            *COM*:00000001 SLC03394_transID
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:35     .text:00000006 SLC03394_ProcessMSGCmd
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:49     .text:00000008 SLC03394_RcvSETRESP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:63     .text:0000000a SLC03394_RcvGETRESP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:77     .text:0000000c SLC03394_RcvEVENTRESP
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:91     .text:0000000e SLC03394_RcvEVENT
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:151    .text:00000064 SLC03394_RcvGET
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:180    .text:00000076 SLC03394_RcvSET
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:278    .text:000000fa SLC03394_ProcessKVPCmd
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccwNaaaa.s:385    .data:00000000 SLC03394_MandatoryInClusters
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+apf_sendSingleKVP
+SLC03394_RcvGET_OnOffSRC
+SLC03394_RcvSET_OnOffSRC
+apf_getKVPTrans

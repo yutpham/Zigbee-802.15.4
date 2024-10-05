@@ -1,0 +1,387 @@
+/*******************************************************************************/
+//Module: APL	                                                               */   
+//File Name:   APS.C														   */
+//Description: This file implements the Application Data Entity Primitives     */
+//-----------------------------------------------------------------------------*/
+//Revision History:                                                            */
+//Date				Programmer		Details                                    */
+//06/25/2007                                                   */
+//------------------------------------------------------------------------------*/
+//  Copyright (C) 2006 - All Rights Reserved                                   */
+/*******************************************************************************/
+
+/************************************************************************/
+/*					Include files										*/
+/************************************************************************/
+#include "types.h"
+#include "utils.h"
+#include "aps.h"
+#include "aps_ib.h"
+#include "app_framework.h"
+#include "zdo.h"
+#include "data_queue.h"
+#include "ucos_ii.h"
+/************************************************************************/
+/*					Constant declaration								*/
+/************************************************************************/
+#define         SIZE_OF_FULL_APS_HDR        7
+/************************************************************************/
+/*					Type Definition										*/
+/************************************************************************/
+#define         APS_INVALID_HANDLE          MAX_APS_DATA_QUEUE_SIZE
+
+/*Status of data in the handler*/
+typedef enum
+{
+    APS_DATA_SENDING        = 0x01,
+    APS_DATA_WAIT_RESEND    = 0x02,
+    APS_DATA_WAIT_ACK
+}APS_DATA_STATE;
+/************************************************************************/
+/*					Variable declaration								*/
+/************************************************************************/
+/*Data queue*/
+DATA_REC            ApsRecList[MAX_APS_DATA_QUEUE_SIZE];
+DATA_QUEUE          ApsDataHandler;
+UINT8               ApsCounter;
+OS_TMR*             pApsDataTimer;
+/******************************************************************************/
+//@FunctionName:  aps_init											          */
+//@Description:	  This function will initialize the APS. Called by ZDO        */
+//	                                                                          */    
+//@Param                                                                      */
+//	                                                                          */   
+/******************************************************************************/
+void aps_init()
+{
+	/*********** Variable declaration ***********/
+
+	/*********** Function body		 ***********/
+    /*init data queue*/
+    dataqueue_init(&ApsDataHandler,ApsRecList,MAX_APS_DATA_QUEUE_SIZE);
+    /*Init aps counter*/
+    ApsCounter = ramdom_getRandomByte();
+
+    aps_checkAck(NULL,NULL);
+} // End of functions
+
+/************************************************************************/
+/*                      Static Function                                 */
+/************************************************************************/
+/******************************************************************************/
+//@FunctionName:   	aps_checkAck						  	                  */
+//@Description:	                                                              */
+//	                                                                          */    
+//@Param                                                                      */
+//	                                                                          */   
+/******************************************************************************/
+void aps_checkAck(void* arg1, void* arg2)
+{
+	/*********** Variable declaration ***********/
+    UINT8       nErr;
+    NWK_MSG     Msg;
+	/*********** Function body		 ***********/
+    if (arg1 == NULL)
+    {
+        /*Create timer*/
+        pApsDataTimer = OSTmrCreate(0,apscMaxAckWaitDureation*3125,OS_TMR_OPT_ONE_SHOT,
+            aps_checkAck,NULL,NULL,nErr);
+        if (pApsDataTimer==NULL)
+            err(ERR_UNRECOVERABLE,0,0,0);
+    }
+
+    /*Send msg to the queue*/
+    Msg.MsgType = APS_ACK_TIMER;
+    schedul_sendMsg(&Msg);
+
+    /*Start next timer*/
+    OSTmrStart(pApsDataTimer,&nErr);
+} // End of functions
+
+/******************************************************************************/
+//@FunctionName: aps_resend								  	                  */
+//@Description:	                                                              */
+//	                                                                          */    
+//@Param                                                                      */
+//	                                                                          */   
+/******************************************************************************/
+void aps_resend(UINT8 nHandle)
+{
+	/*********** Variable declaration ***********/
+
+	/*********** Function body		 ***********/
+
+} // End of functions
+
+
+/************************************************************************/
+/*                      Function                                        */
+/************************************************************************/
+
+/******************************************************************************/
+//@FunctionName:   apsdeDataRequest						  	                  */
+//@Description:	                                                              */
+//	                                                                          */    
+//@Param                                                                      */
+//	                                                                          */   
+/******************************************************************************/
+Z_STATUS apsdeDataRequest( UINT8 DestAddrMode,ADDRESS* pDestAddr, BYTE DstEndpoint, 
+                       UINT16 ProfileID, BYTE ClusterId, BYTE SrcEndpoint,
+                       BYTE asduLength, BYTE *asdu, BYTE TxOptions, 
+                       BYTE DiscoverRoute, BYTE RadiusCounter )
+{
+	/*********** Variable declaration ***********/
+    P_APS_FRM           par_pFrm;
+    DATA_REC*           pRec;
+    UINT8               nLen;
+    ADDR_MAP_ENTRY*     pAddrMap;
+    UINT8               Handle;
+    Z_STATUS            Status;
+	/*********** Function body		 ***********/    
+    Status = APS_NO_BOUND_DEVICE;
+    if (DestAddrMode == APS_ADDR_INDIRECT)
+    {
+        Status = APS_NO_BOUND_DEVICE;
+    }
+    else
+    {
+        /* ACK or not */
+        if (TxOptions&APS_TX_ACK_REQ)
+        {
+            /* Keep the transmission to evaluate ACK or resend*/
+            Handle = dataqueue_getFreeSlot(&ApsDataHandler);                      
+            if (Handle==ApsDataHandler.Size)
+                return TRANSACTION_OVERFLOW;
+        }
+        else
+            Handle = APS_INVALID_HANDLE;
+
+        /*Format the frame*/
+        par_pFrm =  (P_APS_FRM_DIRECT)mem_getMem(SIZE_OF_FULL_APS_HDR+NWK_NPDU_HEADER_SIZE+asduLength);
+        if (par_pFrm)
+        {
+            par_pFrm = (BYTE*)par_pFrm+NWK_NPDU_HEADER_SIZE;    /*Data convention for simplification*/
+            par_pFrm->DeliveryMode      =   APS_DELIVERY_NORMAL;
+            par_pFrm->FrmType           =   APS_FRM_DATA;
+            par_pFrm->IndirectAddMode   =   0; /*Not care in direct transit */   
+            par_pFrm->AckRequest        =   (TxOptions&APS_TX_ACK_REQ);
+            par_pFrm->Sercurity         =   FALSE;           
+
+            par_pFrm->DestEndpoint      = DstEndpoint;
+            par_pFrm->SrcEndPoint       = SrcEndpoint;
+            par_pFrm->ProfileId         = ProfileID;
+            par_pFrm->ClusterId         = ClusterId;
+            par_pFrm->ApsCounter        = ApsCounter++;
+
+            nLen = SIZE_OF_FULL_APS_HDR;
+            mem_cpy((BYTE*)par_pFrm + nLen,asdu, asduLength);
+            nLen += asduLength;           
+
+            /* Address mode */
+            if(DestAddrMode == APS_ADDR_SHORT)
+                Status = nldeDataRequest(pDestAddr->Short,nLen,par_pFrm,Handle,
+                                        RadiusCounter,DiscoverRoute,FALSE);
+            else if(DestAddrMode == APS_ADDR_EXT)
+            {
+                pAddrMap = ib_searchAddrEntry(0x00,pDestAddr);
+                if (pAddrMap)
+                {
+                    /*Put data in the handler*/
+                    Status = nldeDataRequest(pAddrMap->ShortAddr,nLen,par_pFrm,Handle,
+                                            RadiusCounter,DiscoverRoute,FALSE);
+                }
+            }
+
+            if (TxOptions&APS_TX_ACK_REQ && Status == SUCCESS)
+            {
+                dataqueue_addRec(&ApsDataHandler,par_pFrm,nLen,par_pFrm->ApsCounter,APS_DATA_WAIT_ACK);
+                pRec            = &ApsDataHandler.RecList[Handle];
+                pRec->Status    = APS_DATA_SENDING;
+                pRec->Reserved  = 0;    /*The first time, init it to 0*/
+                Status = SUCCESS;
+            }
+            else
+                /*Release the memory*/
+                mem_freeMem((BYTE*)par_pFrm-NWK_NPDU_HEADER_SIZE) ;
+        }
+    }                
+    return Status;	
+} // End of functions
+
+/******************************************************************************/
+//@FunctionName:   	nldeDataIndication					  	                  */
+//@Description:	                                                              */
+//	                                                                          */    
+//@Param                                                                      */
+//	                                                                          */   
+/******************************************************************************/
+void nldeDataIndication(UINT8  SrcAddrMode, ADDRESS*	SrcAddress, BYTE NsduLength, BYTE *Nsdu, BYTE LinkQuality)
+{
+	/*********** Variable declaration ***********/
+    P_APS_FRM       pFrm;
+    P_APS_FRM       pACK;
+    DATA_REC*       pRec;
+    UINT8           index;
+	/*********** Function body		 ***********/
+    pFrm = (P_APS_FRM)Nsdu;
+    switch(pFrm->FrmType)
+    {
+    case APS_FRM_ACK: 
+        if (pFrm->DeliveryMode ==APS_DELIVERY_NORMAL)
+        {
+            pACK = pFrm;
+            index = dataqueue_findRec(&ApsDataHandler,pACK->ApsCounter);
+            if (index != APS_INVALID_HANDLE)
+            {
+                pRec = &ApsDataHandler.RecList[index];
+                pFrm = pRec->pData;
+                /*Check the ack*/
+                if (pACK->SrcEndPoint == pFrm->SrcEndPoint
+                    && pACK->ApsCounter == pFrm->ApsCounter)
+                {
+                    /*Inform the requester*/
+                    apsdeDataConfirm(APS_ADDR_INDIRECT,NULL,pFrm->DestEndpoint,pFrm->SrcEndPoint,SUCCESS);
+
+                    /*remove the frames*/
+                    mem_freeMem(pRec->pData);
+
+                    /*Remove data handler*/
+                    dataqueue_removeRec(&ApsDataHandler,index);                
+                }
+            }
+        }
+    	break;
+    case APS_FRM_CMD: 
+    	break;
+    case APS_FRM_DATA:
+        if (pFrm->DeliveryMode == APS_DELIVERY_NORMAL)
+        {            
+            pFrm =  (P_APS_FRM)Nsdu;       
+            if (app_finEp(pFrm->DestEndpoint))
+            {
+                apsdDataIndication( pFrm, NsduLength - SIZE_OF_FULL_APS_HDR,
+                                    (SrcAddrMode==AM_SHORT_16)?APS_ADDR_SHORT:APS_ADDR_EXT,
+                                    SrcAddress,LinkQuality,FALSE);
+
+                if (pFrm->AckRequest)
+                {
+                    /* Send the ACK*/
+                    pACK = (P_APS_FRM)mem_getMem(sizeof(P_APS_FRM));
+                    if (pACK)
+                    {
+                        mem_cpy(pACK,pFrm,SIZE_OF_FULL_APS_HDR);
+                        pACK->FrmType = APS_FRM_ACK;
+                        nldeDataRequest(SrcAddress->Short,SIZE_OF_FULL_APS_HDR,pACK,APS_INVALID_HANDLE,
+                                        DEFAULT_RADIUS,FALSE,FALSE);
+                    }
+                }
+            }
+        }
+        else if (pFrm->DeliveryMode == APS_DELIVERY_INDIRECT)
+        {
+            /*TBD: different frame format */
+        }
+        else if (pFrm->DeliveryMode == APS_DELIVERY_BROADCAST)
+        {
+            /*TBD: different frame format */
+        }
+        break;
+    default:
+        break;
+    }
+
+    /*remove the frames*/
+    mem_freeMem(Nsdu-NWK_NPDU_HEADER_SIZE); /*Data convention: pay attention*/
+} // End of functions
+/******************************************************************************/
+//@FunctionName:   	nldeDataConfirm						  	                  */
+//@Description:	                                                              */
+//	                                                                          */    
+//@Param                                                                      */
+//	                                                                          */   
+/******************************************************************************/
+void nldeDataConfirm(BYTE NsduHandle, NWK_STATUS Status)
+{
+	/*********** Variable declaration ***********/
+    DATA_REC*           pRec;
+    P_APS_FRM           par_pFrm;
+	/*********** Function body		 ***********/
+    /*Check the handler*/
+    if (NsduHandle == APS_INVALID_HANDLE) /*This is non-ack packet*/
+    {
+        TOGGLE_GLED();
+        /*Omit it*/
+    }
+    else if(NsduHandle < APS_INVALID_HANDLE)
+    {
+        pRec = &ApsDataHandler.RecList[NsduHandle];
+        par_pFrm  = pRec->pData;
+        if (par_pFrm->DeliveryMode == APS_DELIVERY_INDIRECT)
+        {
+            /*Consider later*/
+        }
+        else if (par_pFrm->DeliveryMode == APS_DELIVERY_NORMAL)
+        {
+            if (Status == SUCCESS)
+                pRec->Status    = APS_DATA_WAIT_ACK;
+            else
+                pRec->Status    = APS_DATA_WAIT_RESEND;
+        }
+        else if (par_pFrm->DeliveryMode == APS_DELIVERY_BROADCAST)
+        {
+        }
+        else /*A-normal case*/
+        {
+#ifdef ZIGBEE_DEBUG
+            err(ERR_UNRECOVERABLE,0,0,0);
+#endif
+        }
+    }  
+} // End of functions
+
+
+/******************************************************************************/
+//@FunctionName:  nwk_processApsEvent 										  	                  */
+//@Description:	                                                              */
+//	                                                                          */    
+//@Param                                                                      */
+//	                                                                          */   
+/******************************************************************************/
+void nwk_processApsEvent(NWK_MSG*   pMsg, void* arg)
+{
+	/*********** Variable declaration ***********/
+    UINT8                   Index;
+    DATA_QUEUE*             pQueue;
+    DATA_REC*               pRec;
+    P_APS_FRM           par_pFrm;
+	/*********** Function body		 ***********/
+    if (pMsg->MsgType == APS_ACK_TIMER)
+    {
+        /*check the handler queue*/
+        pQueue      = &ApsDataHandler;
+        Index       = pQueue->FirstIndex;
+        while (Index != pQueue->Size && pQueue->RecList[Index].pData) /* is the valid packet*/
+        {
+            pRec = &pQueue->RecList[Index];
+            if (pQueue->RecList[Index].Reserved++ == apscMaxFrameRetries)
+            {
+                /*Inform the requester*/
+                pFrm = pRec->pData;
+                apsdeDataConfirm(APS_ADDR_INDIRECT,NULL,pFrm->DestEndpoint,pFrm->SrcEndPoint,SUCCESS);
+
+                /*remove the frames*/
+                mem_freeMem(pRec->pData);
+            }
+            else
+            {
+                if (pRec->Status == APS_DATA_WAIT_RESEND
+                    || pRec->Status == APS_DATA_WAIT_ACK)
+                    aps_resend(Index); /*resend*/
+
+                pRec->Status = APS_DATA_WAIT_ACK;
+                pRec->Reserved++;  /*Increase the count*/                    
+            }
+            Index = pQueue->RecList[Index].NextIndex;
+        }
+    }
+} // End of functions

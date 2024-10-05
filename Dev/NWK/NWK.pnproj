@@ -1,0 +1,1 @@
+<Project name="NWK"><Folder name="library"><File path="library\nwk_nlde.c"></File><File path="library\nwk_nlme.c"></File><File path="library\nwk_utils.c"></File></Folder><Folder name="include"><File path="include\nwk.h"></File><File path="include\nwk_types.h"></File></Folder><File path="E:\ZigbeeStack\Test\NWK\taget\makefile"></File></Project>

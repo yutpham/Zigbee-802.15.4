@@ -1,0 +1,140 @@
+   1               		.file	"nv.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	nv_read
+  20               	nv_read:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26 0000 9C01      		movw r18,r24
+  27               	.LM2:
+  28 0002 4115      		cp r20,__zero_reg__
+  29 0004 5105      		cpc r21,__zero_reg__
+  30 0006 01F0      		breq .L7
+  31               	.LVL1:
+  32               	.LM3:
+  33 0008 FB01      		movw r30,r22
+  34               	.LVL2:
+  35               	.LVL3:
+  36               	.L15:
+  37               	.LM4:
+  38 000a E199      		sbic 60-0x20,1
+  39 000c 00C0      		rjmp .L15
+  40               	.LM5:
+  41 000e 9FB7      		in r25,95-0x20
+  42               	/* #APP */
+  43 0010 F894      		cli
+  44               		
+  45               	.LM6:
+  46               	/* #NOAPP */
+  47 0012 3FBB      		out (62)+1-0x20,r19
+  48 0014 2EBB      		out 62-0x20,r18
+  49               	.LM7:
+  50 0016 E09A      		sbi 60-0x20,0
+  51               	.LM8:
+  52 0018 8DB3      		in r24,61-0x20
+  53 001a 8083      		st Z,r24
+  54               	.LM9:
+  55 001c 9FBF      		out 95-0x20,r25
+  56               	.LM10:
+  57 001e 4150      		subi r20,lo8(-(-1))
+  58 0020 5040      		sbci r21,hi8(-(-1))
+  59               	.LM11:
+  60 0022 01F0      		breq .L7
+  61               	.LM12:
+  62 0024 2F5F      		subi r18,lo8(-(1))
+  63 0026 3F4F      		sbci r19,hi8(-(1))
+  64               	.LM13:
+  65 0028 3196      		adiw r30,1
+  66 002a 00C0      		rjmp .L15
+  67               	.LVL4:
+  68               	.L7:
+  69 002c 0895      		ret
+  70               	/* epilogue: frame size=0 */
+  71               	/* epilogue: noreturn */
+  72               	/* epilogue end (size=0) */
+  73               	/* function nv_read size 28 (28) */
+  74               	.LFE2:
+  76               	.global	nv_write
+  78               	nv_write:
+  79               	.LFB3:
+  80               	.LM14:
+  81               	/* prologue: frame size=0 */
+  82               	/* prologue end (size=0) */
+  83               	.LVL5:
+  84 002e 9C01      		movw r18,r24
+  85               	.LM15:
+  86 0030 4115      		cp r20,__zero_reg__
+  87 0032 5105      		cpc r21,__zero_reg__
+  88 0034 01F0      		breq .L23
+  89               	.LVL6:
+  90               	.LM16:
+  91 0036 FB01      		movw r30,r22
+  92               	.LVL7:
+  93               	.LVL8:
+  94               	.L31:
+  95               	.LM17:
+  96 0038 E199      		sbic 60-0x20,1
+  97 003a 00C0      		rjmp .L31
+  98               	.LM18:
+  99 003c 3FBB      		out (62)+1-0x20,r19
+ 100 003e 2EBB      		out 62-0x20,r18
+ 101               	.LM19:
+ 102 0040 8081      		ld r24,Z
+ 103               	.LVL9:
+ 104 0042 8DBB      		out 61-0x20,r24
+ 105               	.LM20:
+ 106 0044 8FB7      		in r24,95-0x20
+ 107               	.LVL10:
+ 108               	/* #APP */
+ 109 0046 F894      		cli
+ 110               		
+ 111               	.LM21:
+ 112               	/* #NOAPP */
+ 113 0048 E29A      		sbi 60-0x20,2
+ 114               	.LM22:
+ 115 004a E19A      		sbi 60-0x20,1
+ 116               	.LM23:
+ 117 004c 8FBF      		out 95-0x20,r24
+ 118               	.LM24:
+ 119 004e 4150      		subi r20,lo8(-(-1))
+ 120 0050 5040      		sbci r21,hi8(-(-1))
+ 121               	.LM25:
+ 122 0052 01F0      		breq .L23
+ 123               	.LM26:
+ 124 0054 2F5F      		subi r18,lo8(-(1))
+ 125 0056 3F4F      		sbci r19,hi8(-(1))
+ 126               	.LM27:
+ 127 0058 3196      		adiw r30,1
+ 128 005a 00C0      		rjmp .L31
+ 129               	.LVL11:
+ 130               	.L23:
+ 131 005c 0895      		ret
+ 132               	/* epilogue: frame size=0 */
+ 133               	/* epilogue: noreturn */
+ 134               	/* epilogue end (size=0) */
+ 135               	/* function nv_write size 29 (29) */
+ 136               	.LFE3:
+ 167               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 nv.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOOaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOOaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOOaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOOaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOOaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOOaaaa.s:20     .text:00000000 nv_read
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOOaaaa.s:78     .text:0000002e nv_write
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

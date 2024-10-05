@@ -1,0 +1,449 @@
+   1               		.file	"zigbee.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	app_init
+  20               	app_init:
+  21               	.LFB7:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LBB2:
+  26               	.LM2:
+  27 0000 E091 0000 		lds r30,EndpointDescriptors
+  28 0004 F091 0000 		lds r31,(EndpointDescriptors)+1
+  29 0008 3097      		sbiw r30,0
+  30 000a 01F0      		breq .L2
+  31               	.LM3:
+  32 000c 0684      		ldd __tmp_reg__,Z+14
+  33 000e F785      		ldd r31,Z+15
+  34 0010 E02D      		mov r30,__tmp_reg__
+  35 0012 60E0      		ldi r22,lo8(0)
+  36 0014 70E0      		ldi r23,hi8(0)
+  37 0016 80E0      		ldi r24,lo8(0)
+  38 0018 90E0      		ldi r25,hi8(0)
+  39 001a 0995      		icall
+  40               	.L2:
+  41               	.LM4:
+  42 001c E091 0000 		lds r30,EndpointDescriptors+2
+  43 0020 F091 0000 		lds r31,(EndpointDescriptors+2)+1
+  44 0024 3097      		sbiw r30,0
+  45 0026 01F0      		breq .L6
+  46               	.LM5:
+  47 0028 0684      		ldd __tmp_reg__,Z+14
+  48 002a F785      		ldd r31,Z+15
+  49 002c E02D      		mov r30,__tmp_reg__
+  50 002e 60E0      		ldi r22,lo8(0)
+  51 0030 70E0      		ldi r23,hi8(0)
+  52 0032 80E0      		ldi r24,lo8(0)
+  53 0034 90E0      		ldi r25,hi8(0)
+  54 0036 0995      		icall
+  55               	.L6:
+  56 0038 0895      		ret
+  57               	.LBE2:
+  58               	/* epilogue: frame size=0 */
+  59               	/* epilogue: noreturn */
+  60               	/* epilogue end (size=0) */
+  61               	/* function app_init size 29 (29) */
+  62               	.LFE7:
+  64               	.global	zigbee_task
+  66               	zigbee_task:
+  67               	.LFB9:
+  68               	.LM6:
+  69               	/* prologue: frame size=0 */
+  70               	/* prologue end (size=0) */
+  71               	.LVL0:
+  72 003a FC01      		movw r30,r24
+  73               	.LM7:
+  74 003c 8081      		ld r24,Z
+  75               	.LVL1:
+  76 003e 8F31      		cpi r24,lo8(31)
+  77 0040 00F0      		brlo .L16
+  78               	.LM8:
+  79 0042 8F33      		cpi r24,lo8(63)
+  80 0044 00F0      		brlo .L17
+  81               	.LM9:
+  82 0046 8F34      		cpi r24,lo8(79)
+  83 0048 00F0      		brlo .L18
+  84 004a 0895      		ret
+  85               	.L18:
+  86               	.LM10:
+  87 004c 60E0      		ldi r22,lo8(0)
+  88 004e 70E0      		ldi r23,hi8(0)
+  89               	.LVL2:
+  90 0050 CF01      		movw r24,r30
+  91 0052 0E94 0000 		call nwk_processApsEvent
+  92               	.LVL3:
+  93 0056 0895      		ret
+  94               	.LVL4:
+  95               	.L17:
+  96               	.LM11:
+  97 0058 CF01      		movw r24,r30
+  98 005a 0E94 0000 		call apf_dispatchEvent
+  99               	.LVL5:
+ 100 005e 0895      		ret
+ 101               	.LVL6:
+ 102               	.L16:
+ 103               	.LM12:
+ 104 0060 60E0      		ldi r22,lo8(0)
+ 105 0062 70E0      		ldi r23,hi8(0)
+ 106               	.LVL7:
+ 107 0064 CF01      		movw r24,r30
+ 108 0066 0E94 0000 		call nwk_processNwkEvent
+ 109               	.LVL8:
+ 110 006a 0895      		ret
+ 111               	/* epilogue: frame size=0 */
+ 112               	/* epilogue: noreturn */
+ 113               	/* epilogue end (size=0) */
+ 114               	/* function zigbee_task size 25 (25) */
+ 115               	.LFE9:
+ 117               	.global	zigbee_init
+ 119               	zigbee_init:
+ 120               	.LFB8:
+ 121               	.LM13:
+ 122               	/* prologue: frame size=0 */
+ 123               	/* prologue end (size=0) */
+ 124               	.LM14:
+ 125 006c 0E94 0000 		call nwk_init
+ 126               	.LM15:
+ 127 0070 0E94 0000 		call mac_init
+ 128               	/* epilogue: frame size=0 */
+ 129 0074 0895      		ret
+ 130               	/* epilogue end (size=1) */
+ 131               	/* function zigbee_init size 5 (4) */
+ 132               	.LFE8:
+ 134               	.global	app_task
+ 136               	app_task:
+ 137               	.LFB6:
+ 138               	.LM16:
+ 139               	/* prologue: frame size=0 */
+ 140 0076 CF93      		push r28
+ 141 0078 DF93      		push r29
+ 142               	/* prologue end (size=2) */
+ 143               	.LVL9:
+ 144 007a DC01      		movw r26,r24
+ 145               	.LVL10:
+ 146               	.LM17:
+ 147 007c 8C91      		ld r24,X
+ 148               	.LVL11:
+ 149 007e 8435      		cpi r24,lo8(84)
+ 150 0080 01F0      		breq .L22
+ 151               	.LBB3:
+ 152               	.LM18:
+ 153 0082 E091 0000 		lds r30,EndpointDescriptors+2
+ 154 0086 F091 0000 		lds r31,(EndpointDescriptors+2)+1
+ 155 008a 3097      		sbiw r30,0
+ 156 008c 01F0      		breq .L27
+ 157 008e 9081      		ld r25,Z
+ 158 0090 ED01      		movw r28,r26
+ 159 0092 8981      		ldd r24,Y+1
+ 160 0094 9817      		cp r25,r24
+ 161 0096 01F4      		brne .L27
+ 162 0098 00C0      		rjmp .L29
+ 163               	.L22:
+ 164               	.LBE3:
+ 165               	.LM19:
+ 166 009a 0E94 0000 		call pollBoard
+ 167               	.LVL12:
+ 168 009e 00C0      		rjmp .L27
+ 169               	.LVL13:
+ 170               	.L29:
+ 171               	.LBB4:
+ 172               	.LM20:
+ 173 00a0 0484      		ldd __tmp_reg__,Z+12
+ 174 00a2 F585      		ldd r31,Z+13
+ 175 00a4 E02D      		mov r30,__tmp_reg__
+ 176 00a6 60E0      		ldi r22,lo8(0)
+ 177 00a8 70E0      		ldi r23,hi8(0)
+ 178               	.LVL14:
+ 179 00aa CD01      		movw r24,r26
+ 180 00ac 0995      		icall
+ 181               	.LVL15:
+ 182               	.LVL16:
+ 183               	.L27:
+ 184               	.LBE4:
+ 185               	/* epilogue: frame size=0 */
+ 186 00ae DF91      		pop r29
+ 187 00b0 CF91      		pop r28
+ 188 00b2 0895      		ret
+ 189               	/* epilogue end (size=3) */
+ 190               	/* function app_task size 31 (26) */
+ 191               	.LFE6:
+ 193               	.global	err
+ 195               	err:
+ 196               	.LFB5:
+ 197               	.LM21:
+ 198               	/* prologue: frame size=0 */
+ 199 00b4 1F93      		push r17
+ 200               	/* prologue end (size=1) */
+ 201               	.LVL17:
+ 202               	.LM22:
+ 203 00b6 8230      		cpi r24,lo8(2)
+ 204 00b8 01F4      		brne .L33
+ 205 00ba 18E0      		ldi r17,lo8(8)
+ 206               	.L32:
+ 207               	.LM23:
+ 208 00bc 80E5      		ldi r24,lo8(-15536)
+ 209 00be 93EC      		ldi r25,hi8(-15536)
+ 210               	.LVL18:
+ 211 00c0 0E94 0000 		call wait
+ 212               	.LVL19:
+ 213               	.LM24:
+ 214 00c4 83B1      		in r24,35-0x20
+ 215 00c6 8127      		eor r24,r17
+ 216 00c8 83B9      		out 35-0x20,r24
+ 217 00ca 00C0      		rjmp .L32
+ 218               	.LVL20:
+ 219               	.L33:
+ 220               	/* epilogue: frame size=0 */
+ 221 00cc 1F91      		pop r17
+ 222 00ce 0895      		ret
+ 223               	/* epilogue end (size=2) */
+ 224               	/* function err size 14 (11) */
+ 225               	.LFE5:
+ 227               	.global	programEEPROM
+ 229               	programEEPROM:
+ 230               	.LFB4:
+ 231               	.LM25:
+ 232               	/* prologue: frame size=8 */
+ 233 00d0 CF93      		push r28
+ 234 00d2 DF93      		push r29
+ 235 00d4 CDB7      		in r28,__SP_L__
+ 236 00d6 DEB7      		in r29,__SP_H__
+ 237 00d8 2897      		sbiw r28,8
+ 238 00da 0FB6      		in __tmp_reg__,__SREG__
+ 239 00dc F894      		cli
+ 240 00de DEBF      		out __SP_H__,r29
+ 241 00e0 0FBE      		out __SREG__,__tmp_reg__
+ 242 00e2 CDBF      		out __SP_L__,r28
+ 243               	/* prologue end (size=10) */
+ 244               	.LM26:
+ 245 00e4 82E2      		ldi r24,lo8(34)
+ 246 00e6 8983      		std Y+1,r24
+ 247 00e8 8A83      		std Y+2,r24
+ 248 00ea 1B82      		std Y+3,__zero_reg__
+ 249 00ec 1C82      		std Y+4,__zero_reg__
+ 250 00ee 1D82      		std Y+5,__zero_reg__
+ 251 00f0 1E82      		std Y+6,__zero_reg__
+ 252 00f2 1F82      		std Y+7,__zero_reg__
+ 253 00f4 1886      		std Y+8,__zero_reg__
+ 254               	.LM27:
+ 255 00f6 48E0      		ldi r20,lo8(8)
+ 256 00f8 50E0      		ldi r21,hi8(8)
+ 257 00fa BE01      		movw r22,r28
+ 258 00fc 6F5F      		subi r22,lo8(-(1))
+ 259 00fe 7F4F      		sbci r23,hi8(-(1))
+ 260 0100 81E0      		ldi r24,lo8(1)
+ 261 0102 90E0      		ldi r25,hi8(1)
+ 262 0104 0E94 0000 		call nv_write
+ 263               	.L35:
+ 264               	.LM28:
+ 265 0108 1B9A      		sbi 35-0x20,3
+ 266 010a 1B9A      		sbi 35-0x20,3
+ 267 010c 00C0      		rjmp .L35
+ 268               	/* epilogue: frame size=8 */
+ 269               	/* epilogue: noreturn */
+ 270               	/* epilogue end (size=0) */
+ 271               	/* function programEEPROM size 31 (21) */
+ 272               	.LFE4:
+ 274               	.global	recordByte
+ 276               	recordByte:
+ 277               	.LFB3:
+ 278               	.LM29:
+ 279               	/* prologue: frame size=1 */
+ 280 010e CF93      		push r28
+ 281 0110 DF93      		push r29
+ 282 0112 CDB7      		in r28,__SP_L__
+ 283 0114 DEB7      		in r29,__SP_H__
+ 284 0116 2197      		sbiw r28,1
+ 285 0118 0FB6      		in __tmp_reg__,__SREG__
+ 286 011a F894      		cli
+ 287 011c DEBF      		out __SP_H__,r29
+ 288 011e 0FBE      		out __SREG__,__tmp_reg__
+ 289 0120 CDBF      		out __SP_L__,r28
+ 290               	/* prologue end (size=10) */
+ 291               	.LVL21:
+ 292 0122 8983      		std Y+1,r24
+ 293               	.LM30:
+ 294 0124 8091 0000 		lds r24,nCount
+ 295               	.LVL22:
+ 296 0128 8F5F      		subi r24,lo8(-(1))
+ 297 012a 8093 0000 		sts nCount,r24
+ 298               	.LM31:
+ 299 012e 9927      		clr r25
+ 300 0130 41E0      		ldi r20,lo8(1)
+ 301 0132 50E0      		ldi r21,hi8(1)
+ 302 0134 BE01      		movw r22,r28
+ 303 0136 6F5F      		subi r22,lo8(-(1))
+ 304 0138 7F4F      		sbci r23,hi8(-(1))
+ 305 013a 0B96      		adiw r24,11
+ 306 013c 0E94 0000 		call nv_write
+ 307               	/* epilogue: frame size=1 */
+ 308 0140 2196      		adiw r28,1
+ 309 0142 0FB6      		in __tmp_reg__,__SREG__
+ 310 0144 F894      		cli
+ 311 0146 DEBF      		out __SP_H__,r29
+ 312 0148 0FBE      		out __SREG__,__tmp_reg__
+ 313 014a CDBF      		out __SP_L__,r28
+ 314 014c DF91      		pop r29
+ 315 014e CF91      		pop r28
+ 316 0150 0895      		ret
+ 317               	/* epilogue end (size=9) */
+ 318               	/* function recordByte size 34 (15) */
+ 319               	.LFE3:
+ 321               	.global	putData
+ 323               	putData:
+ 324               	.LFB2:
+ 325               	.LM32:
+ 326               	/* prologue: frame size=0 */
+ 327 0152 1F93      		push r17
+ 328               	/* prologue end (size=1) */
+ 329               	.LVL23:
+ 330 0154 9C01      		movw r18,r24
+ 331 0156 162F      		mov r17,r22
+ 332               	.LM33:
+ 333 0158 462F      		mov r20,r22
+ 334 015a 5527      		clr r21
+ 335 015c E091 0000 		lds r30,nCount
+ 336 0160 8091 0000 		lds r24,DataBuf
+ 337 0164 9091 0000 		lds r25,(DataBuf)+1
+ 338               	.LVL24:
+ 339 0168 B901      		movw r22,r18
+ 340               	.LVL25:
+ 341 016a 8E0F      		add r24,r30
+ 342 016c 911D      		adc r25,__zero_reg__
+ 343 016e 0E94 0000 		call mem_cpy
+ 344               	.LVL26:
+ 345               	.LM34:
+ 346 0172 8091 0000 		lds r24,nCount
+ 347 0176 810F      		add r24,r17
+ 348 0178 8093 0000 		sts nCount,r24
+ 349               	.LM35:
+ 350 017c 8C30      		cpi r24,lo8(12)
+ 351 017e 01F4      		brne .L42
+ 352               	.LM36:
+ 353               	/* #APP */
+ 354 0180 7894      		sei
+ 355               		
+ 356               	/* #NOAPP */
+ 357               	.L42:
+ 358               	/* epilogue: frame size=0 */
+ 359 0182 1F91      		pop r17
+ 360 0184 0895      		ret
+ 361               	/* epilogue end (size=2) */
+ 362               	/* function putData size 29 (26) */
+ 363               	.LFE2:
+ 365               	.global	main
+ 367               	main:
+ 368               	.LFB10:
+ 369               	.LM37:
+ 370               	/* prologue: frame size=8 */
+ 371 0186 CF93      		push r28
+ 372 0188 DF93      		push r29
+ 373 018a CDB7      		in r28,__SP_L__
+ 374 018c DEB7      		in r29,__SP_H__
+ 375 018e 2897      		sbiw r28,8
+ 376 0190 0FB6      		in __tmp_reg__,__SREG__
+ 377 0192 F894      		cli
+ 378 0194 DEBF      		out __SP_H__,r29
+ 379 0196 0FBE      		out __SREG__,__tmp_reg__
+ 380 0198 CDBF      		out __SP_L__,r28
+ 381               	/* prologue end (size=10) */
+ 382               	.LBB12:
+ 383               	.LBB13:
+ 384               	.LM38:
+ 385 019a 82E2      		ldi r24,lo8(34)
+ 386 019c 8983      		std Y+1,r24
+ 387 019e 8A83      		std Y+2,r24
+ 388 01a0 1B82      		std Y+3,__zero_reg__
+ 389 01a2 1C82      		std Y+4,__zero_reg__
+ 390 01a4 1D82      		std Y+5,__zero_reg__
+ 391 01a6 1E82      		std Y+6,__zero_reg__
+ 392 01a8 1F82      		std Y+7,__zero_reg__
+ 393 01aa 1886      		std Y+8,__zero_reg__
+ 394               	.LM39:
+ 395 01ac 48E0      		ldi r20,lo8(8)
+ 396 01ae 50E0      		ldi r21,hi8(8)
+ 397 01b0 BE01      		movw r22,r28
+ 398 01b2 6F5F      		subi r22,lo8(-(1))
+ 399 01b4 7F4F      		sbci r23,hi8(-(1))
+ 400 01b6 81E0      		ldi r24,lo8(1)
+ 401 01b8 90E0      		ldi r25,hi8(1)
+ 402 01ba 0E94 0000 		call nv_write
+ 403               	.L44:
+ 404               	.LM40:
+ 405 01be 1B9A      		sbi 35-0x20,3
+ 406 01c0 1B9A      		sbi 35-0x20,3
+ 407 01c2 00C0      		rjmp .L44
+ 408               	.LBE13:
+ 409               	.LBE12:
+ 410               	/* epilogue: frame size=8 */
+ 411               	/* epilogue: noreturn */
+ 412               	/* epilogue end (size=0) */
+ 413               	/* function main size 31 (21) */
+ 414               	.LFE10:
+ 416               	.global	nCount
+ 417               	.global	nCount
+ 418               		.section .bss
+ 421               	nCount:
+ 422 0000 00        		.skip 1,0
+ 423               		.comm OSIntNesting,1,1
+ 424               		.comm OSMemFreeList,2,1
+ 425               		.comm OSMemTbl,96,1
+ 426               		.comm OSTmrFree,2,1
+ 427               		.comm OSTmrUsed,2,1
+ 428               		.comm OSTmrTime,4,1
+ 429               		.comm OSTmrTbl,240,1
+ 430               		.comm OSTmrFreeList,2,1
+ 431               		.comm OSTmrWheelTbl,32,1
+ 432               		.comm AppStk,450,1
+ 433               		.comm DataBuf,2,1
+ 512               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 zigbee.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:20     .text:00000000 app_init
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:66     .text:0000003a zigbee_task
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:119    .text:0000006c zigbee_init
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:136    .text:00000076 app_task
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:195    .text:000000b4 err
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:229    .text:000000d0 programEEPROM
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:276    .text:0000010e recordByte
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:421    .bss:00000000 nCount
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:323    .text:00000152 putData
+                            *COM*:00000002 DataBuf
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccKsaaaa.s:367    .text:00000186 main
+                            *COM*:00000001 OSIntNesting
+                            *COM*:00000002 OSMemFreeList
+                            *COM*:00000060 OSMemTbl
+                            *COM*:00000002 OSTmrFree
+                            *COM*:00000002 OSTmrUsed
+                            *COM*:00000004 OSTmrTime
+                            *COM*:000000f0 OSTmrTbl
+                            *COM*:00000002 OSTmrFreeList
+                            *COM*:00000020 OSTmrWheelTbl
+                            *COM*:000001c2 AppStk
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+EndpointDescriptors
+nwk_processApsEvent
+apf_dispatchEvent
+nwk_processNwkEvent
+nwk_init
+mac_init
+pollBoard
+wait
+nv_write
+mem_cpy

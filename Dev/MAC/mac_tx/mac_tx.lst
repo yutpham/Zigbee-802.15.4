@@ -1,0 +1,1097 @@
+   1               		.file	"mac_tx.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	tx_init
+  20               	tx_init:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LM2:
+  26 0000 87E0      		ldi r24,lo8(7)
+  27 0002 8093 0000 		sts MacTx,r24
+  28               	.LM3:
+  29 0006 1092 0000 		sts (MacTx+13)+1,__zero_reg__
+  30 000a 1092 0000 		sts MacTx+13,__zero_reg__
+  31               	/* epilogue: frame size=0 */
+  32 000e 0895      		ret
+  33               	/* epilogue end (size=1) */
+  34               	/* function tx_init size 8 (7) */
+  35               	.LFE2:
+  37               	.global	tx_notifyAck
+  39               	tx_notifyAck:
+  40               	.LFB4:
+  41               	.LM4:
+  42               	/* prologue: frame size=0 */
+  43               	/* prologue end (size=0) */
+  44               	.LVL0:
+  45 0010 DC01      		movw r26,r24
+  46               	.LM5:
+  47 0012 E091 0000 		lds r30,MacTx+13
+  48 0016 F091 0000 		lds r31,(MacTx+13)+1
+  49 001a 3097      		sbiw r30,0
+  50 001c 01F0      		breq .L4
+  51               	.LVL1:
+  52               	.LM6:
+  53 001e 8281      		ldd r24,Z+2
+  54 0020 FD01      		movw r30,r26
+  55 0022 8283      		std Z+2,r24
+  56               	.LM7:
+  57 0024 E091 0000 		lds r30,MacTx+13
+  58 0028 F091 0000 		lds r31,(MacTx+13)+1
+  59 002c 9281      		ldd r25,Z+2
+  60 002e 8917      		cp r24,r25
+  61 0030 01F0      		breq .L10
+  62               	.LVL2:
+  63               	.L4:
+  64               	.LM8:
+  65 0032 80E0      		ldi r24,lo8(0)
+  66 0034 90E0      		ldi r25,hi8(0)
+  67               	.LM9:
+  68 0036 0895      		ret
+  69               	.L10:
+  70               	.LM10:
+  71 0038 85E0      		ldi r24,lo8(5)
+  72 003a 8093 0000 		sts MacTx,r24
+  73               	.LM11:
+  74 003e 8C91      		ld r24,X
+  75 0040 8295      		swap r24
+  76 0042 8F70      		andi r24,0x0f
+  77 0044 8170      		andi r24,lo8(1)
+  78 0046 8093 0000 		sts MacTx+1,r24
+  79 004a 81E0      		ldi r24,lo8(1)
+  80 004c 90E0      		ldi r25,hi8(1)
+  81 004e 0895      		ret
+  82               	/* epilogue: frame size=0 */
+  83               	/* epilogue: noreturn */
+  84               	/* epilogue end (size=0) */
+  85               	/* function tx_notifyAck size 32 (32) */
+  86               	.LFE4:
+  88               	.global	tx_timeoutAck
+  90               	tx_timeoutAck:
+  91               	.LFB7:
+  92               	.LM12:
+  93               	/* prologue: frame size=0 */
+  94               	/* prologue end (size=0) */
+  95               	.LVL3:
+  96 0050 FB01      		movw r30,r22
+  97               	.LM13:
+  98 0052 EA57      		subi r30,lo8(-(134))
+  99 0054 FF4F      		sbci r31,hi8(-(134))
+ 100 0056 8081      		ld r24,Z
+ 101               	.LVL4:
+ 102 0058 8150      		subi r24,lo8(-(-1))
+ 103 005a 8083      		st Z,r24
+ 104               	.LM14:
+ 105 005c 8823      		tst r24
+ 106 005e 01F0      		breq .L12
+ 107               	.LM15:
+ 108 0060 1092 0000 		sts MacTx,__zero_reg__
+ 109 0064 0895      		ret
+ 110               	.L12:
+ 111               	.LM16:
+ 112 0066 86E0      		ldi r24,lo8(6)
+ 113 0068 8093 0000 		sts MacTx,r24
+ 114 006c 0895      		ret
+ 115               	/* epilogue: frame size=0 */
+ 116               	/* epilogue: noreturn */
+ 117               	/* epilogue end (size=0) */
+ 118               	/* function tx_timeoutAck size 15 (15) */
+ 119               	.LFE7:
+ 121               	.global	tx_resumeAfterBeacon
+ 123               	tx_resumeAfterBeacon:
+ 124               	.LFB12:
+ 125               	.LM17:
+ 126               	/* prologue: frame size=0 */
+ 127 006e AF92      		push r10
+ 128 0070 BF92      		push r11
+ 129 0072 CF92      		push r12
+ 130 0074 DF92      		push r13
+ 131 0076 EF92      		push r14
+ 132 0078 FF92      		push r15
+ 133 007a 0F93      		push r16
+ 134 007c 1F93      		push r17
+ 135               	/* prologue end (size=8) */
+ 136               	.LVL5:
+ 137 007e 982F      		mov r25,r24
+ 138               	.LM18:
+ 139 0080 8091 0000 		lds r24,MacTx+9
+ 140               	.LVL6:
+ 141 0084 8130      		cpi r24,lo8(1)
+ 142 0086 01F0      		breq .+2
+ 143 0088 00C0      		rjmp .L35
+ 144               	.LM19:
+ 145 008a 9923      		tst r25
+ 146 008c 01F4      		brne .+2
+ 147 008e 00C0      		rjmp .L19
+ 148               	.LM20:
+ 149 0090 E091 0000 		lds r30,MacTx+13
+ 150 0094 F091 0000 		lds r31,(MacTx+13)+1
+ 151 0098 EC57      		subi r30,lo8(-(132))
+ 152 009a FF4F      		sbci r31,hi8(-(132))
+ 153 009c 8081      		ld r24,Z
+ 154 009e 8823      		tst r24
+ 155 00a0 01F4      		brne .+2
+ 156 00a2 00C0      		rjmp .L36
+ 157               	.L24:
+ 158               	.LM21:
+ 159 00a4 1092 0000 		sts capLeft,__zero_reg__
+ 160 00a8 1092 0000 		sts (capLeft)+1,__zero_reg__
+ 161 00ac 1092 0000 		sts (capLeft)+2,__zero_reg__
+ 162 00b0 1092 0000 		sts (capLeft)+3,__zero_reg__
+ 163               	.L23:
+ 164               	.LM22:
+ 165 00b4 8091 0000 		lds r24,BeaconInfo+87
+ 166 00b8 8823      		tst r24
+ 167 00ba 01F4      		brne .+2
+ 168 00bc 00C0      		rjmp .L26
+ 169               	.LM23:
+ 170 00be 4091 0000 		lds r20,SlotInfo
+ 171 00c2 5091 0000 		lds r21,(SlotInfo)+1
+ 172 00c6 6091 0000 		lds r22,(SlotInfo)+2
+ 173 00ca 7091 0000 		lds r23,(SlotInfo)+3
+ 174 00ce 8091 0000 		lds r24,BeaconInfo+85
+ 175 00d2 2091 0000 		lds r18,mpib+4
+ 176 00d6 820F      		add r24,r18
+ 177 00d8 912D      		mov r25,__zero_reg__
+ 178 00da 911D      		adc r25,__zero_reg__
+ 179 00dc AA27      		clr r26
+ 180 00de 97FD      		sbrc r25,7
+ 181 00e0 A095      		com r26
+ 182 00e2 BA2F      		mov r27,r26
+ 183 00e4 841B      		sub r24,r20
+ 184 00e6 950B      		sbc r25,r21
+ 185 00e8 A60B      		sbc r26,r22
+ 186 00ea B70B      		sbc r27,r23
+ 187 00ec 0197      		sbiw r24,1
+ 188 00ee A109      		sbc r26,__zero_reg__
+ 189 00f0 B109      		sbc r27,__zero_reg__
+ 190 00f2 8093 0000 		sts capLeft,r24
+ 191 00f6 9093 0000 		sts (capLeft)+1,r25
+ 192 00fa A093 0000 		sts (capLeft)+2,r26
+ 193 00fe B093 0000 		sts (capLeft)+3,r27
+ 194               	.LM24:
+ 195 0102 2091 0000 		lds r18,MacTx+3
+ 196 0106 6091 0000 		lds r22,MacTx+10
+ 197 010a 862F      		mov r24,r22
+ 198 010c 9927      		clr r25
+ 199 010e 0396      		adiw r24,3
+ 200 0110 820F      		add r24,r18
+ 201 0112 911D      		adc r25,__zero_reg__
+ 202 0114 AA27      		clr r26
+ 203 0116 97FD      		sbrc r25,7
+ 204 0118 A095      		com r26
+ 205 011a BA2F      		mov r27,r26
+ 206 011c 8093 0000 		sts capRequired,r24
+ 207 0120 9093 0000 		sts (capRequired)+1,r25
+ 208 0124 A093 0000 		sts (capRequired)+2,r26
+ 209 0128 B093 0000 		sts (capRequired)+3,r27
+ 210               	.L28:
+ 211               	.LM25:
+ 212 012c 2091 0000 		lds r18,capLeft
+ 213 0130 3091 0000 		lds r19,(capLeft)+1
+ 214 0134 4091 0000 		lds r20,(capLeft)+2
+ 215 0138 5091 0000 		lds r21,(capLeft)+3
+ 216 013c 2817      		cp r18,r24
+ 217 013e 3907      		cpc r19,r25
+ 218 0140 4A07      		cpc r20,r26
+ 219 0142 5B07      		cpc r21,r27
+ 220 0144 00F0      		brlo .+2
+ 221 0146 00C0      		rjmp .L37
+ 222               	.LM26:
+ 223 0148 2115      		cp r18,__zero_reg__
+ 224 014a 3105      		cpc r19,__zero_reg__
+ 225 014c 4105      		cpc r20,__zero_reg__
+ 226 014e 5105      		cpc r21,__zero_reg__
+ 227 0150 01F4      		brne .+2
+ 228 0152 00C0      		rjmp .L35
+ 229               	.LM27:
+ 230 0154 862F      		mov r24,r22
+ 231 0156 9927      		clr r25
+ 232 0158 AA27      		clr r26
+ 233 015a BB27      		clr r27
+ 234 015c 2817      		cp r18,r24
+ 235 015e 3907      		cpc r19,r25
+ 236 0160 4A07      		cpc r20,r26
+ 237 0162 5B07      		cpc r21,r27
+ 238 0164 01F0      		breq .L38
+ 239 0166 862F      		mov r24,r22
+ 240 0168 821B      		sub r24,r18
+ 241               	.L34:
+ 242 016a 8093 0000 		sts MacTx+10,r24
+ 243 016e 00C0      		rjmp .L35
+ 244               	.L26:
+ 245               	.LM28:
+ 246 0170 E091 0000 		lds r30,MacTx+13
+ 247 0174 F091 0000 		lds r31,(MacTx+13)+1
+ 248 0178 EB57      		subi r30,lo8(-(133))
+ 249 017a FF4F      		sbci r31,hi8(-(133))
+ 250 017c 2081      		ld r18,Z
+ 251 017e 6091 0000 		lds r22,MacTx+10
+ 252 0182 862F      		mov r24,r22
+ 253 0184 9927      		clr r25
+ 254 0186 0296      		adiw r24,2
+ 255 0188 820F      		add r24,r18
+ 256 018a 911D      		adc r25,__zero_reg__
+ 257 018c AA27      		clr r26
+ 258 018e 97FD      		sbrc r25,7
+ 259 0190 A095      		com r26
+ 260 0192 BA2F      		mov r27,r26
+ 261 0194 8093 0000 		sts capRequired,r24
+ 262 0198 9093 0000 		sts (capRequired)+1,r25
+ 263 019c A093 0000 		sts (capRequired)+2,r26
+ 264 01a0 B093 0000 		sts (capRequired)+3,r27
+ 265 01a4 00C0      		rjmp .L28
+ 266               	.L38:
+ 267               	.LM29:
+ 268 01a6 80E0      		ldi r24,lo8(0)
+ 269 01a8 00C0      		rjmp .L34
+ 270               	.L19:
+ 271               	.LM30:
+ 272 01aa 86E0      		ldi r24,lo8(6)
+ 273 01ac 0E94 0000 		call timer_endTimer
+ 274               	.LVL7:
+ 275               	.LM31:
+ 276 01b0 E091 0000 		lds r30,MacTx+13
+ 277 01b4 F091 0000 		lds r31,(MacTx+13)+1
+ 278 01b8 EC57      		subi r30,lo8(-(132))
+ 279 01ba FF4F      		sbci r31,hi8(-(132))
+ 280 01bc 8081      		ld r24,Z
+ 281 01be 8823      		tst r24
+ 282 01c0 01F4      		brne .+2
+ 283 01c2 00C0      		rjmp .L24
+ 284               	.LM32:
+ 285 01c4 8091 0000 		lds r24,BeaconInfo+86
+ 286 01c8 9927      		clr r25
+ 287 01ca AA27      		clr r26
+ 288 01cc BB27      		clr r27
+ 289 01ce 7C01      		movw r14,r24
+ 290 01d0 8D01      		movw r16,r26
+ 291 01d2 EE0C      		lsl r14
+ 292 01d4 FF1C      		rol r15
+ 293 01d6 001F      		rol r16
+ 294 01d8 111F      		rol r17
+ 295 01da E80E      		add r14,r24
+ 296 01dc F91E      		adc r15,r25
+ 297 01de 0A1F      		adc r16,r26
+ 298 01e0 1B1F      		adc r17,r27
+ 299 01e2 83E0      		ldi r24,lo8(3)
+ 300 01e4 90E0      		ldi r25,hi8(3)
+ 301 01e6 A0E0      		ldi r26,hlo8(3)
+ 302 01e8 B0E0      		ldi r27,hhi8(3)
+ 303 01ea E80E      		add r14,r24
+ 304 01ec F91E      		adc r15,r25
+ 305 01ee 0A1F      		adc r16,r26
+ 306 01f0 1B1F      		adc r17,r27
+ 307 01f2 0090 0000 		lds r0,mpib+34
+ 308 01f6 00C0      		rjmp 2f
+ 309 01f8 EE0C      	1:	lsl r14
+ 310 01fa FF1C      		rol r15
+ 311 01fc 001F      		rol r16
+ 312 01fe 111F      		rol r17
+ 313 0200 0A94      	2:	dec r0
+ 314 0202 02F4      		brpl 1b
+ 315 0204 E092 0000 		sts nCap,r14
+ 316 0208 F092 0000 		sts (nCap)+1,r15
+ 317 020c 0093 0000 		sts (nCap)+2,r16
+ 318 0210 1093 0000 		sts (nCap)+3,r17
+ 319               	.LM33:
+ 320 0214 A090 0000 		lds r10,SlotInfo
+ 321 0218 B090 0000 		lds r11,(SlotInfo)+1
+ 322 021c C090 0000 		lds r12,(SlotInfo)+2
+ 323 0220 D090 0000 		lds r13,(SlotInfo)+3
+ 324 0224 0E94 0000 		call beacon_calBeaconMargin
+ 325 0228 EA18      		sub r14,r10
+ 326 022a FB08      		sbc r15,r11
+ 327 022c 0C09      		sbc r16,r12
+ 328 022e 1D09      		sbc r17,r13
+ 329 0230 E81A      		sub r14,r24
+ 330 0232 F108      		sbc r15,__zero_reg__
+ 331 0234 0109      		sbc r16,__zero_reg__
+ 332 0236 1109      		sbc r17,__zero_reg__
+ 333 0238 0894      		sec
+ 334 023a E108      		sbc r14,__zero_reg__
+ 335 023c F108      		sbc r15,__zero_reg__
+ 336 023e 0109      		sbc r16,__zero_reg__
+ 337 0240 1109      		sbc r17,__zero_reg__
+ 338 0242 E092 0000 		sts capLeft,r14
+ 339 0246 F092 0000 		sts (capLeft)+1,r15
+ 340 024a 0093 0000 		sts (capLeft)+2,r16
+ 341 024e 1093 0000 		sts (capLeft)+3,r17
+ 342 0252 00C0      		rjmp .L23
+ 343               	.LVL8:
+ 344               	.L37:
+ 345               	.LM34:
+ 346 0254 81E0      		ldi r24,lo8(1)
+ 347 0256 90E0      		ldi r25,hi8(1)
+ 348 0258 0E94 0000 		call schedul_activate
+ 349               	.LVL9:
+ 350               	.LM35:
+ 351 025c 1092 0000 		sts MacTx+9,__zero_reg__
+ 352 0260 00C0      		rjmp .L35
+ 353               	.LVL10:
+ 354               	.L36:
+ 355               	.LM36:
+ 356 0262 8091 0000 		lds r24,BeaconInfo+86
+ 357 0266 9927      		clr r25
+ 358 0268 AA27      		clr r26
+ 359 026a BB27      		clr r27
+ 360 026c 7C01      		movw r14,r24
+ 361 026e 8D01      		movw r16,r26
+ 362 0270 EE0C      		lsl r14
+ 363 0272 FF1C      		rol r15
+ 364 0274 001F      		rol r16
+ 365 0276 111F      		rol r17
+ 366 0278 E80E      		add r14,r24
+ 367 027a F91E      		adc r15,r25
+ 368 027c 0A1F      		adc r16,r26
+ 369 027e 1B1F      		adc r17,r27
+ 370 0280 83E0      		ldi r24,lo8(3)
+ 371 0282 90E0      		ldi r25,hi8(3)
+ 372 0284 A0E0      		ldi r26,hlo8(3)
+ 373 0286 B0E0      		ldi r27,hhi8(3)
+ 374 0288 E80E      		add r14,r24
+ 375 028a F91E      		adc r15,r25
+ 376 028c 0A1F      		adc r16,r26
+ 377 028e 1B1F      		adc r17,r27
+ 378 0290 0090 0000 		lds r0,mpib+34
+ 379 0294 00C0      		rjmp 2f
+ 380 0296 EE0C      	1:	lsl r14
+ 381 0298 FF1C      		rol r15
+ 382 029a 001F      		rol r16
+ 383 029c 111F      		rol r17
+ 384 029e 0A94      	2:	dec r0
+ 385 02a0 02F4      		brpl 1b
+ 386 02a2 E092 0000 		sts nCap,r14
+ 387 02a6 F092 0000 		sts (nCap)+1,r15
+ 388 02aa 0093 0000 		sts (nCap)+2,r16
+ 389 02ae 1093 0000 		sts (nCap)+3,r17
+ 390               	.LM37:
+ 391 02b2 8091 0000 		lds r24,BeaconInfo+85
+ 392 02b6 9927      		clr r25
+ 393 02b8 0196      		adiw r24,1
+ 394 02ba AA27      		clr r26
+ 395 02bc 97FD      		sbrc r25,7
+ 396 02be A095      		com r26
+ 397 02c0 BA2F      		mov r27,r26
+ 398 02c2 E81A      		sub r14,r24
+ 399 02c4 F90A      		sbc r15,r25
+ 400 02c6 0A0B      		sbc r16,r26
+ 401 02c8 1B0B      		sbc r17,r27
+ 402 02ca 0E94 0000 		call beacon_calBeaconMargin
+ 403               	.LVL11:
+ 404 02ce E81A      		sub r14,r24
+ 405 02d0 F108      		sbc r15,__zero_reg__
+ 406 02d2 0109      		sbc r16,__zero_reg__
+ 407 02d4 1109      		sbc r17,__zero_reg__
+ 408 02d6 E092 0000 		sts capLeft,r14
+ 409 02da F092 0000 		sts (capLeft)+1,r15
+ 410 02de 0093 0000 		sts (capLeft)+2,r16
+ 411 02e2 1093 0000 		sts (capLeft)+3,r17
+ 412 02e6 00C0      		rjmp .L23
+ 413               	.LVL12:
+ 414               	.L35:
+ 415               	/* epilogue: frame size=0 */
+ 416 02e8 1F91      		pop r17
+ 417 02ea 0F91      		pop r16
+ 418 02ec FF90      		pop r15
+ 419 02ee EF90      		pop r14
+ 420 02f0 DF90      		pop r13
+ 421 02f2 CF90      		pop r12
+ 422 02f4 BF90      		pop r11
+ 423 02f6 AF90      		pop r10
+ 424 02f8 0895      		ret
+ 425               	/* epilogue end (size=9) */
+ 426               	/* function tx_resumeAfterBeacon size 326 (309) */
+ 427               	.LFE12:
+ 429               	.global	tx_resumeAfterTxBeacon
+ 431               	tx_resumeAfterTxBeacon:
+ 432               	.LFB11:
+ 433               	.LM38:
+ 434               	/* prologue: frame size=0 */
+ 435               	/* prologue end (size=0) */
+ 436               	.LM39:
+ 437 02fa 8091 0000 		lds r24,macInfo+8
+ 438 02fe 8823      		tst r24
+ 439 0300 01F4      		brne .L40
+ 440               	.LM40:
+ 441 0302 8091 0000 		lds r24,BeaconInfo+85
+ 442 0306 9927      		clr r25
+ 443 0308 0296      		adiw r24,2
+ 444 030a AA27      		clr r26
+ 445 030c 97FD      		sbrc r25,7
+ 446 030e A095      		com r26
+ 447 0310 BA2F      		mov r27,r26
+ 448 0312 8093 0000 		sts SlotInfo,r24
+ 449 0316 9093 0000 		sts (SlotInfo)+1,r25
+ 450 031a A093 0000 		sts (SlotInfo)+2,r26
+ 451 031e B093 0000 		sts (SlotInfo)+3,r27
+ 452               	.L40:
+ 453               	.LM41:
+ 454 0322 40E0      		ldi r20,lo8(0)
+ 455 0324 50E0      		ldi r21,hi8(0)
+ 456 0326 60E0      		ldi r22,lo8(0)
+ 457 0328 80E0      		ldi r24,lo8(gs(tx_resumeAfterBeaconTxTask))
+ 458 032a 90E0      		ldi r25,hi8(gs(tx_resumeAfterBeaconTxTask))
+ 459 032c 0E94 0000 		call schedul_addTask
+ 460               	/* epilogue: frame size=0 */
+ 461 0330 0895      		ret
+ 462               	/* epilogue end (size=1) */
+ 463               	/* function tx_resumeAfterTxBeacon size 28 (27) */
+ 464               	.LFE11:
+ 466               	.global	tx_trans
+ 468               	tx_trans:
+ 469               	.LFB3:
+ 470               	.LM42:
+ 471               	/* prologue: frame size=0 */
+ 472               	/* prologue end (size=0) */
+ 473               	.LVL13:
+ 474 0332 FC01      		movw r30,r24
+ 475               	.LM43:
+ 476 0334 E957      		subi r30,lo8(-(135))
+ 477 0336 FF4F      		sbci r31,hi8(-(135))
+ 478 0338 1082      		st Z,__zero_reg__
+ 479 033a E758      		subi r30,lo8(-(-135))
+ 480 033c F040      		sbci r31,hi8(-(-135))
+ 481               	.LM44:
+ 482 033e AF01      		movw r20,r30
+ 483 0340 61E0      		ldi r22,lo8(1)
+ 484 0342 80E0      		ldi r24,lo8(gs(tx_transTask))
+ 485 0344 90E0      		ldi r25,hi8(gs(tx_transTask))
+ 486               	.LVL14:
+ 487 0346 0E94 0000 		call schedul_addTask
+ 488               	.LVL15:
+ 489               	.LM45:
+ 490 034a 9927      		clr r25
+ 491               	/* epilogue: frame size=0 */
+ 492 034c 0895      		ret
+ 493               	/* epilogue end (size=1) */
+ 494               	/* function tx_trans size 14 (13) */
+ 495               	.LFE3:
+ 497               	.global	tx_resumeAfterBeaconTxTask
+ 499               	tx_resumeAfterBeaconTxTask:
+ 500               	.LFB10:
+ 501               	.LM46:
+ 502               	/* prologue: frame size=0 */
+ 503               	/* prologue end (size=0) */
+ 504               	.LVL16:
+ 505               	.LM47:
+ 506 034e 81E0      		ldi r24,lo8(1)
+ 507               	.LVL17:
+ 508 0350 0E94 0000 		call tx_resumeAfterBeacon
+ 509               	.LVL18:
+ 510               	.LM48:
+ 511 0354 80E0      		ldi r24,lo8(0)
+ 512 0356 0E94 0000 		call schedul_removeTask
+ 513               	/* epilogue: frame size=0 */
+ 514 035a 0895      		ret
+ 515               	/* epilogue end (size=1) */
+ 516               	/* function tx_resumeAfterBeaconTxTask size 7 (6) */
+ 517               	.LFE10:
+ 519               	.global	tx_send
+ 521               	tx_send:
+ 522               	.LFB5:
+ 523               	.LM49:
+ 524               	/* prologue: frame size=0 */
+ 525               	/* prologue end (size=0) */
+ 526               	.LVL19:
+ 527 035c 9C01      		movw r18,r24
+ 528               	.LM50:
+ 529 035e 8091 0000 		lds r24,MacTx+2
+ 530               	.LVL20:
+ 531 0362 8823      		tst r24
+ 532 0364 01F0      		breq .L48
+ 533               	.LM51:
+ 534 0366 8091 0000 		lds r24,MacTx+3
+ 535 036a 8823      		tst r24
+ 536 036c 01F0      		breq .L48
+ 537               	.L52:
+ 538               	.LM52:
+ 539 036e 06B6      		in __tmp_reg__,86-0x20
+ 540 0370 03FE      		sbrs __tmp_reg__,3
+ 541 0372 00C0      		rjmp .L52
+ 542               	.L48:
+ 543               	.LM53:
+ 544 0374 C901      		movw r24,r18
+ 545 0376 0E94 0000 		call pddata_request
+ 546               	.LVL21:
+ 547               	.LM54:
+ 548 037a 81E0      		ldi r24,lo8(1)
+ 549 037c 90E0      		ldi r25,hi8(1)
+ 550               	/* epilogue: frame size=0 */
+ 551 037e 0895      		ret
+ 552               	/* epilogue end (size=1) */
+ 553               	/* function tx_send size 18 (17) */
+ 554               	.LFE5:
+ 556               	.global	tx_transBeacon
+ 558               	tx_transBeacon:
+ 559               	.LFB9:
+ 560               	.LM55:
+ 561               	/* prologue: frame size=0 */
+ 562 0380 0F93      		push r16
+ 563 0382 1F93      		push r17
+ 564               	/* prologue end (size=2) */
+ 565               	.LVL22:
+ 566 0384 8C01      		movw r16,r24
+ 567               	.LM56:
+ 568 0386 0E94 0000 		call phytx_turnOnTx
+ 569               	.LVL23:
+ 570               	.LM57:
+ 571 038a C801      		movw r24,r16
+ 572 038c 0E94 0000 		call pddata_request
+ 573               	.LM58:
+ 574 0390 86E0      		ldi r24,lo8(6)
+ 575 0392 90E0      		ldi r25,hi8(6)
+ 576 0394 0E94 0000 		call mac_setTrxState
+ 577               	/* epilogue: frame size=0 */
+ 578 0398 1F91      		pop r17
+ 579 039a 0F91      		pop r16
+ 580 039c 0895      		ret
+ 581               	/* epilogue end (size=3) */
+ 582               	/* function tx_transBeacon size 15 (10) */
+ 583               	.LFE9:
+ 585               	.global	tx_endTrans
+ 587               	tx_endTrans:
+ 588               	.LFB8:
+ 589               	.LM59:
+ 590               	/* prologue: frame size=0 */
+ 591 039e DF92      		push r13
+ 592 03a0 EF92      		push r14
+ 593 03a2 FF92      		push r15
+ 594 03a4 0F93      		push r16
+ 595 03a6 1F93      		push r17
+ 596 03a8 CF93      		push r28
+ 597 03aa DF93      		push r29
+ 598               	/* prologue end (size=7) */
+ 599               	.LVL24:
+ 600 03ac EC01      		movw r28,r24
+ 601 03ae D62E      		mov r13,r22
+ 602               	.LM60:
+ 603 03b0 E62E      		mov r14,r22
+ 604 03b2 FF24      		clr r15
+ 605 03b4 B701      		movw r22,r14
+ 606               	.LVL25:
+ 607 03b6 0E94 0000 		call mac_manageTrxAfterTx
+ 608               	.LVL26:
+ 609               	.LM61:
+ 610 03ba 8E01      		movw r16,r28
+ 611 03bc 0F57      		subi r16,lo8(-(129))
+ 612 03be 1F4F      		sbci r17,hi8(-(129))
+ 613 03c0 F801      		movw r30,r16
+ 614 03c2 8081      		ld r24,Z
+ 615 03c4 82FF      		sbrs r24,2
+ 616 03c6 00C0      		rjmp .L57
+ 617               	.LM62:
+ 618 03c8 DD20      		tst r13
+ 619 03ca 01F0      		breq .+2
+ 620 03cc 00C0      		rjmp .L59
+ 621               	.LM63:
+ 622 03ce CE01      		movw r24,r28
+ 623 03d0 0E94 0000 		call indirectTx_removePkt
+ 624               	.LM64:
+ 625 03d4 F801      		movw r30,r16
+ 626 03d6 8081      		ld r24,Z
+ 627 03d8 82FD      		sbrc r24,2
+ 628 03da 00C0      		rjmp .L59
+ 629               	.L57:
+ 630               	.LM65:
+ 631 03dc 8881      		ld r24,Y
+ 632 03de 8770      		andi r24,lo8(7)
+ 633 03e0 9927      		clr r25
+ 634 03e2 8130      		cpi r24,1
+ 635 03e4 9105      		cpc r25,__zero_reg__
+ 636 03e6 01F0      		breq .L61
+ 637 03e8 0397      		sbiw r24,3
+ 638 03ea 01F0      		breq .+2
+ 639 03ec 00C0      		rjmp .L59
+ 640               	.LM66:
+ 641 03ee 8091 0000 		lds r24,macInfo
+ 642 03f2 8330      		cpi r24,lo8(3)
+ 643 03f4 01F0      		breq .L66
+ 644 03f6 8430      		cpi r24,lo8(4)
+ 645 03f8 00F0      		brlo .L77
+ 646 03fa 8430      		cpi r24,lo8(4)
+ 647 03fc 01F0      		breq .L67
+ 648 03fe 8530      		cpi r24,lo8(5)
+ 649 0400 01F4      		brne .L63
+ 650               	.LM67:
+ 651 0402 BE01      		movw r22,r28
+ 652 0404 C701      		movw r24,r14
+ 653 0406 0E94 0000 		call mlme_handlePollTransition
+ 654 040a 00C0      		rjmp .L59
+ 655               	.L61:
+ 656               	.LM68:
+ 657 040c E091 0000 		lds r30,MacTx+13
+ 658 0410 F091 0000 		lds r31,(MacTx+13)+1
+ 659 0414 ED57      		subi r30,lo8(-(131))
+ 660 0416 FF4F      		sbci r31,hi8(-(131))
+ 661 0418 8081      		ld r24,Z
+ 662 041a E358      		subi r30,lo8(-(-131))
+ 663 041c F040      		sbci r31,hi8(-(-131))
+ 664 041e 82FF      		sbrs r24,2
+ 665 0420 00C0      		rjmp .L78
+ 666               	.L74:
+ 667               	.LM69:
+ 668 0422 CF01      		movw r24,r30
+ 669 0424 0E94 0000 		call mem_releaseTxPkt
+ 670 0428 00C0      		rjmp .L59
+ 671               	.L78:
+ 672               	.LM70:
+ 673 042a EE57      		subi r30,lo8(-(130))
+ 674 042c FF4F      		sbci r31,hi8(-(130))
+ 675 042e 6D2D      		mov r22,r13
+ 676 0430 8081      		ld r24,Z
+ 677 0432 0E94 0000 		call mcpsDataConfirm
+ 678 0436 E091 0000 		lds r30,MacTx+13
+ 679 043a F091 0000 		lds r31,(MacTx+13)+1
+ 680 043e 00C0      		rjmp .L74
+ 681               	.L77:
+ 682               	.LM71:
+ 683 0440 8130      		cpi r24,lo8(1)
+ 684 0442 01F0      		breq .L63
+ 685 0444 8230      		cpi r24,lo8(2)
+ 686 0446 01F0      		breq .L79
+ 687               	.L63:
+ 688               	.LM72:
+ 689 0448 8091 0000 		lds r24,MacTx+13
+ 690 044c 9091 0000 		lds r25,(MacTx+13)+1
+ 691 0450 0E94 0000 		call mem_releaseTxPkt
+ 692 0454 00C0      		rjmp .L59
+ 693               	.L66:
+ 694               	.LM73:
+ 695 0456 BE01      		movw r22,r28
+ 696 0458 8D2D      		mov r24,r13
+ 697 045a 0E94 0000 		call mlme_handleDisassoTransition
+ 698 045e 00C0      		rjmp .L59
+ 699               	.L67:
+ 700               	.LM74:
+ 701 0460 DD20      		tst r13
+ 702 0462 01F0      		breq .L70
+ 703               	.LM75:
+ 704 0464 83E0      		ldi r24,lo8(3)
+ 705 0466 8093 0000 		sts macInfo+1,r24
+ 706 046a 00C0      		rjmp .L59
+ 707               	.L79:
+ 708               	.LM76:
+ 709 046c BE01      		movw r22,r28
+ 710 046e C701      		movw r24,r14
+ 711 0470 0E94 0000 		call mlme_notifyAssociation
+ 712 0474 00C0      		rjmp .L59
+ 713               	.L70:
+ 714               	.LM77:
+ 715 0476 E091 0000 		lds r30,pScanInfo
+ 716 047a F091 0000 		lds r31,(pScanInfo)+1
+ 717 047e 8081      		ld r24,Z
+ 718 0480 8130      		cpi r24,lo8(1)
+ 719 0482 01F0      		breq .L72
+ 720 0484 8330      		cpi r24,lo8(3)
+ 721 0486 01F4      		brne .L59
+ 722               	.LM78:
+ 723 0488 20E0      		ldi r18,lo8(1536)
+ 724 048a 36E0      		ldi r19,hi8(1536)
+ 725 048c 40E0      		ldi r20,hlo8(1536)
+ 726 048e 50E0      		ldi r21,hhi8(1536)
+ 727 0490 60E0      		ldi r22,lo8(0)
+ 728 0492 70E0      		ldi r23,hi8(0)
+ 729 0494 80E0      		ldi r24,lo8(0)
+ 730 0496 0E94 0000 		call timer_startTimer
+ 731 049a 00C0      		rjmp .L59
+ 732               	.L72:
+ 733               	.LM79:
+ 734 049c 20E3      		ldi r18,lo8(48)
+ 735 049e 30E0      		ldi r19,hi8(48)
+ 736 04a0 40E0      		ldi r20,hlo8(48)
+ 737 04a2 50E0      		ldi r21,hhi8(48)
+ 738 04a4 0580      		ldd r0,Z+5
+ 739 04a6 00C0      		rjmp 2f
+ 740 04a8 220F      	1:	lsl r18
+ 741 04aa 331F      		rol r19
+ 742 04ac 441F      		rol r20
+ 743 04ae 551F      		rol r21
+ 744 04b0 0A94      	2:	dec r0
+ 745 04b2 02F4      		brpl 1b
+ 746 04b4 205A      		subi r18,lo8(-(96))
+ 747 04b6 3F4F      		sbci r19,hi8(-(96))
+ 748 04b8 4F4F      		sbci r20,hlo8(-(96))
+ 749 04ba 5F4F      		sbci r21,hhi8(-(96))
+ 750 04bc 60E0      		ldi r22,lo8(0)
+ 751 04be 70E0      		ldi r23,hi8(0)
+ 752 04c0 80E0      		ldi r24,lo8(0)
+ 753 04c2 0E94 0000 		call timer_startTimer
+ 754               	.LM80:
+ 755 04c6 8091 0000 		lds r24,MacTx+13
+ 756 04ca 9091 0000 		lds r25,(MacTx+13)+1
+ 757 04ce 0E94 0000 		call mem_releaseTxPkt
+ 758               	.L59:
+ 759               	.LM81:
+ 760 04d2 87E0      		ldi r24,lo8(7)
+ 761 04d4 8093 0000 		sts MacTx,r24
+ 762               	.LM82:
+ 763 04d8 81E0      		ldi r24,lo8(1)
+ 764 04da 0E94 0000 		call schedul_removeTask
+ 765               	/* epilogue: frame size=0 */
+ 766 04de DF91      		pop r29
+ 767 04e0 CF91      		pop r28
+ 768 04e2 1F91      		pop r17
+ 769 04e4 0F91      		pop r16
+ 770 04e6 FF90      		pop r15
+ 771 04e8 EF90      		pop r14
+ 772 04ea DF90      		pop r13
+ 773 04ec 0895      		ret
+ 774               	/* epilogue end (size=8) */
+ 775               	/* function tx_endTrans size 169 (154) */
+ 776               	.LFE8:
+ 778               	.global	tx_transTask
+ 780               	tx_transTask:
+ 781               	.LFB6:
+ 782               	.LM83:
+ 783               	/* prologue: frame size=0 */
+ 784 04ee CF93      		push r28
+ 785 04f0 DF93      		push r29
+ 786               	/* prologue end (size=2) */
+ 787               	.LVL27:
+ 788 04f2 EC01      		movw r28,r24
+ 789               	.LVL28:
+ 790               	.LVL29:
+ 791               	.LM84:
+ 792 04f4 FC01      		movw r30,r24
+ 793 04f6 E957      		subi r30,lo8(-(135))
+ 794 04f8 FF4F      		sbci r31,hi8(-(135))
+ 795 04fa 8081      		ld r24,Z
+ 796 04fc 8823      		tst r24
+ 797 04fe 01F4      		brne .L81
+ 798               	.LM85:
+ 799 0500 1092 0000 		sts MacTx,__zero_reg__
+ 800               	.LM86:
+ 801 0504 CD57      		subi r28,lo8(-(131))
+ 802 0506 DF4F      		sbci r29,hi8(-(131))
+ 803 0508 8881      		ld r24,Y
+ 804 050a C358      		subi r28,lo8(-(-131))
+ 805 050c D040      		sbci r29,hi8(-(-131))
+ 806 050e 8170      		andi r24,lo8(1)
+ 807 0510 8093 0000 		sts MacTx+2,r24
+ 808               	.LM87:
+ 809 0514 D093 0000 		sts (MacTx+13)+1,r29
+ 810 0518 C093 0000 		sts MacTx+13,r28
+ 811               	.LM88:
+ 812 051c 81E0      		ldi r24,lo8(1)
+ 813 051e 8083      		st Z,r24
+ 814               	.L81:
+ 815               	.LM89:
+ 816 0520 8091 0000 		lds r24,MacTx
+ 817 0524 8230      		cpi r24,lo8(2)
+ 818 0526 01F4      		brne .+2
+ 819 0528 00C0      		rjmp .L86
+ 820 052a 8330      		cpi r24,lo8(3)
+ 821 052c 00F0      		brlo .L117
+ 822 052e 8530      		cpi r24,lo8(5)
+ 823 0530 01F4      		brne .+2
+ 824 0532 00C0      		rjmp .L88
+ 825 0534 8630      		cpi r24,lo8(6)
+ 826 0536 01F4      		brne .+2
+ 827 0538 00C0      		rjmp .L89
+ 828 053a 8330      		cpi r24,lo8(3)
+ 829 053c 01F0      		breq .+2
+ 830 053e 00C0      		rjmp .L113
+ 831               	.LM90:
+ 832 0540 C098      		cbi 56-0x20,0
+ 833 0542 1FB8      		out 47-0x20,__zero_reg__
+ 834 0544 8FB1      		in r24,47-0x20
+ 835               	.LVL30:
+ 836 0546 C09A      		sbi 56-0x20,0
+ 837               	.LM91:
+ 838 0548 83FD      		sbrc r24,3
+ 839 054a 00C0      		rjmp .L113
+ 840 054c 00C0      		rjmp .L124
+ 841               	.LVL31:
+ 842               	.L117:
+ 843               	.LM92:
+ 844 054e 8823      		tst r24
+ 845 0550 01F4      		brne .L119
+ 846               	.LM93:
+ 847 0552 41E0      		ldi r20,lo8(1)
+ 848 0554 4093 0000 		sts MacTx,r20
+ 849               	.LM94:
+ 850 0558 8091 0000 		lds r24,MacTx+2
+ 851 055c 8823      		tst r24
+ 852 055e 01F4      		brne .+2
+ 853 0560 00C0      		rjmp .L91
+ 854               	.LM95:
+ 855 0562 8091 0000 		lds r24,mpib+8
+ 856 0566 8F30      		cpi r24,lo8(15)
+ 857 0568 01F0      		breq .L93
+ 858 056a CD57      		subi r28,lo8(-(131))
+ 859 056c DF4F      		sbci r29,hi8(-(131))
+ 860 056e 8881      		ld r24,Y
+ 861 0570 C358      		subi r28,lo8(-(-131))
+ 862 0572 D040      		sbci r29,hi8(-(-131))
+ 863 0574 81FF      		sbrs r24,1
+ 864 0576 00C0      		rjmp .L120
+ 865               	.L93:
+ 866 0578 40E0      		ldi r20,lo8(0)
+ 867               	.L97:
+ 868               	.LM96:
+ 869 057a C058      		subi r28,lo8(-(128))
+ 870 057c DF4F      		sbci r29,hi8(-(128))
+ 871 057e BE01      		movw r22,r28
+ 872               	.LVL32:
+ 873 0580 80E0      		ldi r24,lo8(MacTx+3)
+ 874 0582 90E0      		ldi r25,hi8(MacTx+3)
+ 875 0584 0E94 0000 		call csmaca_initCsmaca
+ 876               	.LM97:
+ 877 0588 81E0      		ldi r24,lo8(1)
+ 878 058a 8093 0000 		sts MacTx,r24
+ 879 058e 00C0      		rjmp .L113
+ 880               	.LVL33:
+ 881               	.L119:
+ 882               	.LM98:
+ 883 0590 8130      		cpi r24,lo8(1)
+ 884 0592 01F0      		breq .+2
+ 885 0594 00C0      		rjmp .L113
+ 886               	.LM99:
+ 887 0596 80E0      		ldi r24,lo8(MacTx+3)
+ 888 0598 90E0      		ldi r25,hi8(MacTx+3)
+ 889 059a 0E94 0000 		call csmaca_process
+ 890               	.LVL34:
+ 891               	.LM100:
+ 892 059e 8091 0000 		lds r24,MacTx+5
+ 893               	.LVL35:
+ 894               	.LM101:
+ 895 05a2 8330      		cpi r24,lo8(3)
+ 896 05a4 01F4      		brne .L98
+ 897               	.LM102:
+ 898 05a6 82E0      		ldi r24,lo8(2)
+ 899               	.LVL36:
+ 900 05a8 8093 0000 		sts MacTx,r24
+ 901               	.LVL37:
+ 902               	.L86:
+ 903               	.LM103:
+ 904 05ac 89E0      		ldi r24,lo8(9)
+ 905 05ae 90E0      		ldi r25,hi8(9)
+ 906 05b0 0E94 0000 		call mac_setTrxState
+ 907               	.LVL38:
+ 908               	.LM104:
+ 909 05b4 8730      		cpi r24,lo8(7)
+ 910 05b6 01F0      		breq .+2
+ 911 05b8 00C0      		rjmp .L113
+ 912               	.LBB4:
+ 913               	.LBB5:
+ 914               	.LM105:
+ 915 05ba 8091 0000 		lds r24,MacTx+2
+ 916 05be 8823      		tst r24
+ 917 05c0 01F0      		breq .L105
+ 918               	.LM106:
+ 919 05c2 8091 0000 		lds r24,MacTx+3
+ 920 05c6 8823      		tst r24
+ 921 05c8 01F4      		brne .L114
+ 922               	.L105:
+ 923               	.LM107:
+ 924 05ca CE01      		movw r24,r28
+ 925 05cc 0E94 0000 		call pddata_request
+ 926               	.LBE5:
+ 927               	.LBE4:
+ 928               	.LM108:
+ 929 05d0 8881      		ld r24,Y
+ 930 05d2 85FD      		sbrc r24,5
+ 931 05d4 00C0      		rjmp .L121
+ 932               	.LM109:
+ 933 05d6 83E0      		ldi r24,lo8(3)
+ 934 05d8 8093 0000 		sts MacTx,r24
+ 935 05dc 00C0      		rjmp .L113
+ 936               	.L114:
+ 937               	.LBB6:
+ 938               	.LBB7:
+ 939               	.LM110:
+ 940 05de 06B6      		in __tmp_reg__,86-0x20
+ 941 05e0 03FC      		sbrc __tmp_reg__,3
+ 942 05e2 00C0      		rjmp .L105
+ 943 05e4 06B6      		in __tmp_reg__,86-0x20
+ 944 05e6 03FE      		sbrs __tmp_reg__,3
+ 945 05e8 00C0      		rjmp .L114
+ 946 05ea 00C0      		rjmp .L105
+ 947               	.LVL39:
+ 948               	.L89:
+ 949               	.LBE7:
+ 950               	.LBE6:
+ 951               	.LM111:
+ 952 05ec 69EE      		ldi r22,lo8(-23)
+ 953               	.LVL40:
+ 954 05ee CE01      		movw r24,r28
+ 955 05f0 0E94 0000 		call tx_endTrans
+ 956 05f4 00C0      		rjmp .L113
+ 957               	.LVL41:
+ 958               	.L88:
+ 959               	.LM112:
+ 960 05f6 E091 0000 		lds r30,MacTx+13
+ 961 05fa F091 0000 		lds r31,(MacTx+13)+1
+ 962 05fe 8081      		ld r24,Z
+ 963 0600 85FD      		sbrc r24,5
+ 964 0602 00C0      		rjmp .L122
+ 965               	.LVL42:
+ 966               	.L111:
+ 967               	.LM113:
+ 968 0604 60E0      		ldi r22,lo8(0)
+ 969               	.LVL43:
+ 970 0606 CF01      		movw r24,r30
+ 971 0608 0E94 0000 		call tx_endTrans
+ 972               	.LVL44:
+ 973 060c 00C0      		rjmp .L113
+ 974               	.LVL45:
+ 975               	.L91:
+ 976               	.LM114:
+ 977 060e 82E0      		ldi r24,lo8(2)
+ 978 0610 8093 0000 		sts MacTx,r24
+ 979 0614 00C0      		rjmp .L113
+ 980               	.LVL46:
+ 981               	.L98:
+ 982               	.LM115:
+ 983 0616 8430      		cpi r24,lo8(4)
+ 984 0618 01F0      		breq .L100
+ 985 061a 8130      		cpi r24,lo8(1)
+ 986 061c 01F0      		breq .L100
+ 987               	.LM116:
+ 988 061e 8091 0000 		lds r24,MacTx+9
+ 989               	.LVL47:
+ 990 0622 8130      		cpi r24,lo8(1)
+ 991 0624 01F4      		brne .L113
+ 992               	.LM117:
+ 993 0626 81E0      		ldi r24,lo8(1)
+ 994 0628 90E0      		ldi r25,hi8(1)
+ 995 062a 0E94 0000 		call schedul_suspend
+ 996 062e 00C0      		rjmp .L113
+ 997               	.LVL48:
+ 998               	.L120:
+ 999               	.LM118:
+ 1000 0630 90E0      		ldi r25,lo8(0)
+ 1001 0632 8091 0000 		lds r24,BeaconInfo+2
+ 1002 0636 8130      		cpi r24,lo8(1)
+ 1003 0638 01F0      		breq .L123
+ 1004 063a 4927      		eor r20,r25
+ 1005 063c 00C0      		rjmp .L97
+ 1006               	.LVL49:
+ 1007               	.L124:
+ 1008               	.LM119:
+ 1009 063e 60E0      		ldi r22,lo8(0)
+ 1010               	.LVL50:
+ 1011 0640 CE01      		movw r24,r28
+ 1012               	.LVL51:
+ 1013 0642 0E94 0000 		call tx_endTrans
+ 1014 0646 00C0      		rjmp .L113
+ 1015               	.LVL52:
+ 1016               	.L123:
+ 1017               	.LM120:
+ 1018 0648 91E0      		ldi r25,lo8(1)
+ 1019 064a 4927      		eor r20,r25
+ 1020 064c 00C0      		rjmp .L97
+ 1021               	.LVL53:
+ 1022               	.L121:
+ 1023               	.LM121:
+ 1024 064e 0E94 0000 		call phyrx_initOnRx
+ 1025               	.LM122:
+ 1026 0652 84E0      		ldi r24,lo8(4)
+ 1027 0654 8093 0000 		sts MacTx,r24
+ 1028               	.LM123:
+ 1029 0658 CB57      		subi r28,lo8(-(133))
+ 1030 065a DF4F      		sbci r29,hi8(-(133))
+ 1031 065c 2881      		ld r18,Y
+ 1032 065e C558      		subi r28,lo8(-(-133))
+ 1033 0660 D040      		sbci r29,hi8(-(-133))
+ 1034 0662 3327      		clr r19
+ 1035 0664 2E5F      		subi r18,lo8(-(2))
+ 1036 0666 3F4F      		sbci r19,hi8(-(2))
+ 1037 0668 4427      		clr r20
+ 1038 066a 37FD      		sbrc r19,7
+ 1039 066c 4095      		com r20
+ 1040 066e 542F      		mov r21,r20
+ 1041 0670 BE01      		movw r22,r28
+ 1042 0672 87E0      		ldi r24,lo8(7)
+ 1043 0674 0E94 0000 		call timer_startTimer
+ 1044 0678 00C0      		rjmp .L113
+ 1045               	.LVL54:
+ 1046               	.L122:
+ 1047               	.LM124:
+ 1048 067a 87E0      		ldi r24,lo8(7)
+ 1049 067c 0E94 0000 		call timer_endTimer
+ 1050               	.LVL55:
+ 1051 0680 E091 0000 		lds r30,MacTx+13
+ 1052 0684 F091 0000 		lds r31,(MacTx+13)+1
+ 1053 0688 00C0      		rjmp .L111
+ 1054               	.LVL56:
+ 1055               	.L100:
+ 1056               	.LM125:
+ 1057 068a 61EE      		ldi r22,lo8(-31)
+ 1058 068c CE01      		movw r24,r28
+ 1059               	.LVL57:
+ 1060 068e 0E94 0000 		call tx_endTrans
+ 1061               	.LVL58:
+ 1062               	.L113:
+ 1063               	/* epilogue: frame size=0 */
+ 1064 0692 DF91      		pop r29
+ 1065 0694 CF91      		pop r28
+ 1066 0696 0895      		ret
+ 1067               	/* epilogue end (size=3) */
+ 1068               	/* function tx_transTask size 213 (208) */
+ 1069               	.LFE6:
+ 1071               		.comm MacTx,15,1
+ 1072               		.comm capRequired,4,1
+ 1073               		.comm capLeft,4,1
+ 1074               		.comm nCap,4,1
+ 1167               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 mac_tx.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:20     .text:00000000 tx_init
+                            *COM*:0000000f MacTx
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:39     .text:00000010 tx_notifyAck
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:90     .text:00000050 tx_timeoutAck
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:123    .text:0000006e tx_resumeAfterBeacon
+                            *COM*:00000004 capLeft
+                            *COM*:00000004 capRequired
+                            *COM*:00000004 nCap
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:431    .text:000002fa tx_resumeAfterTxBeacon
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:499    .text:0000034e tx_resumeAfterBeaconTxTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:468    .text:00000332 tx_trans
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:780    .text:000004ee tx_transTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:521    .text:0000035c tx_send
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:558    .text:00000380 tx_transBeacon
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccaOaaaa.s:587    .text:0000039e tx_endTrans
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+BeaconInfo
+SlotInfo
+mpib
+timer_endTimer
+beacon_calBeaconMargin
+schedul_activate
+macInfo
+schedul_addTask
+schedul_removeTask
+pddata_request
+phytx_turnOnTx
+mac_setTrxState
+mac_manageTrxAfterTx
+indirectTx_removePkt
+mlme_handlePollTransition
+mem_releaseTxPkt
+mcpsDataConfirm
+mlme_handleDisassoTransition
+mlme_notifyAssociation
+pScanInfo
+timer_startTimer
+csmaca_initCsmaca
+csmaca_process
+schedul_suspend
+phyrx_initOnRx

@@ -1,0 +1,943 @@
+   1               		.file	"schedul.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	schedul_runPerTasks
+  20               	schedul_runPerTasks:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24 0000 CF93      		push r28
+  25 0002 DF93      		push r29
+  26               	/* prologue end (size=2) */
+  27               	.LM2:
+  28               	/* #APP */
+  29 0004 F894      		cli
+  30               		
+  31               	.LM3:
+  32               	/* #NOAPP */
+  33 0006 A091 0000 		lds r26,PerTaskQueue+2
+  34 000a B091 0000 		lds r27,(PerTaskQueue+2)+1
+  35               	.LVL0:
+  36               	.LM4:
+  37               	/* #APP */
+  38 000e 7894      		sei
+  39               		
+  40               	.LM5:
+  41               	/* #NOAPP */
+  42 0010 1097      		sbiw r26,0
+  43 0012 01F0      		breq .L2
+  44               	.LM6:
+  45 0014 ED01      		movw r28,r26
+  46 0016 8C81      		ldd r24,Y+4
+  47 0018 8823      		tst r24
+  48 001a 01F4      		brne .+2
+  49 001c 00C0      		rjmp .L17
+  50               	.L2:
+  51               	.LM7:
+  52               	/* #APP */
+  53 001e F894      		cli
+  54               		
+  55               	.LM8:
+  56               	/* #NOAPP */
+  57 0020 A091 0000 		lds r26,PerTaskQueue+6
+  58 0024 B091 0000 		lds r27,(PerTaskQueue+6)+1
+  59               	.LVL1:
+  60               	.LM9:
+  61               	/* #APP */
+  62 0028 7894      		sei
+  63               		
+  64               	.LM10:
+  65               	/* #NOAPP */
+  66 002a 1097      		sbiw r26,0
+  67 002c 01F0      		breq .L5
+  68               	.LM11:
+  69 002e FD01      		movw r30,r26
+  70 0030 8481      		ldd r24,Z+4
+  71 0032 8823      		tst r24
+  72 0034 01F0      		breq .L18
+  73               	.L5:
+  74               	.LM12:
+  75               	/* #APP */
+  76 0036 F894      		cli
+  77               		
+  78               	.LM13:
+  79               	/* #NOAPP */
+  80 0038 A091 0000 		lds r26,PerTaskQueue+10
+  81 003c B091 0000 		lds r27,(PerTaskQueue+10)+1
+  82               	.LVL2:
+  83               	.LM14:
+  84               	/* #APP */
+  85 0040 7894      		sei
+  86               		
+  87               	.LM15:
+  88               	/* #NOAPP */
+  89 0042 1097      		sbiw r26,0
+  90 0044 01F0      		breq .L8
+  91               	.LM16:
+  92 0046 FD01      		movw r30,r26
+  93 0048 8481      		ldd r24,Z+4
+  94 004a 8823      		tst r24
+  95 004c 01F0      		breq .L15
+  96               	.L8:
+  97               	.LM17:
+  98               	/* #APP */
+  99 004e F894      		cli
+ 100               		
+ 101               	.LM18:
+ 102               	/* #NOAPP */
+ 103 0050 A091 0000 		lds r26,PerTaskQueue+14
+ 104 0054 B091 0000 		lds r27,(PerTaskQueue+14)+1
+ 105               	.LVL3:
+ 106               	.LM19:
+ 107               	/* #APP */
+ 108 0058 7894      		sei
+ 109               		
+ 110               	.LM20:
+ 111               	/* #NOAPP */
+ 112 005a 1097      		sbiw r26,0
+ 113 005c 01F0      		breq .L14
+ 114               	.LM21:
+ 115 005e FD01      		movw r30,r26
+ 116 0060 8481      		ldd r24,Z+4
+ 117 0062 8823      		tst r24
+ 118 0064 01F4      		brne .L14
+ 119               	.LVL4:
+ 120               	.L15:
+ 121               	.LVL5:
+ 122               	.LM22:
+ 123 0066 ED91      		ld r30,X+
+ 124 0068 FC91      		ld r31,X
+ 125 006a 1197      		sbiw r26,1
+ 126 006c 60E0      		ldi r22,lo8(0)
+ 127 006e 70E0      		ldi r23,hi8(0)
+ 128 0070 ED01      		movw r28,r26
+ 129 0072 8A81      		ldd r24,Y+2
+ 130 0074 9B81      		ldd r25,Y+3
+ 131 0076 0995      		icall
+ 132               	.LVL6:
+ 133 0078 00C0      		rjmp .L14
+ 134               	.LVL7:
+ 135               	.L18:
+ 136 007a ED91      		ld r30,X+
+ 137 007c FC91      		ld r31,X
+ 138 007e 1197      		sbiw r26,1
+ 139 0080 60E0      		ldi r22,lo8(0)
+ 140 0082 70E0      		ldi r23,hi8(0)
+ 141 0084 ED01      		movw r28,r26
+ 142 0086 8A81      		ldd r24,Y+2
+ 143 0088 9B81      		ldd r25,Y+3
+ 144 008a 0995      		icall
+ 145               	.LVL8:
+ 146 008c 00C0      		rjmp .L5
+ 147               	.LVL9:
+ 148               	.L17:
+ 149 008e ED91      		ld r30,X+
+ 150 0090 FC91      		ld r31,X
+ 151 0092 60E0      		ldi r22,lo8(0)
+ 152 0094 70E0      		ldi r23,hi8(0)
+ 153 0096 8A81      		ldd r24,Y+2
+ 154 0098 9B81      		ldd r25,Y+3
+ 155 009a 0995      		icall
+ 156               	.LVL10:
+ 157 009c 00C0      		rjmp .L2
+ 158               	.LVL11:
+ 159               	.L14:
+ 160               	/* epilogue: frame size=0 */
+ 161 009e DF91      		pop r29
+ 162 00a0 CF91      		pop r28
+ 163 00a2 0895      		ret
+ 164               	/* epilogue end (size=3) */
+ 165               	/* function schedul_runPerTasks size 106 (101) */
+ 166               	.LFE2:
+ 168               	.global	schedul_getTask
+ 170               	schedul_getTask:
+ 171               	.LFB5:
+ 172               	.LM23:
+ 173               	/* prologue: frame size=0 */
+ 174               	/* prologue end (size=0) */
+ 175 00a4 8091 0000 		lds r24,CurrAperTask
+ 176               	.LM24:
+ 177 00a8 9927      		clr r25
+ 178               	/* epilogue: frame size=0 */
+ 179 00aa 0895      		ret
+ 180               	/* epilogue end (size=1) */
+ 181               	/* function schedul_getTask size 4 (3) */
+ 182               	.LFE5:
+ 184               	.global	schedul_addTask
+ 186               	schedul_addTask:
+ 187               	.LFB8:
+ 188               	.LM25:
+ 189               	/* prologue: frame size=0 */
+ 190 00ac CF93      		push r28
+ 191 00ae DF93      		push r29
+ 192               	/* prologue end (size=2) */
+ 193               	.LVL12:
+ 194 00b0 9C01      		movw r18,r24
+ 195               	.LM26:
+ 196               	/* #APP */
+ 197 00b2 F894      		cli
+ 198               		
+ 199               	.LM27:
+ 200               	/* #NOAPP */
+ 201 00b4 6430      		cpi r22,lo8(4)
+ 202 00b6 00F4      		brsh .L22
+ 203               	.LVL13:
+ 204               	.LM28:
+ 205 00b8 A091 0000 		lds r26,PerTaskQueue
+ 206 00bc B091 0000 		lds r27,(PerTaskQueue)+1
+ 207               	.LVL14:
+ 208               	.LM29:
+ 209 00c0 FD01      		movw r30,r26
+ 210 00c2 8581      		ldd r24,Z+5
+ 211 00c4 9681      		ldd r25,Z+6
+ 212 00c6 9093 0000 		sts (PerTaskQueue)+1,r25
+ 213 00ca 8093 0000 		sts PerTaskQueue,r24
+ 214               	.LM30:
+ 215 00ce 1097      		sbiw r26,0
+ 216 00d0 01F0      		breq .L22
+ 217               	.LM31:
+ 218 00d2 5383      		std Z+3,r21
+ 219 00d4 4283      		std Z+2,r20
+ 220               	.LM32:
+ 221 00d6 1196      		adiw r26,1
+ 222 00d8 3C93      		st X,r19
+ 223 00da 2E93      		st -X,r18
+ 224               	.LM33:
+ 225 00dc 1482      		std Z+4,__zero_reg__
+ 226               	.LM34:
+ 227 00de 1682      		std Z+6,__zero_reg__
+ 228 00e0 1582      		std Z+5,__zero_reg__
+ 229               	.LM35:
+ 230 00e2 E62F      		mov r30,r22
+ 231 00e4 FF27      		clr r31
+ 232 00e6 EE0F      		lsl r30
+ 233 00e8 FF1F      		rol r31
+ 234 00ea EE0F      		lsl r30
+ 235 00ec FF1F      		rol r31
+ 236 00ee E050      		subi r30,lo8(-(PerTaskQueue))
+ 237 00f0 F040      		sbci r31,hi8(-(PerTaskQueue))
+ 238 00f2 C481      		ldd r28,Z+4
+ 239 00f4 D581      		ldd r29,Z+5
+ 240 00f6 2097      		sbiw r28,0
+ 241 00f8 01F0      		breq .L29
+ 242               	.LM36:
+ 243 00fa BE83      		std Y+6,r27
+ 244 00fc AD83      		std Y+5,r26
+ 245               	.LM37:
+ 246 00fe B583      		std Z+5,r27
+ 247 0100 A483      		std Z+4,r26
+ 248 0102 81E0      		ldi r24,lo8(1)
+ 249 0104 90E0      		ldi r25,hi8(1)
+ 250 0106 00C0      		rjmp .L27
+ 251               	.LVL15:
+ 252               	.L22:
+ 253 0108 80E0      		ldi r24,lo8(0)
+ 254 010a 90E0      		ldi r25,hi8(0)
+ 255 010c 00C0      		rjmp .L27
+ 256               	.L29:
+ 257               	.LM38:
+ 258 010e B583      		std Z+5,r27
+ 259 0110 A483      		std Z+4,r26
+ 260               	.LM39:
+ 261 0112 B383      		std Z+3,r27
+ 262 0114 A283      		std Z+2,r26
+ 263 0116 81E0      		ldi r24,lo8(1)
+ 264 0118 90E0      		ldi r25,hi8(1)
+ 265               	.L27:
+ 266               	.LM40:
+ 267               	/* #APP */
+ 268 011a 7894      		sei
+ 269               		
+ 270               	/* #NOAPP */
+ 271               	/* epilogue: frame size=0 */
+ 272 011c DF91      		pop r29
+ 273 011e CF91      		pop r28
+ 274 0120 0895      		ret
+ 275               	/* epilogue end (size=3) */
+ 276               	/* function schedul_addTask size 65 (60) */
+ 277               	.LFE8:
+ 279               	.global	schedul_suspend
+ 281               	schedul_suspend:
+ 282               	.LFB9:
+ 283               	.LM41:
+ 284               	/* prologue: frame size=0 */
+ 285               	/* prologue end (size=0) */
+ 286               	.LVL16:
+ 287               	.LM42:
+ 288 0122 E82F      		mov r30,r24
+ 289 0124 FF27      		clr r31
+ 290 0126 EE0F      		lsl r30
+ 291 0128 FF1F      		rol r31
+ 292 012a EE0F      		lsl r30
+ 293 012c FF1F      		rol r31
+ 294 012e E050      		subi r30,lo8(-(PerTaskQueue))
+ 295 0130 F040      		sbci r31,hi8(-(PerTaskQueue))
+ 296 0132 0280      		ldd __tmp_reg__,Z+2
+ 297 0134 F381      		ldd r31,Z+3
+ 298 0136 E02D      		mov r30,__tmp_reg__
+ 299 0138 3097      		sbiw r30,0
+ 300 013a 01F0      		breq .L33
+ 301               	.LM43:
+ 302 013c 81E0      		ldi r24,lo8(1)
+ 303               	.LVL17:
+ 304 013e 8483      		std Z+4,r24
+ 305               	.LVL18:
+ 306               	.L33:
+ 307 0140 0895      		ret
+ 308               	/* epilogue: frame size=0 */
+ 309               	/* epilogue: noreturn */
+ 310               	/* epilogue end (size=0) */
+ 311               	/* function schedul_suspend size 16 (16) */
+ 312               	.LFE9:
+ 314               	.global	schedul_activate
+ 316               	schedul_activate:
+ 317               	.LFB10:
+ 318               	.LM44:
+ 319               	/* prologue: frame size=0 */
+ 320               	/* prologue end (size=0) */
+ 321               	.LVL19:
+ 322               	.LM45:
+ 323 0142 E82F      		mov r30,r24
+ 324 0144 FF27      		clr r31
+ 325 0146 EE0F      		lsl r30
+ 326 0148 FF1F      		rol r31
+ 327 014a EE0F      		lsl r30
+ 328 014c FF1F      		rol r31
+ 329 014e E050      		subi r30,lo8(-(PerTaskQueue))
+ 330 0150 F040      		sbci r31,hi8(-(PerTaskQueue))
+ 331 0152 0280      		ldd __tmp_reg__,Z+2
+ 332 0154 F381      		ldd r31,Z+3
+ 333 0156 E02D      		mov r30,__tmp_reg__
+ 334 0158 3097      		sbiw r30,0
+ 335 015a 01F0      		breq .L37
+ 336               	.LM46:
+ 337 015c 1482      		std Z+4,__zero_reg__
+ 338               	.L37:
+ 339 015e 0895      		ret
+ 340               	/* epilogue: frame size=0 */
+ 341               	/* epilogue: noreturn */
+ 342               	/* epilogue end (size=0) */
+ 343               	/* function schedul_activate size 15 (15) */
+ 344               	.LFE10:
+ 346               	.global	schedul_getParam
+ 348               	schedul_getParam:
+ 349               	.LFB11:
+ 350               	.LM47:
+ 351               	/* prologue: frame size=0 */
+ 352               	/* prologue end (size=0) */
+ 353               	.LVL20:
+ 354               	.LM48:
+ 355 0160 E82F      		mov r30,r24
+ 356 0162 FF27      		clr r31
+ 357 0164 EE0F      		lsl r30
+ 358 0166 FF1F      		rol r31
+ 359 0168 EE0F      		lsl r30
+ 360 016a FF1F      		rol r31
+ 361 016c E050      		subi r30,lo8(-(PerTaskQueue))
+ 362 016e F040      		sbci r31,hi8(-(PerTaskQueue))
+ 363 0170 0280      		ldd __tmp_reg__,Z+2
+ 364 0172 F381      		ldd r31,Z+3
+ 365 0174 E02D      		mov r30,__tmp_reg__
+ 366 0176 3097      		sbiw r30,0
+ 367 0178 01F0      		breq .L43
+ 368               	.LM49:
+ 369 017a 8281      		ldd r24,Z+2
+ 370 017c 9381      		ldd r25,Z+3
+ 371               	.LVL21:
+ 372               	.LM50:
+ 373 017e 0895      		ret
+ 374               	.LVL22:
+ 375               	.L43:
+ 376               	.LM51:
+ 377 0180 80E0      		ldi r24,lo8(0)
+ 378 0182 90E0      		ldi r25,hi8(0)
+ 379               	.LVL23:
+ 380 0184 0895      		ret
+ 381               	/* epilogue: frame size=0 */
+ 382               	/* epilogue: noreturn */
+ 383               	/* epilogue end (size=0) */
+ 384               	/* function schedul_getParam size 19 (19) */
+ 385               	.LFE11:
+ 387               	.global	schedul_removeTask
+ 389               	schedul_removeTask:
+ 390               	.LFB12:
+ 391               	.LM52:
+ 392               	/* prologue: frame size=0 */
+ 393 0186 CF93      		push r28
+ 394 0188 DF93      		push r29
+ 395               	/* prologue end (size=2) */
+ 396               	.LVL24:
+ 397               	.LM53:
+ 398               	/* #APP */
+ 399 018a F894      		cli
+ 400               		
+ 401               	.LM54:
+ 402               	/* #NOAPP */
+ 403 018c E82F      		mov r30,r24
+ 404 018e FF27      		clr r31
+ 405 0190 EE0F      		lsl r30
+ 406 0192 FF1F      		rol r31
+ 407 0194 EE0F      		lsl r30
+ 408 0196 FF1F      		rol r31
+ 409 0198 E050      		subi r30,lo8(-(PerTaskQueue))
+ 410 019a F040      		sbci r31,hi8(-(PerTaskQueue))
+ 411 019c A281      		ldd r26,Z+2
+ 412 019e B381      		ldd r27,Z+3
+ 413               	.LVL25:
+ 414               	.LM55:
+ 415 01a0 1097      		sbiw r26,0
+ 416 01a2 01F0      		breq .L52
+ 417               	.LM56:
+ 418 01a4 ED01      		movw r28,r26
+ 419 01a6 8D81      		ldd r24,Y+5
+ 420 01a8 9E81      		ldd r25,Y+6
+ 421               	.LVL26:
+ 422 01aa 0097      		sbiw r24,0
+ 423 01ac 01F0      		breq .L53
+ 424               	.LM57:
+ 425 01ae 9383      		std Z+3,r25
+ 426 01b0 8283      		std Z+2,r24
+ 427               	.L50:
+ 428               	.LM58:
+ 429 01b2 8091 0000 		lds r24,PerTaskQueue
+ 430 01b6 9091 0000 		lds r25,(PerTaskQueue)+1
+ 431 01ba FD01      		movw r30,r26
+ 432 01bc 9683      		std Z+6,r25
+ 433 01be 8583      		std Z+5,r24
+ 434               	.LM59:
+ 435 01c0 B093 0000 		sts (PerTaskQueue)+1,r27
+ 436 01c4 A093 0000 		sts PerTaskQueue,r26
+ 437 01c8 81E0      		ldi r24,lo8(1)
+ 438 01ca 90E0      		ldi r25,hi8(1)
+ 439 01cc 00C0      		rjmp .L47
+ 440               	.L53:
+ 441               	.LM60:
+ 442 01ce 1582      		std Z+5,__zero_reg__
+ 443 01d0 1482      		std Z+4,__zero_reg__
+ 444               	.LM61:
+ 445 01d2 1382      		std Z+3,__zero_reg__
+ 446 01d4 1282      		std Z+2,__zero_reg__
+ 447 01d6 00C0      		rjmp .L50
+ 448               	.LVL27:
+ 449               	.L52:
+ 450               	.LM62:
+ 451 01d8 80E0      		ldi r24,lo8(0)
+ 452 01da 90E0      		ldi r25,hi8(0)
+ 453               	.LVL28:
+ 454               	.L47:
+ 455               	.LM63:
+ 456               	/* #APP */
+ 457 01dc 7894      		sei
+ 458               		
+ 459               	/* #NOAPP */
+ 460               	/* epilogue: frame size=0 */
+ 461 01de DF91      		pop r29
+ 462 01e0 CF91      		pop r28
+ 463 01e2 0895      		ret
+ 464               	/* epilogue end (size=3) */
+ 465               	/* function schedul_removeTask size 53 (48) */
+ 466               	.LFE12:
+ 468               	.global	schedul_init
+ 470               	schedul_init:
+ 471               	.LFB6:
+ 472               	.LM64:
+ 473               	/* prologue: frame size=0 */
+ 474 01e4 0F93      		push r16
+ 475 01e6 1F93      		push r17
+ 476               	/* prologue end (size=2) */
+ 477               	.LBB2:
+ 478               	.LM65:
+ 479 01e8 1092 0000 		sts (PerTaskSpool+2)+1,__zero_reg__
+ 480 01ec 1092 0000 		sts PerTaskSpool+2,__zero_reg__
+ 481               	.LM66:
+ 482 01f0 1092 0000 		sts (PerTaskSpool)+1,__zero_reg__
+ 483 01f4 1092 0000 		sts PerTaskSpool,__zero_reg__
+ 484               	.LM67:
+ 485 01f8 80E0      		ldi r24,lo8(PerTaskSpool+7)
+ 486 01fa 90E0      		ldi r25,hi8(PerTaskSpool+7)
+ 487 01fc 9093 0000 		sts (PerTaskSpool+5)+1,r25
+ 488 0200 8093 0000 		sts PerTaskSpool+5,r24
+ 489               	.LM68:
+ 490 0204 1092 0000 		sts (PerTaskSpool+9)+1,__zero_reg__
+ 491 0208 1092 0000 		sts PerTaskSpool+9,__zero_reg__
+ 492               	.LM69:
+ 493 020c 1092 0000 		sts (PerTaskSpool+7)+1,__zero_reg__
+ 494 0210 1092 0000 		sts PerTaskSpool+7,__zero_reg__
+ 495               	.LM70:
+ 496 0214 0796      		adiw r24,7
+ 497 0216 9093 0000 		sts (PerTaskSpool+12)+1,r25
+ 498 021a 8093 0000 		sts PerTaskSpool+12,r24
+ 499               	.LM71:
+ 500 021e 1092 0000 		sts (PerTaskSpool+16)+1,__zero_reg__
+ 501 0222 1092 0000 		sts PerTaskSpool+16,__zero_reg__
+ 502               	.LM72:
+ 503 0226 1092 0000 		sts (PerTaskSpool+14)+1,__zero_reg__
+ 504 022a 1092 0000 		sts PerTaskSpool+14,__zero_reg__
+ 505               	.LM73:
+ 506 022e 0796      		adiw r24,7
+ 507 0230 9093 0000 		sts (PerTaskSpool+19)+1,r25
+ 508 0234 8093 0000 		sts PerTaskSpool+19,r24
+ 509               	.LM74:
+ 510 0238 1092 0000 		sts (PerTaskSpool+23)+1,__zero_reg__
+ 511 023c 1092 0000 		sts PerTaskSpool+23,__zero_reg__
+ 512               	.LM75:
+ 513 0240 1092 0000 		sts (PerTaskSpool+21)+1,__zero_reg__
+ 514 0244 1092 0000 		sts PerTaskSpool+21,__zero_reg__
+ 515               	.LM76:
+ 516 0248 0796      		adiw r24,7
+ 517 024a 9093 0000 		sts (PerTaskSpool+26)+1,r25
+ 518 024e 8093 0000 		sts PerTaskSpool+26,r24
+ 519               	.LM77:
+ 520 0252 1092 0000 		sts (PerTaskSpool+30)+1,__zero_reg__
+ 521 0256 1092 0000 		sts PerTaskSpool+30,__zero_reg__
+ 522               	.LM78:
+ 523 025a 1092 0000 		sts (PerTaskSpool+28)+1,__zero_reg__
+ 524 025e 1092 0000 		sts PerTaskSpool+28,__zero_reg__
+ 525               	.LM79:
+ 526 0262 0796      		adiw r24,7
+ 527 0264 9093 0000 		sts (PerTaskSpool+33)+1,r25
+ 528 0268 8093 0000 		sts PerTaskSpool+33,r24
+ 529               	.LM80:
+ 530 026c 1092 0000 		sts (PerTaskSpool+37)+1,__zero_reg__
+ 531 0270 1092 0000 		sts PerTaskSpool+37,__zero_reg__
+ 532               	.LM81:
+ 533 0274 1092 0000 		sts (PerTaskSpool+35)+1,__zero_reg__
+ 534 0278 1092 0000 		sts PerTaskSpool+35,__zero_reg__
+ 535               	.LM82:
+ 536 027c 0796      		adiw r24,7
+ 537 027e 9093 0000 		sts (PerTaskSpool+40)+1,r25
+ 538 0282 8093 0000 		sts PerTaskSpool+40,r24
+ 539               	.LM83:
+ 540 0286 1092 0000 		sts (PerTaskSpool+44)+1,__zero_reg__
+ 541 028a 1092 0000 		sts PerTaskSpool+44,__zero_reg__
+ 542               	.LM84:
+ 543 028e 1092 0000 		sts (PerTaskSpool+42)+1,__zero_reg__
+ 544 0292 1092 0000 		sts PerTaskSpool+42,__zero_reg__
+ 545               	.LM85:
+ 546 0296 0796      		adiw r24,7
+ 547 0298 9093 0000 		sts (PerTaskSpool+47)+1,r25
+ 548 029c 8093 0000 		sts PerTaskSpool+47,r24
+ 549               	.LM86:
+ 550 02a0 1092 0000 		sts (PerTaskSpool+51)+1,__zero_reg__
+ 551 02a4 1092 0000 		sts PerTaskSpool+51,__zero_reg__
+ 552               	.LM87:
+ 553 02a8 1092 0000 		sts (PerTaskSpool+49)+1,__zero_reg__
+ 554 02ac 1092 0000 		sts PerTaskSpool+49,__zero_reg__
+ 555               	.LM88:
+ 556 02b0 0796      		adiw r24,7
+ 557 02b2 9093 0000 		sts (PerTaskSpool+54)+1,r25
+ 558 02b6 8093 0000 		sts PerTaskSpool+54,r24
+ 559               	.LM89:
+ 560 02ba 1092 0000 		sts (PerTaskSpool+58)+1,__zero_reg__
+ 561 02be 1092 0000 		sts PerTaskSpool+58,__zero_reg__
+ 562               	.LM90:
+ 563 02c2 1092 0000 		sts (PerTaskSpool+56)+1,__zero_reg__
+ 564 02c6 1092 0000 		sts PerTaskSpool+56,__zero_reg__
+ 565               	.LM91:
+ 566 02ca 0796      		adiw r24,7
+ 567 02cc 9093 0000 		sts (PerTaskSpool+61)+1,r25
+ 568 02d0 8093 0000 		sts PerTaskSpool+61,r24
+ 569               	.LM92:
+ 570 02d4 1092 0000 		sts (PerTaskSpool+65)+1,__zero_reg__
+ 571 02d8 1092 0000 		sts PerTaskSpool+65,__zero_reg__
+ 572               	.LM93:
+ 573 02dc 1092 0000 		sts (PerTaskSpool+63)+1,__zero_reg__
+ 574 02e0 1092 0000 		sts PerTaskSpool+63,__zero_reg__
+ 575               	.LM94:
+ 576 02e4 20E0      		ldi r18,lo8(PerTaskSpool+70)
+ 577 02e6 30E0      		ldi r19,hi8(PerTaskSpool+70)
+ 578 02e8 3093 0000 		sts (PerTaskSpool+68)+1,r19
+ 579 02ec 2093 0000 		sts PerTaskSpool+68,r18
+ 580               	.LM95:
+ 581 02f0 1092 0000 		sts (PerTaskSpool+72)+1,__zero_reg__
+ 582 02f4 1092 0000 		sts PerTaskSpool+72,__zero_reg__
+ 583               	.LM96:
+ 584 02f8 1092 0000 		sts (PerTaskSpool+70)+1,__zero_reg__
+ 585 02fc 1092 0000 		sts PerTaskSpool+70,__zero_reg__
+ 586               	.LM97:
+ 587 0300 20E0      		ldi r18,lo8(PerTaskSpool+77)
+ 588 0302 30E0      		ldi r19,hi8(PerTaskSpool+77)
+ 589 0304 3093 0000 		sts (PerTaskSpool+75)+1,r19
+ 590 0308 2093 0000 		sts PerTaskSpool+75,r18
+ 591               	.LM98:
+ 592 030c 1092 0000 		sts (PerTaskSpool+79)+1,__zero_reg__
+ 593 0310 1092 0000 		sts PerTaskSpool+79,__zero_reg__
+ 594               	.LM99:
+ 595 0314 1092 0000 		sts (PerTaskSpool+77)+1,__zero_reg__
+ 596 0318 1092 0000 		sts PerTaskSpool+77,__zero_reg__
+ 597               	.LM100:
+ 598 031c 1092 0000 		sts (PerTaskSpool+82)+1,__zero_reg__
+ 599 0320 1092 0000 		sts PerTaskSpool+82,__zero_reg__
+ 600               	.LBE2:
+ 601               	.LBB3:
+ 602               	.LM101:
+ 603 0324 1092 0000 		sts (PerTaskQueue+2)+1,__zero_reg__
+ 604 0328 1092 0000 		sts PerTaskQueue+2,__zero_reg__
+ 605               	.LM102:
+ 606 032c 1092 0000 		sts (PerTaskQueue+4)+1,__zero_reg__
+ 607 0330 1092 0000 		sts PerTaskQueue+4,__zero_reg__
+ 608               	.LM103:
+ 609 0334 1092 0000 		sts (PerTaskQueue+6)+1,__zero_reg__
+ 610 0338 1092 0000 		sts PerTaskQueue+6,__zero_reg__
+ 611               	.LM104:
+ 612 033c 1092 0000 		sts (PerTaskQueue+8)+1,__zero_reg__
+ 613 0340 1092 0000 		sts PerTaskQueue+8,__zero_reg__
+ 614               	.LM105:
+ 615 0344 1092 0000 		sts (PerTaskQueue+10)+1,__zero_reg__
+ 616 0348 1092 0000 		sts PerTaskQueue+10,__zero_reg__
+ 617               	.LM106:
+ 618 034c 1092 0000 		sts (PerTaskQueue+12)+1,__zero_reg__
+ 619 0350 1092 0000 		sts PerTaskQueue+12,__zero_reg__
+ 620               	.LM107:
+ 621 0354 1092 0000 		sts (PerTaskQueue+14)+1,__zero_reg__
+ 622 0358 1092 0000 		sts PerTaskQueue+14,__zero_reg__
+ 623               	.LM108:
+ 624 035c 1092 0000 		sts (PerTaskQueue+16)+1,__zero_reg__
+ 625 0360 1092 0000 		sts PerTaskQueue+16,__zero_reg__
+ 626 0364 CF97      		sbiw r24,63
+ 627               	.LBE3:
+ 628               	.LM109:
+ 629 0366 9093 0000 		sts (PerTaskQueue)+1,r25
+ 630 036a 8093 0000 		sts PerTaskQueue,r24
+ 631               	.LM110:
+ 632 036e 00E0      		ldi r16,lo8(AperTaskQueue+5)
+ 633 0370 10E0      		ldi r17,hi8(AperTaskQueue+5)
+ 634 0372 4CE0      		ldi r20,lo8(12)
+ 635 0374 60E0      		ldi r22,lo8(ZigbeeEventList)
+ 636 0376 70E0      		ldi r23,hi8(ZigbeeEventList)
+ 637 0378 C801      		movw r24,r16
+ 638 037a 0E94 0000 		call queue_init
+ 639               	.LM111:
+ 640 037e 46E0      		ldi r20,lo8(6)
+ 641 0380 60E0      		ldi r22,lo8(AppMsgQueue)
+ 642 0382 70E0      		ldi r23,hi8(AppMsgQueue)
+ 643 0384 C801      		movw r24,r16
+ 644 0386 0F96      		adiw r24,15
+ 645 0388 0E94 0000 		call queue_init
+ 646               	/* epilogue: frame size=0 */
+ 647 038c 1F91      		pop r17
+ 648 038e 0F91      		pop r16
+ 649 0390 0895      		ret
+ 650               	/* epilogue end (size=3) */
+ 651               	/* function schedul_init size 215 (210) */
+ 652               	.LFE6:
+ 654               	.global	schedul_sendMsg
+ 656               	schedul_sendMsg:
+ 657               	.LFB4:
+ 658               	.LM112:
+ 659               	/* prologue: frame size=0 */
+ 660               	/* prologue end (size=0) */
+ 661               	.LVL29:
+ 662 0392 982F      		mov r25,r24
+ 663               	.LM113:
+ 664               	/* #APP */
+ 665 0394 F894      		cli
+ 666               		
+ 667               	.LVL30:
+ 668               	.LM114:
+ 669               	/* #NOAPP */
+ 670 0396 8450      		subi r24,lo8(-(-4))
+ 671 0398 8230      		cpi r24,lo8(2)
+ 672 039a 00F4      		brsh .L57
+ 673               	.LM115:
+ 674 039c 8FE0      		ldi r24,lo8(15)
+ 675 039e 989F      		mul r25,r24
+ 676 03a0 C001      		movw r24,r0
+ 677 03a2 1124      		clr r1
+ 678 03a4 8050      		subi r24,lo8(-(AperTaskQueue-55))
+ 679 03a6 9040      		sbci r25,hi8(-(AperTaskQueue-55))
+ 680 03a8 0E94 0000 		call queue_push
+ 681               	.LVL31:
+ 682               	.L57:
+ 683               	.LM116:
+ 684               	/* #APP */
+ 685 03ac 7894      		sei
+ 686               		
+ 687               	/* #NOAPP */
+ 688               	/* epilogue: frame size=0 */
+ 689 03ae 0895      		ret
+ 690               	/* epilogue end (size=1) */
+ 691               	/* function schedul_sendMsg size 21 (20) */
+ 692               	.LFE4:
+ 694               	.global	schedul_runAperTasks
+ 696               	schedul_runAperTasks:
+ 697               	.LFB3:
+ 698               	.LM117:
+ 699               	/* prologue: frame size=4 */
+ 700 03b0 0F93      		push r16
+ 701 03b2 1F93      		push r17
+ 702 03b4 CF93      		push r28
+ 703 03b6 DF93      		push r29
+ 704 03b8 CDB7      		in r28,__SP_L__
+ 705 03ba DEB7      		in r29,__SP_H__
+ 706 03bc 2497      		sbiw r28,4
+ 707 03be 0FB6      		in __tmp_reg__,__SREG__
+ 708 03c0 F894      		cli
+ 709 03c2 DEBF      		out __SP_H__,r29
+ 710 03c4 0FBE      		out __SREG__,__tmp_reg__
+ 711 03c6 CDBF      		out __SP_L__,r28
+ 712               	/* prologue end (size=12) */
+ 713 03c8 8091 0000 		lds r24,AperTaskQueue+14
+ 714 03cc 8E01      		movw r16,r28
+ 715 03ce 0F5F      		subi r16,lo8(-(1))
+ 716 03d0 1F4F      		sbci r17,hi8(-(1))
+ 717 03d2 00C0      		rjmp .L74
+ 718               	.L70:
+ 719               	.LM118:
+ 720 03d4 8091 0000 		lds r24,AperTaskQueue+29
+ 721 03d8 8823      		tst r24
+ 722 03da 01F0      		breq .L70
+ 723               	.LM119:
+ 724 03dc 85E0      		ldi r24,lo8(5)
+ 725 03de 8093 0000 		sts CurrAperTask,r24
+ 726               	.LM120:
+ 727               	/* #APP */
+ 728 03e2 F894      		cli
+ 729               		
+ 730               	.LM121:
+ 731               	/* #NOAPP */
+ 732 03e4 B801      		movw r22,r16
+ 733 03e6 80E0      		ldi r24,lo8(AperTaskQueue+20)
+ 734 03e8 90E0      		ldi r25,hi8(AperTaskQueue+20)
+ 735 03ea 0E94 0000 		call queue_pop
+ 736               	.LM122:
+ 737               	/* #APP */
+ 738 03ee 7894      		sei
+ 739               		
+ 740               	.LM123:
+ 741               	/* #NOAPP */
+ 742 03f0 E091 0000 		lds r30,AperTaskQueue+15
+ 743 03f4 F091 0000 		lds r31,(AperTaskQueue+15)+1
+ 744               	.L75:
+ 745 03f8 60E0      		ldi r22,lo8(0)
+ 746 03fa 70E0      		ldi r23,hi8(0)
+ 747 03fc 8E01      		movw r16,r28
+ 748 03fe 0F5F      		subi r16,lo8(-(1))
+ 749 0400 1F4F      		sbci r17,hi8(-(1))
+ 750 0402 C801      		movw r24,r16
+ 751 0404 0995      		icall
+ 752 0406 8091 0000 		lds r24,AperTaskQueue+14
+ 753               	.L74:
+ 754               	.LM124:
+ 755 040a 8823      		tst r24
+ 756 040c 01F0      		breq .L70
+ 757               	.LM125:
+ 758 040e 84E0      		ldi r24,lo8(4)
+ 759 0410 8093 0000 		sts CurrAperTask,r24
+ 760               	.LM126:
+ 761               	/* #APP */
+ 762 0414 F894      		cli
+ 763               		
+ 764               	.LM127:
+ 765               	/* #NOAPP */
+ 766 0416 B801      		movw r22,r16
+ 767 0418 80E0      		ldi r24,lo8(AperTaskQueue+5)
+ 768 041a 90E0      		ldi r25,hi8(AperTaskQueue+5)
+ 769 041c 0E94 0000 		call queue_pop
+ 770               	.LM128:
+ 771               	/* #APP */
+ 772 0420 7894      		sei
+ 773               		
+ 774               	.LM129:
+ 775               	/* #NOAPP */
+ 776 0422 E091 0000 		lds r30,AperTaskQueue
+ 777 0426 F091 0000 		lds r31,(AperTaskQueue)+1
+ 778 042a 00C0      		rjmp .L75
+ 779               	/* epilogue: frame size=4 */
+ 780               	/* epilogue: noreturn */
+ 781               	/* epilogue end (size=0) */
+ 782               	/* function schedul_runAperTasks size 74 (62) */
+ 783               	.LFE3:
+ 785               	.global	schedul_resetPerTask
+ 787               	schedul_resetPerTask:
+ 788               	.LFB7:
+ 789               	.LM130:
+ 790               	/* prologue: frame size=0 */
+ 791 042c CF93      		push r28
+ 792 042e DF93      		push r29
+ 793               	/* prologue end (size=2) */
+ 794               	.LM131:
+ 795               	/* #APP */
+ 796 0430 F894      		cli
+ 797               		
+ 798               	/* #NOAPP */
+ 799 0432 22E0      		ldi r18,lo8(2)
+ 800 0434 30E0      		ldi r19,hi8(2)
+ 801               	.LVL32:
+ 802               	.LVL33:
+ 803               	.L92:
+ 804               	.LBB7:
+ 805               	.LBB8:
+ 806               	.LBB9:
+ 807               	.LM132:
+ 808               	/* #APP */
+ 809 0436 F894      		cli
+ 810               		
+ 811               	.LM133:
+ 812               	/* #NOAPP */
+ 813 0438 E22F      		mov r30,r18
+ 814 043a FF27      		clr r31
+ 815 043c EE0F      		lsl r30
+ 816 043e FF1F      		rol r31
+ 817 0440 EE0F      		lsl r30
+ 818 0442 FF1F      		rol r31
+ 819 0444 E050      		subi r30,lo8(-(PerTaskQueue))
+ 820 0446 F040      		sbci r31,hi8(-(PerTaskQueue))
+ 821 0448 A281      		ldd r26,Z+2
+ 822 044a B381      		ldd r27,Z+3
+ 823               	.LM134:
+ 824 044c 1097      		sbiw r26,0
+ 825 044e 01F0      		breq .L93
+ 826               	.LM135:
+ 827 0450 ED01      		movw r28,r26
+ 828 0452 8D81      		ldd r24,Y+5
+ 829 0454 9E81      		ldd r25,Y+6
+ 830 0456 0097      		sbiw r24,0
+ 831 0458 01F0      		breq .L94
+ 832               	.LM136:
+ 833 045a 9383      		std Z+3,r25
+ 834 045c 8283      		std Z+2,r24
+ 835               	.L83:
+ 836               	.LM137:
+ 837 045e 8091 0000 		lds r24,PerTaskQueue
+ 838 0462 9091 0000 		lds r25,(PerTaskQueue)+1
+ 839 0466 FD01      		movw r30,r26
+ 840 0468 9683      		std Z+6,r25
+ 841 046a 8583      		std Z+5,r24
+ 842               	.LM138:
+ 843 046c B093 0000 		sts (PerTaskQueue)+1,r27
+ 844 0470 A093 0000 		sts PerTaskQueue,r26
+ 845 0474 81E0      		ldi r24,lo8(1)
+ 846               	.L80:
+ 847               	.LM139:
+ 848               	/* #APP */
+ 849 0476 7894      		sei
+ 850               		
+ 851               	/* #NOAPP */
+ 852               	.LBE9:
+ 853               	.LBE8:
+ 854               	.LM140:
+ 855 0478 8823      		tst r24
+ 856 047a 01F4      		brne .L92
+ 857               	.LM141:
+ 858 047c 2F5F      		subi r18,lo8(-(1))
+ 859 047e 3F4F      		sbci r19,hi8(-(1))
+ 860 0480 2430      		cpi r18,4
+ 861 0482 3105      		cpc r19,__zero_reg__
+ 862 0484 04F0      		brlt .L92
+ 863 0486 00C0      		rjmp .L96
+ 864               	.L93:
+ 865               	.LBB10:
+ 866               	.LBB11:
+ 867               	.LM142:
+ 868 0488 80E0      		ldi r24,lo8(0)
+ 869 048a 00C0      		rjmp .L80
+ 870               	.L94:
+ 871               	.LM143:
+ 872 048c 1582      		std Z+5,__zero_reg__
+ 873 048e 1482      		std Z+4,__zero_reg__
+ 874               	.LM144:
+ 875 0490 1382      		std Z+3,__zero_reg__
+ 876 0492 1282      		std Z+2,__zero_reg__
+ 877 0494 00C0      		rjmp .L83
+ 878               	.L96:
+ 879               	.LBE11:
+ 880               	.LBE10:
+ 881               	.LBE7:
+ 882               	.LM145:
+ 883               	/* #APP */
+ 884 0496 7894      		sei
+ 885               		
+ 886               	/* #NOAPP */
+ 887               	/* epilogue: frame size=0 */
+ 888 0498 DF91      		pop r29
+ 889 049a CF91      		pop r28
+ 890 049c 0895      		ret
+ 891               	/* epilogue end (size=3) */
+ 892               	/* function schedul_resetPerTask size 69 (64) */
+ 893               	.LFE7:
+ 895               	.global	AperTaskQueue
+ 896               		.data
+ 899               	AperTaskQueue:
+ 900 0000 0000      		.word	pm(zigbee_task)
+ 901 0002 0000      		.word	0
+ 902 0004 00        		.byte	0
+ 903 0005 0000      		.word	0
+ 904 0007 0000      		.word	0
+ 905 0009 0000      		.word	0
+ 906 000b 0000      		.word	0
+ 907 000d 00        		.byte	0
+ 908 000e 00        		.byte	0
+ 909 000f 0000      		.word	pm(app_task)
+ 910 0011 0000      		.word	0
+ 911 0013 00        		.byte	0
+ 912 0014 0000      		.word	0
+ 913 0016 0000      		.word	0
+ 914 0018 0000      		.word	0
+ 915 001a 0000      		.word	0
+ 916 001c 00        		.byte	0
+ 917 001d 00        		.byte	0
+ 918               		.comm OSIntNesting,1,1
+ 919               		.comm OSMemFreeList,2,1
+ 920               		.comm OSMemTbl,96,1
+ 921               		.comm OSTmrFree,2,1
+ 922               		.comm OSTmrUsed,2,1
+ 923               		.comm OSTmrTime,4,1
+ 924               		.comm OSTmrTbl,240,1
+ 925               		.comm OSTmrFreeList,2,1
+ 926               		.comm OSTmrWheelTbl,32,1
+ 927               		.comm PerTaskSpool,84,1
+ 928               		.comm PerTaskQueue,18,1
+ 929               		.comm ZigbeeEventList,48,1
+ 930               		.comm AppMsgQueue,24,1
+ 931               		.comm CurrAperTask,1,1
+ 1024               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 schedul.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:20     .text:00000000 schedul_runPerTasks
+                            *COM*:00000012 PerTaskQueue
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:170    .text:000000a4 schedul_getTask
+                            *COM*:00000001 CurrAperTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:186    .text:000000ac schedul_addTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:281    .text:00000122 schedul_suspend
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:316    .text:00000142 schedul_activate
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:348    .text:00000160 schedul_getParam
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:389    .text:00000186 schedul_removeTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:470    .text:000001e4 schedul_init
+                            *COM*:00000054 PerTaskSpool
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:899    .data:00000000 AperTaskQueue
+                            *COM*:00000030 ZigbeeEventList
+                            *COM*:00000018 AppMsgQueue
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:656    .text:00000392 schedul_sendMsg
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:696    .text:000003b0 schedul_runAperTasks
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cca4aaaa.s:787    .text:0000042c schedul_resetPerTask
+                            *COM*:00000001 OSIntNesting
+                            *COM*:00000002 OSMemFreeList
+                            *COM*:00000060 OSMemTbl
+                            *COM*:00000002 OSTmrFree
+                            *COM*:00000002 OSTmrUsed
+                            *COM*:00000004 OSTmrTime
+                            *COM*:000000f0 OSTmrTbl
+                            *COM*:00000002 OSTmrFreeList
+                            *COM*:00000020 OSTmrWheelTbl
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+queue_init
+queue_push
+queue_pop
+zigbee_task
+app_task

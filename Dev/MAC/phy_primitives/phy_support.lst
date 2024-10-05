@@ -1,0 +1,611 @@
+   1               		.file	"phy_support.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	phyrx_turnOnRx
+  20               	phyrx_turnOnRx:
+  21               	.LFB4:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26               	.LM2:
+  27               	/* #APP */
+  28 0000 F894      		cli
+  29               		
+  30               	.LM3:
+  31               	/* #NOAPP */
+  32 0002 C098      		cbi 56-0x20,0
+  33 0004 83E0      		ldi r24,lo8(3)
+  34               	.LVL1:
+  35 0006 8FB9      		out 47-0x20,r24
+  36 0008 C09A      		sbi 56-0x20,0
+  37               	.LM4:
+  38 000a 89B7      		in r24,89-0x20
+  39 000c 8160      		ori r24,lo8(1)
+  40 000e 89BF      		out 89-0x20,r24
+  41               	.LM5:
+  42 0010 86E0      		ldi r24,lo8(6)
+  43 0012 8093 0000 		sts PhyInfo+7,r24
+  44               	.LM6:
+  45 0016 1092 0000 		sts PhyInfo+19,__zero_reg__
+  46               	.LM7:
+  47               	/* #APP */
+  48 001a 7894      		sei
+  49               		
+  50               	/* #NOAPP */
+  51               	/* epilogue: frame size=0 */
+  52 001c 0895      		ret
+  53               	/* epilogue end (size=1) */
+  54               	/* function phyrx_turnOnRx size 21 (20) */
+  55               	.LFE4:
+  57               	.global	phyrx_initOnRx
+  59               	phyrx_initOnRx:
+  60               	.LFB5:
+  61               	.LM8:
+  62               	/* prologue: frame size=0 */
+  63               	/* prologue end (size=0) */
+  64               	.LM9:
+  65 001e 86E0      		ldi r24,lo8(6)
+  66 0020 8093 0000 		sts PhyInfo+7,r24
+  67               	.LM10:
+  68 0024 1092 0000 		sts PhyInfo+19,__zero_reg__
+  69               	.LM11:
+  70 0028 89B7      		in r24,89-0x20
+  71 002a 8160      		ori r24,lo8(1)
+  72 002c 89BF      		out 89-0x20,r24
+  73               	/* epilogue: frame size=0 */
+  74 002e 0895      		ret
+  75               	/* epilogue end (size=1) */
+  76               	/* function phyrx_initOnRx size 9 (8) */
+  77               	.LFE5:
+  79               	.global	phyrx_ResetRx
+  81               	phyrx_ResetRx:
+  82               	.LFB7:
+  83               	.LM12:
+  84               	/* prologue: frame size=0 */
+  85               	/* prologue end (size=0) */
+  86               	.LM13:
+  87               	/* #APP */
+  88 0030 F894      		cli
+  89               		
+  90               	.LM14:
+  91               	/* #NOAPP */
+  92 0032 C098      		cbi 56-0x20,0
+  93 0034 88E0      		ldi r24,lo8(8)
+  94 0036 8FB9      		out 47-0x20,r24
+  95 0038 C09A      		sbi 56-0x20,0
+  96               	.LM15:
+  97 003a C098      		cbi 56-0x20,0
+  98 003c 8FB9      		out 47-0x20,r24
+  99 003e C09A      		sbi 56-0x20,0
+ 100               	.LM16:
+ 101 0040 1092 0000 		sts PhyInfo+19,__zero_reg__
+ 102               	.LM17:
+ 103               	/* #APP */
+ 104 0044 F894      		cli
+ 105               		
+ 106               	/* #NOAPP */
+ 107               	/* epilogue: frame size=0 */
+ 108 0046 0895      		ret
+ 109               	/* epilogue end (size=1) */
+ 110               	/* function phyrx_ResetRx size 18 (17) */
+ 111               	.LFE7:
+ 113               	.global	phy_WriteRam
+ 115               	phy_WriteRam:
+ 116               	.LFB8:
+ 117               	.LM18:
+ 118               	/* prologue: frame size=0 */
+ 119               	/* prologue end (size=0) */
+ 120               	.LVL2:
+ 121 0048 FC01      		movw r30,r24
+ 122               	.LM19:
+ 123 004a 4423      		tst r20
+ 124 004c 01F0      		breq .L17
+ 125               	.LVL3:
+ 126               	.L20:
+ 127               	.LM20:
+ 128 004e 2223      		tst r18
+ 129 0050 01F0      		breq .L10
+ 130               	/* #APP */
+ 131 0052 F894      		cli
+ 132               		
+ 133               	/* #NOAPP */
+ 134               	.L10:
+ 135               	.LM21:
+ 136 0054 C098      		cbi 56-0x20,0
+ 137               	.LVL4:
+ 138               	.LM22:
+ 139 0056 862F      		mov r24,r22
+ 140 0058 8F77      		andi r24,lo8(127)
+ 141 005a 8068      		ori r24,lo8(-128)
+ 142 005c 8FB9      		out 47-0x20,r24
+ 143               	.LVL5:
+ 144 005e CB01      		movw r24,r22
+ 145 0060 9695      		lsr r25
+ 146 0062 8795      		ror r24
+ 147 0064 807C      		andi r24,lo8(-64)
+ 148 0066 8FB9      		out 47-0x20,r24
+ 149               	.L12:
+ 150               	.LM23:
+ 151 0068 8191      		ld r24,Z+
+ 152 006a 8FB9      		out 47-0x20,r24
+ 153               	.LM24:
+ 154 006c 4150      		subi r20,lo8(-(-1))
+ 155 006e 842F      		mov r24,r20
+ 156 0070 9927      		clr r25
+ 157 0072 8770      		andi r24,lo8(7)
+ 158 0074 9070      		andi r25,hi8(7)
+ 159 0076 892B      		or r24,r25
+ 160 0078 01F4      		brne .L12
+ 161               	.LVL6:
+ 162               	.LM25:
+ 163 007a C09A      		sbi 56-0x20,0
+ 164               	.LM26:
+ 165 007c 2223      		tst r18
+ 166 007e 01F0      		breq .L14
+ 167               	/* #APP */
+ 168 0080 7894      		sei
+ 169               		
+ 170               	/* #NOAPP */
+ 171               	.L14:
+ 172               	.LM27:
+ 173 0082 4423      		tst r20
+ 174 0084 01F0      		breq .L17
+ 175               	.LVL7:
+ 176               	.LM28:
+ 177 0086 685F      		subi r22,lo8(-(8))
+ 178 0088 7F4F      		sbci r23,hi8(-(8))
+ 179 008a 00C0      		rjmp .L20
+ 180               	.LVL8:
+ 181               	.L17:
+ 182 008c 0895      		ret
+ 183               	/* epilogue: frame size=0 */
+ 184               	/* epilogue: noreturn */
+ 185               	/* epilogue end (size=0) */
+ 186               	/* function phy_WriteRam size 41 (41) */
+ 187               	.LFE8:
+ 189               	.global	phy_ReadFifo
+ 191               	phy_ReadFifo:
+ 192               	.LFB9:
+ 193               	.LM29:
+ 194               	/* prologue: frame size=0 */
+ 195               	/* prologue end (size=0) */
+ 196               	.LVL9:
+ 197 008e FC01      		movw r30,r24
+ 198 0090 DA01      		movw r26,r20
+ 199               	.LM30:
+ 200               	/* #APP */
+ 201 0092 F894      		cli
+ 202               		
+ 203               	.LM31:
+ 204               	/* #NOAPP */
+ 205 0094 C098      		cbi 56-0x20,0
+ 206               	.LM32:
+ 207 0096 8FE7      		ldi r24,lo8(127)
+ 208               	.LVL10:
+ 209 0098 8FB9      		out 47-0x20,r24
+ 210               	.LM33:
+ 211 009a 6C93      		st X,r22
+ 212               	.LM34:
+ 213 009c 6623      		tst r22
+ 214 009e 01F0      		breq .L23
+ 215               	.LVL11:
+ 216               	.L26:
+ 217               	.LM35:
+ 218 00a0 1FB8      		out 47-0x20,__zero_reg__
+ 219 00a2 8FB1      		in r24,47-0x20
+ 220 00a4 8193      		st Z+,r24
+ 221               	.LM36:
+ 222 00a6 6150      		subi r22,lo8(-(-1))
+ 223 00a8 01F4      		brne .L26
+ 224               	.L23:
+ 225               	.LM37:
+ 226 00aa 8C91      		ld r24,X
+ 227 00ac 861B      		sub r24,r22
+ 228 00ae 8C93      		st X,r24
+ 229               	.LM38:
+ 230 00b0 C09A      		sbi 56-0x20,0
+ 231               	.LM39:
+ 232               	/* #APP */
+ 233 00b2 7894      		sei
+ 234               		
+ 235               	.LM40:
+ 236               	/* #NOAPP */
+ 237 00b4 83E0      		ldi r24,lo8(3)
+ 238 00b6 90E0      		ldi r25,hi8(3)
+ 239               	/* epilogue: frame size=0 */
+ 240 00b8 0895      		ret
+ 241               	/* epilogue end (size=1) */
+ 242               	/* function phy_ReadFifo size 29 (28) */
+ 243               	.LFE9:
+ 245               	.global	phy_WriteFifo
+ 247               	phy_WriteFifo:
+ 248               	.LFB10:
+ 249               	.LM41:
+ 250               	/* prologue: frame size=0 */
+ 251               	/* prologue end (size=0) */
+ 252               	.LVL12:
+ 253 00ba FC01      		movw r30,r24
+ 254               	.LM42:
+ 255 00bc 6623      		tst r22
+ 256 00be 01F0      		breq .L33
+ 257               	.LVL13:
+ 258 00c0 2EE3      		ldi r18,lo8(62)
+ 259               	.LVL14:
+ 260               	.L30:
+ 261               	.LM43:
+ 262               	/* #APP */
+ 263 00c2 F894      		cli
+ 264               		
+ 265               	.LM44:
+ 266               	/* #NOAPP */
+ 267 00c4 C098      		cbi 56-0x20,0
+ 268               	.LM45:
+ 269 00c6 2FB9      		out 47-0x20,r18
+ 270               	.L31:
+ 271               	.LM46:
+ 272 00c8 8191      		ld r24,Z+
+ 273 00ca 8FB9      		out 47-0x20,r24
+ 274               	.LVL15:
+ 275               	.LM47:
+ 276 00cc 6150      		subi r22,lo8(-(-1))
+ 277 00ce 862F      		mov r24,r22
+ 278 00d0 9927      		clr r25
+ 279 00d2 8770      		andi r24,lo8(7)
+ 280 00d4 9070      		andi r25,hi8(7)
+ 281 00d6 892B      		or r24,r25
+ 282 00d8 01F4      		brne .L31
+ 283               	.LVL16:
+ 284               	.LM48:
+ 285 00da C09A      		sbi 56-0x20,0
+ 286               	.LM49:
+ 287               	/* #APP */
+ 288 00dc 7894      		sei
+ 289               		
+ 290               	.LVL17:
+ 291               	.LM50:
+ 292               	/* #NOAPP */
+ 293 00de 6623      		tst r22
+ 294 00e0 01F4      		brne .L30
+ 295               	.LVL18:
+ 296               	.L33:
+ 297 00e2 0895      		ret
+ 298               	/* epilogue: frame size=0 */
+ 299               	/* epilogue: noreturn */
+ 300               	/* epilogue end (size=0) */
+ 301               	/* function phy_WriteFifo size 27 (27) */
+ 302               	.LFE10:
+ 304               	.global	phyrx_checkAck
+ 306               	phyrx_checkAck:
+ 307               	.LFB11:
+ 308               	.LM51:
+ 309               	/* prologue: frame size=0 */
+ 310               	/* prologue end (size=0) */
+ 311               	.LVL19:
+ 312 00e4 FC01      		movw r30,r24
+ 313               	.LM52:
+ 314 00e6 8081      		ld r24,Z
+ 315               	.LVL20:
+ 316 00e8 85FF      		sbrs r24,5
+ 317 00ea 00C0      		rjmp .L44
+ 318               	.LM53:
+ 319               	/* #APP */
+ 320 00ec F894      		cli
+ 321               		
+ 322               	.LM54:
+ 323               	/* #NOAPP */
+ 324 00ee 849B      		sbis 48-0x20,4
+ 325 00f0 00C0      		rjmp .L40
+ 326               	.LM55:
+ 327 00f2 8091 0000 		lds r24,FirstPkt
+ 328 00f6 8430      		cpi r24,lo8(4)
+ 329 00f8 01F0      		breq .L42
+ 330               	.LM56:
+ 331 00fa C098      		cbi 56-0x20,0
+ 332 00fc 8BE0      		ldi r24,lo8(11)
+ 333 00fe 8FB9      		out 47-0x20,r24
+ 334 0100 C09A      		sbi 56-0x20,0
+ 335               	.L40:
+ 336               	.LM57:
+ 337               	/* #APP */
+ 338 0102 7894      		sei
+ 339               		
+ 340               	/* #NOAPP */
+ 341               	.L44:
+ 342 0104 0895      		ret
+ 343               	.L42:
+ 344               	.LM58:
+ 345 0106 C098      		cbi 56-0x20,0
+ 346 0108 8AE0      		ldi r24,lo8(10)
+ 347 010a 8FB9      		out 47-0x20,r24
+ 348 010c C09A      		sbi 56-0x20,0
+ 349 010e 00C0      		rjmp .L40
+ 350               	/* epilogue: frame size=0 */
+ 351               	/* epilogue: noreturn */
+ 352               	/* epilogue end (size=0) */
+ 353               	/* function phyrx_checkAck size 28 (28) */
+ 354               	.LFE11:
+ 356               	.global	phy_disableFIFOInt
+ 358               	phy_disableFIFOInt:
+ 359               	.LFB12:
+ 360               	.LM59:
+ 361               	/* prologue: frame size=0 */
+ 362               	/* prologue end (size=0) */
+ 363               	.LVL21:
+ 364               	.LM60:
+ 365               	/* #APP */
+ 366 0110 F894      		cli
+ 367               		
+ 368               	.LM61:
+ 369               	/* #NOAPP */
+ 370 0112 8823      		tst r24
+ 371 0114 01F0      		breq .L46
+ 372               	.LM62:
+ 373 0116 8093 0000 		sts PhyInfo+9,r24
+ 374               	.LM63:
+ 375 011a 89B7      		in r24,89-0x20
+ 376               	.LVL22:
+ 377 011c 8E7F      		andi r24,lo8(-2)
+ 378 011e 89BF      		out 89-0x20,r24
+ 379 0120 00C0      		rjmp .L48
+ 380               	.LVL23:
+ 381               	.L46:
+ 382               	.LM64:
+ 383 0122 C098      		cbi 56-0x20,0
+ 384 0124 88E0      		ldi r24,lo8(8)
+ 385               	.LVL24:
+ 386 0126 8FB9      		out 47-0x20,r24
+ 387 0128 C09A      		sbi 56-0x20,0
+ 388               	.LM65:
+ 389 012a C098      		cbi 56-0x20,0
+ 390 012c 8FB9      		out 47-0x20,r24
+ 391 012e C09A      		sbi 56-0x20,0
+ 392               	.LM66:
+ 393 0130 89B7      		in r24,89-0x20
+ 394 0132 8160      		ori r24,lo8(1)
+ 395 0134 89BF      		out 89-0x20,r24
+ 396               	.L48:
+ 397               	.LM67:
+ 398               	/* #APP */
+ 399 0136 7894      		sei
+ 400               		
+ 401               	/* #NOAPP */
+ 402               	/* epilogue: frame size=0 */
+ 403 0138 0895      		ret
+ 404               	/* epilogue end (size=1) */
+ 405               	/* function phy_disableFIFOInt size 27 (26) */
+ 406               	.LFE12:
+ 408               	.global	phytrx_setPwrMode
+ 410               	phytrx_setPwrMode:
+ 411               	.LFB2:
+ 412               	.LM68:
+ 413               	/* prologue: frame size=0 */
+ 414 013a 1F93      		push r17
+ 415               	/* prologue end (size=1) */
+ 416               	.LVL25:
+ 417               	.LM69:
+ 418 013c 8823      		tst r24
+ 419 013e 01F4      		brne .L53
+ 420               	.LM70:
+ 421 0140 80B5      		in r24,64-0x20
+ 422               	.LVL26:
+ 423 0142 8460      		ori r24,lo8(4)
+ 424 0144 80BD      		out 64-0x20,r24
+ 425 0146 87B3      		in r24,55-0x20
+ 426 0148 8766      		ori r24,lo8(103)
+ 427 014a 87BB      		out 55-0x20,r24
+ 428 014c C09A      		sbi 56-0x20,0
+ 429               	.LM71:
+ 430 014e 80E5      		ldi r24,lo8(80)
+ 431 0150 8DB9      		out 45-0x20,r24
+ 432 0152 11E0      		ldi r17,lo8(1)
+ 433 0154 1EB9      		out 46-0x20,r17
+ 434               	.LM72:
+ 435 0156 8091 6A00 		lds r24,106
+ 436 015a 8360      		ori r24,lo8(3)
+ 437 015c 8093 6A00 		sts 106,r24
+ 438 0160 18BF      		out 88-0x20,r17
+ 439               	.LM73:
+ 440 0162 87B3      		in r24,55-0x20
+ 441 0164 8069      		ori r24,lo8(-112)
+ 442 0166 87BB      		out 55-0x20,r24
+ 443 0168 8F9A      		sbi 49-0x20,7
+ 444 016a 82B3      		in r24,50-0x20
+ 445 016c 806A      		ori r24,lo8(-96)
+ 446 016e 82BB      		out 50-0x20,r24
+ 447 0170 82B1      		in r24,34-0x20
+ 448 0172 8861      		ori r24,lo8(24)
+ 449 0174 82B9      		out 34-0x20,r24
+ 450 0176 83B1      		in r24,35-0x20
+ 451 0178 877E      		andi r24,lo8(-25)
+ 452 017a 83B9      		out 35-0x20,r24
+ 453               	.LM74:
+ 454 017c C698      		cbi 56-0x20,6
+ 455               	.LM75:
+ 456 017e C59A      		sbi 56-0x20,5
+ 457               	.LM76:
+ 458 0180 88E5      		ldi r24,lo8(600)
+ 459 0182 92E0      		ldi r25,hi8(600)
+ 460 0184 0E94 0000 		call wait
+ 461               	.LM77:
+ 462 0188 C69A      		sbi 56-0x20,6
+ 463               	.LM78:
+ 464 018a C098      		cbi 56-0x20,0
+ 465 018c 1FB9      		out 47-0x20,r17
+ 466 018e C09A      		sbi 56-0x20,0
+ 467               	.LM79:
+ 468 0190 1092 0000 		sts PhyInfo+9,__zero_reg__
+ 469               	.LM80:
+ 470 0194 1092 0000 		sts PhyInfo+19,__zero_reg__
+ 471               	.LM81:
+ 472 0198 88E0      		ldi r24,lo8(8)
+ 473 019a 8093 0000 		sts PhyInfo+7,r24
+ 474               	.LVL27:
+ 475               	.L53:
+ 476               	/* epilogue: frame size=0 */
+ 477 019e 1F91      		pop r17
+ 478 01a0 0895      		ret
+ 479               	/* epilogue end (size=2) */
+ 480               	/* function phytrx_setPwrMode size 52 (49) */
+ 481               	.LFE2:
+ 483               	.global	phyrx_turnOffTrx
+ 485               	phyrx_turnOffTrx:
+ 486               	.LFB3:
+ 487               	.LM82:
+ 488               	/* prologue: frame size=0 */
+ 489               	/* prologue end (size=0) */
+ 490               	.LVL28:
+ 491               	.LM83:
+ 492               	/* #APP */
+ 493 01a2 F894      		cli
+ 494               		
+ 495               	/* #NOAPP */
+ 496               	.LBB4:
+ 497               	.LBB5:
+ 498               	.LM84:
+ 499               	/* #APP */
+ 500 01a4 F894      		cli
+ 501               		
+ 502               	.LM85:
+ 503               	/* #NOAPP */
+ 504 01a6 C098      		cbi 56-0x20,0
+ 505 01a8 88E0      		ldi r24,lo8(8)
+ 506               	.LVL29:
+ 507 01aa 8FB9      		out 47-0x20,r24
+ 508 01ac C09A      		sbi 56-0x20,0
+ 509               	.LM86:
+ 510 01ae C098      		cbi 56-0x20,0
+ 511 01b0 8FB9      		out 47-0x20,r24
+ 512 01b2 C09A      		sbi 56-0x20,0
+ 513               	.LM87:
+ 514               	/* #APP */
+ 515 01b4 F894      		cli
+ 516               		
+ 517               	/* #NOAPP */
+ 518               	.LBE5:
+ 519               	.LBE4:
+ 520               	.LM88:
+ 521 01b6 C098      		cbi 56-0x20,0
+ 522 01b8 86E0      		ldi r24,lo8(6)
+ 523 01ba 8FB9      		out 47-0x20,r24
+ 524 01bc C09A      		sbi 56-0x20,0
+ 525               	.LM89:
+ 526 01be 89B7      		in r24,89-0x20
+ 527 01c0 8E7F      		andi r24,lo8(-2)
+ 528 01c2 89BF      		out 89-0x20,r24
+ 529               	.LM90:
+ 530 01c4 88E0      		ldi r24,lo8(8)
+ 531 01c6 8093 0000 		sts PhyInfo+7,r24
+ 532               	.LM91:
+ 533 01ca 1092 0000 		sts PhyInfo+19,__zero_reg__
+ 534               	.LM92:
+ 535               	/* #APP */
+ 536 01ce 7894      		sei
+ 537               		
+ 538               	/* #NOAPP */
+ 539               	/* epilogue: frame size=0 */
+ 540 01d0 0895      		ret
+ 541               	/* epilogue end (size=1) */
+ 542               	/* function phyrx_turnOffTrx size 36 (35) */
+ 543               	.LFE3:
+ 545               	.global	phytx_turnOnTx
+ 547               	phytx_turnOnTx:
+ 548               	.LFB6:
+ 549               	.LM93:
+ 550               	/* prologue: frame size=0 */
+ 551               	/* prologue end (size=0) */
+ 552               	.LM94:
+ 553               	/* #APP */
+ 554 01d2 F894      		cli
+ 555               		
+ 556               	/* #NOAPP */
+ 557               	.LBB8:
+ 558               	.LBB9:
+ 559               	.LM95:
+ 560               	/* #APP */
+ 561 01d4 F894      		cli
+ 562               		
+ 563               	.LM96:
+ 564               	/* #NOAPP */
+ 565 01d6 C098      		cbi 56-0x20,0
+ 566 01d8 88E0      		ldi r24,lo8(8)
+ 567 01da 8FB9      		out 47-0x20,r24
+ 568 01dc C09A      		sbi 56-0x20,0
+ 569               	.LM97:
+ 570 01de C098      		cbi 56-0x20,0
+ 571 01e0 8FB9      		out 47-0x20,r24
+ 572 01e2 C09A      		sbi 56-0x20,0
+ 573               	.LM98:
+ 574               	/* #APP */
+ 575 01e4 F894      		cli
+ 576               		
+ 577               	/* #NOAPP */
+ 578               	.LBE9:
+ 579               	.LBE8:
+ 580               	.LM99:
+ 581 01e6 C098      		cbi 56-0x20,0
+ 582 01e8 99E0      		ldi r25,lo8(9)
+ 583 01ea 9FB9      		out 47-0x20,r25
+ 584 01ec C09A      		sbi 56-0x20,0
+ 585               	.LM100:
+ 586 01ee C098      		cbi 56-0x20,0
+ 587 01f0 84E0      		ldi r24,lo8(4)
+ 588 01f2 8FB9      		out 47-0x20,r24
+ 589 01f4 C09A      		sbi 56-0x20,0
+ 590               	.LM101:
+ 591 01f6 C098      		cbi 56-0x20,0
+ 592 01f8 1FB8      		out 47-0x20,__zero_reg__
+ 593 01fa 8FB1      		in r24,47-0x20
+ 594               	.LVL30:
+ 595 01fc C09A      		sbi 56-0x20,0
+ 596               	.LM102:
+ 597 01fe 9093 0000 		sts PhyInfo+7,r25
+ 598               	.LM103:
+ 599 0202 1092 0000 		sts PhyInfo+19,__zero_reg__
+ 600               	.LM104:
+ 601               	/* #APP */
+ 602 0206 7894      		sei
+ 603               		
+ 604               	.LM105:
+ 605               	/* #NOAPP */
+ 606 0208 81E0      		ldi r24,lo8(1)
+ 607 020a 90E0      		ldi r25,hi8(1)
+ 608               	.LVL31:
+ 609               	/* epilogue: frame size=0 */
+ 610 020c 0895      		ret
+ 611               	/* epilogue end (size=1) */
+ 612               	/* function phytx_turnOnTx size 42 (41) */
+ 613               	.LFE6:
+ 707               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 phy_support.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:20     .text:00000000 phyrx_turnOnRx
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:59     .text:0000001e phyrx_initOnRx
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:81     .text:00000030 phyrx_ResetRx
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:115    .text:00000048 phy_WriteRam
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:191    .text:0000008e phy_ReadFifo
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:247    .text:000000ba phy_WriteFifo
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:306    .text:000000e4 phyrx_checkAck
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:358    .text:00000110 phy_disableFIFOInt
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:410    .text:0000013a phytrx_setPwrMode
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:485    .text:000001a2 phyrx_turnOffTrx
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccOcbaaa.s:547    .text:000001d2 phytx_turnOnTx
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+PhyInfo
+FirstPkt
+wait

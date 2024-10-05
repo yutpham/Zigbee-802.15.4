@@ -1,0 +1,258 @@
+   1               		.file	"mac_mcps.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	mcpsPurgeRequest
+  20               	mcpsPurgeRequest:
+  21               	.LFB3:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26               	/* epilogue: frame size=0 */
+  27 0000 0895      		ret
+  28               	/* epilogue end (size=1) */
+  29               	/* function mcpsPurgeRequest size 1 (0) */
+  30               	.LFE3:
+  32               	.global	mcpsDataRequest
+  34               	mcpsDataRequest:
+  35               	.LFB2:
+  36               	.LM2:
+  37               	/* prologue: frame size=4 */
+  38 0002 2F92      		push r2
+  39 0004 3F92      		push r3
+  40 0006 4F92      		push r4
+  41 0008 5F92      		push r5
+  42 000a 6F92      		push r6
+  43 000c 7F92      		push r7
+  44 000e 8F92      		push r8
+  45 0010 9F92      		push r9
+  46 0012 AF92      		push r10
+  47 0014 BF92      		push r11
+  48 0016 CF92      		push r12
+  49 0018 DF92      		push r13
+  50 001a EF92      		push r14
+  51 001c FF92      		push r15
+  52 001e 0F93      		push r16
+  53 0020 1F93      		push r17
+  54 0022 CF93      		push r28
+  55 0024 DF93      		push r29
+  56 0026 CDB7      		in r28,__SP_L__
+  57 0028 DEB7      		in r29,__SP_H__
+  58 002a 2497      		sbiw r28,4
+  59 002c 0FB6      		in __tmp_reg__,__SREG__
+  60 002e F894      		cli
+  61 0030 DEBF      		out __SP_H__,r29
+  62 0032 0FBE      		out __SREG__,__tmp_reg__
+  63 0034 CDBF      		out __SP_L__,r28
+  64               	/* prologue end (size=26) */
+  65               	.LVL1:
+  66 0036 8983      		std Y+1,r24
+  67 0038 7B83      		std Y+3,r23
+  68 003a 6A83      		std Y+2,r22
+  69 003c 1A01      		movw r2,r20
+  70 003e 922E      		mov r9,r18
+  71 0040 8C82      		std Y+4,r8
+  72 0042 898C      		ldd r8,Y+25
+  73               	.LVL2:
+  74               	.LM3:
+  75 0044 482C      		mov r4,r8
+  76 0046 5524      		clr r5
+  77 0048 43FC      		sbrc r4,3
+  78 004a 00C0      		rjmp .L4
+  79               	.LVL3:
+  80               	.LM4:
+  81 004c 41FC      		sbrc r4,1
+  82 004e 00C0      		rjmp .L4
+  83               	.LM5:
+  84 0050 0E94 0000 		call mem_getFreeTxPkt
+  85 0054 3C01      		movw r6,r24
+  86               	.LVL4:
+  87               	.LM6:
+  88 0056 0097      		sbiw r24,0
+  89 0058 01F4      		brne .+2
+  90 005a 00C0      		rjmp .L7
+  91               	.LVL5:
+  92               	.LM7:
+  93 005c 62E0      		ldi r22,lo8(2)
+  94 005e 70E0      		ldi r23,hi8(2)
+  95 0060 0E94 0000 		call mem_set
+  96               	.LVL6:
+  97               	.LM8:
+  98 0064 CF92      		push r12
+  99 0066 BF92      		push r11
+ 100 0068 AF92      		push r10
+ 101 006a 5701      		movw r10,r14
+ 102               	.LVL7:
+ 103 006c 6801      		movw r12,r16
+ 104               	.LVL8:
+ 105 006e E92C      		mov r14,r9
+ 106               	.LVL9:
+ 107 0070 8101      		movw r16,r2
+ 108               	.LVL10:
+ 109 0072 2A81      		ldd r18,Y+2
+ 110 0074 3B81      		ldd r19,Y+3
+ 111 0076 4981      		ldd r20,Y+1
+ 112 0078 61E0      		ldi r22,lo8(1)
+ 113 007a C301      		movw r24,r6
+ 114 007c 0E94 0000 		call mac_formatMpdu
+ 115               	.LM9:
+ 116 0080 0F90      		pop __tmp_reg__
+ 117 0082 0F90      		pop __tmp_reg__
+ 118 0084 0F90      	 	pop __tmp_reg__
+ 119 0086 8823      		tst r24
+ 120 0088 01F0      		breq .+2
+ 121 008a 00C0      		rjmp .L20
+ 122               	.LVL11:
+ 123               	.LM10:
+ 124 008c 86E8      		ldi r24,lo8(134)
+ 125 008e 90E0      		ldi r25,hi8(134)
+ 126 0090 680E      		add r6,r24
+ 127 0092 791E      		adc r7,r25
+ 128 0094 83E0      		ldi r24,lo8(3)
+ 129 0096 F301      		movw r30,r6
+ 130 0098 8083      		st Z,r24
+ 131               	.LM11:
+ 132 009a 8CEF      		ldi r24,lo8(-4)
+ 133 009c 9FEF      		ldi r25,hi8(-4)
+ 134 009e 680E      		add r6,r24
+ 135 00a0 791E      		adc r7,r25
+ 136 00a2 F301      		movw r30,r6
+ 137 00a4 8C81      		ldd r24,Y+4
+ 138 00a6 8193      		st Z+,r24
+ 139 00a8 3F01      		movw r6,r30
+ 140               	.LM12:
+ 141 00aa 81E0      		ldi r24,lo8(1)
+ 142 00ac 8083      		st Z,r24
+ 143 00ae EDE7      		ldi r30,lo8(-131)
+ 144 00b0 FFEF      		ldi r31,hi8(-131)
+ 145 00b2 6E0E      		add r6,r30
+ 146 00b4 7F1E      		adc r7,r31
+ 147               	.LM13:
+ 148 00b6 42FE      		sbrs r4,2
+ 149 00b8 00C0      		rjmp .L12
+ 150               	.LM14:
+ 151 00ba C301      		movw r24,r6
+ 152 00bc 0E94 0000 		call indirectTx_addPkt
+ 153 00c0 182F      		mov r17,r24
+ 154               	.LVL12:
+ 155               	.LM15:
+ 156 00c2 1123      		tst r17
+ 157 00c4 01F4      		brne .L15
+ 158               	.L21:
+ 159               	.LM16:
+ 160 00c6 C301      		movw r24,r6
+ 161 00c8 0E94 0000 		call mem_releaseTxPkt
+ 162               	.LM17:
+ 163 00cc 7092 0000 		sts (MacTx+13)+1,r7
+ 164 00d0 6092 0000 		sts MacTx+13,r6
+ 165               	.LM18:
+ 166 00d4 60E0      		ldi r22,lo8(0)
+ 167 00d6 70E0      		ldi r23,hi8(0)
+ 168 00d8 C301      		movw r24,r6
+ 169 00da 0E94 0000 		call tx_endTrans
+ 170 00de 81EF      		ldi r24,lo8(241)
+ 171 00e0 90E0      		ldi r25,hi8(241)
+ 172 00e2 00C0      		rjmp .L11
+ 173               	.LVL13:
+ 174               	.L12:
+ 175               	.LM19:
+ 176 00e4 C301      		movw r24,r6
+ 177 00e6 0E94 0000 		call tx_trans
+ 178 00ea 182F      		mov r17,r24
+ 179               	.LVL14:
+ 180               	.LM20:
+ 181 00ec 1123      		tst r17
+ 182 00ee 01F0      		breq .L21
+ 183               	.L15:
+ 184               	.LM21:
+ 185 00f0 7092 0000 		sts (MacTx+13)+1,r7
+ 186 00f4 6092 0000 		sts MacTx+13,r6
+ 187               	.LM22:
+ 188 00f8 60E0      		ldi r22,lo8(0)
+ 189 00fa 70E0      		ldi r23,hi8(0)
+ 190 00fc C301      		movw r24,r6
+ 191 00fe 0E94 0000 		call tx_endTrans
+ 192               	.LM23:
+ 193 0102 1130      		cpi r17,lo8(1)
+ 194 0104 01F0      		breq .L22
+ 195               	.LVL15:
+ 196               	.L7:
+ 197 0106 81EF      		ldi r24,lo8(241)
+ 198 0108 90E0      		ldi r25,hi8(241)
+ 199 010a 00C0      		rjmp .L11
+ 200               	.LVL16:
+ 201               	.L20:
+ 202               	.LM24:
+ 203 010c 85EE      		ldi r24,lo8(229)
+ 204 010e 90E0      		ldi r25,hi8(229)
+ 205 0110 00C0      		rjmp .L11
+ 206               	.LVL17:
+ 207               	.L22:
+ 208               	.LM25:
+ 209 0112 80E0      		ldi r24,lo8(0)
+ 210 0114 90E0      		ldi r25,hi8(0)
+ 211 0116 00C0      		rjmp .L11
+ 212               	.LVL18:
+ 213               	.L4:
+ 214 0118 84EF      		ldi r24,lo8(244)
+ 215 011a 90E0      		ldi r25,hi8(244)
+ 216               	.LVL19:
+ 217               	.L11:
+ 218               	/* epilogue: frame size=4 */
+ 219 011c 2496      		adiw r28,4
+ 220 011e 0FB6      		in __tmp_reg__,__SREG__
+ 221 0120 F894      		cli
+ 222 0122 DEBF      		out __SP_H__,r29
+ 223 0124 0FBE      		out __SREG__,__tmp_reg__
+ 224 0126 CDBF      		out __SP_L__,r28
+ 225 0128 DF91      		pop r29
+ 226 012a CF91      		pop r28
+ 227 012c 1F91      		pop r17
+ 228 012e 0F91      		pop r16
+ 229 0130 FF90      		pop r15
+ 230 0132 EF90      		pop r14
+ 231 0134 DF90      		pop r13
+ 232 0136 CF90      		pop r12
+ 233 0138 BF90      		pop r11
+ 234 013a AF90      		pop r10
+ 235 013c 9F90      		pop r9
+ 236 013e 8F90      		pop r8
+ 237 0140 7F90      		pop r7
+ 238 0142 6F90      		pop r6
+ 239 0144 5F90      		pop r5
+ 240 0146 4F90      		pop r4
+ 241 0148 3F90      		pop r3
+ 242 014a 2F90      		pop r2
+ 243 014c 0895      		ret
+ 244               	/* epilogue end (size=25) */
+ 245               	/* function mcpsDataRequest size 166 (115) */
+ 246               	.LFE2:
+ 277               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 mac_mcps.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccWYaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccWYaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccWYaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccWYaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccWYaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccWYaaaa.s:20     .text:00000000 mcpsPurgeRequest
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccWYaaaa.s:34     .text:00000002 mcpsDataRequest
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+mem_getFreeTxPkt
+mem_set
+mac_formatMpdu
+indirectTx_addPkt
+mem_releaseTxPkt
+MacTx
+tx_endTrans
+tx_trans

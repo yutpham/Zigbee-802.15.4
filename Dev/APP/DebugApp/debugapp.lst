@@ -1,0 +1,486 @@
+   1               		.file	"debugapp.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	debugapp_processReceivedData
+  20               	debugapp_processReceivedData:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26 0000 FC01      		movw r30,r24
+  27               	.LM2:
+  28 0002 8081      		ld r24,Z
+  29               	.LVL1:
+  30 0004 8333      		cpi r24,lo8(51)
+  31 0006 01F4      		brne .L4
+  32               	.LM3:
+  33 0008 8181      		ldd r24,Z+1
+  34 000a 8333      		cpi r24,lo8(51)
+  35 000c 01F4      		brne .L4
+  36 000e 8281      		ldd r24,Z+2
+  37 0010 8823      		tst r24
+  38 0012 01F4      		brne .L4
+  39 0014 8381      		ldd r24,Z+3
+  40 0016 8823      		tst r24
+  41 0018 01F4      		brne .L4
+  42 001a 8481      		ldd r24,Z+4
+  43 001c 8823      		tst r24
+  44 001e 01F4      		brne .L4
+  45 0020 8581      		ldd r24,Z+5
+  46 0022 8823      		tst r24
+  47 0024 01F4      		brne .L4
+  48 0026 8681      		ldd r24,Z+6
+  49 0028 8823      		tst r24
+  50 002a 01F4      		brne .L4
+  51 002c 8781      		ldd r24,Z+7
+  52 002e 8823      		tst r24
+  53 0030 01F4      		brne .L4
+  54               	.LM4:
+  55 0032 88B3      		in r24,56-0x20
+  56 0034 90E1      		ldi r25,lo8(16)
+  57 0036 8927      		eor r24,r25
+  58 0038 88BB      		out 56-0x20,r24
+  59               	.L4:
+  60 003a 0895      		ret
+  61               	/* epilogue: frame size=0 */
+  62               	/* epilogue: noreturn */
+  63               	/* epilogue end (size=0) */
+  64               	/* function debugapp_processReceivedData size 30 (30) */
+  65               	.LFE2:
+  67               	.global	debugapp_init
+  69               	debugapp_init:
+  70               	.LFB7:
+  71               	.LM5:
+  72               	/* prologue: frame size=0 */
+  73               	/* prologue end (size=0) */
+  74               	.LVL2:
+  75               	.LM6:
+  76 003c 80E0      		ldi r24,lo8(DebugApp_Descriptor)
+  77 003e 90E0      		ldi r25,hi8(DebugApp_Descriptor)
+  78               	.LVL3:
+  79 0040 0E94 0000 		call app_addEP
+  80               	.LVL4:
+  81               	/* epilogue: frame size=0 */
+  82 0044 0895      		ret
+  83               	/* epilogue end (size=1) */
+  84               	/* function debugapp_init size 5 (4) */
+  85               	.LFE7:
+  87               	.global	debugapp_createTimer
+  89               	debugapp_createTimer:
+  90               	.LFB4:
+  91               	.LM7:
+  92               	/* prologue: frame size=4 */
+  93 0046 0F93      		push r16
+  94 0048 1F93      		push r17
+  95 004a CF93      		push r28
+  96 004c DF93      		push r29
+  97 004e CDB7      		in r28,__SP_L__
+  98 0050 DEB7      		in r29,__SP_H__
+  99 0052 2497      		sbiw r28,4
+ 100 0054 0FB6      		in __tmp_reg__,__SREG__
+ 101 0056 F894      		cli
+ 102 0058 DEBF      		out __SP_H__,r29
+ 103 005a 0FBE      		out __SREG__,__tmp_reg__
+ 104 005c CDBF      		out __SP_L__,r28
+ 105               	/* prologue end (size=12) */
+ 106               	.LVL5:
+ 107               	.LM8:
+ 108 005e 81E0      		ldi r24,lo8(1)
+ 109               	.LVL6:
+ 110 0060 8A83      		std Y+2,r24
+ 111               	.LM9:
+ 112 0062 80E6      		ldi r24,lo8(96)
+ 113 0064 8983      		std Y+1,r24
+ 114               	.LM10:
+ 115 0066 05E0      		ldi r16,lo8(5)
+ 116 0068 10E0      		ldi r17,hi8(5)
+ 117 006a 21E0      		ldi r18,lo8(1)
+ 118 006c 30E0      		ldi r19,hi8(1)
+ 119 006e 40E1      		ldi r20,lo8(10000)
+ 120 0070 57E2      		ldi r21,hi8(10000)
+ 121 0072 60E0      		ldi r22,hlo8(10000)
+ 122 0074 70E0      		ldi r23,hhi8(10000)
+ 123 0076 CE01      		movw r24,r28
+ 124 0078 0196      		adiw r24,1
+ 125 007a 0E94 0000 		call mtimer_creatTmr
+ 126               	.LVL7:
+ 127               	/* epilogue: frame size=4 */
+ 128 007e 2496      		adiw r28,4
+ 129 0080 0FB6      		in __tmp_reg__,__SREG__
+ 130 0082 F894      		cli
+ 131 0084 DEBF      		out __SP_H__,r29
+ 132 0086 0FBE      		out __SREG__,__tmp_reg__
+ 133 0088 CDBF      		out __SP_L__,r28
+ 134 008a DF91      		pop r29
+ 135 008c CF91      		pop r28
+ 136 008e 1F91      		pop r17
+ 137 0090 0F91      		pop r16
+ 138 0092 0895      		ret
+ 139               	/* epilogue end (size=11) */
+ 140               	/* function debugapp_createTimer size 39 (16) */
+ 141               	.LFE4:
+ 143               	.global	debugapp_searchCoord
+ 145               	debugapp_searchCoord:
+ 146               	.LFB5:
+ 147               	.LM11:
+ 148               	/* prologue: frame size=0 */
+ 149 0094 1F93      		push r17
+ 150               	/* prologue end (size=1) */
+ 151               	.LVL8:
+ 152 0096 182F      		mov r17,r24
+ 153               	.LM12:
+ 154 0098 8091 0000 		lds r24,aDesShorAddr
+ 155 009c 9091 0000 		lds r25,(aDesShorAddr)+1
+ 156               	.LVL9:
+ 157 00a0 8F5F      		subi r24,lo8(-1)
+ 158 00a2 9F4F      		sbci r25,hi8(-1)
+ 159 00a4 01F4      		brne .L17
+ 160               	.LM13:
+ 161 00a6 80E0      		ldi r24,lo8(aExDesAddr)
+ 162 00a8 90E0      		ldi r25,hi8(aExDesAddr)
+ 163 00aa 0E94 0000 		call nwk_getShortAddInNT
+ 164 00ae 9093 0000 		sts (aDesShorAddr)+1,r25
+ 165 00b2 8093 0000 		sts aDesShorAddr,r24
+ 166               	.LM14:
+ 167 00b6 8F5F      		subi r24,lo8(-1)
+ 168 00b8 9F4F      		sbci r25,hi8(-1)
+ 169 00ba 01F0      		breq .L12
+ 170               	.LM15:
+ 171 00bc 83E0      		ldi r24,lo8(3)
+ 172 00be 8093 0000 		sts AppState,r24
+ 173 00c2 00C0      		rjmp .L17
+ 174               	.L12:
+ 175               	.LM16:
+ 176 00c4 60E0      		ldi r22,lo8(aExDesAddr)
+ 177 00c6 70E0      		ldi r23,hi8(aExDesAddr)
+ 178 00c8 8FEF      		ldi r24,lo8(-1)
+ 179 00ca 9FEF      		ldi r25,hi8(-1)
+ 180 00cc 0E94 0000 		call ib_searchAddrEntry
+ 181 00d0 FC01      		movw r30,r24
+ 182               	.LVL10:
+ 183               	.LM17:
+ 184 00d2 892B      		or r24,r25
+ 185 00d4 01F0      		breq .L14
+ 186               	.LVL11:
+ 187               	.LM18:
+ 188 00d6 88B3      		in r24,56-0x20
+ 189               	.LVL12:
+ 190 00d8 90E1      		ldi r25,lo8(16)
+ 191 00da 8927      		eor r24,r25
+ 192 00dc 88BB      		out 56-0x20,r24
+ 193               	.LM19:
+ 194 00de 83E0      		ldi r24,lo8(3)
+ 195 00e0 8093 0000 		sts AppState,r24
+ 196               	.LM20:
+ 197 00e4 8281      		ldd r24,Z+2
+ 198 00e6 9381      		ldd r25,Z+3
+ 199 00e8 9093 0000 		sts (aDesShorAddr)+1,r25
+ 200 00ec 8093 0000 		sts aDesShorAddr,r24
+ 201 00f0 00C0      		rjmp .L17
+ 202               	.LVL13:
+ 203               	.L14:
+ 204               	.LM21:
+ 205 00f2 82E0      		ldi r24,lo8(2)
+ 206               	.LVL14:
+ 207 00f4 8093 0000 		sts AppState,r24
+ 208               	.LM22:
+ 209 00f8 21E0      		ldi r18,lo8(1)
+ 210 00fa 41E0      		ldi r20,lo8(1)
+ 211 00fc 60E0      		ldi r22,lo8(0)
+ 212 00fe 80E0      		ldi r24,lo8(aExDesAddr)
+ 213 0100 90E0      		ldi r25,hi8(aExDesAddr)
+ 214 0102 0E94 0000 		call zdp_NwkAddrReq
+ 215               	.LVL15:
+ 216               	.LM23:
+ 217 0106 1123      		tst r17
+ 218 0108 01F0      		breq .L17
+ 219               	.LM24:
+ 220 010a 60E0      		ldi r22,lo8(0)
+ 221 010c 70E0      		ldi r23,hi8(0)
+ 222 010e 80E0      		ldi r24,lo8(0)
+ 223 0110 90E0      		ldi r25,hi8(0)
+ 224 0112 0E94 0000 		call debugapp_createTimer
+ 225               	.LVL16:
+ 226               	.L17:
+ 227               	/* epilogue: frame size=0 */
+ 228 0116 1F91      		pop r17
+ 229 0118 0895      		ret
+ 230               	/* epilogue end (size=2) */
+ 231               	/* function debugapp_searchCoord size 69 (66) */
+ 232               	.LFE5:
+ 234               	.global	debugapp_sendData
+ 236               	debugapp_sendData:
+ 237               	.LFB3:
+ 238               	.LM25:
+ 239               	/* prologue: frame size=4 */
+ 240 011a AF92      		push r10
+ 241 011c BF92      		push r11
+ 242 011e CF92      		push r12
+ 243 0120 EF92      		push r14
+ 244 0122 0F93      		push r16
+ 245 0124 CF93      		push r28
+ 246 0126 DF93      		push r29
+ 247 0128 CDB7      		in r28,__SP_L__
+ 248 012a DEB7      		in r29,__SP_H__
+ 249 012c 2497      		sbiw r28,4
+ 250 012e 0FB6      		in __tmp_reg__,__SREG__
+ 251 0130 F894      		cli
+ 252 0132 DEBF      		out __SP_H__,r29
+ 253 0134 0FBE      		out __SREG__,__tmp_reg__
+ 254 0136 CDBF      		out __SP_L__,r28
+ 255               	/* prologue end (size=15) */
+ 256               	.LVL17:
+ 257               	.LM26:
+ 258 0138 6A83      		std Y+2,r22
+ 259               	.LM27:
+ 260 013a 2091 0000 		lds r18,nTransSeq
+ 261 013e 2983      		std Y+1,r18
+ 262 0140 2F5F      		subi r18,lo8(-(1))
+ 263 0142 2093 0000 		sts nTransSeq,r18
+ 264               	.LM28:
+ 265 0146 9C83      		std Y+4,r25
+ 266 0148 8B83      		std Y+3,r24
+ 267               	.LM29:
+ 268 014a 82E0      		ldi r24,lo8(2)
+ 269               	.LVL18:
+ 270 014c 0E94 0000 		call apf_initFrm
+ 271               	.LVL19:
+ 272 0150 5C01      		movw r10,r24
+ 273               	.LVL20:
+ 274               	.LM30:
+ 275 0152 0097      		sbiw r24,0
+ 276 0154 01F0      		breq .L23
+ 277               	.LVL21:
+ 278               	.LM31:
+ 279 0156 BE01      		movw r22,r28
+ 280 0158 6F5F      		subi r22,lo8(-(1))
+ 281 015a 7F4F      		sbci r23,hi8(-(1))
+ 282 015c 0E94 0000 		call apf_addMsg
+ 283               	.LVL22:
+ 284 0160 8823      		tst r24
+ 285 0162 01F0      		breq .L21
+ 286               	.LM32:
+ 287 0164 CC24      		clr r12
+ 288 0166 81E0      		ldi r24,lo8(1)
+ 289 0168 E82E      		mov r14,r24
+ 290 016a 00E0      		ldi r16,lo8(0)
+ 291 016c 21E0      		ldi r18,lo8(1)
+ 292 016e 40E0      		ldi r20,lo8(aDesShorAddr)
+ 293 0170 50E0      		ldi r21,hi8(aDesShorAddr)
+ 294 0172 61E0      		ldi r22,lo8(1)
+ 295 0174 C501      		movw r24,r10
+ 296 0176 0E94 0000 		call apf_sendFrm
+ 297               	.L21:
+ 298               	.LM33:
+ 299 017a C501      		movw r24,r10
+ 300 017c 0E94 0000 		call apf_releaseFrm
+ 301               	.LVL23:
+ 302               	.L23:
+ 303               	/* epilogue: frame size=4 */
+ 304 0180 2496      		adiw r28,4
+ 305 0182 0FB6      		in __tmp_reg__,__SREG__
+ 306 0184 F894      		cli
+ 307 0186 DEBF      		out __SP_H__,r29
+ 308 0188 0FBE      		out __SREG__,__tmp_reg__
+ 309 018a CDBF      		out __SP_L__,r28
+ 310 018c DF91      		pop r29
+ 311 018e CF91      		pop r28
+ 312 0190 0F91      		pop r16
+ 313 0192 EF90      		pop r14
+ 314 0194 CF90      		pop r12
+ 315 0196 BF90      		pop r11
+ 316 0198 AF90      		pop r10
+ 317 019a 0895      		ret
+ 318               	/* epilogue end (size=14) */
+ 319               	/* function debugapp_sendData size 65 (36) */
+ 320               	.LFE3:
+ 322               	.global	debugapp_task
+ 324               	debugapp_task:
+ 325               	.LFB6:
+ 326               	.LM34:
+ 327               	/* prologue: frame size=0 */
+ 328               	/* prologue end (size=0) */
+ 329               	.LVL24:
+ 330 019c FC01      		movw r30,r24
+ 331               	.LVL25:
+ 332               	.LM35:
+ 333 019e 8081      		ld r24,Z
+ 334               	.LVL26:
+ 335 01a0 8135      		cpi r24,lo8(81)
+ 336 01a2 01F0      		breq .L26
+ 337               	.LM36:
+ 338 01a4 8036      		cpi r24,lo8(96)
+ 339 01a6 01F4      		brne .L32
+ 340 01a8 00C0      		rjmp .L27
+ 341               	.L26:
+ 342               	.LM37:
+ 343 01aa 0280      		ldd __tmp_reg__,Z+2
+ 344 01ac F381      		ldd r31,Z+3
+ 345 01ae E02D      		mov r30,__tmp_reg__
+ 346               	.LVL27:
+ 347               	.LBB4:
+ 348               	.LBB5:
+ 349               	.LM38:
+ 350 01b0 8489      		ldd r24,Z+20
+ 351 01b2 8333      		cpi r24,lo8(51)
+ 352 01b4 01F4      		brne .L28
+ 353 01b6 8589      		ldd r24,Z+21
+ 354 01b8 8333      		cpi r24,lo8(51)
+ 355 01ba 01F4      		brne .L28
+ 356 01bc 8689      		ldd r24,Z+22
+ 357 01be 8823      		tst r24
+ 358 01c0 01F4      		brne .L28
+ 359 01c2 8789      		ldd r24,Z+23
+ 360 01c4 8823      		tst r24
+ 361 01c6 01F4      		brne .L28
+ 362 01c8 808D      		ldd r24,Z+24
+ 363 01ca 8823      		tst r24
+ 364 01cc 01F4      		brne .L28
+ 365 01ce 818D      		ldd r24,Z+25
+ 366 01d0 8823      		tst r24
+ 367 01d2 01F4      		brne .L28
+ 368 01d4 828D      		ldd r24,Z+26
+ 369 01d6 8823      		tst r24
+ 370 01d8 01F4      		brne .L28
+ 371 01da 838D      		ldd r24,Z+27
+ 372 01dc 8823      		tst r24
+ 373 01de 01F4      		brne .L28
+ 374               	.LM39:
+ 375 01e0 88B3      		in r24,56-0x20
+ 376 01e2 90E1      		ldi r25,lo8(16)
+ 377 01e4 8927      		eor r24,r25
+ 378 01e6 88BB      		out 56-0x20,r24
+ 379               	.L28:
+ 380               	.LBE5:
+ 381               	.LBE4:
+ 382               	.LM40:
+ 383 01e8 CF01      		movw r24,r30
+ 384 01ea 0E94 0000 		call apf_releaseInComFrm
+ 385               	.LVL28:
+ 386 01ee 0895      		ret
+ 387               	.LVL29:
+ 388               	.L27:
+ 389               	.LM41:
+ 390 01f0 8091 0000 		lds r24,AppState
+ 391 01f4 8230      		cpi r24,lo8(2)
+ 392 01f6 01F0      		breq .L30
+ 393 01f8 8330      		cpi r24,lo8(3)
+ 394 01fa 01F4      		brne .L32
+ 395 01fc 00C0      		rjmp .L31
+ 396               	.L30:
+ 397               	.LM42:
+ 398 01fe 80E0      		ldi r24,lo8(0)
+ 399 0200 0E94 0000 		call debugapp_searchCoord
+ 400               	.LVL30:
+ 401 0204 0895      		ret
+ 402               	.LVL31:
+ 403               	.L31:
+ 404               	.LM43:
+ 405 0206 68E0      		ldi r22,lo8(8)
+ 406               	.LVL32:
+ 407 0208 80E0      		ldi r24,lo8(aExtendedAddress)
+ 408 020a 90E0      		ldi r25,hi8(aExtendedAddress)
+ 409 020c 0E94 0000 		call debugapp_sendData
+ 410               	.LVL33:
+ 411               	.LVL34:
+ 412               	.L32:
+ 413 0210 0895      		ret
+ 414               	/* epilogue: frame size=0 */
+ 415               	/* epilogue: noreturn */
+ 416               	/* epilogue end (size=0) */
+ 417               	/* function debugapp_task size 59 (59) */
+ 418               	.LFE6:
+ 420               	.global	nTransSeq
+ 421               	.global	nTransSeq
+ 422               		.section .bss
+ 425               	nTransSeq:
+ 426 0000 00        		.skip 1,0
+ 427               	.global	aDesShorAddr
+ 428               		.data
+ 431               	aDesShorAddr:
+ 432 0000 FFFF      		.word	-1
+ 433               	.global	AppState
+ 436               	AppState:
+ 437 0002 01        		.byte	1
+ 438               	.global	aExDesAddr
+ 441               	aExDesAddr:
+ 442 0003 55        		.byte	85
+ 443 0004 55        		.byte	85
+ 444 0005 00        		.byte	0
+ 445 0006 00        		.byte	0
+ 446 0007 00        		.byte	0
+ 447 0008 00        		.byte	0
+ 448 0009 00        		.byte	0
+ 449 000a 00        		.byte	0
+ 450               	.global	DebugApp_Descriptor
+ 453               	DebugApp_Descriptor:
+ 454 000b 01        		.byte	1
+ 455 000c 0000      		.word	0
+ 456 000e 0000      		.word	0
+ 457 0010 00        		.byte	0
+ 458 0011 00        		.byte	0
+ 459 0012 0000      		.word	0
+ 460 0014 00        		.byte	0
+ 461 0015 0000      		.word	0
+ 462 0017 0000      		.word	pm(debugapp_task)
+ 463 0019 0000      		.word	pm(debugapp_init)
+ 464               		.comm OSIntNesting,1,1
+ 465               		.comm OSMemFreeList,2,1
+ 466               		.comm OSMemTbl,96,1
+ 467               		.comm OSTmrFree,2,1
+ 468               		.comm OSTmrUsed,2,1
+ 469               		.comm OSTmrTime,4,1
+ 470               		.comm OSTmrTbl,240,1
+ 471               		.comm OSTmrFreeList,2,1
+ 472               		.comm OSTmrWheelTbl,32,1
+ 530               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 debugapp.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:20     .text:00000000 debugapp_processReceivedData
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:69     .text:0000003c debugapp_init
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:453    .data:0000000b DebugApp_Descriptor
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:89     .text:00000046 debugapp_createTimer
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:145    .text:00000094 debugapp_searchCoord
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:431    .data:00000000 aDesShorAddr
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:441    .data:00000003 aExDesAddr
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:436    .data:00000002 AppState
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:236    .text:0000011a debugapp_sendData
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:425    .bss:00000000 nTransSeq
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCWaaaa.s:324    .text:0000019c debugapp_task
+                            *COM*:00000001 OSIntNesting
+                            *COM*:00000002 OSMemFreeList
+                            *COM*:00000060 OSMemTbl
+                            *COM*:00000002 OSTmrFree
+                            *COM*:00000002 OSTmrUsed
+                            *COM*:00000004 OSTmrTime
+                            *COM*:000000f0 OSTmrTbl
+                            *COM*:00000002 OSTmrFreeList
+                            *COM*:00000020 OSTmrWheelTbl
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+app_addEP
+mtimer_creatTmr
+nwk_getShortAddInNT
+ib_searchAddrEntry
+zdp_NwkAddrReq
+apf_initFrm
+apf_addMsg
+apf_sendFrm
+apf_releaseFrm
+apf_releaseInComFrm
+aExtendedAddress

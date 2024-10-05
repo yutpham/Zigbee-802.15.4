@@ -1,0 +1,67 @@
+   1               		.file	"zdo_app_interface.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	zdo_app_DeviceStart
+  20               	zdo_app_DeviceStart:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=4 */
+  24 0000 CF93      		push r28
+  25 0002 DF93      		push r29
+  26 0004 CDB7      		in r28,__SP_L__
+  27 0006 DEB7      		in r29,__SP_H__
+  28 0008 2497      		sbiw r28,4
+  29 000a 0FB6      		in __tmp_reg__,__SREG__
+  30 000c F894      		cli
+  31 000e DEBF      		out __SP_H__,r29
+  32 0010 0FBE      		out __SREG__,__tmp_reg__
+  33 0012 CDBF      		out __SP_L__,r28
+  34               	/* prologue end (size=10) */
+  35               	.LM2:
+  36 0014 8FEF      		ldi r24,lo8(-1)
+  37 0016 8A83      		std Y+2,r24
+  38               	.LM3:
+  39 0018 80E5      		ldi r24,lo8(80)
+  40 001a 8983      		std Y+1,r24
+  41               	.LM4:
+  42 001c CE01      		movw r24,r28
+  43 001e 0196      		adiw r24,1
+  44 0020 0E94 0000 		call apf_dispatchEvent
+  45               	.LM5:
+  46 0024 88B3      		in r24,56-0x20
+  47 0026 8058      		subi r24,lo8(-(-128))
+  48 0028 88BB      		out 56-0x20,r24
+  49               	/* epilogue: frame size=4 */
+  50 002a 2496      		adiw r28,4
+  51 002c 0FB6      		in __tmp_reg__,__SREG__
+  52 002e F894      		cli
+  53 0030 DEBF      		out __SP_H__,r29
+  54 0032 0FBE      		out __SREG__,__tmp_reg__
+  55 0034 CDBF      		out __SP_L__,r28
+  56 0036 DF91      		pop r29
+  57 0038 CF91      		pop r28
+  58 003a 0895      		ret
+  59               	/* epilogue end (size=9) */
+  60               	/* function zdo_app_DeviceStart size 30 (11) */
+  61               	.LFE2:
+  85               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 zdo_app_interface.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccs3aaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccs3aaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccs3aaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccs3aaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccs3aaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccs3aaaa.s:20     .text:00000000 zdo_app_DeviceStart
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+apf_dispatchEvent

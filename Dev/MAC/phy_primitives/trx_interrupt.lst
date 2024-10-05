@@ -1,0 +1,916 @@
+   1               		.file	"trx_interrupt.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	__vector_11
+  20               	__vector_11:
+  21               	.LFB3:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24 0000 1F92      		push __zero_reg__
+  25 0002 0F92      		push __tmp_reg__
+  26 0004 0FB6      		in __tmp_reg__,__SREG__
+  27 0006 0F92      		push __tmp_reg__
+  28 0008 1124      		clr __zero_reg__
+  29 000a 2F93      		push r18
+  30 000c 3F93      		push r19
+  31 000e 4F93      		push r20
+  32 0010 5F93      		push r21
+  33 0012 6F93      		push r22
+  34 0014 7F93      		push r23
+  35 0016 8F93      		push r24
+  36 0018 9F93      		push r25
+  37 001a AF93      		push r26
+  38 001c BF93      		push r27
+  39 001e CF93      		push r28
+  40 0020 DF93      		push r29
+  41 0022 EF93      		push r30
+  42 0024 FF93      		push r31
+  43               	/* prologue end (size=19) */
+  44               	.LM2:
+  45 0026 C6B5      		in r28,70-0x20
+  46 0028 D7B5      		in r29,(70)+1-0x20
+  47 002a D093 0000 		sts (SlotInfo+12)+1,r29
+  48 002e C093 0000 		sts SlotInfo+12,r28
+  49               	.LM3:
+  50 0032 2091 0000 		lds r18,SlotInfo
+  51 0036 3091 0000 		lds r19,(SlotInfo)+1
+  52 003a 4091 0000 		lds r20,(SlotInfo)+2
+  53 003e 5091 0000 		lds r21,(SlotInfo)+3
+  54 0042 2093 0000 		sts SlotInfo+8,r18
+  55 0046 3093 0000 		sts (SlotInfo+8)+1,r19
+  56 004a 4093 0000 		sts (SlotInfo+8)+2,r20
+  57 004e 5093 0000 		sts (SlotInfo+8)+3,r21
+  58               	.LM4:
+  59 0052 8CB5      		in r24,76-0x20
+  60 0054 9DB5      		in r25,(76)+1-0x20
+  61 0056 8C17      		cp r24,r28
+  62 0058 9D07      		cpc r25,r29
+  63 005a 00F4      		brsh .L2
+  64               	.LM5:
+  65 005c 2F5F      		subi r18,lo8(-(1))
+  66 005e 3F4F      		sbci r19,hi8(-(1))
+  67 0060 4F4F      		sbci r20,hlo8(-(1))
+  68 0062 5F4F      		sbci r21,hhi8(-(1))
+  69 0064 2093 0000 		sts SlotInfo+8,r18
+  70 0068 3093 0000 		sts (SlotInfo+8)+1,r19
+  71 006c 4093 0000 		sts (SlotInfo+8)+2,r20
+  72 0070 5093 0000 		sts (SlotInfo+8)+3,r21
+  73               	.L2:
+  74               	.LM6:
+  75 0074 6091 0000 		lds r22,SlotInfo+8
+  76 0078 7091 0000 		lds r23,(SlotInfo+8)+1
+  77 007c 8091 0000 		lds r24,(SlotInfo+8)+2
+  78 0080 9091 0000 		lds r25,(SlotInfo+8)+3
+  79 0084 20E4      		ldi r18,lo8(320)
+  80 0086 31E0      		ldi r19,hi8(320)
+  81 0088 40E0      		ldi r20,hlo8(320)
+  82 008a 50E0      		ldi r21,hhi8(320)
+  83 008c 0E94 0000 		call __mulsi3
+  84 0090 2091 0000 		lds r18,SlotInfo+14
+  85 0094 3091 0000 		lds r19,(SlotInfo+14)+1
+  86 0098 4091 0000 		lds r20,(SlotInfo+14)+2
+  87 009c 5091 0000 		lds r21,(SlotInfo+14)+3
+  88 00a0 260F      		add r18,r22
+  89 00a2 371F      		adc r19,r23
+  90 00a4 481F      		adc r20,r24
+  91 00a6 591F      		adc r21,r25
+  92 00a8 D695      		lsr r29
+  93 00aa C795      		ror r28
+  94 00ac D695      		lsr r29
+  95 00ae C795      		ror r28
+  96 00b0 D695      		lsr r29
+  97 00b2 C795      		ror r28
+  98 00b4 CE01      		movw r24,r28
+  99 00b6 AA27      		clr r26
+ 100 00b8 BB27      		clr r27
+ 101 00ba 820F      		add r24,r18
+ 102 00bc 931F      		adc r25,r19
+ 103 00be A41F      		adc r26,r20
+ 104 00c0 B51F      		adc r27,r21
+ 105 00c2 8093 0000 		sts SlotInfo+4,r24
+ 106 00c6 9093 0000 		sts (SlotInfo+4)+1,r25
+ 107 00ca A093 0000 		sts (SlotInfo+4)+2,r26
+ 108 00ce B093 0000 		sts (SlotInfo+4)+3,r27
+ 109               	/* epilogue: frame size=0 */
+ 110 00d2 FF91      		pop r31
+ 111 00d4 EF91      		pop r30
+ 112 00d6 DF91      		pop r29
+ 113 00d8 CF91      		pop r28
+ 114 00da BF91      		pop r27
+ 115 00dc AF91      		pop r26
+ 116 00de 9F91      		pop r25
+ 117 00e0 8F91      		pop r24
+ 118 00e2 7F91      		pop r23
+ 119 00e4 6F91      		pop r22
+ 120 00e6 5F91      		pop r21
+ 121 00e8 4F91      		pop r20
+ 122 00ea 3F91      		pop r19
+ 123 00ec 2F91      		pop r18
+ 124 00ee 0F90      		pop __tmp_reg__
+ 125 00f0 0FBE      		out __SREG__,__tmp_reg__
+ 126 00f2 0F90      		pop __tmp_reg__
+ 127 00f4 1F90      		pop __zero_reg__
+ 128 00f6 1895      		reti
+ 129               	/* epilogue end (size=19) */
+ 130               	/* function __vector_11 size 124 (86) */
+ 131               	.LFE3:
+ 133               	.global	__vector_24
+ 135               	__vector_24:
+ 136               	.LFB4:
+ 137               	.LM7:
+ 138               	/* prologue: frame size=0 */
+ 139 00f8 1F92      		push __zero_reg__
+ 140 00fa 0F92      		push __tmp_reg__
+ 141 00fc 0FB6      		in __tmp_reg__,__SREG__
+ 142 00fe 0F92      		push __tmp_reg__
+ 143 0100 1124      		clr __zero_reg__
+ 144               	/* prologue end (size=5) */
+ 145               	/* epilogue: frame size=0 */
+ 146 0102 0F90      		pop __tmp_reg__
+ 147 0104 0FBE      		out __SREG__,__tmp_reg__
+ 148 0106 0F90      		pop __tmp_reg__
+ 149 0108 1F90      		pop __zero_reg__
+ 150 010a 1895      		reti
+ 151               	/* epilogue end (size=5) */
+ 152               	/* function __vector_24 size 10 (0) */
+ 153               	.LFE4:
+ 155               	.global	phyrx_receivePayload
+ 157               	phyrx_receivePayload:
+ 158               	.LFB7:
+ 159               	.LM8:
+ 160               	/* prologue: frame size=0 */
+ 161               	/* prologue end (size=0) */
+ 162               	.LM9:
+ 163 010c A091 0000 		lds r26,PhyInfo+16
+ 164 0110 B091 0000 		lds r27,(PhyInfo+16)+1
+ 165               	.LVL0:
+ 166               	.LM10:
+ 167 0114 FD01      		movw r30,r26
+ 168 0116 9181      		ldd r25,Z+1
+ 169 0118 892F      		mov r24,r25
+ 170 011a 8C70      		andi r24,lo8(12)
+ 171 011c 01F0      		breq .L9
+ 172               	.LVL1:
+ 173               	.LM11:
+ 174 011e 3396      		adiw r30,3
+ 175               	.LM12:
+ 176               	/* #APP */
+ 177 0120 F894      		cli
+ 178               		
+ 179               	/* #NOAPP */
+ 180 0122 C098      		cbi 56-0x20,0
+ 181 0124 8FE7      		ldi r24,lo8(127)
+ 182 0126 8FB9      		out 47-0x20,r24
+ 183 0128 1FB8      		out 47-0x20,__zero_reg__
+ 184 012a 8FB1      		in r24,47-0x20
+ 185 012c 8083      		st Z,r24
+ 186 012e 1FB8      		out 47-0x20,__zero_reg__
+ 187 0130 8FB1      		in r24,47-0x20
+ 188 0132 8183      		std Z+1,r24
+ 189 0134 C09A      		sbi 56-0x20,0
+ 190               	/* #APP */
+ 191 0136 7894      		sei
+ 192               		
+ 193               	.LM13:
+ 194               	/* #NOAPP */
+ 195 0138 FD01      		movw r30,r26
+ 196               	.LVL2:
+ 197 013a 8181      		ldd r24,Z+1
+ 198 013c 8C70      		andi r24,lo8(12)
+ 199 013e 8830      		cpi r24,lo8(8)
+ 200 0140 01F4      		brne .+2
+ 201 0142 00C0      		rjmp .L38
+ 202               	.LM14:
+ 203 0144 8C30      		cpi r24,lo8(12)
+ 204 0146 01F0      		breq .L39
+ 205               	.L14:
+ 206               	.LM15:
+ 207 0148 80E0      		ldi r24,lo8(0)
+ 208 014a 90E0      		ldi r25,hi8(0)
+ 209               	.LM16:
+ 210 014c 0895      		ret
+ 211               	.L39:
+ 212               	.LM17:
+ 213 014e 98E0      		ldi r25,lo8(8)
+ 214               	.LVL3:
+ 215               	.L13:
+ 216               	.LM18:
+ 217 0150 FD01      		movw r30,r26
+ 218               	.LVL4:
+ 219 0152 3596      		adiw r30,5
+ 220               	.LM19:
+ 221               	/* #APP */
+ 222 0154 F894      		cli
+ 223               		
+ 224               	/* #NOAPP */
+ 225 0156 C098      		cbi 56-0x20,0
+ 226 0158 8FE7      		ldi r24,lo8(127)
+ 227 015a 8FB9      		out 47-0x20,r24
+ 228               	.L16:
+ 229 015c 1FB8      		out 47-0x20,__zero_reg__
+ 230 015e 8FB1      		in r24,47-0x20
+ 231 0160 8193      		st Z+,r24
+ 232 0162 9150      		subi r25,lo8(-(-1))
+ 233 0164 01F4      		brne .L16
+ 234 0166 C09A      		sbi 56-0x20,0
+ 235               	/* #APP */
+ 236 0168 7894      		sei
+ 237               		
+ 238               	/* #NOAPP */
+ 239 016a FD01      		movw r30,r26
+ 240               	.LVL5:
+ 241 016c 9181      		ldd r25,Z+1
+ 242               	.LVL6:
+ 243               	.L9:
+ 244               	.LM20:
+ 245 016e 892F      		mov r24,r25
+ 246 0170 807C      		andi r24,lo8(-64)
+ 247 0172 01F0      		breq .L18
+ 248               	.LM21:
+ 249 0174 8C91      		ld r24,X
+ 250 0176 86FD      		sbrc r24,6
+ 251 0178 00C0      		rjmp .L20
+ 252               	.LM22:
+ 253 017a FD01      		movw r30,r26
+ 254               	.LVL7:
+ 255 017c 3D96      		adiw r30,13
+ 256               	.LM23:
+ 257               	/* #APP */
+ 258 017e F894      		cli
+ 259               		
+ 260               	/* #NOAPP */
+ 261 0180 C098      		cbi 56-0x20,0
+ 262 0182 8FE7      		ldi r24,lo8(127)
+ 263 0184 8FB9      		out 47-0x20,r24
+ 264 0186 1FB8      		out 47-0x20,__zero_reg__
+ 265 0188 8FB1      		in r24,47-0x20
+ 266 018a 8083      		st Z,r24
+ 267 018c 1FB8      		out 47-0x20,__zero_reg__
+ 268 018e 8FB1      		in r24,47-0x20
+ 269 0190 8183      		std Z+1,r24
+ 270 0192 C09A      		sbi 56-0x20,0
+ 271               	/* #APP */
+ 272 0194 7894      		sei
+ 273               		
+ 274               	/* #NOAPP */
+ 275 0196 FD01      		movw r30,r26
+ 276               	.LVL8:
+ 277 0198 9181      		ldd r25,Z+1
+ 278               	.L20:
+ 279               	.LM24:
+ 280 019a 892F      		mov r24,r25
+ 281 019c 807C      		andi r24,lo8(-64)
+ 282 019e 8038      		cpi r24,lo8(-128)
+ 283 01a0 01F0      		breq .L40
+ 284               	.LM25:
+ 285 01a2 803C      		cpi r24,lo8(-64)
+ 286 01a4 01F4      		brne .L14
+ 287 01a6 98E0      		ldi r25,lo8(8)
+ 288               	.LVL9:
+ 289               	.L24:
+ 290               	.LM26:
+ 291 01a8 FD01      		movw r30,r26
+ 292               	.LVL10:
+ 293 01aa 3F96      		adiw r30,15
+ 294               	.LM27:
+ 295               	/* #APP */
+ 296 01ac F894      		cli
+ 297               		
+ 298               	/* #NOAPP */
+ 299 01ae C098      		cbi 56-0x20,0
+ 300 01b0 8FE7      		ldi r24,lo8(127)
+ 301 01b2 8FB9      		out 47-0x20,r24
+ 302               	.L26:
+ 303 01b4 1FB8      		out 47-0x20,__zero_reg__
+ 304 01b6 8FB1      		in r24,47-0x20
+ 305 01b8 8193      		st Z+,r24
+ 306 01ba 9150      		subi r25,lo8(-(-1))
+ 307 01bc 01F4      		brne .L26
+ 308 01be C09A      		sbi 56-0x20,0
+ 309               	/* #APP */
+ 310 01c0 7894      		sei
+ 311               		
+ 312               	/* #NOAPP */
+ 313               	.L18:
+ 314               	.LM28:
+ 315 01c2 9091 0000 		lds r25,PhyInfo+15
+ 316               	.LVL11:
+ 317 01c6 8091 0000 		lds r24,PhyInfo+18
+ 318 01ca 981B      		sub r25,r24
+ 319 01cc 9250      		subi r25,lo8(-(-2))
+ 320 01ce FD01      		movw r30,r26
+ 321               	.LVL12:
+ 322 01d0 978B      		std Z+23,r25
+ 323               	.LM29:
+ 324               	/* #APP */
+ 325 01d2 F894      		cli
+ 326               		
+ 327               	/* #NOAPP */
+ 328 01d4 C098      		cbi 56-0x20,0
+ 329 01d6 8FE7      		ldi r24,lo8(127)
+ 330 01d8 8FB9      		out 47-0x20,r24
+ 331 01da 9923      		tst r25
+ 332 01dc 01F0      		breq .L28
+ 333               	.LM30:
+ 334 01de FD01      		movw r30,r26
+ 335               	.LVL13:
+ 336 01e0 7896      		adiw r30,24
+ 337               	.L30:
+ 338               	.LM31:
+ 339 01e2 1FB8      		out 47-0x20,__zero_reg__
+ 340 01e4 8FB1      		in r24,47-0x20
+ 341 01e6 8193      		st Z+,r24
+ 342 01e8 9150      		subi r25,lo8(-(-1))
+ 343 01ea 01F4      		brne .L30
+ 344               	.L28:
+ 345 01ec C09A      		sbi 56-0x20,0
+ 346               	/* #APP */
+ 347 01ee 7894      		sei
+ 348               		
+ 349               	/* #NOAPP */
+ 350 01f0 81E0      		ldi r24,lo8(1)
+ 351 01f2 90E0      		ldi r25,hi8(1)
+ 352 01f4 0895      		ret
+ 353               	.LVL14:
+ 354               	.L38:
+ 355               	.LM32:
+ 356 01f6 92E0      		ldi r25,lo8(2)
+ 357               	.LVL15:
+ 358 01f8 00C0      		rjmp .L13
+ 359               	.LVL16:
+ 360               	.L40:
+ 361               	.LM33:
+ 362 01fa 92E0      		ldi r25,lo8(2)
+ 363               	.LVL17:
+ 364 01fc 00C0      		rjmp .L24
+ 365               	/* epilogue: frame size=0 */
+ 366               	/* epilogue: noreturn */
+ 367               	/* epilogue end (size=0) */
+ 368               	/* function phyrx_receivePayload size 156 (156) */
+ 369               	.LFE7:
+ 371               	.global	phyrx_receiveUnsecured
+ 373               	phyrx_receiveUnsecured:
+ 374               	.LFB6:
+ 375               	.LM34:
+ 376               	/* prologue: frame size=0 */
+ 377 01fe CF93      		push r28
+ 378 0200 DF93      		push r29
+ 379               	/* prologue end (size=2) */
+ 380               	.LM35:
+ 381 0202 C091 0000 		lds r28,PhyInfo+16
+ 382 0206 D091 0000 		lds r29,(PhyInfo+16)+1
+ 383               	.LVL18:
+ 384 020a 2097      		sbiw r28,0
+ 385 020c 01F4      		brne .+2
+ 386 020e 00C0      		rjmp .L75
+ 387               	.LVL19:
+ 388               	.L42:
+ 389               	.LM36:
+ 390 0210 8091 0000 		lds r24,PhyInfo+19
+ 391 0214 8823      		tst r24
+ 392 0216 01F0      		breq .+2
+ 393 0218 00C0      		rjmp .L76
+ 394               	.LM37:
+ 395 021a 1C9A      		sbi 35-0x20,4
+ 396               	.LM38:
+ 397               	/* #APP */
+ 398 021c F894      		cli
+ 399               		
+ 400               	/* #NOAPP */
+ 401 021e C098      		cbi 56-0x20,0
+ 402 0220 8FE7      		ldi r24,lo8(127)
+ 403 0222 8FB9      		out 47-0x20,r24
+ 404 0224 1FB8      		out 47-0x20,__zero_reg__
+ 405 0226 8FB1      		in r24,47-0x20
+ 406 0228 8093 0000 		sts PhyInfo+15,r24
+ 407 022c C09A      		sbi 56-0x20,0
+ 408               	/* #APP */
+ 409 022e 7894      		sei
+ 410               		
+ 411               	.LM39:
+ 412               	/* #NOAPP */
+ 413 0230 A091 0000 		lds r26,PhyInfo+16
+ 414 0234 B091 0000 		lds r27,(PhyInfo+16)+1
+ 415               	.LVL20:
+ 416               	.LM40:
+ 417               	/* #APP */
+ 418 0238 F894      		cli
+ 419               		
+ 420               	/* #NOAPP */
+ 421 023a C098      		cbi 56-0x20,0
+ 422 023c 8FE7      		ldi r24,lo8(127)
+ 423 023e 8FB9      		out 47-0x20,r24
+ 424 0240 1FB8      		out 47-0x20,__zero_reg__
+ 425 0242 8FB1      		in r24,47-0x20
+ 426               	.LVL21:
+ 427 0244 FD01      		movw r30,r26
+ 428 0246 8193      		st Z+,r24
+ 429 0248 9F01      		movw r18,r30
+ 430 024a 1FB8      		out 47-0x20,__zero_reg__
+ 431 024c 8FB1      		in r24,47-0x20
+ 432               	.LVL22:
+ 433 024e FD01      		movw r30,r26
+ 434 0250 8183      		std Z+1,r24
+ 435 0252 1FB8      		out 47-0x20,__zero_reg__
+ 436 0254 8FB1      		in r24,47-0x20
+ 437 0256 F901      		movw r30,r18
+ 438 0258 8183      		std Z+1,r24
+ 439               	.LM41:
+ 440 025a CE01      		movw r24,r28
+ 441               	.LVL23:
+ 442               	.LM42:
+ 443 025c C09A      		sbi 56-0x20,0
+ 444               	/* #APP */
+ 445 025e 7894      		sei
+ 446               		
+ 447               	.LM43:
+ 448               	/* #NOAPP */
+ 449 0260 0E94 0000 		call mac_getMpduHrLength
+ 450               	.LVL24:
+ 451 0264 8093 0000 		sts PhyInfo+18,r24
+ 452               	.LM44:
+ 453 0268 2091 0000 		lds r18,PhyInfo+15
+ 454 026c 3327      		clr r19
+ 455 026e 27FD      		sbrc r18,7
+ 456 0270 3095      		com r19
+ 457 0272 9927      		clr r25
+ 458 0274 0296      		adiw r24,2
+ 459 0276 2817      		cp r18,r24
+ 460 0278 3907      		cpc r19,r25
+ 461 027a 04F4      		brge .L49
+ 462               	.LVL25:
+ 463               	.L74:
+ 464               	.LM45:
+ 465 027c 84E0      		ldi r24,lo8(4)
+ 466 027e 8093 0000 		sts PhyInfo+19,r24
+ 467               	.L45:
+ 468               	.LM46:
+ 469 0282 0E94 0000 		call phyrx_ResetRx
+ 470               	.L65:
+ 471               	.LM47:
+ 472 0286 1C98      		cbi 35-0x20,4
+ 473               	.LM48:
+ 474 0288 1092 0000 		sts PhyInfo+19,__zero_reg__
+ 475               	.LM49:
+ 476 028c 8091 0000 		lds r24,macInfo
+ 477 0290 8430      		cpi r24,lo8(4)
+ 478 0292 01F4      		brne .+2
+ 479 0294 00C0      		rjmp .L77
+ 480 0296 90E0      		ldi r25,lo8(0)
+ 481               	.L71:
+ 482               	/* #APP */
+ 483 0298 F894      		cli
+ 484               		
+ 485               	/* #NOAPP */
+ 486 029a C098      		cbi 56-0x20,0
+ 487 029c 8CE1      		ldi r24,lo8(28)
+ 488 029e 8FB9      		out 47-0x20,r24
+ 489 02a0 9FB9      		out 47-0x20,r25
+ 490 02a2 84E0      		ldi r24,lo8(4)
+ 491 02a4 8FB9      		out 47-0x20,r24
+ 492 02a6 C09A      		sbi 56-0x20,0
+ 493               	/* #APP */
+ 494 02a8 7894      		sei
+ 495               		
+ 496               	/* #NOAPP */
+ 497 02aa 00C0      		rjmp .L72
+ 498               	.L76:
+ 499               	.LM50:
+ 500 02ac 8130      		cpi r24,lo8(1)
+ 501 02ae 01F0      		breq .L48
+ 502               	.LM51:
+ 503 02b0 8230      		cpi r24,lo8(2)
+ 504 02b2 01F0      		breq .L60
+ 505               	.L51:
+ 506               	.LM52:
+ 507 02b4 8430      		cpi r24,lo8(4)
+ 508 02b6 01F0      		breq .L45
+ 509 02b8 8530      		cpi r24,lo8(5)
+ 510 02ba 01F0      		breq .L65
+ 511 02bc 8330      		cpi r24,lo8(3)
+ 512 02be 01F0      		breq .+2
+ 513 02c0 00C0      		rjmp .L72
+ 514 02c2 00C0      		rjmp .L63
+ 515               	.L49:
+ 516               	.LM53:
+ 517 02c4 CE01      		movw r24,r28
+ 518 02c6 0E94 0000 		call phyrx_checkAck
+ 519               	.LM54:
+ 520 02ca 9091 0000 		lds r25,PhyInfo+15
+ 521 02ce 9530      		cpi r25,lo8(5)
+ 522 02d0 01F4      		brne .+2
+ 523 02d2 00C0      		rjmp .L78
+ 524               	.L52:
+ 525               	.LM55:
+ 526 02d4 81E0      		ldi r24,lo8(1)
+ 527 02d6 8093 0000 		sts PhyInfo+19,r24
+ 528               	.LM56:
+ 529 02da 8091 0000 		lds r24,macInfo
+ 530 02de 8430      		cpi r24,lo8(4)
+ 531 02e0 01F4      		brne .+2
+ 532 02e2 00C0      		rjmp .L79
+ 533 02e4 20E0      		ldi r18,lo8(0)
+ 534 02e6 30E0      		ldi r19,hi8(0)
+ 535               	.LVL26:
+ 536               	.L58:
+ 537 02e8 892F      		mov r24,r25
+ 538 02ea 9927      		clr r25
+ 539 02ec 87FD      		sbrc r24,7
+ 540 02ee 9095      		com r25
+ 541               	.LVL27:
+ 542 02f0 0697      		sbiw r24,6
+ 543 02f2 822B      		or r24,r18
+ 544 02f4 932B      		or r25,r19
+ 545               	/* #APP */
+ 546 02f6 F894      		cli
+ 547               		
+ 548               	/* #NOAPP */
+ 549 02f8 C098      		cbi 56-0x20,0
+ 550 02fa 2CE1      		ldi r18,lo8(28)
+ 551               	.LVL28:
+ 552 02fc 2FB9      		out 47-0x20,r18
+ 553 02fe 292F      		mov r18,r25
+ 554 0300 3327      		clr r19
+ 555 0302 2FB9      		out 47-0x20,r18
+ 556 0304 8FB9      		out 47-0x20,r24
+ 557 0306 C09A      		sbi 56-0x20,0
+ 558               	/* #APP */
+ 559 0308 7894      		sei
+ 560               		
+ 561               	/* #NOAPP */
+ 562               	.L55:
+ 563               	.LM57:
+ 564 030a 8099      		sbic 48-0x20,0
+ 565 030c 00C0      		rjmp .L48
+ 566 030e 8091 0000 		lds r24,PhyInfo+19
+ 567               	.LVL29:
+ 568 0312 8130      		cpi r24,lo8(1)
+ 569 0314 01F0      		breq .L51
+ 570               	.LVL30:
+ 571               	.L48:
+ 572               	.LM58:
+ 573 0316 0E94 0000 		call phyrx_receivePayload
+ 574               	.LVL31:
+ 575               	.LM59:
+ 576 031a 82E0      		ldi r24,lo8(2)
+ 577 031c 8093 0000 		sts PhyInfo+19,r24
+ 578               	.L60:
+ 579               	.LM60:
+ 580 0320 FE01      		movw r30,r28
+ 581               	.LVL32:
+ 582 0322 E258      		subi r30,lo8(-(126))
+ 583 0324 FF4F      		sbci r31,hi8(-(126))
+ 584               	.LM61:
+ 585               	/* #APP */
+ 586 0326 F894      		cli
+ 587               		
+ 588               	/* #NOAPP */
+ 589 0328 C098      		cbi 56-0x20,0
+ 590 032a 8FE7      		ldi r24,lo8(127)
+ 591 032c 8FB9      		out 47-0x20,r24
+ 592 032e 1FB8      		out 47-0x20,__zero_reg__
+ 593 0330 8FB1      		in r24,47-0x20
+ 594 0332 8083      		st Z,r24
+ 595 0334 1FB8      		out 47-0x20,__zero_reg__
+ 596 0336 8FB1      		in r24,47-0x20
+ 597 0338 8183      		std Z+1,r24
+ 598 033a C09A      		sbi 56-0x20,0
+ 599               	/* #APP */
+ 600 033c 7894      		sei
+ 601               		
+ 602               	.LM62:
+ 603               	/* #NOAPP */
+ 604 033e C158      		subi r28,lo8(-(127))
+ 605 0340 DF4F      		sbci r29,hi8(-(127))
+ 606 0342 8881      		ld r24,Y
+ 607 0344 CF57      		subi r28,lo8(-(-127))
+ 608 0346 D040      		sbci r29,hi8(-(-127))
+ 609 0348 87FD      		sbrc r24,7
+ 610 034a 00C0      		rjmp .L80
+ 611               	.L61:
+ 612               	.LM63:
+ 613 034c 83E0      		ldi r24,lo8(3)
+ 614 034e 8093 0000 		sts PhyInfo+19,r24
+ 615               	.L63:
+ 616               	.LM64:
+ 617 0352 60E0      		ldi r22,lo8(0)
+ 618 0354 CE01      		movw r24,r28
+ 619 0356 0E94 0000 		call pddata_indication
+ 620               	.LVL33:
+ 621               	.LM65:
+ 622 035a 1092 0000 		sts PhyInfo+19,__zero_reg__
+ 623               	.LM66:
+ 624 035e 8091 0000 		lds r24,macInfo
+ 625 0362 8430      		cpi r24,lo8(4)
+ 626 0364 01F0      		breq .L81
+ 627 0366 90E0      		ldi r25,lo8(0)
+ 628               	.L68:
+ 629               	/* #APP */
+ 630 0368 F894      		cli
+ 631               		
+ 632               	/* #NOAPP */
+ 633 036a C098      		cbi 56-0x20,0
+ 634 036c 8CE1      		ldi r24,lo8(28)
+ 635 036e 8FB9      		out 47-0x20,r24
+ 636 0370 9FB9      		out 47-0x20,r25
+ 637 0372 84E0      		ldi r24,lo8(4)
+ 638 0374 8FB9      		out 47-0x20,r24
+ 639 0376 C09A      		sbi 56-0x20,0
+ 640               	/* #APP */
+ 641 0378 7894      		sei
+ 642               		
+ 643               	.LM67:
+ 644               	/* #NOAPP */
+ 645 037a 1C98      		cbi 35-0x20,4
+ 646 037c 00C0      		rjmp .L72
+ 647               	.LVL34:
+ 648               	.L80:
+ 649               	.LM68:
+ 650 037e 85E0      		ldi r24,lo8(5)
+ 651 0380 8093 0000 		sts PhyInfo+19,r24
+ 652 0384 00C0      		rjmp .L61
+ 653               	.LVL35:
+ 654               	.L77:
+ 655               	.LM69:
+ 656 0386 98E0      		ldi r25,lo8(8)
+ 657 0388 00C0      		rjmp .L71
+ 658               	.L81:
+ 659               	.LM70:
+ 660 038a 98E0      		ldi r25,lo8(8)
+ 661 038c 00C0      		rjmp .L68
+ 662               	.L75:
+ 663               	.LM71:
+ 664 038e 0E94 0000 		call mem_getFreeRxPkt
+ 665 0392 EC01      		movw r28,r24
+ 666 0394 9093 0000 		sts (PhyInfo+16)+1,r25
+ 667 0398 8093 0000 		sts PhyInfo+16,r24
+ 668               	.LM72:
+ 669 039c 892B      		or r24,r25
+ 670 039e 01F0      		breq .+2
+ 671 03a0 00C0      		rjmp .L42
+ 672               	.LVL36:
+ 673 03a2 00C0      		rjmp .L74
+ 674               	.LVL37:
+ 675               	.L78:
+ 676               	.LM73:
+ 677 03a4 8881      		ld r24,Y
+ 678 03a6 8770      		andi r24,lo8(7)
+ 679 03a8 8230      		cpi r24,lo8(2)
+ 680 03aa 01F0      		breq .+2
+ 681 03ac 00C0      		rjmp .L52
+ 682               	.LM74:
+ 683 03ae 8093 0000 		sts PhyInfo+19,r24
+ 684 03b2 00C0      		rjmp .L55
+ 685               	.L79:
+ 686               	.LM75:
+ 687 03b4 20E0      		ldi r18,lo8(2048)
+ 688 03b6 38E0      		ldi r19,hi8(2048)
+ 689               	.LVL38:
+ 690 03b8 00C0      		rjmp .L58
+ 691               	.LVL39:
+ 692               	.L72:
+ 693               	/* epilogue: frame size=0 */
+ 694 03ba DF91      		pop r29
+ 695 03bc CF91      		pop r28
+ 696 03be 0895      		ret
+ 697               	/* epilogue end (size=3) */
+ 698               	/* function phyrx_receiveUnsecured size 261 (256) */
+ 699               	.LFE6:
+ 701               	.global	__vector_1
+ 703               	__vector_1:
+ 704               	.LFB5:
+ 705               	.LM76:
+ 706               	/* prologue: frame size=0 */
+ 707 03c0 1F92      		push __zero_reg__
+ 708 03c2 0F92      		push __tmp_reg__
+ 709 03c4 0FB6      		in __tmp_reg__,__SREG__
+ 710 03c6 0F92      		push __tmp_reg__
+ 711 03c8 1124      		clr __zero_reg__
+ 712 03ca 2F93      		push r18
+ 713 03cc 3F93      		push r19
+ 714 03ce 4F93      		push r20
+ 715 03d0 5F93      		push r21
+ 716 03d2 6F93      		push r22
+ 717 03d4 7F93      		push r23
+ 718 03d6 8F93      		push r24
+ 719 03d8 9F93      		push r25
+ 720 03da AF93      		push r26
+ 721 03dc BF93      		push r27
+ 722 03de EF93      		push r30
+ 723 03e0 FF93      		push r31
+ 724               	/* prologue end (size=17) */
+ 725               	.LM77:
+ 726 03e2 87B7      		in r24,87-0x20
+ 727 03e4 8F7E      		andi r24,lo8(-17)
+ 728 03e6 87BF      		out 87-0x20,r24
+ 729               	.LM78:
+ 730 03e8 89B7      		in r24,89-0x20
+ 731 03ea 8E7F      		andi r24,lo8(-2)
+ 732 03ec 89BF      		out 89-0x20,r24
+ 733               	.LM79:
+ 734 03ee 9091 0000 		lds r25,PhyInfo+14
+ 735 03f2 9330      		cpi r25,lo8(3)
+ 736 03f4 00F0      		brlo .L100
+ 737 03f6 00C0      		rjmp .L83
+ 738               	.L99:
+ 739               	.LM80:
+ 740 03f8 8091 0000 		lds r24,PhyInfo+7
+ 741 03fc 8630      		cpi r24,lo8(6)
+ 742 03fe 01F4      		brne .L86
+ 743               	.LM81:
+ 744 0400 80E0      		ldi r24,lo8(PhyInfo)
+ 745 0402 90E0      		ldi r25,hi8(PhyInfo)
+ 746 0404 0E94 0000 		call phyrx_receiveUnsecured
+ 747               	.LM82:
+ 748 0408 9091 0000 		lds r25,PhyInfo+14
+ 749 040c 9330      		cpi r25,lo8(3)
+ 750 040e 00F4      		brsh .L83
+ 751               	.L100:
+ 752 0410 8099      		sbic 48-0x20,0
+ 753 0412 00C0      		rjmp .L99
+ 754               	.L83:
+ 755               	.LM83:
+ 756 0414 8091 0000 		lds r24,PhyInfo+7
+ 757 0418 8630      		cpi r24,lo8(6)
+ 758 041a 01F0      		breq .L101
+ 759               	.L86:
+ 760               	.LM84:
+ 761 041c 0E94 0000 		call phyrx_ResetRx
+ 762               	.L92:
+ 763               	.LM85:
+ 764 0420 89B7      		in r24,89-0x20
+ 765 0422 8160      		ori r24,lo8(1)
+ 766 0424 89BF      		out 89-0x20,r24
+ 767               	.LM86:
+ 768 0426 8091 0000 		lds r24,TmrIntNesting
+ 769 042a 8823      		tst r24
+ 770 042c 01F4      		brne .L96
+ 771               	.LM87:
+ 772 042e 87B7      		in r24,87-0x20
+ 773 0430 8061      		ori r24,lo8(16)
+ 774 0432 87BF      		out 87-0x20,r24
+ 775 0434 00C0      		rjmp .L96
+ 776               	.L101:
+ 777               	.LM88:
+ 778 0436 9330      		cpi r25,lo8(3)
+ 779 0438 00F4      		brsh .L86
+ 780 043a 809B      		sbis 48-0x20,0
+ 781 043c 00C0      		rjmp .L92
+ 782 043e 8199      		sbic 48-0x20,1
+ 783 0440 00C0      		rjmp .L92
+ 784 0442 00C0      		rjmp .L86
+ 785               	.L96:
+ 786               	/* epilogue: frame size=0 */
+ 787 0444 FF91      		pop r31
+ 788 0446 EF91      		pop r30
+ 789 0448 BF91      		pop r27
+ 790 044a AF91      		pop r26
+ 791 044c 9F91      		pop r25
+ 792 044e 8F91      		pop r24
+ 793 0450 7F91      		pop r23
+ 794 0452 6F91      		pop r22
+ 795 0454 5F91      		pop r21
+ 796 0456 4F91      		pop r20
+ 797 0458 3F91      		pop r19
+ 798 045a 2F91      		pop r18
+ 799 045c 0F90      		pop __tmp_reg__
+ 800 045e 0FBE      		out __SREG__,__tmp_reg__
+ 801 0460 0F90      		pop __tmp_reg__
+ 802 0462 1F90      		pop __zero_reg__
+ 803 0464 1895      		reti
+ 804               	/* epilogue end (size=17) */
+ 805               	/* function __vector_1 size 83 (49) */
+ 806               	.LFE5:
+ 808               	.global	__vector_12
+ 810               	__vector_12:
+ 811               	.LFB2:
+ 812               	.LM89:
+ 813               	/* prologue: frame size=0 */
+ 814 0466 1F92      		push __zero_reg__
+ 815 0468 0F92      		push __tmp_reg__
+ 816 046a 0FB6      		in __tmp_reg__,__SREG__
+ 817 046c 0F92      		push __tmp_reg__
+ 818 046e 1124      		clr __zero_reg__
+ 819 0470 2F93      		push r18
+ 820 0472 3F93      		push r19
+ 821 0474 4F93      		push r20
+ 822 0476 5F93      		push r21
+ 823 0478 6F93      		push r22
+ 824 047a 7F93      		push r23
+ 825 047c 8F93      		push r24
+ 826 047e 9F93      		push r25
+ 827 0480 AF93      		push r26
+ 828 0482 BF93      		push r27
+ 829 0484 EF93      		push r30
+ 830 0486 FF93      		push r31
+ 831               	/* prologue end (size=17) */
+ 832               	.LM90:
+ 833 0488 87B7      		in r24,87-0x20
+ 834 048a 8F7E      		andi r24,lo8(-17)
+ 835 048c 87BF      		out 87-0x20,r24
+ 836               	.LM91:
+ 837 048e 8091 0000 		lds r24,TmrIntNesting
+ 838 0492 8F5F      		subi r24,lo8(-(1))
+ 839 0494 8093 0000 		sts TmrIntNesting,r24
+ 840               	.LM92:
+ 841 0498 80E0      		ldi r24,lo8(0)
+ 842 049a 90E0      		ldi r25,hi8(0)
+ 843 049c 0E94 0000 		call OSTmr_Task
+ 844               	.LM93:
+ 845 04a0 8091 0000 		lds r24,SlotInfo
+ 846 04a4 9091 0000 		lds r25,(SlotInfo)+1
+ 847 04a8 A091 0000 		lds r26,(SlotInfo)+2
+ 848 04ac B091 0000 		lds r27,(SlotInfo)+3
+ 849 04b0 0196      		adiw r24,1
+ 850 04b2 A11D      		adc r26,__zero_reg__
+ 851 04b4 B11D      		adc r27,__zero_reg__
+ 852 04b6 8093 0000 		sts SlotInfo,r24
+ 853 04ba 9093 0000 		sts (SlotInfo)+1,r25
+ 854 04be A093 0000 		sts (SlotInfo)+2,r26
+ 855 04c2 B093 0000 		sts (SlotInfo)+3,r27
+ 856               	.LM94:
+ 857 04c6 8091 0000 		lds r24,TmrIntNesting
+ 858 04ca 8150      		subi r24,lo8(-(-1))
+ 859 04cc 8093 0000 		sts TmrIntNesting,r24
+ 860               	.LM95:
+ 861 04d0 87B7      		in r24,87-0x20
+ 862 04d2 8061      		ori r24,lo8(16)
+ 863 04d4 87BF      		out 87-0x20,r24
+ 864               	/* epilogue: frame size=0 */
+ 865 04d6 FF91      		pop r31
+ 866 04d8 EF91      		pop r30
+ 867 04da BF91      		pop r27
+ 868 04dc AF91      		pop r26
+ 869 04de 9F91      		pop r25
+ 870 04e0 8F91      		pop r24
+ 871 04e2 7F91      		pop r23
+ 872 04e4 6F91      		pop r22
+ 873 04e6 5F91      		pop r21
+ 874 04e8 4F91      		pop r20
+ 875 04ea 3F91      		pop r19
+ 876 04ec 2F91      		pop r18
+ 877 04ee 0F90      		pop __tmp_reg__
+ 878 04f0 0FBE      		out __SREG__,__tmp_reg__
+ 879 04f2 0F90      		pop __tmp_reg__
+ 880 04f4 1F90      		pop __zero_reg__
+ 881 04f6 1895      		reti
+ 882               	/* epilogue end (size=17) */
+ 883               	/* function __vector_12 size 73 (39) */
+ 884               	.LFE2:
+ 886               		.comm OSIntNesting,1,1
+ 887               		.comm OSMemFreeList,2,1
+ 888               		.comm OSMemTbl,96,1
+ 889               		.comm OSTmrFree,2,1
+ 890               		.comm OSTmrUsed,2,1
+ 891               		.comm OSTmrTime,4,1
+ 892               		.comm OSTmrTbl,240,1
+ 893               		.comm OSTmrFreeList,2,1
+ 894               		.comm OSTmrWheelTbl,32,1
+ 895               		.comm TmrIntNesting,1,1
+ 896               		.comm RxIntNesting,1,1
+ 954               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 trx_interrupt.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:20     .text:00000000 __vector_11
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:135    .text:000000f8 __vector_24
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:157    .text:0000010c phyrx_receivePayload
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:373    .text:000001fe phyrx_receiveUnsecured
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:703    .text:000003c0 __vector_1
+                            *COM*:00000001 TmrIntNesting
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccCQaaaa.s:810    .text:00000466 __vector_12
+                            *COM*:00000001 OSIntNesting
+                            *COM*:00000002 OSMemFreeList
+                            *COM*:00000060 OSMemTbl
+                            *COM*:00000002 OSTmrFree
+                            *COM*:00000002 OSTmrUsed
+                            *COM*:00000004 OSTmrTime
+                            *COM*:000000f0 OSTmrTbl
+                            *COM*:00000002 OSTmrFreeList
+                            *COM*:00000020 OSTmrWheelTbl
+                            *COM*:00000001 RxIntNesting
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+SlotInfo
+__mulsi3
+PhyInfo
+mac_getMpduHrLength
+phyrx_ResetRx
+macInfo
+phyrx_checkAck
+pddata_indication
+mem_getFreeRxPkt
+OSTmr_Task

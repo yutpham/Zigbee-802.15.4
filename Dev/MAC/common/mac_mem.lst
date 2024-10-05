@@ -1,0 +1,288 @@
+   1               		.file	"mac_mem.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	mem_releaseRxPkt
+  20               	mem_releaseRxPkt:
+  21               	.LFB7:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26               	.LM2:
+  27 0000 BC01      		movw r22,r24
+  28 0002 8091 0000 		lds r24,MacRxMem
+  29 0006 9091 0000 		lds r25,(MacRxMem)+1
+  30               	.LVL1:
+  31 000a 0E94 0000 		call OSMemPut
+  32               	.LVL2:
+  33               	/* epilogue: frame size=0 */
+  34 000e 0895      		ret
+  35               	/* epilogue end (size=1) */
+  36               	/* function mem_releaseRxPkt size 8 (7) */
+  37               	.LFE7:
+  39               	.global	mem_releaseTxPkt
+  41               	mem_releaseTxPkt:
+  42               	.LFB5:
+  43               	.LM3:
+  44               	/* prologue: frame size=0 */
+  45               	/* prologue end (size=0) */
+  46               	.LVL3:
+  47               	.LM4:
+  48 0010 BC01      		movw r22,r24
+  49 0012 8091 0000 		lds r24,MacTxMem
+  50 0016 9091 0000 		lds r25,(MacTxMem)+1
+  51               	.LVL4:
+  52 001a 0E94 0000 		call OSMemPut
+  53               	.LVL5:
+  54               	/* epilogue: frame size=0 */
+  55 001e 0895      		ret
+  56               	/* epilogue end (size=1) */
+  57               	/* function mem_releaseTxPkt size 8 (7) */
+  58               	.LFE5:
+  60               	.global	mem_getFreeRxPkt
+  62               	mem_getFreeRxPkt:
+  63               	.LFB6:
+  64               	.LM5:
+  65               	/* prologue: frame size=1 */
+  66 0020 CF93      		push r28
+  67 0022 DF93      		push r29
+  68 0024 CDB7      		in r28,__SP_L__
+  69 0026 DEB7      		in r29,__SP_H__
+  70 0028 2197      		sbiw r28,1
+  71 002a 0FB6      		in __tmp_reg__,__SREG__
+  72 002c F894      		cli
+  73 002e DEBF      		out __SP_H__,r29
+  74 0030 0FBE      		out __SREG__,__tmp_reg__
+  75 0032 CDBF      		out __SP_L__,r28
+  76               	/* prologue end (size=10) */
+  77               	.LM6:
+  78 0034 BE01      		movw r22,r28
+  79 0036 6F5F      		subi r22,lo8(-(1))
+  80 0038 7F4F      		sbci r23,hi8(-(1))
+  81 003a 8091 0000 		lds r24,MacRxMem
+  82 003e 9091 0000 		lds r25,(MacRxMem)+1
+  83 0042 0E94 0000 		call OSMemGet
+  84               	/* epilogue: frame size=1 */
+  85 0046 2196      		adiw r28,1
+  86 0048 0FB6      		in __tmp_reg__,__SREG__
+  87 004a F894      		cli
+  88 004c DEBF      		out __SP_H__,r29
+  89 004e 0FBE      		out __SREG__,__tmp_reg__
+  90 0050 CDBF      		out __SP_L__,r28
+  91 0052 DF91      		pop r29
+  92 0054 CF91      		pop r28
+  93 0056 0895      		ret
+  94               	/* epilogue end (size=9) */
+  95               	/* function mem_getFreeRxPkt size 28 (9) */
+  96               	.LFE6:
+  98               	.global	mem_getFreeTxPkt
+ 100               	mem_getFreeTxPkt:
+ 101               	.LFB4:
+ 102               	.LM7:
+ 103               	/* prologue: frame size=1 */
+ 104 0058 CF93      		push r28
+ 105 005a DF93      		push r29
+ 106 005c CDB7      		in r28,__SP_L__
+ 107 005e DEB7      		in r29,__SP_H__
+ 108 0060 2197      		sbiw r28,1
+ 109 0062 0FB6      		in __tmp_reg__,__SREG__
+ 110 0064 F894      		cli
+ 111 0066 DEBF      		out __SP_H__,r29
+ 112 0068 0FBE      		out __SREG__,__tmp_reg__
+ 113 006a CDBF      		out __SP_L__,r28
+ 114               	/* prologue end (size=10) */
+ 115               	.LM8:
+ 116 006c BE01      		movw r22,r28
+ 117 006e 6F5F      		subi r22,lo8(-(1))
+ 118 0070 7F4F      		sbci r23,hi8(-(1))
+ 119 0072 8091 0000 		lds r24,MacTxMem
+ 120 0076 9091 0000 		lds r25,(MacTxMem)+1
+ 121 007a 0E94 0000 		call OSMemGet
+ 122               	/* epilogue: frame size=1 */
+ 123 007e 2196      		adiw r28,1
+ 124 0080 0FB6      		in __tmp_reg__,__SREG__
+ 125 0082 F894      		cli
+ 126 0084 DEBF      		out __SP_H__,r29
+ 127 0086 0FBE      		out __SREG__,__tmp_reg__
+ 128 0088 CDBF      		out __SP_L__,r28
+ 129 008a DF91      		pop r29
+ 130 008c CF91      		pop r28
+ 131 008e 0895      		ret
+ 132               	/* epilogue end (size=9) */
+ 133               	/* function mem_getFreeTxPkt size 28 (9) */
+ 134               	.LFE4:
+ 136               	.global	mem_release
+ 138               	mem_release:
+ 139               	.LFB3:
+ 140               	.LM9:
+ 141               	/* prologue: frame size=1 */
+ 142 0090 0F93      		push r16
+ 143 0092 1F93      		push r17
+ 144 0094 CF93      		push r28
+ 145 0096 DF93      		push r29
+ 146 0098 CDB7      		in r28,__SP_L__
+ 147 009a DEB7      		in r29,__SP_H__
+ 148 009c 2197      		sbiw r28,1
+ 149 009e 0FB6      		in __tmp_reg__,__SREG__
+ 150 00a0 F894      		cli
+ 151 00a2 DEBF      		out __SP_H__,r29
+ 152 00a4 0FBE      		out __SREG__,__tmp_reg__
+ 153 00a6 CDBF      		out __SP_L__,r28
+ 154               	/* prologue end (size=12) */
+ 155               	.LM10:
+ 156 00a8 8E01      		movw r16,r28
+ 157 00aa 0F5F      		subi r16,lo8(-(1))
+ 158 00ac 1F4F      		sbci r17,hi8(-(1))
+ 159 00ae B801      		movw r22,r16
+ 160 00b0 8091 0000 		lds r24,MacRxMem
+ 161 00b4 9091 0000 		lds r25,(MacRxMem)+1
+ 162 00b8 0E94 0000 		call OSMemDelete
+ 163               	.LM11:
+ 164 00bc B801      		movw r22,r16
+ 165 00be 8091 0000 		lds r24,MacTxMem
+ 166 00c2 9091 0000 		lds r25,(MacTxMem)+1
+ 167 00c6 0E94 0000 		call OSMemDelete
+ 168               	/* epilogue: frame size=1 */
+ 169 00ca 2196      		adiw r28,1
+ 170 00cc 0FB6      		in __tmp_reg__,__SREG__
+ 171 00ce F894      		cli
+ 172 00d0 DEBF      		out __SP_H__,r29
+ 173 00d2 0FBE      		out __SREG__,__tmp_reg__
+ 174 00d4 CDBF      		out __SP_L__,r28
+ 175 00d6 DF91      		pop r29
+ 176 00d8 CF91      		pop r28
+ 177 00da 1F91      		pop r17
+ 178 00dc 0F91      		pop r16
+ 179 00de 0895      		ret
+ 180               	/* epilogue end (size=11) */
+ 181               	/* function mem_release size 40 (17) */
+ 182               	.LFE3:
+ 184               	.global	mem_initialize
+ 186               	mem_initialize:
+ 187               	.LFB2:
+ 188               	.LM12:
+ 189               	/* prologue: frame size=1 */
+ 190 00e0 CF92      		push r12
+ 191 00e2 DF92      		push r13
+ 192 00e4 EF92      		push r14
+ 193 00e6 FF92      		push r15
+ 194 00e8 0F93      		push r16
+ 195 00ea 1F93      		push r17
+ 196 00ec CF93      		push r28
+ 197 00ee DF93      		push r29
+ 198 00f0 CDB7      		in r28,__SP_L__
+ 199 00f2 DEB7      		in r29,__SP_H__
+ 200 00f4 2197      		sbiw r28,1
+ 201 00f6 0FB6      		in __tmp_reg__,__SREG__
+ 202 00f8 F894      		cli
+ 203 00fa DEBF      		out __SP_H__,r29
+ 204 00fc 0FBE      		out __SREG__,__tmp_reg__
+ 205 00fe CDBF      		out __SP_L__,r28
+ 206               	/* prologue end (size=16) */
+ 207               	.LM13:
+ 208 0100 6E01      		movw r12,r28
+ 209 0102 0894      		sec
+ 210 0104 C11C      		adc r12,__zero_reg__
+ 211 0106 D11C      		adc r13,__zero_reg__
+ 212 0108 7601      		movw r14,r12
+ 213 010a 00E8      		ldi r16,lo8(128)
+ 214 010c 10E0      		ldi r17,hi8(128)
+ 215 010e 20E0      		ldi r18,hlo8(128)
+ 216 0110 30E0      		ldi r19,hhi8(128)
+ 217 0112 43E0      		ldi r20,lo8(3)
+ 218 0114 50E0      		ldi r21,hi8(3)
+ 219 0116 60E0      		ldi r22,hlo8(3)
+ 220 0118 70E0      		ldi r23,hhi8(3)
+ 221 011a 80E0      		ldi r24,lo8(MacRxPktPool)
+ 222 011c 90E0      		ldi r25,hi8(MacRxPktPool)
+ 223 011e 0E94 0000 		call OSMemCreate
+ 224 0122 9093 0000 		sts (MacRxMem)+1,r25
+ 225 0126 8093 0000 		sts MacRxMem,r24
+ 226               	.LM14:
+ 227 012a 08E8      		ldi r16,lo8(136)
+ 228 012c 10E0      		ldi r17,hi8(136)
+ 229 012e 20E0      		ldi r18,hlo8(136)
+ 230 0130 30E0      		ldi r19,hhi8(136)
+ 231 0132 44E0      		ldi r20,lo8(4)
+ 232 0134 50E0      		ldi r21,hi8(4)
+ 233 0136 60E0      		ldi r22,hlo8(4)
+ 234 0138 70E0      		ldi r23,hhi8(4)
+ 235 013a 80E0      		ldi r24,lo8(MacTxPktPool)
+ 236 013c 90E0      		ldi r25,hi8(MacTxPktPool)
+ 237 013e 0E94 0000 		call OSMemCreate
+ 238 0142 9093 0000 		sts (MacTxMem)+1,r25
+ 239 0146 8093 0000 		sts MacTxMem,r24
+ 240               	/* epilogue: frame size=1 */
+ 241 014a 2196      		adiw r28,1
+ 242 014c 0FB6      		in __tmp_reg__,__SREG__
+ 243 014e F894      		cli
+ 244 0150 DEBF      		out __SP_H__,r29
+ 245 0152 0FBE      		out __SREG__,__tmp_reg__
+ 246 0154 CDBF      		out __SP_L__,r28
+ 247 0156 DF91      		pop r29
+ 248 0158 CF91      		pop r28
+ 249 015a 1F91      		pop r17
+ 250 015c 0F91      		pop r16
+ 251 015e FF90      		pop r15
+ 252 0160 EF90      		pop r14
+ 253 0162 DF90      		pop r13
+ 254 0164 CF90      		pop r12
+ 255 0166 0895      		ret
+ 256               	/* epilogue end (size=15) */
+ 257               	/* function mem_initialize size 68 (37) */
+ 258               	.LFE2:
+ 260               		.comm OSIntNesting,1,1
+ 261               		.comm OSMemFreeList,2,1
+ 262               		.comm OSMemTbl,96,1
+ 263               		.comm OSTmrFree,2,1
+ 264               		.comm OSTmrUsed,2,1
+ 265               		.comm OSTmrTime,4,1
+ 266               		.comm OSTmrTbl,240,1
+ 267               		.comm OSTmrFreeList,2,1
+ 268               		.comm OSTmrWheelTbl,32,1
+ 269               		.comm MacRxPktPool,384,1
+ 270               		.comm MacTxPktPool,544,1
+ 271               		.comm MacRxMem,2,1
+ 272               		.comm MacTxMem,2,1
+ 330               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 mac_mem.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:20     .text:00000000 mem_releaseRxPkt
+                            *COM*:00000002 MacRxMem
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:41     .text:00000010 mem_releaseTxPkt
+                            *COM*:00000002 MacTxMem
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:62     .text:00000020 mem_getFreeRxPkt
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:100    .text:00000058 mem_getFreeTxPkt
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:138    .text:00000090 mem_release
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccsHaaaa.s:186    .text:000000e0 mem_initialize
+                            *COM*:00000180 MacRxPktPool
+                            *COM*:00000220 MacTxPktPool
+                            *COM*:00000001 OSIntNesting
+                            *COM*:00000002 OSMemFreeList
+                            *COM*:00000060 OSMemTbl
+                            *COM*:00000002 OSTmrFree
+                            *COM*:00000002 OSTmrUsed
+                            *COM*:00000004 OSTmrTime
+                            *COM*:000000f0 OSTmrTbl
+                            *COM*:00000002 OSTmrFreeList
+                            *COM*:00000020 OSTmrWheelTbl
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+OSMemPut
+OSMemGet
+OSMemDelete
+OSMemCreate

@@ -1,0 +1,1838 @@
+   1               		.file	"nwk.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	nwk_setNwkState
+  20               	nwk_setNwkState:
+  21               	.LFB3:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26               	.LM2:
+  27 0000 80E0      		ldi r24,lo8(0)
+  28 0002 90E0      		ldi r25,hi8(0)
+  29               	.LVL1:
+  30               	/* epilogue: frame size=0 */
+  31 0004 0895      		ret
+  32               	/* epilogue end (size=1) */
+  33               	/* function nwk_setNwkState size 3 (2) */
+  34               	.LFE3:
+  36               	.global	nwk_processAssoIndication
+  38               	nwk_processAssoIndication:
+  39               	.LFB25:
+  40               	.LM3:
+  41               	/* prologue: frame size=0 */
+  42 0006 8F92      		push r8
+  43 0008 9F92      		push r9
+  44 000a AF92      		push r10
+  45 000c BF92      		push r11
+  46 000e CF92      		push r12
+  47 0010 DF92      		push r13
+  48 0012 EF92      		push r14
+  49 0014 FF92      		push r15
+  50 0016 0F93      		push r16
+  51 0018 CF93      		push r28
+  52 001a DF93      		push r29
+  53               	/* prologue end (size=11) */
+  54               	.LVL2:
+  55 001c 5C01      		movw r10,r24
+  56               	.LM4:
+  57 001e FC01      		movw r30,r24
+  58 0020 C281      		ldd r28,Z+2
+  59 0022 D381      		ldd r29,Z+3
+  60               	.LVL3:
+  61               	.LM5:
+  62 0024 98E0      		ldi r25,lo8(8)
+  63 0026 C92E      		mov r12,r25
+  64 0028 D12C      		mov r13,__zero_reg__
+  65               	.LVL4:
+  66 002a CC0E      		add r12,r28
+  67 002c DD1E      		adc r13,r29
+  68               	.LM6:
+  69 002e 8885      		ldd r24,Y+8
+  70               	.LVL5:
+  71 0030 81FD      		sbrc r24,1
+  72 0032 00C0      		rjmp .L4
+  73               	.LM7:
+  74 0034 8091 0000 		lds r24,NwkInfo+24
+  75 0038 87FF      		sbrs r24,7
+  76 003a 00C0      		rjmp .L6
+  77               	.L7:
+  78               	.LM8:
+  79 003c CE01      		movw r24,r28
+  80 003e 0E94 0000 		call nwk_getShortAddInNT
+  81 0042 7C01      		movw r14,r24
+  82               	.LVL6:
+  83               	.LM9:
+  84 0044 8F5F      		subi r24,lo8(-1)
+  85 0046 9F4F      		sbci r25,hi8(-1)
+  86 0048 01F0      		breq .L8
+  87               	.LVL7:
+  88 004a 00E0      		ldi r16,lo8(0)
+  89               	.LVL8:
+  90 004c 00C0      		rjmp .L10
+  91               	.LVL9:
+  92               	.L4:
+  93               	.LM10:
+  94 004e 8091 0000 		lds r24,NwkInfo+24
+  95 0052 82FD      		sbrc r24,2
+  96 0054 00C0      		rjmp .L7
+  97               	.L6:
+  98               	.LM11:
+  99 0056 8FEF      		ldi r24,lo8(-1)
+ 100 0058 E82E      		mov r14,r24
+ 101 005a F82E      		mov r15,r24
+ 102               	.LVL10:
+ 103 005c 02E0      		ldi r16,lo8(2)
+ 104               	.LVL11:
+ 105 005e 00C0      		rjmp .L10
+ 106               	.LVL12:
+ 107               	.L8:
+ 108               	.LM12:
+ 109 0060 F601      		movw r30,r12
+ 110 0062 8081      		ld r24,Z
+ 111               	.LVL13:
+ 112 0064 8695      		lsr r24
+ 113 0066 8170      		andi r24,lo8(1)
+ 114 0068 9927      		clr r25
+ 115 006a 0E94 0000 		call routing_checkFreeAddr
+ 116               	.LM13:
+ 117 006e 892B      		or r24,r25
+ 118 0070 01F4      		brne .L11
+ 119 0072 8824      		clr r8
+ 120 0074 9924      		clr r9
+ 121               	.LVL14:
+ 122               	.L13:
+ 123               	.LM14:
+ 124 0076 073C      		cpi r16,lo8(-57)
+ 125 0078 01F0      		breq .L14
+ 126 007a FFEF      		ldi r31,lo8(-1)
+ 127 007c 8F16      		cp r8,r31
+ 128 007e FFEF      		ldi r31,hi8(-1)
+ 129 0080 9F06      		cpc r9,r31
+ 130 0082 01F0      		breq .L14
+ 131               	.LM15:
+ 132 0084 4885      		ldd r20,Y+8
+ 133 0086 5527      		clr r21
+ 134 0088 BE01      		movw r22,r28
+ 135 008a C401      		movw r24,r8
+ 136 008c 0E94 0000 		call nlmeJoinIndication
+ 137 0090 7401      		movw r14,r8
+ 138 0092 00C0      		rjmp .L10
+ 139               	.L14:
+ 140               	.LM16:
+ 141 0094 81E0      		ldi r24,lo8(1)
+ 142 0096 90E0      		ldi r25,hi8(1)
+ 143 0098 0E94 0000 		call nwk_inhibitJoin
+ 144 009c 01E0      		ldi r16,lo8(1)
+ 145 009e 00C0      		rjmp .L10
+ 146               	.LVL15:
+ 147               	.L11:
+ 148               	.LM17:
+ 149 00a0 F601      		movw r30,r12
+ 150 00a2 8081      		ld r24,Z
+ 151 00a4 8695      		lsr r24
+ 152 00a6 8170      		andi r24,lo8(1)
+ 153 00a8 0E94 0000 		call routing_allocDistAddr
+ 154 00ac 4C01      		movw r8,r24
+ 155               	.LVL16:
+ 156               	.LM18:
+ 157 00ae 0A85      		ldd r16,Y+10
+ 158 00b0 2985      		ldd r18,Y+9
+ 159 00b2 F601      		movw r30,r12
+ 160 00b4 4081      		ld r20,Z
+ 161 00b6 BC01      		movw r22,r24
+ 162 00b8 CE01      		movw r24,r28
+ 163 00ba 0E94 0000 		call nwk_addNewChild
+ 164 00be 082F      		mov r16,r24
+ 165               	.LVL17:
+ 166 00c0 00C0      		rjmp .L13
+ 167               	.LVL18:
+ 168               	.L10:
+ 169               	.LM19:
+ 170 00c2 20E0      		ldi r18,lo8(0)
+ 171 00c4 402F      		mov r20,r16
+ 172 00c6 B701      		movw r22,r14
+ 173 00c8 CE01      		movw r24,r28
+ 174 00ca 0E94 0000 		call mlmeAssociateResponse
+ 175               	.LM20:
+ 176 00ce F501      		movw r30,r10
+ 177 00d0 8281      		ldd r24,Z+2
+ 178 00d2 9381      		ldd r25,Z+3
+ 179 00d4 0E94 0000 		call mem_freeMem
+ 180               	/* epilogue: frame size=0 */
+ 181 00d8 DF91      		pop r29
+ 182 00da CF91      		pop r28
+ 183 00dc 0F91      		pop r16
+ 184 00de FF90      		pop r15
+ 185 00e0 EF90      		pop r14
+ 186 00e2 DF90      		pop r13
+ 187 00e4 CF90      		pop r12
+ 188 00e6 BF90      		pop r11
+ 189 00e8 AF90      		pop r10
+ 190 00ea 9F90      		pop r9
+ 191 00ec 8F90      		pop r8
+ 192 00ee 0895      		ret
+ 193               	/* epilogue end (size=12) */
+ 194               	/* function nwk_processAssoIndication size 118 (95) */
+ 195               	.LFE25:
+ 197               	.global	nwk_processBeaconIndication
+ 199               	nwk_processBeaconIndication:
+ 200               	.LFB24:
+ 201               	.LM21:
+ 202               	/* prologue: frame size=0 */
+ 203               	/* prologue end (size=0) */
+ 204               	.LVL19:
+ 205 00f0 FC01      		movw r30,r24
+ 206               	.LM22:
+ 207 00f2 8091 0000 		lds r24,NwkInfo+1
+ 208               	.LVL20:
+ 209 00f6 8330      		cpi r24,lo8(3)
+ 210 00f8 01F0      		breq .L23
+ 211 00fa 0895      		ret
+ 212               	.L23:
+ 213               	.LM23:
+ 214 00fc 8281      		ldd r24,Z+2
+ 215 00fe 9381      		ldd r25,Z+3
+ 216 0100 0E94 0000 		call nwk_updateBeacon
+ 217               	.LVL21:
+ 218 0104 0895      		ret
+ 219               	/* epilogue: frame size=0 */
+ 220               	/* epilogue: noreturn */
+ 221               	/* epilogue end (size=0) */
+ 222               	/* function nwk_processBeaconIndication size 11 (11) */
+ 223               	.LFE24:
+ 225               	.global	nwk_processStartConfirm
+ 227               	nwk_processStartConfirm:
+ 228               	.LFB23:
+ 229               	.LM24:
+ 230               	/* prologue: frame size=0 */
+ 231               	/* prologue end (size=0) */
+ 232               	.LVL22:
+ 233               	.LM25:
+ 234 0106 FC01      		movw r30,r24
+ 235 0108 8181      		ldd r24,Z+1
+ 236               	.LVL23:
+ 237 010a 8823      		tst r24
+ 238 010c 01F4      		brne .L25
+ 239               	.LM26:
+ 240 010e 8091 0000 		lds r24,NwkInfo+1
+ 241 0112 8230      		cpi r24,lo8(2)
+ 242 0114 01F0      		breq .L32
+ 243               	.L27:
+ 244               	.LM27:
+ 245 0116 8730      		cpi r24,lo8(7)
+ 246 0118 01F0      		breq .L33
+ 247 011a 0895      		ret
+ 248               	.L25:
+ 249               	.LM28:
+ 250 011c 84EC      		ldi r24,lo8(196)
+ 251 011e 90E0      		ldi r25,hi8(196)
+ 252 0120 0E94 0000 		call nlmeNetworkFormationConfirm
+ 253 0124 0895      		ret
+ 254               	.L33:
+ 255               	.LM29:
+ 256 0126 81E0      		ldi r24,lo8(1)
+ 257 0128 8093 0000 		sts NwkInfo,r24
+ 258               	.LM30:
+ 259 012c 8093 0000 		sts NwkInfo+7,r24
+ 260               	.LM31:
+ 261 0130 80E0      		ldi r24,lo8(0)
+ 262 0132 90E0      		ldi r25,hi8(0)
+ 263 0134 0E94 0000 		call nlmeStartRouterConfirm
+ 264 0138 0895      		ret
+ 265               	.L32:
+ 266               	.LM32:
+ 267 013a 81E0      		ldi r24,lo8(1)
+ 268 013c 8093 0000 		sts NwkInfo,r24
+ 269               	.LM33:
+ 270 0140 1092 0000 		sts NwkInfo+7,__zero_reg__
+ 271               	.LM34:
+ 272 0144 80E0      		ldi r24,lo8(0)
+ 273 0146 90E0      		ldi r25,hi8(0)
+ 274 0148 0E94 0000 		call nlmeNetworkFormationConfirm
+ 275 014c 8091 0000 		lds r24,NwkInfo+1
+ 276 0150 00C0      		rjmp .L27
+ 277               	/* epilogue: frame size=0 */
+ 278               	/* epilogue: noreturn */
+ 279               	/* epilogue end (size=0) */
+ 280               	/* function nwk_processStartConfirm size 38 (38) */
+ 281               	.LFE23:
+ 283               	.global	nwk_processPollConfirm
+ 285               	nwk_processPollConfirm:
+ 286               	.LFB22:
+ 287               	.LM35:
+ 288               	/* prologue: frame size=0 */
+ 289               	/* prologue end (size=0) */
+ 290               	.LVL24:
+ 291               	.LM36:
+ 292 0152 FC01      		movw r30,r24
+ 293 0154 8181      		ldd r24,Z+1
+ 294               	.LVL25:
+ 295 0156 8823      		tst r24
+ 296 0158 01F4      		brne .L35
+ 297               	.LM37:
+ 298 015a 80E0      		ldi r24,lo8(0)
+ 299 015c 90E0      		ldi r25,hi8(0)
+ 300 015e 0E94 0000 		call nlmeSyncConfirm
+ 301 0162 0895      		ret
+ 302               	.L35:
+ 303               	.LM38:
+ 304 0164 86EC      		ldi r24,lo8(198)
+ 305 0166 90E0      		ldi r25,hi8(198)
+ 306 0168 0E94 0000 		call nlmeSyncConfirm
+ 307 016c 0895      		ret
+ 308               	/* epilogue: frame size=0 */
+ 309               	/* epilogue: noreturn */
+ 310               	/* epilogue end (size=0) */
+ 311               	/* function nwk_processPollConfirm size 14 (14) */
+ 312               	.LFE22:
+ 314               	.global	nwk_processDisAssConfirm
+ 316               	nwk_processDisAssConfirm:
+ 317               	.LFB21:
+ 318               	.LM39:
+ 319               	/* prologue: frame size=0 */
+ 320               	/* prologue end (size=0) */
+ 321               	.LVL26:
+ 322               	.LM40:
+ 323 016e FC01      		movw r30,r24
+ 324 0170 8181      		ldd r24,Z+1
+ 325               	.LVL27:
+ 326 0172 8111      		cpse r24,__zero_reg__
+ 327 0174 0895      		ret
+ 328               	.L43:
+ 329               	.LM41:
+ 330 0176 60E0      		ldi r22,lo8(0)
+ 331 0178 70E0      		ldi r23,hi8(0)
+ 332 017a 80E0      		ldi r24,lo8(0)
+ 333 017c 90E0      		ldi r25,hi8(0)
+ 334 017e 0E94 0000 		call nlmeLeaveConfirm
+ 335 0182 0895      		ret
+ 336               	/* epilogue: frame size=0 */
+ 337               	/* epilogue: noreturn */
+ 338               	/* epilogue end (size=0) */
+ 339               	/* function nwk_processDisAssConfirm size 12 (12) */
+ 340               	.LFE21:
+ 342               	.global	nwk_processScanConfirm
+ 344               	nwk_processScanConfirm:
+ 345               	.LFB20:
+ 346               	.LM42:
+ 347               	/* prologue: frame size=0 */
+ 348 0184 CF93      		push r28
+ 349 0186 DF93      		push r29
+ 350               	/* prologue end (size=2) */
+ 351               	.LVL28:
+ 352 0188 FC01      		movw r30,r24
+ 353               	.LM43:
+ 354 018a C281      		ldd r28,Z+2
+ 355 018c D381      		ldd r29,Z+3
+ 356               	.LM44:
+ 357 018e 4181      		ldd r20,Z+1
+ 358 0190 4423      		tst r20
+ 359 0192 01F4      		brne .L45
+ 360               	.LVL29:
+ 361               	.LM45:
+ 362 0194 8091 0000 		lds r24,NwkInfo+1
+ 363 0198 8330      		cpi r24,lo8(3)
+ 364 019a 01F0      		breq .L55
+ 365               	.L47:
+ 366               	.LM46:
+ 367 019c 8530      		cpi r24,lo8(5)
+ 368 019e 01F4      		brne .L49
+ 369 01a0 00C0      		rjmp .L58
+ 370               	.LVL30:
+ 371               	.L45:
+ 372               	.LM47:
+ 373 01a2 8091 0000 		lds r24,NwkInfo+1
+ 374 01a6 8330      		cpi r24,lo8(3)
+ 375 01a8 01F0      		breq .L57
+ 376               	.L51:
+ 377               	.LM48:
+ 378 01aa 8530      		cpi r24,lo8(5)
+ 379 01ac 01F4      		brne .L49
+ 380               	.LM49:
+ 381 01ae 6AEC      		ldi r22,lo8(202)
+ 382 01b0 70E0      		ldi r23,hi8(202)
+ 383 01b2 8091 0000 		lds r24,NwkInfo+4
+ 384 01b6 9091 0000 		lds r25,(NwkInfo+4)+1
+ 385 01ba 0E94 0000 		call nlmeJoinConfirm
+ 386               	.LVL31:
+ 387 01be 00C0      		rjmp .L49
+ 388               	.LVL32:
+ 389               	.L58:
+ 390               	.LM50:
+ 391 01c0 60E0      		ldi r22,lo8(0)
+ 392 01c2 70E0      		ldi r23,hi8(0)
+ 393 01c4 8091 0000 		lds r24,NwkInfo+4
+ 394 01c8 9091 0000 		lds r25,(NwkInfo+4)+1
+ 395 01cc 0E94 0000 		call nlmeJoinConfirm
+ 396               	.LVL33:
+ 397               	.LM51:
+ 398 01d0 86E0      		ldi r24,lo8(6)
+ 399 01d2 8093 0000 		sts NwkInfo,r24
+ 400 01d6 00C0      		rjmp .L49
+ 401               	.LVL34:
+ 402               	.L55:
+ 403               	.LM52:
+ 404 01d8 60E0      		ldi r22,lo8(0)
+ 405 01da 70E0      		ldi r23,hi8(0)
+ 406 01dc 80E0      		ldi r24,lo8(nwk_desc)
+ 407 01de 90E0      		ldi r25,hi8(nwk_desc)
+ 408 01e0 0E94 0000 		call nlmeNetworkDiscoveryConfirm
+ 409               	.LVL35:
+ 410 01e4 8091 0000 		lds r24,NwkInfo+1
+ 411 01e8 00C0      		rjmp .L47
+ 412               	.LVL36:
+ 413               	.L57:
+ 414               	.LM53:
+ 415 01ea 5527      		clr r21
+ 416 01ec 60E0      		ldi r22,lo8(0)
+ 417 01ee 70E0      		ldi r23,hi8(0)
+ 418 01f0 80E0      		ldi r24,lo8(0)
+ 419 01f2 90E0      		ldi r25,hi8(0)
+ 420 01f4 0E94 0000 		call nlmeNetworkDiscoveryConfirm
+ 421               	.LVL37:
+ 422 01f8 8091 0000 		lds r24,NwkInfo+1
+ 423 01fc 00C0      		rjmp .L51
+ 424               	.LVL38:
+ 425               	.L49:
+ 426               	.LM54:
+ 427 01fe CE01      		movw r24,r28
+ 428 0200 0E94 0000 		call mem_freeMem
+ 429               	.LVL39:
+ 430               	/* epilogue: frame size=0 */
+ 431 0204 DF91      		pop r29
+ 432 0206 CF91      		pop r28
+ 433 0208 0895      		ret
+ 434               	/* epilogue end (size=3) */
+ 435               	/* function nwk_processScanConfirm size 67 (62) */
+ 436               	.LFE20:
+ 438               	.global	nwk_processAssConfirm
+ 440               	nwk_processAssConfirm:
+ 441               	.LFB19:
+ 442               	.LM55:
+ 443               	/* prologue: frame size=0 */
+ 444 020a 1F93      		push r17
+ 445 020c CF93      		push r28
+ 446 020e DF93      		push r29
+ 447               	/* prologue end (size=3) */
+ 448               	.LVL40:
+ 449 0210 DC01      		movw r26,r24
+ 450               	.LM56:
+ 451 0212 EC01      		movw r28,r24
+ 452 0214 8981      		ldd r24,Y+1
+ 453               	.LVL41:
+ 454 0216 8823      		tst r24
+ 455 0218 01F4      		brne .L60
+ 456               	.LM57:
+ 457 021a 8091 0000 		lds r24,NwkInfo+1
+ 458 021e 8430      		cpi r24,lo8(4)
+ 459 0220 01F0      		breq .L68
+ 460               	.L60:
+ 461               	.LM58:
+ 462 0222 1092 0000 		sts NwkInfo+1,__zero_reg__
+ 463               	.LM59:
+ 464 0226 E091 0000 		lds r30,NwkInfo+2
+ 465 022a F091 0000 		lds r31,(NwkInfo+2)+1
+ 466 022e 83E0      		ldi r24,lo8(3)
+ 467 0230 8687      		std Z+14,r24
+ 468               	.LM60:
+ 469 0232 E091 0000 		lds r30,NwkInfo+2
+ 470 0236 F091 0000 		lds r31,(NwkInfo+2)+1
+ 471 023a 118A      		std Z+17,__zero_reg__
+ 472               	.LM61:
+ 473 023c ED01      		movw r28,r26
+ 474 023e 6981      		ldd r22,Y+1
+ 475 0240 7727      		clr r23
+ 476 0242 8091 0000 		lds r24,NwkInfo+4
+ 477 0246 9091 0000 		lds r25,(NwkInfo+4)+1
+ 478 024a 0E94 0000 		call nlmeJoinConfirm
+ 479               	.LVL42:
+ 480 024e 00C0      		rjmp .L67
+ 481               	.LVL43:
+ 482               	.L68:
+ 483               	.LM62:
+ 484 0250 8A81      		ldd r24,Y+2
+ 485 0252 9B81      		ldd r25,Y+3
+ 486 0254 8F5F      		subi r24,lo8(-1)
+ 487 0256 9F4F      		sbci r25,hi8(-1)
+ 488 0258 01F0      		breq .L60
+ 489               	.LM63:
+ 490 025a E091 0000 		lds r30,NwkInfo+2
+ 491 025e F091 0000 		lds r31,(NwkInfo+2)+1
+ 492 0262 1686      		std Z+14,__zero_reg__
+ 493               	.LM64:
+ 494 0264 E091 0000 		lds r30,NwkInfo+2
+ 495 0268 F091 0000 		lds r31,(NwkInfo+2)+1
+ 496 026c 11E0      		ldi r17,lo8(1)
+ 497 026e 118B      		std Z+17,r17
+ 498               	.LM65:
+ 499 0270 8A81      		ldd r24,Y+2
+ 500 0272 9B81      		ldd r25,Y+3
+ 501 0274 9093 0000 		sts (NwkInfo+8)+1,r25
+ 502 0278 8093 0000 		sts NwkInfo+8,r24
+ 503               	.LM66:
+ 504 027c 86E0      		ldi r24,lo8(6)
+ 505 027e 8093 0000 		sts NwkInfo,r24
+ 506               	.LM67:
+ 507 0282 3296      		adiw r30,2
+ 508 0284 BF01      		movw r22,r30
+ 509 0286 8AE4      		ldi r24,lo8(74)
+ 510 0288 0E94 0000 		call mlmeGetRequest
+ 511               	.LVL44:
+ 512               	.LM68:
+ 513 028c 8091 0000 		lds r24,NwkInfo+7
+ 514 0290 8230      		cpi r24,lo8(2)
+ 515 0292 01F0      		breq .L69
+ 516               	.L64:
+ 517               	.LM69:
+ 518 0294 60E0      		ldi r22,lo8(0)
+ 519 0296 70E0      		ldi r23,hi8(0)
+ 520 0298 8091 0000 		lds r24,NwkInfo+4
+ 521 029c 9091 0000 		lds r25,(NwkInfo+4)+1
+ 522 02a0 0E94 0000 		call nlmeJoinConfirm
+ 523 02a4 00C0      		rjmp .L67
+ 524               	.L69:
+ 525               	.LM70:
+ 526 02a6 1093 0000 		sts NwkInfo,r17
+ 527 02aa 00C0      		rjmp .L64
+ 528               	.L67:
+ 529               	/* epilogue: frame size=0 */
+ 530 02ac DF91      		pop r29
+ 531 02ae CF91      		pop r28
+ 532 02b0 1F91      		pop r17
+ 533 02b2 0895      		ret
+ 534               	/* epilogue end (size=4) */
+ 535               	/* function nwk_processAssConfirm size 86 (79) */
+ 536               	.LFE19:
+ 538               	.global	mcpsDataIndication
+ 540               	mcpsDataIndication:
+ 541               	.LFB6:
+ 542               	.LM71:
+ 543               	/* prologue: frame size=4 */
+ 544 02b4 CF93      		push r28
+ 545 02b6 DF93      		push r29
+ 546 02b8 CDB7      		in r28,__SP_L__
+ 547 02ba DEB7      		in r29,__SP_H__
+ 548 02bc 2497      		sbiw r28,4
+ 549 02be 0FB6      		in __tmp_reg__,__SREG__
+ 550 02c0 F894      		cli
+ 551 02c2 DEBF      		out __SP_H__,r29
+ 552 02c4 0FBE      		out __SREG__,__tmp_reg__
+ 553 02c6 CDBF      		out __SP_L__,r28
+ 554               	/* prologue end (size=10) */
+ 555               	.LVL45:
+ 556               	.LM72:
+ 557 02c8 29E0      		ldi r18,lo8(9)
+ 558 02ca 2983      		std Y+1,r18
+ 559               	.LM73:
+ 560 02cc 9C83      		std Y+4,r25
+ 561 02ce 8B83      		std Y+3,r24
+ 562               	.LM74:
+ 563 02d0 BE01      		movw r22,r28
+ 564 02d2 6F5F      		subi r22,lo8(-(1))
+ 565 02d4 7F4F      		sbci r23,hi8(-(1))
+ 566 02d6 84E0      		ldi r24,lo8(4)
+ 567 02d8 90E0      		ldi r25,hi8(4)
+ 568               	.LVL46:
+ 569 02da 0E94 0000 		call schedul_sendMsg
+ 570               	/* epilogue: frame size=4 */
+ 571 02de 2496      		adiw r28,4
+ 572 02e0 0FB6      		in __tmp_reg__,__SREG__
+ 573 02e2 F894      		cli
+ 574 02e4 DEBF      		out __SP_H__,r29
+ 575 02e6 0FBE      		out __SREG__,__tmp_reg__
+ 576 02e8 CDBF      		out __SP_L__,r28
+ 577 02ea DF91      		pop r29
+ 578 02ec CF91      		pop r28
+ 579 02ee 0895      		ret
+ 580               	/* epilogue end (size=9) */
+ 581               	/* function mcpsDataIndication size 30 (11) */
+ 582               	.LFE6:
+ 584               	.global	nwk_sendStatMsg
+ 586               	nwk_sendStatMsg:
+ 587               	.LFB4:
+ 588               	.LM75:
+ 589               	/* prologue: frame size=4 */
+ 590 02f0 CF93      		push r28
+ 591 02f2 DF93      		push r29
+ 592 02f4 CDB7      		in r28,__SP_L__
+ 593 02f6 DEB7      		in r29,__SP_H__
+ 594 02f8 2497      		sbiw r28,4
+ 595 02fa 0FB6      		in __tmp_reg__,__SREG__
+ 596 02fc F894      		cli
+ 597 02fe DEBF      		out __SP_H__,r29
+ 598 0300 0FBE      		out __SREG__,__tmp_reg__
+ 599 0302 CDBF      		out __SP_L__,r28
+ 600               	/* prologue end (size=10) */
+ 601               	.LVL47:
+ 602               	.LM76:
+ 603 0304 8983      		std Y+1,r24
+ 604               	.LM77:
+ 605 0306 6A83      		std Y+2,r22
+ 606               	.LM78:
+ 607 0308 5C83      		std Y+4,r21
+ 608 030a 4B83      		std Y+3,r20
+ 609               	.LM79:
+ 610 030c BE01      		movw r22,r28
+ 611               	.LVL48:
+ 612 030e 6F5F      		subi r22,lo8(-(1))
+ 613 0310 7F4F      		sbci r23,hi8(-(1))
+ 614 0312 84E0      		ldi r24,lo8(4)
+ 615 0314 90E0      		ldi r25,hi8(4)
+ 616               	.LVL49:
+ 617 0316 0E94 0000 		call schedul_sendMsg
+ 618               	.LVL50:
+ 619               	/* epilogue: frame size=4 */
+ 620 031a 2496      		adiw r28,4
+ 621 031c 0FB6      		in __tmp_reg__,__SREG__
+ 622 031e F894      		cli
+ 623 0320 DEBF      		out __SP_H__,r29
+ 624 0322 0FBE      		out __SREG__,__tmp_reg__
+ 625 0324 CDBF      		out __SP_L__,r28
+ 626 0326 DF91      		pop r29
+ 627 0328 CF91      		pop r28
+ 628 032a 0895      		ret
+ 629               	/* epilogue end (size=9) */
+ 630               	/* function nwk_sendStatMsg size 30 (11) */
+ 631               	.LFE4:
+ 633               	.global	nwk_init
+ 635               	nwk_init:
+ 636               	.LFB2:
+ 637               	.LM80:
+ 638               	/* prologue: frame size=0 */
+ 639               	/* prologue end (size=0) */
+ 640               	.LM81:
+ 641 032c 1092 0000 		sts NwkInfo+1,__zero_reg__
+ 642               	.LM82:
+ 643 0330 1092 0000 		sts NwkInfo,__zero_reg__
+ 644               	.LM83:
+ 645 0334 0E94 0000 		call nwk_dataInit
+ 646               	/* epilogue: frame size=0 */
+ 647 0338 0895      		ret
+ 648               	/* epilogue end (size=1) */
+ 649               	/* function nwk_init size 7 (6) */
+ 650               	.LFE2:
+ 652               	.global	mcpsDataConfirm
+ 654               	mcpsDataConfirm:
+ 655               	.LFB5:
+ 656               	.LM84:
+ 657               	/* prologue: frame size=4 */
+ 658 033a CF93      		push r28
+ 659 033c DF93      		push r29
+ 660 033e CDB7      		in r28,__SP_L__
+ 661 0340 DEB7      		in r29,__SP_H__
+ 662 0342 2497      		sbiw r28,4
+ 663 0344 0FB6      		in __tmp_reg__,__SREG__
+ 664 0346 F894      		cli
+ 665 0348 DEBF      		out __SP_H__,r29
+ 666 034a 0FBE      		out __SREG__,__tmp_reg__
+ 667 034c CDBF      		out __SP_L__,r28
+ 668               	/* prologue end (size=10) */
+ 669               	.LVL51:
+ 670               	.LBB4:
+ 671               	.LBB5:
+ 672               	.LM85:
+ 673 034e 94E0      		ldi r25,lo8(4)
+ 674 0350 9983      		std Y+1,r25
+ 675               	.LM86:
+ 676 0352 6A83      		std Y+2,r22
+ 677               	.LM87:
+ 678 0354 9927      		clr r25
+ 679 0356 9C83      		std Y+4,r25
+ 680 0358 8B83      		std Y+3,r24
+ 681               	.LM88:
+ 682 035a BE01      		movw r22,r28
+ 683               	.LVL52:
+ 684 035c 6F5F      		subi r22,lo8(-(1))
+ 685 035e 7F4F      		sbci r23,hi8(-(1))
+ 686 0360 84E0      		ldi r24,lo8(4)
+ 687 0362 90E0      		ldi r25,hi8(4)
+ 688               	.LVL53:
+ 689 0364 0E94 0000 		call schedul_sendMsg
+ 690               	.LBE5:
+ 691               	.LBE4:
+ 692               	/* epilogue: frame size=4 */
+ 693 0368 2496      		adiw r28,4
+ 694 036a 0FB6      		in __tmp_reg__,__SREG__
+ 695 036c F894      		cli
+ 696 036e DEBF      		out __SP_H__,r29
+ 697 0370 0FBE      		out __SREG__,__tmp_reg__
+ 698 0372 CDBF      		out __SP_L__,r28
+ 699 0374 DF91      		pop r29
+ 700 0376 CF91      		pop r28
+ 701 0378 0895      		ret
+ 702               	/* epilogue end (size=9) */
+ 703               	/* function mcpsDataConfirm size 32 (13) */
+ 704               	.LFE5:
+ 706               	.global	mlmeOrphanIndication
+ 708               	mlmeOrphanIndication:
+ 709               	.LFB18:
+ 710               	.LM89:
+ 711               	/* prologue: frame size=4 */
+ 712 037a CF93      		push r28
+ 713 037c DF93      		push r29
+ 714 037e CDB7      		in r28,__SP_L__
+ 715 0380 DEB7      		in r29,__SP_H__
+ 716 0382 2497      		sbiw r28,4
+ 717 0384 0FB6      		in __tmp_reg__,__SREG__
+ 718 0386 F894      		cli
+ 719 0388 DEBF      		out __SP_H__,r29
+ 720 038a 0FBE      		out __SREG__,__tmp_reg__
+ 721 038c CDBF      		out __SP_L__,r28
+ 722               	/* prologue end (size=10) */
+ 723               	.LVL54:
+ 724               	.LBB8:
+ 725               	.LBB9:
+ 726               	.LM90:
+ 727 038e 2AE0      		ldi r18,lo8(10)
+ 728 0390 2983      		std Y+1,r18
+ 729               	.LM91:
+ 730 0392 1A82      		std Y+2,__zero_reg__
+ 731               	.LM92:
+ 732 0394 9C83      		std Y+4,r25
+ 733 0396 8B83      		std Y+3,r24
+ 734               	.LM93:
+ 735 0398 BE01      		movw r22,r28
+ 736               	.LVL55:
+ 737 039a 6F5F      		subi r22,lo8(-(1))
+ 738 039c 7F4F      		sbci r23,hi8(-(1))
+ 739 039e 84E0      		ldi r24,lo8(4)
+ 740 03a0 90E0      		ldi r25,hi8(4)
+ 741               	.LVL56:
+ 742 03a2 0E94 0000 		call schedul_sendMsg
+ 743               	.LVL57:
+ 744               	.LBE9:
+ 745               	.LBE8:
+ 746               	/* epilogue: frame size=4 */
+ 747 03a6 2496      		adiw r28,4
+ 748 03a8 0FB6      		in __tmp_reg__,__SREG__
+ 749 03aa F894      		cli
+ 750 03ac DEBF      		out __SP_H__,r29
+ 751 03ae 0FBE      		out __SREG__,__tmp_reg__
+ 752 03b0 CDBF      		out __SP_L__,r28
+ 753 03b2 DF91      		pop r29
+ 754 03b4 CF91      		pop r28
+ 755 03b6 0895      		ret
+ 756               	/* epilogue end (size=9) */
+ 757               	/* function mlmeOrphanIndication size 31 (12) */
+ 758               	.LFE18:
+ 760               	.global	mlmeAssociateIndication
+ 762               	mlmeAssociateIndication:
+ 763               	.LFB17:
+ 764               	.LM94:
+ 765               	/* prologue: frame size=4 */
+ 766 03b8 DF92      		push r13
+ 767 03ba EF92      		push r14
+ 768 03bc FF92      		push r15
+ 769 03be 0F93      		push r16
+ 770 03c0 1F93      		push r17
+ 771 03c2 CF93      		push r28
+ 772 03c4 DF93      		push r29
+ 773 03c6 CDB7      		in r28,__SP_L__
+ 774 03c8 DEB7      		in r29,__SP_H__
+ 775 03ca 2497      		sbiw r28,4
+ 776 03cc 0FB6      		in __tmp_reg__,__SREG__
+ 777 03ce F894      		cli
+ 778 03d0 DEBF      		out __SP_H__,r29
+ 779 03d2 0FBE      		out __SREG__,__tmp_reg__
+ 780 03d4 CDBF      		out __SP_L__,r28
+ 781               	/* prologue end (size=15) */
+ 782               	.LVL58:
+ 783 03d6 8C01      		movw r16,r24
+ 784 03d8 F62E      		mov r15,r22
+ 785 03da E42E      		mov r14,r20
+ 786 03dc D22E      		mov r13,r18
+ 787               	.LM95:
+ 788 03de 8BE0      		ldi r24,lo8(11)
+ 789               	.LVL59:
+ 790 03e0 0E94 0000 		call mem_getMem
+ 791               	.LVL60:
+ 792 03e4 9C01      		movw r18,r24
+ 793               	.LM96:
+ 794 03e6 892B      		or r24,r25
+ 795 03e8 01F0      		breq .L83
+ 796               	.LM97:
+ 797 03ea D801      		movw r26,r16
+ 798 03ec 8C91      		ld r24,X
+ 799 03ee F901      		movw r30,r18
+ 800 03f0 8083      		st Z,r24
+ 801 03f2 F801      		movw r30,r16
+ 802 03f4 8181      		ldd r24,Z+1
+ 803 03f6 F901      		movw r30,r18
+ 804 03f8 8183      		std Z+1,r24
+ 805 03fa F801      		movw r30,r16
+ 806 03fc 8281      		ldd r24,Z+2
+ 807 03fe F901      		movw r30,r18
+ 808 0400 8283      		std Z+2,r24
+ 809 0402 F801      		movw r30,r16
+ 810 0404 8381      		ldd r24,Z+3
+ 811 0406 F901      		movw r30,r18
+ 812 0408 8383      		std Z+3,r24
+ 813 040a F801      		movw r30,r16
+ 814 040c 8481      		ldd r24,Z+4
+ 815 040e F901      		movw r30,r18
+ 816 0410 8483      		std Z+4,r24
+ 817 0412 F801      		movw r30,r16
+ 818 0414 8581      		ldd r24,Z+5
+ 819 0416 F901      		movw r30,r18
+ 820 0418 8583      		std Z+5,r24
+ 821 041a F801      		movw r30,r16
+ 822 041c 8681      		ldd r24,Z+6
+ 823 041e F901      		movw r30,r18
+ 824 0420 8683      		std Z+6,r24
+ 825 0422 F801      		movw r30,r16
+ 826 0424 8781      		ldd r24,Z+7
+ 827 0426 F901      		movw r30,r18
+ 828 0428 8783      		std Z+7,r24
+ 829               	.LM98:
+ 830 042a F086      		std Z+8,r15
+ 831               	.LM99:
+ 832 042c E186      		std Z+9,r14
+ 833               	.LM100:
+ 834 042e D286      		std Z+10,r13
+ 835               	.LBB12:
+ 836               	.LBB13:
+ 837               	.LM101:
+ 838 0430 8CE0      		ldi r24,lo8(12)
+ 839 0432 8983      		std Y+1,r24
+ 840               	.LM102:
+ 841 0434 1A82      		std Y+2,__zero_reg__
+ 842               	.LM103:
+ 843 0436 3C83      		std Y+4,r19
+ 844 0438 2B83      		std Y+3,r18
+ 845               	.LM104:
+ 846 043a BE01      		movw r22,r28
+ 847 043c 6F5F      		subi r22,lo8(-(1))
+ 848 043e 7F4F      		sbci r23,hi8(-(1))
+ 849 0440 84E0      		ldi r24,lo8(4)
+ 850 0442 90E0      		ldi r25,hi8(4)
+ 851 0444 0E94 0000 		call schedul_sendMsg
+ 852               	.L83:
+ 853               	.LBE13:
+ 854               	.LBE12:
+ 855               	/* epilogue: frame size=4 */
+ 856 0448 2496      		adiw r28,4
+ 857 044a 0FB6      		in __tmp_reg__,__SREG__
+ 858 044c F894      		cli
+ 859 044e DEBF      		out __SP_H__,r29
+ 860 0450 0FBE      		out __SREG__,__tmp_reg__
+ 861 0452 CDBF      		out __SP_L__,r28
+ 862 0454 DF91      		pop r29
+ 863 0456 CF91      		pop r28
+ 864 0458 1F91      		pop r17
+ 865 045a 0F91      		pop r16
+ 866 045c FF90      		pop r15
+ 867 045e EF90      		pop r14
+ 868 0460 DF90      		pop r13
+ 869 0462 0895      		ret
+ 870               	/* epilogue end (size=14) */
+ 871               	/* function mlmeAssociateIndication size 86 (57) */
+ 872               	.LFE17:
+ 874               	.global	mlmeStartConfirm
+ 876               	mlmeStartConfirm:
+ 877               	.LFB16:
+ 878               	.LM105:
+ 879               	/* prologue: frame size=4 */
+ 880 0464 CF93      		push r28
+ 881 0466 DF93      		push r29
+ 882 0468 CDB7      		in r28,__SP_L__
+ 883 046a DEB7      		in r29,__SP_H__
+ 884 046c 2497      		sbiw r28,4
+ 885 046e 0FB6      		in __tmp_reg__,__SREG__
+ 886 0470 F894      		cli
+ 887 0472 DEBF      		out __SP_H__,r29
+ 888 0474 0FBE      		out __SREG__,__tmp_reg__
+ 889 0476 CDBF      		out __SP_L__,r28
+ 890               	/* prologue end (size=10) */
+ 891               	.LVL61:
+ 892               	.LBB16:
+ 893               	.LBB17:
+ 894               	.LM106:
+ 895 0478 93E0      		ldi r25,lo8(3)
+ 896 047a 9983      		std Y+1,r25
+ 897               	.LM107:
+ 898 047c 8A83      		std Y+2,r24
+ 899               	.LM108:
+ 900 047e 1C82      		std Y+4,__zero_reg__
+ 901 0480 1B82      		std Y+3,__zero_reg__
+ 902               	.LM109:
+ 903 0482 BE01      		movw r22,r28
+ 904 0484 6F5F      		subi r22,lo8(-(1))
+ 905 0486 7F4F      		sbci r23,hi8(-(1))
+ 906 0488 84E0      		ldi r24,lo8(4)
+ 907 048a 90E0      		ldi r25,hi8(4)
+ 908               	.LVL62:
+ 909 048c 0E94 0000 		call schedul_sendMsg
+ 910               	.LBE17:
+ 911               	.LBE16:
+ 912               	/* epilogue: frame size=4 */
+ 913 0490 2496      		adiw r28,4
+ 914 0492 0FB6      		in __tmp_reg__,__SREG__
+ 915 0494 F894      		cli
+ 916 0496 DEBF      		out __SP_H__,r29
+ 917 0498 0FBE      		out __SREG__,__tmp_reg__
+ 918 049a CDBF      		out __SP_L__,r28
+ 919 049c DF91      		pop r29
+ 920 049e CF91      		pop r28
+ 921 04a0 0895      		ret
+ 922               	/* epilogue end (size=9) */
+ 923               	/* function mlmeStartConfirm size 31 (12) */
+ 924               	.LFE16:
+ 926               	.global	mlmeBeaconNotifyIndication
+ 928               	mlmeBeaconNotifyIndication:
+ 929               	.LFB15:
+ 930               	.LM110:
+ 931               	/* prologue: frame size=4 */
+ 932 04a2 CF93      		push r28
+ 933 04a4 DF93      		push r29
+ 934 04a6 CDB7      		in r28,__SP_L__
+ 935 04a8 DEB7      		in r29,__SP_H__
+ 936 04aa 2497      		sbiw r28,4
+ 937 04ac 0FB6      		in __tmp_reg__,__SREG__
+ 938 04ae F894      		cli
+ 939 04b0 DEBF      		out __SP_H__,r29
+ 940 04b2 0FBE      		out __SREG__,__tmp_reg__
+ 941 04b4 CDBF      		out __SP_L__,r28
+ 942               	/* prologue end (size=10) */
+ 943               	.LVL63:
+ 944               	.LBB20:
+ 945               	.LBB21:
+ 946               	.LM111:
+ 947 04b6 2EE0      		ldi r18,lo8(14)
+ 948 04b8 2983      		std Y+1,r18
+ 949               	.LM112:
+ 950 04ba 1A82      		std Y+2,__zero_reg__
+ 951               	.LM113:
+ 952 04bc 9C83      		std Y+4,r25
+ 953 04be 8B83      		std Y+3,r24
+ 954               	.LM114:
+ 955 04c0 BE01      		movw r22,r28
+ 956 04c2 6F5F      		subi r22,lo8(-(1))
+ 957 04c4 7F4F      		sbci r23,hi8(-(1))
+ 958 04c6 84E0      		ldi r24,lo8(4)
+ 959 04c8 90E0      		ldi r25,hi8(4)
+ 960               	.LVL64:
+ 961 04ca 0E94 0000 		call schedul_sendMsg
+ 962               	.LBE21:
+ 963               	.LBE20:
+ 964               	/* epilogue: frame size=4 */
+ 965 04ce 2496      		adiw r28,4
+ 966 04d0 0FB6      		in __tmp_reg__,__SREG__
+ 967 04d2 F894      		cli
+ 968 04d4 DEBF      		out __SP_H__,r29
+ 969 04d6 0FBE      		out __SREG__,__tmp_reg__
+ 970 04d8 CDBF      		out __SP_L__,r28
+ 971 04da DF91      		pop r29
+ 972 04dc CF91      		pop r28
+ 973 04de 0895      		ret
+ 974               	/* epilogue end (size=9) */
+ 975               	/* function mlmeBeaconNotifyIndication size 31 (12) */
+ 976               	.LFE15:
+ 978               	.global	mlmeCommStatusIndication
+ 980               	mlmeCommStatusIndication:
+ 981               	.LFB14:
+ 982               	.LM115:
+ 983               	/* prologue: frame size=4 */
+ 984 04e0 CF92      		push r12
+ 985 04e2 DF92      		push r13
+ 986 04e4 EF92      		push r14
+ 987 04e6 FF92      		push r15
+ 988 04e8 0F93      		push r16
+ 989 04ea 1F93      		push r17
+ 990 04ec CF93      		push r28
+ 991 04ee DF93      		push r29
+ 992 04f0 CDB7      		in r28,__SP_L__
+ 993 04f2 DEB7      		in r29,__SP_H__
+ 994 04f4 2497      		sbiw r28,4
+ 995 04f6 0FB6      		in __tmp_reg__,__SREG__
+ 996 04f8 F894      		cli
+ 997 04fa DEBF      		out __SP_H__,r29
+ 998 04fc 0FBE      		out __SREG__,__tmp_reg__
+ 999 04fe CDBF      		out __SP_L__,r28
+ 1000               	/* prologue end (size=16) */
+ 1001               	.LVL65:
+ 1002 0500 8C01      		movw r16,r24
+ 1003               	.LVL66:
+ 1004 0502 F62E      		mov r15,r22
+ 1005 0504 6A01      		movw r12,r20
+ 1006               	.LM116:
+ 1007 0506 8CE0      		ldi r24,lo8(12)
+ 1008               	.LVL67:
+ 1009 0508 0E94 0000 		call mem_getMem
+ 1010               	.LVL68:
+ 1011 050c 9C01      		movw r18,r24
+ 1012               	.LM117:
+ 1013 050e 0097      		sbiw r24,0
+ 1014 0510 01F0      		breq .L92
+ 1015               	.LM118:
+ 1016 0512 FC01      		movw r30,r24
+ 1017 0514 1183      		std Z+1,r17
+ 1018 0516 0083      		st Z,r16
+ 1019               	.LM119:
+ 1020 0518 F282      		std Z+2,r15
+ 1021               	.LM120:
+ 1022 051a DC01      		movw r26,r24
+ 1023 051c 1396      		adiw r26,3
+ 1024 051e F601      		movw r30,r12
+ 1025 0520 88E0      		ldi r24,lo8(8)
+ 1026               	.LVL69:
+ 1027               	.L91:
+ 1028 0522 0190      		ld r0,Z+
+ 1029 0524 0D92      		st X+,r0
+ 1030 0526 8150      		subi r24,lo8(-(-1))
+ 1031 0528 01F4      		brne .L91
+ 1032               	.LM121:
+ 1033 052a F901      		movw r30,r18
+ 1034               	.LVL70:
+ 1035 052c E386      		std Z+11,r14
+ 1036               	.LBB24:
+ 1037               	.LBB25:
+ 1038               	.LM122:
+ 1039 052e 8CE0      		ldi r24,lo8(12)
+ 1040 0530 8983      		std Y+1,r24
+ 1041               	.LM123:
+ 1042 0532 1A82      		std Y+2,__zero_reg__
+ 1043               	.LM124:
+ 1044 0534 3C83      		std Y+4,r19
+ 1045 0536 2B83      		std Y+3,r18
+ 1046               	.LM125:
+ 1047 0538 BE01      		movw r22,r28
+ 1048 053a 6F5F      		subi r22,lo8(-(1))
+ 1049 053c 7F4F      		sbci r23,hi8(-(1))
+ 1050 053e 84E0      		ldi r24,lo8(4)
+ 1051 0540 90E0      		ldi r25,hi8(4)
+ 1052 0542 0E94 0000 		call schedul_sendMsg
+ 1053               	.L92:
+ 1054               	.LBE25:
+ 1055               	.LBE24:
+ 1056               	/* epilogue: frame size=4 */
+ 1057 0546 2496      		adiw r28,4
+ 1058 0548 0FB6      		in __tmp_reg__,__SREG__
+ 1059 054a F894      		cli
+ 1060 054c DEBF      		out __SP_H__,r29
+ 1061 054e 0FBE      		out __SREG__,__tmp_reg__
+ 1062 0550 CDBF      		out __SP_L__,r28
+ 1063 0552 DF91      		pop r29
+ 1064 0554 CF91      		pop r28
+ 1065 0556 1F91      		pop r17
+ 1066 0558 0F91      		pop r16
+ 1067 055a FF90      		pop r15
+ 1068 055c EF90      		pop r14
+ 1069 055e DF90      		pop r13
+ 1070 0560 CF90      		pop r12
+ 1071 0562 0895      		ret
+ 1072               	/* epilogue end (size=15) */
+ 1073               	/* function mlmeCommStatusIndication size 67 (36) */
+ 1074               	.LFE14:
+ 1076               	.global	mlmeSyncLossIndication
+ 1078               	mlmeSyncLossIndication:
+ 1079               	.LFB13:
+ 1080               	.LM126:
+ 1081               	/* prologue: frame size=4 */
+ 1082 0564 CF93      		push r28
+ 1083 0566 DF93      		push r29
+ 1084 0568 CDB7      		in r28,__SP_L__
+ 1085 056a DEB7      		in r29,__SP_H__
+ 1086 056c 2497      		sbiw r28,4
+ 1087 056e 0FB6      		in __tmp_reg__,__SREG__
+ 1088 0570 F894      		cli
+ 1089 0572 DEBF      		out __SP_H__,r29
+ 1090 0574 0FBE      		out __SREG__,__tmp_reg__
+ 1091 0576 CDBF      		out __SP_L__,r28
+ 1092               	/* prologue end (size=10) */
+ 1093               	.LVL71:
+ 1094               	.LBB28:
+ 1095               	.LBB29:
+ 1096               	.LM127:
+ 1097 0578 9FE0      		ldi r25,lo8(15)
+ 1098 057a 9983      		std Y+1,r25
+ 1099               	.LM128:
+ 1100 057c 8A83      		std Y+2,r24
+ 1101               	.LM129:
+ 1102 057e 1C82      		std Y+4,__zero_reg__
+ 1103 0580 1B82      		std Y+3,__zero_reg__
+ 1104               	.LM130:
+ 1105 0582 BE01      		movw r22,r28
+ 1106 0584 6F5F      		subi r22,lo8(-(1))
+ 1107 0586 7F4F      		sbci r23,hi8(-(1))
+ 1108 0588 84E0      		ldi r24,lo8(4)
+ 1109 058a 90E0      		ldi r25,hi8(4)
+ 1110               	.LVL72:
+ 1111 058c 0E94 0000 		call schedul_sendMsg
+ 1112               	.LBE29:
+ 1113               	.LBE28:
+ 1114               	/* epilogue: frame size=4 */
+ 1115 0590 2496      		adiw r28,4
+ 1116 0592 0FB6      		in __tmp_reg__,__SREG__
+ 1117 0594 F894      		cli
+ 1118 0596 DEBF      		out __SP_H__,r29
+ 1119 0598 0FBE      		out __SREG__,__tmp_reg__
+ 1120 059a CDBF      		out __SP_L__,r28
+ 1121 059c DF91      		pop r29
+ 1122 059e CF91      		pop r28
+ 1123 05a0 0895      		ret
+ 1124               	/* epilogue end (size=9) */
+ 1125               	/* function mlmeSyncLossIndication size 31 (12) */
+ 1126               	.LFE13:
+ 1128               	.global	mlmeScanConfirm
+ 1130               	mlmeScanConfirm:
+ 1131               	.LFB12:
+ 1132               	.LM131:
+ 1133               	/* prologue: frame size=4 */
+ 1134 05a2 CF93      		push r28
+ 1135 05a4 DF93      		push r29
+ 1136 05a6 CDB7      		in r28,__SP_L__
+ 1137 05a8 DEB7      		in r29,__SP_H__
+ 1138 05aa 2497      		sbiw r28,4
+ 1139 05ac 0FB6      		in __tmp_reg__,__SREG__
+ 1140 05ae F894      		cli
+ 1141 05b0 DEBF      		out __SP_H__,r29
+ 1142 05b2 0FBE      		out __SREG__,__tmp_reg__
+ 1143 05b4 CDBF      		out __SP_L__,r28
+ 1144               	/* prologue end (size=10) */
+ 1145               	.LVL73:
+ 1146               	.LBB32:
+ 1147               	.LBB33:
+ 1148               	.LM132:
+ 1149 05b6 92E0      		ldi r25,lo8(2)
+ 1150 05b8 9983      		std Y+1,r25
+ 1151               	.LM133:
+ 1152 05ba 8A83      		std Y+2,r24
+ 1153               	.LM134:
+ 1154 05bc 7C83      		std Y+4,r23
+ 1155 05be 6B83      		std Y+3,r22
+ 1156               	.LM135:
+ 1157 05c0 BE01      		movw r22,r28
+ 1158               	.LVL74:
+ 1159 05c2 6F5F      		subi r22,lo8(-(1))
+ 1160 05c4 7F4F      		sbci r23,hi8(-(1))
+ 1161 05c6 84E0      		ldi r24,lo8(4)
+ 1162 05c8 90E0      		ldi r25,hi8(4)
+ 1163               	.LVL75:
+ 1164 05ca 0E94 0000 		call schedul_sendMsg
+ 1165               	.LBE33:
+ 1166               	.LBE32:
+ 1167               	/* epilogue: frame size=4 */
+ 1168 05ce 2496      		adiw r28,4
+ 1169 05d0 0FB6      		in __tmp_reg__,__SREG__
+ 1170 05d2 F894      		cli
+ 1171 05d4 DEBF      		out __SP_H__,r29
+ 1172 05d6 0FBE      		out __SREG__,__tmp_reg__
+ 1173 05d8 CDBF      		out __SP_L__,r28
+ 1174 05da DF91      		pop r29
+ 1175 05dc CF91      		pop r28
+ 1176 05de 0895      		ret
+ 1177               	/* epilogue end (size=9) */
+ 1178               	/* function mlmeScanConfirm size 31 (12) */
+ 1179               	.LFE12:
+ 1181               	.global	mlmePollConfirm
+ 1183               	mlmePollConfirm:
+ 1184               	.LFB11:
+ 1185               	.LM136:
+ 1186               	/* prologue: frame size=4 */
+ 1187 05e0 CF93      		push r28
+ 1188 05e2 DF93      		push r29
+ 1189 05e4 CDB7      		in r28,__SP_L__
+ 1190 05e6 DEB7      		in r29,__SP_H__
+ 1191 05e8 2497      		sbiw r28,4
+ 1192 05ea 0FB6      		in __tmp_reg__,__SREG__
+ 1193 05ec F894      		cli
+ 1194 05ee DEBF      		out __SP_H__,r29
+ 1195 05f0 0FBE      		out __SREG__,__tmp_reg__
+ 1196 05f2 CDBF      		out __SP_L__,r28
+ 1197               	/* prologue end (size=10) */
+ 1198               	.LVL76:
+ 1199               	.LBB36:
+ 1200               	.LBB37:
+ 1201               	.LM137:
+ 1202 05f4 97E0      		ldi r25,lo8(7)
+ 1203 05f6 9983      		std Y+1,r25
+ 1204               	.LM138:
+ 1205 05f8 8A83      		std Y+2,r24
+ 1206               	.LM139:
+ 1207 05fa 1C82      		std Y+4,__zero_reg__
+ 1208 05fc 1B82      		std Y+3,__zero_reg__
+ 1209               	.LM140:
+ 1210 05fe BE01      		movw r22,r28
+ 1211 0600 6F5F      		subi r22,lo8(-(1))
+ 1212 0602 7F4F      		sbci r23,hi8(-(1))
+ 1213 0604 84E0      		ldi r24,lo8(4)
+ 1214 0606 90E0      		ldi r25,hi8(4)
+ 1215               	.LVL77:
+ 1216 0608 0E94 0000 		call schedul_sendMsg
+ 1217               	.LBE37:
+ 1218               	.LBE36:
+ 1219               	/* epilogue: frame size=4 */
+ 1220 060c 2496      		adiw r28,4
+ 1221 060e 0FB6      		in __tmp_reg__,__SREG__
+ 1222 0610 F894      		cli
+ 1223 0612 DEBF      		out __SP_H__,r29
+ 1224 0614 0FBE      		out __SREG__,__tmp_reg__
+ 1225 0616 CDBF      		out __SP_L__,r28
+ 1226 0618 DF91      		pop r29
+ 1227 061a CF91      		pop r28
+ 1228 061c 0895      		ret
+ 1229               	/* epilogue end (size=9) */
+ 1230               	/* function mlmePollConfirm size 31 (12) */
+ 1231               	.LFE11:
+ 1233               	.global	mlmeResetConfirm
+ 1235               	mlmeResetConfirm:
+ 1236               	.LFB10:
+ 1237               	.LM141:
+ 1238               	/* prologue: frame size=4 */
+ 1239 061e CF93      		push r28
+ 1240 0620 DF93      		push r29
+ 1241 0622 CDB7      		in r28,__SP_L__
+ 1242 0624 DEB7      		in r29,__SP_H__
+ 1243 0626 2497      		sbiw r28,4
+ 1244 0628 0FB6      		in __tmp_reg__,__SREG__
+ 1245 062a F894      		cli
+ 1246 062c DEBF      		out __SP_H__,r29
+ 1247 062e 0FBE      		out __SREG__,__tmp_reg__
+ 1248 0630 CDBF      		out __SP_L__,r28
+ 1249               	/* prologue end (size=10) */
+ 1250               	.LVL78:
+ 1251               	.LBB40:
+ 1252               	.LBB41:
+ 1253               	.LM142:
+ 1254 0632 96E0      		ldi r25,lo8(6)
+ 1255 0634 9983      		std Y+1,r25
+ 1256               	.LM143:
+ 1257 0636 8A83      		std Y+2,r24
+ 1258               	.LM144:
+ 1259 0638 1C82      		std Y+4,__zero_reg__
+ 1260 063a 1B82      		std Y+3,__zero_reg__
+ 1261               	.LM145:
+ 1262 063c BE01      		movw r22,r28
+ 1263 063e 6F5F      		subi r22,lo8(-(1))
+ 1264 0640 7F4F      		sbci r23,hi8(-(1))
+ 1265 0642 84E0      		ldi r24,lo8(4)
+ 1266 0644 90E0      		ldi r25,hi8(4)
+ 1267               	.LVL79:
+ 1268 0646 0E94 0000 		call schedul_sendMsg
+ 1269               	.LBE41:
+ 1270               	.LBE40:
+ 1271               	/* epilogue: frame size=4 */
+ 1272 064a 2496      		adiw r28,4
+ 1273 064c 0FB6      		in __tmp_reg__,__SREG__
+ 1274 064e F894      		cli
+ 1275 0650 DEBF      		out __SP_H__,r29
+ 1276 0652 0FBE      		out __SREG__,__tmp_reg__
+ 1277 0654 CDBF      		out __SP_L__,r28
+ 1278 0656 DF91      		pop r29
+ 1279 0658 CF91      		pop r28
+ 1280 065a 0895      		ret
+ 1281               	/* epilogue end (size=9) */
+ 1282               	/* function mlmeResetConfirm size 31 (12) */
+ 1283               	.LFE10:
+ 1285               	.global	mlmeDisassociateIndication
+ 1287               	mlmeDisassociateIndication:
+ 1288               	.LFB9:
+ 1289               	.LM146:
+ 1290               	/* prologue: frame size=4 */
+ 1291 065c DF92      		push r13
+ 1292 065e EF92      		push r14
+ 1293 0660 FF92      		push r15
+ 1294 0662 0F93      		push r16
+ 1295 0664 1F93      		push r17
+ 1296 0666 CF93      		push r28
+ 1297 0668 DF93      		push r29
+ 1298 066a CDB7      		in r28,__SP_L__
+ 1299 066c DEB7      		in r29,__SP_H__
+ 1300 066e 2497      		sbiw r28,4
+ 1301 0670 0FB6      		in __tmp_reg__,__SREG__
+ 1302 0672 F894      		cli
+ 1303 0674 DEBF      		out __SP_H__,r29
+ 1304 0676 0FBE      		out __SREG__,__tmp_reg__
+ 1305 0678 CDBF      		out __SP_L__,r28
+ 1306               	/* prologue end (size=15) */
+ 1307               	.LVL80:
+ 1308 067a 8C01      		movw r16,r24
+ 1309 067c F62E      		mov r15,r22
+ 1310 067e E42E      		mov r14,r20
+ 1311 0680 D22E      		mov r13,r18
+ 1312               	.LM147:
+ 1313 0682 8BE0      		ldi r24,lo8(11)
+ 1314               	.LVL81:
+ 1315 0684 0E94 0000 		call mem_getMem
+ 1316               	.LVL82:
+ 1317 0688 9C01      		movw r18,r24
+ 1318               	.LM148:
+ 1319 068a 892B      		or r24,r25
+ 1320 068c 01F0      		breq .L106
+ 1321               	.LM149:
+ 1322 068e D801      		movw r26,r16
+ 1323 0690 8C91      		ld r24,X
+ 1324 0692 F901      		movw r30,r18
+ 1325 0694 8083      		st Z,r24
+ 1326 0696 F801      		movw r30,r16
+ 1327 0698 8181      		ldd r24,Z+1
+ 1328 069a F901      		movw r30,r18
+ 1329 069c 8183      		std Z+1,r24
+ 1330 069e F801      		movw r30,r16
+ 1331 06a0 8281      		ldd r24,Z+2
+ 1332 06a2 F901      		movw r30,r18
+ 1333 06a4 8283      		std Z+2,r24
+ 1334 06a6 F801      		movw r30,r16
+ 1335 06a8 8381      		ldd r24,Z+3
+ 1336 06aa F901      		movw r30,r18
+ 1337 06ac 8383      		std Z+3,r24
+ 1338 06ae F801      		movw r30,r16
+ 1339 06b0 8481      		ldd r24,Z+4
+ 1340 06b2 F901      		movw r30,r18
+ 1341 06b4 8483      		std Z+4,r24
+ 1342 06b6 F801      		movw r30,r16
+ 1343 06b8 8581      		ldd r24,Z+5
+ 1344 06ba F901      		movw r30,r18
+ 1345 06bc 8583      		std Z+5,r24
+ 1346 06be F801      		movw r30,r16
+ 1347 06c0 8681      		ldd r24,Z+6
+ 1348 06c2 F901      		movw r30,r18
+ 1349 06c4 8683      		std Z+6,r24
+ 1350 06c6 F801      		movw r30,r16
+ 1351 06c8 8781      		ldd r24,Z+7
+ 1352 06ca F901      		movw r30,r18
+ 1353 06cc 8783      		std Z+7,r24
+ 1354               	.LM150:
+ 1355 06ce F086      		std Z+8,r15
+ 1356               	.LM151:
+ 1357 06d0 E186      		std Z+9,r14
+ 1358               	.LM152:
+ 1359 06d2 D286      		std Z+10,r13
+ 1360               	.LBB44:
+ 1361               	.LBB45:
+ 1362               	.LM153:
+ 1363 06d4 8DE0      		ldi r24,lo8(13)
+ 1364 06d6 8983      		std Y+1,r24
+ 1365               	.LM154:
+ 1366 06d8 1A82      		std Y+2,__zero_reg__
+ 1367               	.LM155:
+ 1368 06da 3C83      		std Y+4,r19
+ 1369 06dc 2B83      		std Y+3,r18
+ 1370               	.LM156:
+ 1371 06de BE01      		movw r22,r28
+ 1372 06e0 6F5F      		subi r22,lo8(-(1))
+ 1373 06e2 7F4F      		sbci r23,hi8(-(1))
+ 1374 06e4 84E0      		ldi r24,lo8(4)
+ 1375 06e6 90E0      		ldi r25,hi8(4)
+ 1376 06e8 0E94 0000 		call schedul_sendMsg
+ 1377               	.L106:
+ 1378               	.LBE45:
+ 1379               	.LBE44:
+ 1380               	/* epilogue: frame size=4 */
+ 1381 06ec 2496      		adiw r28,4
+ 1382 06ee 0FB6      		in __tmp_reg__,__SREG__
+ 1383 06f0 F894      		cli
+ 1384 06f2 DEBF      		out __SP_H__,r29
+ 1385 06f4 0FBE      		out __SREG__,__tmp_reg__
+ 1386 06f6 CDBF      		out __SP_L__,r28
+ 1387 06f8 DF91      		pop r29
+ 1388 06fa CF91      		pop r28
+ 1389 06fc 1F91      		pop r17
+ 1390 06fe 0F91      		pop r16
+ 1391 0700 FF90      		pop r15
+ 1392 0702 EF90      		pop r14
+ 1393 0704 DF90      		pop r13
+ 1394 0706 0895      		ret
+ 1395               	/* epilogue end (size=14) */
+ 1396               	/* function mlmeDisassociateIndication size 86 (57) */
+ 1397               	.LFE9:
+ 1399               	.global	mlmeDisassociateConfirm
+ 1401               	mlmeDisassociateConfirm:
+ 1402               	.LFB8:
+ 1403               	.LM157:
+ 1404               	/* prologue: frame size=4 */
+ 1405 0708 CF93      		push r28
+ 1406 070a DF93      		push r29
+ 1407 070c CDB7      		in r28,__SP_L__
+ 1408 070e DEB7      		in r29,__SP_H__
+ 1409 0710 2497      		sbiw r28,4
+ 1410 0712 0FB6      		in __tmp_reg__,__SREG__
+ 1411 0714 F894      		cli
+ 1412 0716 DEBF      		out __SP_H__,r29
+ 1413 0718 0FBE      		out __SREG__,__tmp_reg__
+ 1414 071a CDBF      		out __SP_L__,r28
+ 1415               	/* prologue end (size=10) */
+ 1416               	.LVL83:
+ 1417               	.LBB48:
+ 1418               	.LBB49:
+ 1419               	.LM158:
+ 1420 071c 95E0      		ldi r25,lo8(5)
+ 1421 071e 9983      		std Y+1,r25
+ 1422               	.LM159:
+ 1423 0720 8A83      		std Y+2,r24
+ 1424               	.LM160:
+ 1425 0722 1C82      		std Y+4,__zero_reg__
+ 1426 0724 1B82      		std Y+3,__zero_reg__
+ 1427               	.LM161:
+ 1428 0726 BE01      		movw r22,r28
+ 1429 0728 6F5F      		subi r22,lo8(-(1))
+ 1430 072a 7F4F      		sbci r23,hi8(-(1))
+ 1431 072c 84E0      		ldi r24,lo8(4)
+ 1432 072e 90E0      		ldi r25,hi8(4)
+ 1433               	.LVL84:
+ 1434 0730 0E94 0000 		call schedul_sendMsg
+ 1435               	.LBE49:
+ 1436               	.LBE48:
+ 1437               	/* epilogue: frame size=4 */
+ 1438 0734 2496      		adiw r28,4
+ 1439 0736 0FB6      		in __tmp_reg__,__SREG__
+ 1440 0738 F894      		cli
+ 1441 073a DEBF      		out __SP_H__,r29
+ 1442 073c 0FBE      		out __SREG__,__tmp_reg__
+ 1443 073e CDBF      		out __SP_L__,r28
+ 1444 0740 DF91      		pop r29
+ 1445 0742 CF91      		pop r28
+ 1446 0744 0895      		ret
+ 1447               	/* epilogue end (size=9) */
+ 1448               	/* function mlmeDisassociateConfirm size 31 (12) */
+ 1449               	.LFE8:
+ 1451               	.global	mlmeAssociateConfirm
+ 1453               	mlmeAssociateConfirm:
+ 1454               	.LFB7:
+ 1455               	.LM162:
+ 1456               	/* prologue: frame size=4 */
+ 1457 0746 CF93      		push r28
+ 1458 0748 DF93      		push r29
+ 1459 074a CDB7      		in r28,__SP_L__
+ 1460 074c DEB7      		in r29,__SP_H__
+ 1461 074e 2497      		sbiw r28,4
+ 1462 0750 0FB6      		in __tmp_reg__,__SREG__
+ 1463 0752 F894      		cli
+ 1464 0754 DEBF      		out __SP_H__,r29
+ 1465 0756 0FBE      		out __SREG__,__tmp_reg__
+ 1466 0758 CDBF      		out __SP_L__,r28
+ 1467               	/* prologue end (size=10) */
+ 1468               	.LVL85:
+ 1469               	.LBB52:
+ 1470               	.LBB53:
+ 1471               	.LM163:
+ 1472 075a 21E0      		ldi r18,lo8(1)
+ 1473 075c 2983      		std Y+1,r18
+ 1474               	.LM164:
+ 1475 075e 6A83      		std Y+2,r22
+ 1476               	.LM165:
+ 1477 0760 9C83      		std Y+4,r25
+ 1478 0762 8B83      		std Y+3,r24
+ 1479               	.LM166:
+ 1480 0764 BE01      		movw r22,r28
+ 1481               	.LVL86:
+ 1482 0766 6F5F      		subi r22,lo8(-(1))
+ 1483 0768 7F4F      		sbci r23,hi8(-(1))
+ 1484 076a 84E0      		ldi r24,lo8(4)
+ 1485 076c 90E0      		ldi r25,hi8(4)
+ 1486               	.LVL87:
+ 1487 076e 0E94 0000 		call schedul_sendMsg
+ 1488               	.LBE53:
+ 1489               	.LBE52:
+ 1490               	/* epilogue: frame size=4 */
+ 1491 0772 2496      		adiw r28,4
+ 1492 0774 0FB6      		in __tmp_reg__,__SREG__
+ 1493 0776 F894      		cli
+ 1494 0778 DEBF      		out __SP_H__,r29
+ 1495 077a 0FBE      		out __SREG__,__tmp_reg__
+ 1496 077c CDBF      		out __SP_L__,r28
+ 1497 077e DF91      		pop r29
+ 1498 0780 CF91      		pop r28
+ 1499 0782 0895      		ret
+ 1500               	/* epilogue end (size=9) */
+ 1501               	/* function mlmeAssociateConfirm size 31 (12) */
+ 1502               	.LFE7:
+ 1504               	.global	nwk_processNwkEvent
+ 1506               	nwk_processNwkEvent:
+ 1507               	.LFB26:
+ 1508               	.LM167:
+ 1509               	/* prologue: frame size=0 */
+ 1510 0784 1F93      		push r17
+ 1511 0786 CF93      		push r28
+ 1512 0788 DF93      		push r29
+ 1513               	/* prologue end (size=3) */
+ 1514               	.LVL88:
+ 1515 078a DC01      		movw r26,r24
+ 1516               	.LM168:
+ 1517 078c 1C91      		ld r17,X
+ 1518 078e 1730      		cpi r17,lo8(7)
+ 1519 0790 01F0      		breq .L119
+ 1520               	.LVL89:
+ 1521               	.LM169:
+ 1522 0792 1830      		cpi r17,lo8(8)
+ 1523 0794 00F0      		brlo .L147
+ 1524 0796 1E30      		cpi r17,lo8(14)
+ 1525 0798 01F0      		breq .L122
+ 1526 079a 1F30      		cpi r17,lo8(15)
+ 1527 079c 00F0      		brlo .L148
+ 1528 079e 1F30      		cpi r17,lo8(15)
+ 1529 07a0 01F4      		brne .+2
+ 1530 07a2 00C0      		rjmp .L123
+ 1531 07a4 1151      		subi r17,lo8(-(-17))
+ 1532 07a6 1230      		cpi r17,lo8(2)
+ 1533 07a8 00F0      		brlo .+2
+ 1534 07aa 00C0      		rjmp .L144
+ 1535               	.LM170:
+ 1536 07ac 0E94 0000 		call nwk_processBtEvent
+ 1537               	.LVL90:
+ 1538 07b0 00C0      		rjmp .L144
+ 1539               	.LVL91:
+ 1540               	.L147:
+ 1541               	.LM171:
+ 1542 07b2 1330      		cpi r17,lo8(3)
+ 1543 07b4 01F0      		breq .L115
+ 1544 07b6 1430      		cpi r17,lo8(4)
+ 1545 07b8 00F0      		brlo .L149
+ 1546 07ba 1530      		cpi r17,lo8(5)
+ 1547 07bc 01F4      		brne .+2
+ 1548 07be 00C0      		rjmp .L117
+ 1549 07c0 1630      		cpi r17,lo8(6)
+ 1550 07c2 00F4      		brsh .+2
+ 1551 07c4 00C0      		rjmp .L150
+ 1552               	.LM172:
+ 1553 07c6 EC01      		movw r28,r24
+ 1554 07c8 8981      		ldd r24,Y+1
+ 1555 07ca 9927      		clr r25
+ 1556 07cc 0E94 0000 		call nlme_resetNwk
+ 1557               	.LVL92:
+ 1558 07d0 00C0      		rjmp .L144
+ 1559               	.LVL93:
+ 1560               	.L119:
+ 1561               	.LBB64:
+ 1562               	.LBB65:
+ 1563               	.LM173:
+ 1564 07d2 FC01      		movw r30,r24
+ 1565 07d4 8181      		ldd r24,Z+1
+ 1566 07d6 8823      		tst r24
+ 1567 07d8 01F4      		brne .L135
+ 1568               	.LM174:
+ 1569 07da 80E0      		ldi r24,lo8(0)
+ 1570 07dc 90E0      		ldi r25,hi8(0)
+ 1571 07de 0E94 0000 		call nlmeSyncConfirm
+ 1572               	.LVL94:
+ 1573 07e2 00C0      		rjmp .L144
+ 1574               	.LVL95:
+ 1575               	.L135:
+ 1576               	.LM175:
+ 1577 07e4 86EC      		ldi r24,lo8(198)
+ 1578 07e6 90E0      		ldi r25,hi8(198)
+ 1579 07e8 0E94 0000 		call nlmeSyncConfirm
+ 1580               	.LVL96:
+ 1581 07ec 00C0      		rjmp .L144
+ 1582               	.LVL97:
+ 1583               	.L148:
+ 1584               	.LBE65:
+ 1585               	.LBE64:
+ 1586               	.LM176:
+ 1587 07ee 1930      		cpi r17,lo8(9)
+ 1588 07f0 01F4      		brne .+2
+ 1589 07f2 00C0      		rjmp .L120
+ 1590 07f4 1C30      		cpi r17,lo8(12)
+ 1591 07f6 01F0      		breq .+2
+ 1592 07f8 00C0      		rjmp .L144
+ 1593               	.LM177:
+ 1594 07fa 0E94 0000 		call nwk_processAssoIndication
+ 1595               	.LVL98:
+ 1596 07fe 00C0      		rjmp .L144
+ 1597               	.LVL99:
+ 1598               	.L149:
+ 1599               	.LM178:
+ 1600 0800 1130      		cpi r17,lo8(1)
+ 1601 0802 01F4      		brne .+2
+ 1602 0804 00C0      		rjmp .L113
+ 1603 0806 1230      		cpi r17,lo8(2)
+ 1604 0808 01F0      		breq .+2
+ 1605 080a 00C0      		rjmp .L144
+ 1606               	.LM179:
+ 1607 080c 0E94 0000 		call nwk_processScanConfirm
+ 1608               	.LVL100:
+ 1609 0810 00C0      		rjmp .L144
+ 1610               	.LVL101:
+ 1611               	.L122:
+ 1612               	.LBB66:
+ 1613               	.LBB67:
+ 1614               	.LM180:
+ 1615 0812 8091 0000 		lds r24,NwkInfo+1
+ 1616 0816 8330      		cpi r24,lo8(3)
+ 1617 0818 01F0      		breq .+2
+ 1618 081a 00C0      		rjmp .L144
+ 1619               	.LM181:
+ 1620 081c FD01      		movw r30,r26
+ 1621 081e 8281      		ldd r24,Z+2
+ 1622 0820 9381      		ldd r25,Z+3
+ 1623 0822 0E94 0000 		call nwk_updateBeacon
+ 1624               	.LVL102:
+ 1625 0826 00C0      		rjmp .L144
+ 1626               	.LVL103:
+ 1627               	.L115:
+ 1628               	.LBE67:
+ 1629               	.LBE66:
+ 1630               	.LBB68:
+ 1631               	.LBB69:
+ 1632               	.LM182:
+ 1633 0828 EC01      		movw r28,r24
+ 1634 082a 8981      		ldd r24,Y+1
+ 1635 082c 8823      		tst r24
+ 1636 082e 01F0      		breq .+2
+ 1637 0830 00C0      		rjmp .L137
+ 1638               	.LM183:
+ 1639 0832 8091 0000 		lds r24,NwkInfo+1
+ 1640 0836 8230      		cpi r24,lo8(2)
+ 1641 0838 01F4      		brne .+2
+ 1642 083a 00C0      		rjmp .L151
+ 1643               	.L139:
+ 1644               	.LM184:
+ 1645 083c 8730      		cpi r24,lo8(7)
+ 1646 083e 01F0      		breq .+2
+ 1647 0840 00C0      		rjmp .L144
+ 1648               	.LM185:
+ 1649 0842 81E0      		ldi r24,lo8(1)
+ 1650 0844 8093 0000 		sts NwkInfo,r24
+ 1651               	.LM186:
+ 1652 0848 8093 0000 		sts NwkInfo+7,r24
+ 1653               	.LM187:
+ 1654 084c 80E0      		ldi r24,lo8(0)
+ 1655 084e 90E0      		ldi r25,hi8(0)
+ 1656 0850 0E94 0000 		call nlmeStartRouterConfirm
+ 1657               	.LVL104:
+ 1658 0854 00C0      		rjmp .L144
+ 1659               	.LVL105:
+ 1660               	.L150:
+ 1661               	.LBE69:
+ 1662               	.LBE68:
+ 1663               	.LM188:
+ 1664 0856 0E94 0000 		call nwk_processDataConfirm
+ 1665               	.LVL106:
+ 1666 085a 00C0      		rjmp .L144
+ 1667               	.LVL107:
+ 1668               	.L117:
+ 1669               	.LBB70:
+ 1670               	.LBB71:
+ 1671               	.LM189:
+ 1672 085c FC01      		movw r30,r24
+ 1673 085e 8181      		ldd r24,Z+1
+ 1674 0860 8823      		tst r24
+ 1675 0862 01F0      		breq .+2
+ 1676 0864 00C0      		rjmp .L144
+ 1677               	.LM190:
+ 1678 0866 60E0      		ldi r22,lo8(0)
+ 1679 0868 70E0      		ldi r23,hi8(0)
+ 1680               	.LVL108:
+ 1681 086a 80E0      		ldi r24,lo8(0)
+ 1682 086c 90E0      		ldi r25,hi8(0)
+ 1683 086e 0E94 0000 		call nlmeLeaveConfirm
+ 1684               	.LVL109:
+ 1685 0872 00C0      		rjmp .L144
+ 1686               	.LVL110:
+ 1687               	.L123:
+ 1688               	.LBE71:
+ 1689               	.LBE70:
+ 1690               	.LM191:
+ 1691 0874 EC01      		movw r28,r24
+ 1692 0876 8A81      		ldd r24,Y+2
+ 1693 0878 9B81      		ldd r25,Y+3
+ 1694 087a 803E      		cpi r24,224
+ 1695 087c 9105      		cpc r25,__zero_reg__
+ 1696 087e 01F0      		breq .+2
+ 1697 0880 00C0      		rjmp .L144
+ 1698               	.LM192:
+ 1699 0882 0E94 0000 		call nlmeSyncIndication
+ 1700               	.LVL111:
+ 1701 0886 00C0      		rjmp .L144
+ 1702               	.LVL112:
+ 1703               	.L120:
+ 1704               	.LM193:
+ 1705 0888 0E94 0000 		call nwk_processDataIndication
+ 1706               	.LVL113:
+ 1707 088c 00C0      		rjmp .L144
+ 1708               	.LVL114:
+ 1709               	.L113:
+ 1710               	.LBB72:
+ 1711               	.LBB73:
+ 1712               	.LM194:
+ 1713 088e EC01      		movw r28,r24
+ 1714 0890 8981      		ldd r24,Y+1
+ 1715 0892 8823      		tst r24
+ 1716 0894 01F4      		brne .L128
+ 1717               	.LM195:
+ 1718 0896 8091 0000 		lds r24,NwkInfo+1
+ 1719 089a 8430      		cpi r24,lo8(4)
+ 1720 089c 01F0      		breq .L152
+ 1721               	.L128:
+ 1722               	.LM196:
+ 1723 089e 1092 0000 		sts NwkInfo+1,__zero_reg__
+ 1724               	.LM197:
+ 1725 08a2 E091 0000 		lds r30,NwkInfo+2
+ 1726 08a6 F091 0000 		lds r31,(NwkInfo+2)+1
+ 1727 08aa 83E0      		ldi r24,lo8(3)
+ 1728 08ac 8687      		std Z+14,r24
+ 1729               	.LM198:
+ 1730 08ae E091 0000 		lds r30,NwkInfo+2
+ 1731 08b2 F091 0000 		lds r31,(NwkInfo+2)+1
+ 1732 08b6 118A      		std Z+17,__zero_reg__
+ 1733               	.LM199:
+ 1734 08b8 ED01      		movw r28,r26
+ 1735 08ba 6981      		ldd r22,Y+1
+ 1736               	.LVL115:
+ 1737 08bc 7727      		clr r23
+ 1738 08be 8091 0000 		lds r24,NwkInfo+4
+ 1739 08c2 9091 0000 		lds r25,(NwkInfo+4)+1
+ 1740 08c6 0E94 0000 		call nlmeJoinConfirm
+ 1741               	.LVL116:
+ 1742 08ca 00C0      		rjmp .L144
+ 1743               	.LVL117:
+ 1744               	.L137:
+ 1745               	.LBE73:
+ 1746               	.LBE72:
+ 1747               	.LBB74:
+ 1748               	.LBB75:
+ 1749               	.LM200:
+ 1750 08cc 84EC      		ldi r24,lo8(196)
+ 1751 08ce 90E0      		ldi r25,hi8(196)
+ 1752 08d0 0E94 0000 		call nlmeNetworkFormationConfirm
+ 1753               	.LVL118:
+ 1754 08d4 00C0      		rjmp .L144
+ 1755               	.LVL119:
+ 1756               	.L151:
+ 1757               	.LM201:
+ 1758 08d6 81E0      		ldi r24,lo8(1)
+ 1759 08d8 8093 0000 		sts NwkInfo,r24
+ 1760               	.LM202:
+ 1761 08dc 1092 0000 		sts NwkInfo+7,__zero_reg__
+ 1762               	.LM203:
+ 1763 08e0 80E0      		ldi r24,lo8(0)
+ 1764 08e2 90E0      		ldi r25,hi8(0)
+ 1765 08e4 0E94 0000 		call nlmeNetworkFormationConfirm
+ 1766               	.LVL120:
+ 1767 08e8 8091 0000 		lds r24,NwkInfo+1
+ 1768 08ec 00C0      		rjmp .L139
+ 1769               	.LVL121:
+ 1770               	.L152:
+ 1771               	.LBE75:
+ 1772               	.LBE74:
+ 1773               	.LBB76:
+ 1774               	.LBB77:
+ 1775               	.LM204:
+ 1776 08ee 8A81      		ldd r24,Y+2
+ 1777 08f0 9B81      		ldd r25,Y+3
+ 1778 08f2 8F5F      		subi r24,lo8(-1)
+ 1779 08f4 9F4F      		sbci r25,hi8(-1)
+ 1780 08f6 01F0      		breq .L128
+ 1781               	.LM205:
+ 1782 08f8 E091 0000 		lds r30,NwkInfo+2
+ 1783 08fc F091 0000 		lds r31,(NwkInfo+2)+1
+ 1784 0900 1686      		std Z+14,__zero_reg__
+ 1785               	.LM206:
+ 1786 0902 E091 0000 		lds r30,NwkInfo+2
+ 1787 0906 F091 0000 		lds r31,(NwkInfo+2)+1
+ 1788 090a 118B      		std Z+17,r17
+ 1789               	.LM207:
+ 1790 090c 8A81      		ldd r24,Y+2
+ 1791 090e 9B81      		ldd r25,Y+3
+ 1792 0910 9093 0000 		sts (NwkInfo+8)+1,r25
+ 1793 0914 8093 0000 		sts NwkInfo+8,r24
+ 1794               	.LM208:
+ 1795 0918 86E0      		ldi r24,lo8(6)
+ 1796 091a 8093 0000 		sts NwkInfo,r24
+ 1797               	.LM209:
+ 1798 091e 3296      		adiw r30,2
+ 1799 0920 BF01      		movw r22,r30
+ 1800               	.LVL122:
+ 1801 0922 8AE4      		ldi r24,lo8(74)
+ 1802 0924 0E94 0000 		call mlmeGetRequest
+ 1803               	.LVL123:
+ 1804               	.LM210:
+ 1805 0928 8091 0000 		lds r24,NwkInfo+7
+ 1806 092c 8230      		cpi r24,lo8(2)
+ 1807 092e 01F0      		breq .L153
+ 1808               	.L132:
+ 1809               	.LM211:
+ 1810 0930 60E0      		ldi r22,lo8(0)
+ 1811 0932 70E0      		ldi r23,hi8(0)
+ 1812 0934 8091 0000 		lds r24,NwkInfo+4
+ 1813 0938 9091 0000 		lds r25,(NwkInfo+4)+1
+ 1814 093c 0E94 0000 		call nlmeJoinConfirm
+ 1815 0940 00C0      		rjmp .L144
+ 1816               	.L153:
+ 1817               	.LM212:
+ 1818 0942 1093 0000 		sts NwkInfo,r17
+ 1819 0946 00C0      		rjmp .L132
+ 1820               	.LVL124:
+ 1821               	.L144:
+ 1822               	.LBE77:
+ 1823               	.LBE76:
+ 1824               	/* epilogue: frame size=0 */
+ 1825 0948 DF91      		pop r29
+ 1826 094a CF91      		pop r28
+ 1827 094c 1F91      		pop r17
+ 1828 094e 0895      		ret
+ 1829               	/* epilogue end (size=4) */
+ 1830               	/* function nwk_processNwkEvent size 231 (224) */
+ 1831               	.LFE26:
+ 2023               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 nwk.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:20     .text:00000000 nwk_setNwkState
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:38     .text:00000006 nwk_processAssoIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:199    .text:000000f0 nwk_processBeaconIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:227    .text:00000106 nwk_processStartConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:285    .text:00000152 nwk_processPollConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:316    .text:0000016e nwk_processDisAssConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:344    .text:00000184 nwk_processScanConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:440    .text:0000020a nwk_processAssConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:540    .text:000002b4 mcpsDataIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:586    .text:000002f0 nwk_sendStatMsg
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:635    .text:0000032c nwk_init
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:654    .text:0000033a mcpsDataConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:708    .text:0000037a mlmeOrphanIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:762    .text:000003b8 mlmeAssociateIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:876    .text:00000464 mlmeStartConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:928    .text:000004a2 mlmeBeaconNotifyIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:980    .text:000004e0 mlmeCommStatusIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:1078   .text:00000564 mlmeSyncLossIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:1130   .text:000005a2 mlmeScanConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:1183   .text:000005e0 mlmePollConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:1235   .text:0000061e mlmeResetConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:1287   .text:0000065c mlmeDisassociateIndication
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:1401   .text:00000708 mlmeDisassociateConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:1453   .text:00000746 mlmeAssociateConfirm
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccoPaaaa.s:1506   .text:00000784 nwk_processNwkEvent
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NwkInfo
+nwk_getShortAddInNT
+routing_checkFreeAddr
+nlmeJoinIndication
+nwk_inhibitJoin
+routing_allocDistAddr
+nwk_addNewChild
+mlmeAssociateResponse
+mem_freeMem
+nwk_updateBeacon
+nlmeNetworkFormationConfirm
+nlmeStartRouterConfirm
+nlmeSyncConfirm
+nlmeLeaveConfirm
+nlmeJoinConfirm
+nwk_desc
+nlmeNetworkDiscoveryConfirm
+mlmeGetRequest
+schedul_sendMsg
+nwk_dataInit
+mem_getMem
+nwk_processBtEvent
+nlme_resetNwk
+nwk_processDataConfirm
+nlmeSyncIndication
+nwk_processDataIndication

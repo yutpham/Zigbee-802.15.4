@@ -1,0 +1,2747 @@
+   1               		.file	"mac_beacon.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	beacon_calBeaconMargin
+  20               	beacon_calBeaconMargin:
+  21               	.LFB3:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LM2:
+  26 0000 8091 0000 		lds r24,mpib+8
+  27 0004 8A30      		cpi r24,lo8(10)
+  28 0006 01F0      		breq .L6
+  29               	.LM3:
+  30 0008 8B30      		cpi r24,lo8(11)
+  31 000a 00F0      		brlo .L15
+  32 000c 8C30      		cpi r24,lo8(12)
+  33 000e 01F0      		breq .L8
+  34 0010 8C30      		cpi r24,lo8(12)
+  35 0012 00F0      		brlo .L7
+  36 0014 8D30      		cpi r24,lo8(13)
+  37 0016 01F0      		breq .L9
+  38 0018 8E30      		cpi r24,lo8(14)
+  39 001a 01F0      		breq .L16
+  40               	.L2:
+  41 001c 81E0      		ldi r24,lo8(1)
+  42 001e 90E0      		ldi r25,hi8(1)
+  43 0020 0895      		ret
+  44               	.L15:
+  45 0022 8830      		cpi r24,lo8(8)
+  46 0024 01F0      		breq .L4
+  47 0026 8930      		cpi r24,lo8(9)
+  48 0028 00F0      		brlo .L17
+  49               	.LM4:
+  50 002a 85E0      		ldi r24,lo8(5)
+  51 002c 90E0      		ldi r25,hi8(5)
+  52 002e 0895      		ret
+  53               	.L6:
+  54               	.LM5:
+  55 0030 8AE0      		ldi r24,lo8(10)
+  56 0032 90E0      		ldi r25,hi8(10)
+  57 0034 0895      		ret
+  58               	.L7:
+  59               	.LM6:
+  60 0036 84E1      		ldi r24,lo8(20)
+  61 0038 90E0      		ldi r25,hi8(20)
+  62 003a 0895      		ret
+  63               	.L17:
+  64               	.LM7:
+  65 003c 8730      		cpi r24,lo8(7)
+  66 003e 01F4      		brne .L2
+  67 0040 82E0      		ldi r24,lo8(2)
+  68 0042 90E0      		ldi r25,hi8(2)
+  69 0044 0895      		ret
+  70               	.L8:
+  71               	.LM8:
+  72 0046 88E2      		ldi r24,lo8(40)
+  73 0048 90E0      		ldi r25,hi8(40)
+  74 004a 0895      		ret
+  75               	.L4:
+  76               	.LM9:
+  77 004c 83E0      		ldi r24,lo8(3)
+  78 004e 90E0      		ldi r25,hi8(3)
+  79 0050 0895      		ret
+  80               	.L9:
+  81               	.LM10:
+  82 0052 8FE4      		ldi r24,lo8(79)
+  83 0054 90E0      		ldi r25,hi8(79)
+  84               	.LM11:
+  85 0056 0895      		ret
+  86               	.L16:
+  87               	.LM12:
+  88 0058 8EE9      		ldi r24,lo8(158)
+  89 005a 90E0      		ldi r25,hi8(158)
+  90 005c 0895      		ret
+  91               	/* epilogue: frame size=0 */
+  92               	/* epilogue: noreturn */
+  93               	/* epilogue end (size=0) */
+  94               	/* function beacon_calBeaconMargin size 47 (47) */
+  95               	.LFE3:
+  97               	.global	beacon_synSlotTime
+  99               	beacon_synSlotTime:
+ 100               	.LFB7:
+ 101               	.LM13:
+ 102               	/* prologue: frame size=0 */
+ 103 005e EF92      		push r14
+ 104 0060 FF92      		push r15
+ 105 0062 0F93      		push r16
+ 106 0064 1F93      		push r17
+ 107               	/* prologue end (size=4) */
+ 108               	.LM14:
+ 109               	/* #APP */
+ 110 0066 F894      		cli
+ 111               		
+ 112               	.LM15:
+ 113               	/* #NOAPP */
+ 114 0068 2091 0000 		lds r18,SlotInfo
+ 115 006c 3091 0000 		lds r19,(SlotInfo)+1
+ 116 0070 4091 0000 		lds r20,(SlotInfo)+2
+ 117 0074 5091 0000 		lds r21,(SlotInfo)+3
+ 118 0078 6091 0000 		lds r22,SlotInfo+8
+ 119 007c 7091 0000 		lds r23,(SlotInfo+8)+1
+ 120 0080 8091 0000 		lds r24,(SlotInfo+8)+2
+ 121 0084 9091 0000 		lds r25,(SlotInfo+8)+3
+ 122 0088 261B      		sub r18,r22
+ 123 008a 370B      		sbc r19,r23
+ 124 008c 480B      		sbc r20,r24
+ 125 008e 590B      		sbc r21,r25
+ 126 0090 2093 0000 		sts SlotInfo,r18
+ 127 0094 3093 0000 		sts (SlotInfo)+1,r19
+ 128 0098 4093 0000 		sts (SlotInfo)+2,r20
+ 129 009c 5093 0000 		sts (SlotInfo)+3,r21
+ 130               	.LM16:
+ 131 00a0 20E1      		ldi r18,lo8(16)
+ 132 00a2 26BF      		out 86-0x20,r18
+ 133               	.LM17:
+ 134 00a4 E090 0000 		lds r14,SlotInfo+12
+ 135 00a8 F090 0000 		lds r15,(SlotInfo+12)+1
+ 136 00ac F694      		lsr r15
+ 137 00ae E794      		ror r14
+ 138 00b0 F694      		lsr r15
+ 139 00b2 E794      		ror r14
+ 140 00b4 F694      		lsr r15
+ 141 00b6 E794      		ror r14
+ 142 00b8 0027      		clr r16
+ 143 00ba 1127      		clr r17
+ 144 00bc 20E4      		ldi r18,lo8(320)
+ 145 00be 31E0      		ldi r19,hi8(320)
+ 146 00c0 40E0      		ldi r20,hlo8(320)
+ 147 00c2 50E0      		ldi r21,hhi8(320)
+ 148 00c4 0E94 0000 		call __mulsi3
+ 149 00c8 2091 0000 		lds r18,SlotInfo+14
+ 150 00cc 3091 0000 		lds r19,(SlotInfo+14)+1
+ 151 00d0 4091 0000 		lds r20,(SlotInfo+14)+2
+ 152 00d4 5091 0000 		lds r21,(SlotInfo+14)+3
+ 153 00d8 260F      		add r18,r22
+ 154 00da 371F      		adc r19,r23
+ 155 00dc 481F      		adc r20,r24
+ 156 00de 591F      		adc r21,r25
+ 157 00e0 E20E      		add r14,r18
+ 158 00e2 F31E      		adc r15,r19
+ 159 00e4 041F      		adc r16,r20
+ 160 00e6 151F      		adc r17,r21
+ 161 00e8 E092 0000 		sts SlotInfo+14,r14
+ 162 00ec F092 0000 		sts (SlotInfo+14)+1,r15
+ 163 00f0 0093 0000 		sts (SlotInfo+14)+2,r16
+ 164 00f4 1093 0000 		sts (SlotInfo+14)+3,r17
+ 165               	.LM18:
+ 166               	/* #APP */
+ 167 00f8 7894      		sei
+ 168               		
+ 169               	/* #NOAPP */
+ 170               	/* epilogue: frame size=0 */
+ 171 00fa 1F91      		pop r17
+ 172 00fc 0F91      		pop r16
+ 173 00fe FF90      		pop r15
+ 174 0100 EF90      		pop r14
+ 175 0102 0895      		ret
+ 176               	/* epilogue end (size=5) */
+ 177               	/* function beacon_synSlotTime size 89 (80) */
+ 178               	.LFE7:
+ 180               	.global	beacon_createBeaconTxTask
+ 182               	beacon_createBeaconTxTask:
+ 183               	.LFB18:
+ 184               	.LM19:
+ 185               	/* prologue: frame size=0 */
+ 186               	/* prologue end (size=0) */
+ 187               	.LVL0:
+ 188               	.LM20:
+ 189 0104 40E0      		ldi r20,lo8(0)
+ 190 0106 50E0      		ldi r21,hi8(0)
+ 191 0108 60E0      		ldi r22,lo8(0)
+ 192               	.LVL1:
+ 193 010a 80E0      		ldi r24,lo8(gs(beacon_transBeaconTask))
+ 194 010c 90E0      		ldi r25,hi8(gs(beacon_transBeaconTask))
+ 195               	.LVL2:
+ 196 010e 0E94 0000 		call schedul_addTask
+ 197               	/* epilogue: frame size=0 */
+ 198 0112 0895      		ret
+ 199               	/* epilogue end (size=1) */
+ 200               	/* function beacon_createBeaconTxTask size 8 (7) */
+ 201               	.LFE18:
+ 203               	.global	beacon_createTimeoutSyncBncTask
+ 205               	beacon_createTimeoutSyncBncTask:
+ 206               	.LFB5:
+ 207               	.LM21:
+ 208               	/* prologue: frame size=0 */
+ 209               	/* prologue end (size=0) */
+ 210               	.LVL3:
+ 211               	.LM22:
+ 212 0114 40E0      		ldi r20,lo8(0)
+ 213 0116 50E0      		ldi r21,hi8(0)
+ 214 0118 60E0      		ldi r22,lo8(0)
+ 215               	.LVL4:
+ 216 011a 80E0      		ldi r24,lo8(gs(beacon_timeoutSyncBeacon))
+ 217 011c 90E0      		ldi r25,hi8(gs(beacon_timeoutSyncBeacon))
+ 218               	.LVL5:
+ 219 011e 0E94 0000 		call schedul_addTask
+ 220               	/* epilogue: frame size=0 */
+ 221 0122 0895      		ret
+ 222               	/* epilogue end (size=1) */
+ 223               	/* function beacon_createTimeoutSyncBncTask size 8 (7) */
+ 224               	.LFE5:
+ 226               	.global	beacon_createSyncBeaconTask
+ 228               	beacon_createSyncBeaconTask:
+ 229               	.LFB4:
+ 230               	.LM23:
+ 231               	/* prologue: frame size=0 */
+ 232               	/* prologue end (size=0) */
+ 233               	.LVL6:
+ 234               	.LM24:
+ 235 0124 40E0      		ldi r20,lo8(0)
+ 236 0126 50E0      		ldi r21,hi8(0)
+ 237 0128 60E0      		ldi r22,lo8(0)
+ 238               	.LVL7:
+ 239 012a 80E0      		ldi r24,lo8(gs(beacon_synsBeaconTask))
+ 240 012c 90E0      		ldi r25,hi8(gs(beacon_synsBeaconTask))
+ 241               	.LVL8:
+ 242 012e 0E94 0000 		call schedul_addTask
+ 243               	/* epilogue: frame size=0 */
+ 244 0132 0895      		ret
+ 245               	/* epilogue end (size=1) */
+ 246               	/* function beacon_createSyncBeaconTask size 8 (7) */
+ 247               	.LFE4:
+ 249               	.global	beacon_endBeaconTx
+ 251               	beacon_endBeaconTx:
+ 252               	.LFB16:
+ 253               	.LM25:
+ 254               	/* prologue: frame size=0 */
+ 255               	/* prologue end (size=0) */
+ 256 0134 8BE0      		ldi r24,lo8(11)
+ 257 0136 0E94 0000 		call timer_endTimer
+ 258               	/* epilogue: frame size=0 */
+ 259 013a 0895      		ret
+ 260               	/* epilogue end (size=1) */
+ 261               	/* function beacon_endBeaconTx size 4 (3) */
+ 262               	.LFE16:
+ 264               	.global	beacon_beaconReceivedOnTracking
+ 266               	beacon_beaconReceivedOnTracking:
+ 267               	.LFB10:
+ 268               	.LM26:
+ 269               	/* prologue: frame size=0 */
+ 270               	/* prologue end (size=0) */
+ 271               	.LM27:
+ 272 013c 8091 0000 		lds r24,BeaconInfo
+ 273 0140 8823      		tst r24
+ 274 0142 01F0      		breq .L29
+ 275               	.LM28:
+ 276 0144 1092 0000 		sts BeaconInfo,__zero_reg__
+ 277               	.L29:
+ 278               	.LM29:
+ 279 0148 85E0      		ldi r24,lo8(5)
+ 280 014a 0E94 0000 		call timer_endTimer
+ 281               	.LM30:
+ 282 014e 84E0      		ldi r24,lo8(4)
+ 283 0150 0E94 0000 		call timer_endTimer
+ 284               	.LM31:
+ 285 0154 84E0      		ldi r24,lo8(4)
+ 286 0156 8093 0000 		sts BeaconInfo+84,r24
+ 287               	.LM32:
+ 288 015a 8091 0000 		lds r24,BeaconInfo+1
+ 289 015e 8823      		tst r24
+ 290 0160 01F0      		breq .L44
+ 291               	.LM33:
+ 292 0162 6091 0000 		lds r22,mpib+8
+ 293               	.LBB4:
+ 294               	.LBB5:
+ 295               	.LM34:
+ 296 0166 6A30      		cpi r22,lo8(10)
+ 297 0168 01F0      		breq .L37
+ 298 016a 6B30      		cpi r22,lo8(11)
+ 299 016c 00F4      		brsh .L42
+ 300 016e 6830      		cpi r22,lo8(8)
+ 301 0170 01F0      		breq .L35
+ 302 0172 6930      		cpi r22,lo8(9)
+ 303 0174 00F4      		brsh .L36
+ 304 0176 6730      		cpi r22,lo8(7)
+ 305 0178 01F4      		brne .+2
+ 306 017a 00C0      		rjmp .L45
+ 307               	.L33:
+ 308 017c 84E0      		ldi r24,lo8(4)
+ 309 017e 90E0      		ldi r25,hi8(4)
+ 310 0180 A0E0      		ldi r26,hlo8(4)
+ 311 0182 B0E0      		ldi r27,hhi8(4)
+ 312 0184 00C0      		rjmp .L43
+ 313               	.L37:
+ 314 0186 88E2      		ldi r24,lo8(40)
+ 315 0188 90E0      		ldi r25,hi8(40)
+ 316 018a A0E0      		ldi r26,hlo8(40)
+ 317 018c B0E0      		ldi r27,hhi8(40)
+ 318               	.L43:
+ 319               	.LBE5:
+ 320               	.LBE4:
+ 321               	.LM35:
+ 322 018e 20E3      		ldi r18,lo8(48)
+ 323 0190 30E0      		ldi r19,hi8(48)
+ 324 0192 40E0      		ldi r20,hlo8(48)
+ 325 0194 50E0      		ldi r21,hhi8(48)
+ 326 0196 00C0      		rjmp 2f
+ 327 0198 220F      	1:	lsl r18
+ 328 019a 331F      		rol r19
+ 329 019c 441F      		rol r20
+ 330 019e 551F      		rol r21
+ 331 01a0 6A95      	2:	dec r22
+ 332 01a2 02F4      		brpl 1b
+ 333 01a4 281B      		sub r18,r24
+ 334 01a6 390B      		sbc r19,r25
+ 335 01a8 4A0B      		sbc r20,r26
+ 336 01aa 5B0B      		sbc r21,r27
+ 337 01ac 60E0      		ldi r22,lo8(0)
+ 338 01ae 70E0      		ldi r23,hi8(0)
+ 339 01b0 84E0      		ldi r24,lo8(4)
+ 340 01b2 0E94 0000 		call timer_startTimer
+ 341               	.L44:
+ 342 01b6 0895      		ret
+ 343               	.L42:
+ 344               	.LBB6:
+ 345               	.LBB7:
+ 346               	.LM36:
+ 347 01b8 6C30      		cpi r22,lo8(12)
+ 348 01ba 01F0      		breq .L39
+ 349 01bc 6C30      		cpi r22,lo8(12)
+ 350 01be 00F0      		brlo .L38
+ 351 01c0 6D30      		cpi r22,lo8(13)
+ 352 01c2 01F0      		breq .L40
+ 353 01c4 6E30      		cpi r22,lo8(14)
+ 354 01c6 01F4      		brne .L33
+ 355 01c8 88E7      		ldi r24,lo8(632)
+ 356 01ca 92E0      		ldi r25,hi8(632)
+ 357 01cc A0E0      		ldi r26,hlo8(632)
+ 358 01ce B0E0      		ldi r27,hhi8(632)
+ 359 01d0 00C0      		rjmp .L43
+ 360               	.L35:
+ 361 01d2 8CE0      		ldi r24,lo8(12)
+ 362 01d4 90E0      		ldi r25,hi8(12)
+ 363 01d6 A0E0      		ldi r26,hlo8(12)
+ 364 01d8 B0E0      		ldi r27,hhi8(12)
+ 365 01da 00C0      		rjmp .L43
+ 366               	.L39:
+ 367 01dc 80EA      		ldi r24,lo8(160)
+ 368 01de 90E0      		ldi r25,hi8(160)
+ 369 01e0 A0E0      		ldi r26,hlo8(160)
+ 370 01e2 B0E0      		ldi r27,hhi8(160)
+ 371 01e4 00C0      		rjmp .L43
+ 372               	.L38:
+ 373 01e6 80E5      		ldi r24,lo8(80)
+ 374 01e8 90E0      		ldi r25,hi8(80)
+ 375 01ea A0E0      		ldi r26,hlo8(80)
+ 376 01ec B0E0      		ldi r27,hhi8(80)
+ 377 01ee 00C0      		rjmp .L43
+ 378               	.L36:
+ 379 01f0 84E1      		ldi r24,lo8(20)
+ 380 01f2 90E0      		ldi r25,hi8(20)
+ 381 01f4 A0E0      		ldi r26,hlo8(20)
+ 382 01f6 B0E0      		ldi r27,hhi8(20)
+ 383 01f8 00C0      		rjmp .L43
+ 384               	.L40:
+ 385 01fa 8CE3      		ldi r24,lo8(316)
+ 386 01fc 91E0      		ldi r25,hi8(316)
+ 387 01fe A0E0      		ldi r26,hlo8(316)
+ 388 0200 B0E0      		ldi r27,hhi8(316)
+ 389 0202 00C0      		rjmp .L43
+ 390               	.L45:
+ 391 0204 88E0      		ldi r24,lo8(8)
+ 392 0206 90E0      		ldi r25,hi8(8)
+ 393 0208 A0E0      		ldi r26,hlo8(8)
+ 394 020a B0E0      		ldi r27,hhi8(8)
+ 395 020c 00C0      		rjmp .L43
+ 396               	.LBE7:
+ 397               	.LBE6:
+ 398               	/* epilogue: frame size=0 */
+ 399               	/* epilogue: noreturn */
+ 400               	/* epilogue end (size=0) */
+ 401               	/* function beacon_beaconReceivedOnTracking size 106 (106) */
+ 402               	.LFE10:
+ 404               	.global	beacon_formatBeacon
+ 406               	beacon_formatBeacon:
+ 407               	.LFB13:
+ 408               	.LM37:
+ 409               	/* prologue: frame size=0 */
+ 410 020e CF93      		push r28
+ 411 0210 DF93      		push r29
+ 412               	/* prologue end (size=2) */
+ 413               	.LM38:
+ 414 0212 8091 0000 		lds r24,mpib+13
+ 415 0216 E091 0000 		lds r30,BeaconInfo+3
+ 416 021a F091 0000 		lds r31,(BeaconInfo+3)+1
+ 417 021e 8283      		std Z+2,r24
+ 418 0220 8F5F      		subi r24,lo8(-(1))
+ 419 0222 8093 0000 		sts mpib+13,r24
+ 420               	.LM39:
+ 421 0226 E091 0000 		lds r30,BeaconInfo+3
+ 422 022a F091 0000 		lds r31,(BeaconInfo+3)+1
+ 423 022e DF01      		movw r26,r30
+ 424               	.LVL9:
+ 425 0230 5896      		adiw r26,24
+ 426               	.LM40:
+ 427 0232 9091 0000 		lds r25,mpib+1
+ 428 0236 9795      		ror r25
+ 429 0238 9927      		clr r25
+ 430 023a 9795      		ror r25
+ 431 023c ED01      		movw r28,r26
+ 432 023e 8981      		ldd r24,Y+1
+ 433 0240 8F77      		andi r24,lo8(127)
+ 434 0242 892B      		or r24,r25
+ 435 0244 8983      		std Y+1,r24
+ 436               	.LM41:
+ 437 0246 9091 0000 		lds r25,mpib+3
+ 438 024a 9170      		andi r25,lo8(1)
+ 439 024c 9295      		swap r25
+ 440 024e 907F      		andi r25,0xf0
+ 441 0250 8F7E      		andi r24,lo8(-17)
+ 442 0252 892B      		or r24,r25
+ 443 0254 8983      		std Y+1,r24
+ 444               	.LM42:
+ 445 0256 9091 0000 		lds r25,mpib+8
+ 446 025a 9F70      		andi r25,lo8(15)
+ 447 025c 808D      		ldd r24,Z+24
+ 448 025e 807F      		andi r24,lo8(-16)
+ 449 0260 892B      		or r24,r25
+ 450 0262 808F      		std Z+24,r24
+ 451               	.LM43:
+ 452 0264 9091 0000 		lds r25,mpib+34
+ 453 0268 9295      		swap r25
+ 454 026a 907F      		andi r25,0xf0
+ 455 026c 8F70      		andi r24,lo8(15)
+ 456 026e 892B      		or r24,r25
+ 457 0270 808F      		std Z+24,r24
+ 458               	.LM44:
+ 459 0272 90E0      		ldi r25,lo8(0)
+ 460 0274 8091 0000 		lds r24,macInfo+8
+ 461 0278 8823      		tst r24
+ 462 027a 01F4      		brne .L47
+ 463               	.LM45:
+ 464 027c 91E0      		ldi r25,lo8(1)
+ 465               	.L47:
+ 466 027e 9295      		swap r25
+ 467 0280 990F      		lsl r25
+ 468 0282 990F      		lsl r25
+ 469 0284 907C      		andi r25,0xc0
+ 470 0286 FD01      		movw r30,r26
+ 471 0288 8181      		ldd r24,Z+1
+ 472 028a 807B      		andi r24,lo8(-80)
+ 473               	.LM46:
+ 474 028c 892B      		or r24,r25
+ 475 028e 8183      		std Z+1,r24
+ 476               	.LM47:
+ 477 0290 1282      		std Z+2,__zero_reg__
+ 478               	.LM48:
+ 479 0292 4091 0000 		lds r20,mpib+5
+ 480 0296 5527      		clr r21
+ 481 0298 6091 0000 		lds r22,mpib+6
+ 482 029c 7091 0000 		lds r23,(mpib+6)+1
+ 483 02a0 8091 0000 		lds r24,BeaconInfo+78
+ 484 02a4 A80F      		add r26,r24
+ 485 02a6 B11D      		adc r27,__zero_reg__
+ 486 02a8 CD01      		movw r24,r26
+ 487 02aa 0396      		adiw r24,3
+ 488 02ac 0E94 0000 		call mem_cpy
+ 489               	.LVL10:
+ 490               	.LM49:
+ 491 02b0 E091 0000 		lds r30,BeaconInfo+3
+ 492 02b4 F091 0000 		lds r31,(BeaconInfo+3)+1
+ 493 02b8 9091 0000 		lds r25,BeaconInfo+78
+ 494 02bc 9D5F      		subi r25,lo8(-(3))
+ 495 02be 8091 0000 		lds r24,mpib+5
+ 496 02c2 890F      		add r24,r25
+ 497 02c4 878B      		std Z+23,r24
+ 498               	.LM50:
+ 499 02c6 E091 0000 		lds r30,BeaconInfo+3
+ 500 02ca F091 0000 		lds r31,(BeaconInfo+3)+1
+ 501 02ce 8789      		ldd r24,Z+23
+ 502 02d0 60E0      		ldi r22,lo8(0)
+ 503 02d2 70E0      		ldi r23,hi8(0)
+ 504 02d4 9927      		clr r25
+ 505 02d6 0E94 0000 		call msupCalcPacketDuration
+ 506 02da 8093 0000 		sts BeaconInfo+85,r24
+ 507               	/* epilogue: frame size=0 */
+ 508 02de DF91      		pop r29
+ 509 02e0 CF91      		pop r28
+ 510 02e2 0895      		ret
+ 511               	/* epilogue end (size=3) */
+ 512               	/* function beacon_formatBeacon size 107 (102) */
+ 513               	.LFE13:
+ 515               	.global	beacon_notifyBeacon
+ 517               	beacon_notifyBeacon:
+ 518               	.LFB12:
+ 519               	.LM51:
+ 520               	/* prologue: frame size=0 */
+ 521 02e4 0F93      		push r16
+ 522 02e6 1F93      		push r17
+ 523 02e8 CF93      		push r28
+ 524 02ea DF93      		push r29
+ 525               	/* prologue end (size=4) */
+ 526               	.LVL11:
+ 527 02ec EC01      		movw r28,r24
+ 528               	.LM52:
+ 529 02ee 8091 0000 		lds r24,PhyInfo
+ 530               	.LVL12:
+ 531 02f2 8093 0000 		sts BeaconNof+12,r24
+ 532               	.LM53:
+ 533 02f6 C258      		subi r28,lo8(-(126))
+ 534 02f8 DF4F      		sbci r29,hi8(-(126))
+ 535 02fa 8881      		ld r24,Y
+ 536 02fc CE57      		subi r28,lo8(-(-126))
+ 537 02fe D040      		sbci r29,hi8(-(-126))
+ 538 0300 8093 0000 		sts BeaconNof+16,r24
+ 539               	.LM54:
+ 540 0304 888D      		ldd r24,Y+24
+ 541 0306 998D      		ldd r25,Y+25
+ 542 0308 9093 0000 		sts (BeaconNof+13)+1,r25
+ 543 030c 8093 0000 		sts BeaconNof+13,r24
+ 544               	.LM55:
+ 545 0310 90E0      		ldi r25,lo8(0)
+ 546 0312 8A8D      		ldd r24,Y+26
+ 547 0314 87FD      		sbrc r24,7
+ 548 0316 00C0      		rjmp .L70
+ 549               	.L50:
+ 550               	.LM56:
+ 551 0318 9093 0000 		sts BeaconNof+15,r25
+ 552               	.LM57:
+ 553 031c 8881      		ld r24,Y
+ 554 031e 8695      		lsr r24
+ 555 0320 8695      		lsr r24
+ 556 0322 8695      		lsr r24
+ 557 0324 8170      		andi r24,lo8(1)
+ 558 0326 8093 0000 		sts BeaconNof+21,r24
+ 559               	.LM58:
+ 560 032a 8881      		ld r24,Y
+ 561 032c 8695      		lsr r24
+ 562 032e 8695      		lsr r24
+ 563 0330 8695      		lsr r24
+ 564 0332 8170      		andi r24,lo8(1)
+ 565 0334 8093 0000 		sts BeaconNof+23,r24
+ 566               	.LM59:
+ 567 0338 A0E0      		ldi r26,lo8(BeaconNof+4)
+ 568 033a B0E0      		ldi r27,hi8(BeaconNof+4)
+ 569 033c FE01      		movw r30,r28
+ 570 033e 3F96      		adiw r30,15
+ 571 0340 88E0      		ldi r24,lo8(8)
+ 572               	.L51:
+ 573 0342 0190      		ld r0,Z+
+ 574 0344 0D92      		st X+,r0
+ 575 0346 8150      		subi r24,lo8(-(-1))
+ 576 0348 01F4      		brne .L51
+ 577               	.LM60:
+ 578 034a 8981      		ldd r24,Y+1
+ 579 034c 8295      		swap r24
+ 580 034e 8695      		lsr r24
+ 581 0350 8695      		lsr r24
+ 582 0352 8370      		andi r24,0x3
+ 583 0354 8093 0000 		sts BeaconNof+1,r24
+ 584               	.LM61:
+ 585 0358 8D85      		ldd r24,Y+13
+ 586 035a 9E85      		ldd r25,Y+14
+ 587 035c 9093 0000 		sts (BeaconNof+2)+1,r25
+ 588 0360 8093 0000 		sts BeaconNof+2,r24
+ 589               	.LM62:
+ 590 0364 8091 0000 		lds r24,OSTmrTime
+ 591 0368 9091 0000 		lds r25,(OSTmrTime)+1
+ 592 036c A091 0000 		lds r26,(OSTmrTime)+2
+ 593 0370 B091 0000 		lds r27,(OSTmrTime)+3
+ 594 0374 8093 0000 		sts BeaconNof+17,r24
+ 595 0378 9093 0000 		sts (BeaconNof+17)+1,r25
+ 596 037c A093 0000 		sts (BeaconNof+17)+2,r26
+ 597 0380 B093 0000 		sts (BeaconNof+17)+3,r27
+ 598               	.LM63:
+ 599 0384 9A8D      		ldd r25,Y+26
+ 600               	.LVL13:
+ 601 0386 9770      		andi r25,lo8(7)
+ 602               	.LM64:
+ 603 0388 01F0      		breq .+2
+ 604 038a 00C0      		rjmp .L52
+ 605 038c E3E0      		ldi r30,lo8(3)
+ 606 038e F0E0      		ldi r31,hi8(3)
+ 607 0390 64E0      		ldi r22,lo8(4)
+ 608               	.LVL14:
+ 609               	.L54:
+ 610               	.LM65:
+ 611 0392 EC0F      		add r30,r28
+ 612 0394 FD1F      		adc r31,r29
+ 613 0396 808D      		ldd r24,Z+24
+ 614 0398 8093 0000 		sts BeaconNof+24,r24
+ 615               	.LM66:
+ 616 039c 282F      		mov r18,r24
+ 617               	.LVL15:
+ 618 039e 2770      		andi r18,lo8(7)
+ 619               	.LM67:
+ 620 03a0 01F0      		breq .L57
+ 621 03a2 462F      		mov r20,r22
+ 622 03a4 5527      		clr r21
+ 623 03a6 30E0      		ldi r19,lo8(0)
+ 624               	.LVL16:
+ 625               	.L58:
+ 626               	.LM68:
+ 627 03a8 3F5F      		subi r19,lo8(-(1))
+ 628               	.LM69:
+ 629 03aa E32F      		mov r30,r19
+ 630 03ac FF27      		clr r31
+ 631 03ae DF01      		movw r26,r30
+ 632 03b0 AA0F      		lsl r26
+ 633 03b2 BB1F      		rol r27
+ 634 03b4 AA0F      		lsl r26
+ 635 03b6 BB1F      		rol r27
+ 636 03b8 AA0F      		lsl r26
+ 637 03ba BB1F      		rol r27
+ 638 03bc A050      		subi r26,lo8(-(BeaconNof))
+ 639 03be B040      		sbci r27,hi8(-(BeaconNof))
+ 640 03c0 EE0F      		lsl r30
+ 641 03c2 FF1F      		rol r31
+ 642 03c4 EC0F      		add r30,r28
+ 643 03c6 FD1F      		adc r31,r29
+ 644 03c8 E40F      		add r30,r20
+ 645 03ca F51F      		adc r31,r21
+ 646 03cc 808D      		ldd r24,Z+24
+ 647 03ce 918D      		ldd r25,Z+25
+ 648 03d0 FD01      		movw r30,r26
+ 649 03d2 928F      		std Z+26,r25
+ 650 03d4 818F      		std Z+25,r24
+ 651               	.LM70:
+ 652 03d6 2317      		cp r18,r19
+ 653 03d8 01F4      		brne .L58
+ 654               	.L57:
+ 655               	.LM71:
+ 656 03da 8091 0000 		lds r24,BeaconNof+24
+ 657 03de 082F      		mov r16,r24
+ 658               	.LVL17:
+ 659 03e0 0770      		andi r16,lo8(7)
+ 660 03e2 000F      		lsl r16
+ 661 03e4 060F      		add r16,r22
+ 662               	.LM72:
+ 663 03e6 982F      		mov r25,r24
+ 664               	.LVL18:
+ 665 03e8 9295      		swap r25
+ 666 03ea 9F70      		andi r25,0x0f
+ 667 03ec 9770      		andi r25,lo8(7)
+ 668               	.LM73:
+ 669 03ee 01F4      		brne .+2
+ 670 03f0 00C0      		rjmp .L60
+ 671 03f2 602F      		mov r22,r16
+ 672 03f4 7727      		clr r23
+ 673               	.LVL19:
+ 674 03f6 322F      		mov r19,r18
+ 675               	.LVL20:
+ 676 03f8 192F      		mov r17,r25
+ 677               	.LVL21:
+ 678 03fa 120F      		add r17,r18
+ 679               	.LVL22:
+ 680               	.L62:
+ 681               	.LM74:
+ 682 03fc 3F5F      		subi r19,lo8(-(1))
+ 683               	.LM75:
+ 684 03fe E32F      		mov r30,r19
+ 685 0400 FF27      		clr r31
+ 686 0402 EE0F      		lsl r30
+ 687 0404 FF1F      		rol r31
+ 688 0406 EE0F      		lsl r30
+ 689 0408 FF1F      		rol r31
+ 690 040a EE0F      		lsl r30
+ 691 040c FF1F      		rol r31
+ 692 040e AF01      		movw r20,r30
+ 693 0410 4050      		subi r20,lo8(-(BeaconNof))
+ 694 0412 5040      		sbci r21,hi8(-(BeaconNof))
+ 695 0414 CA01      		movw r24,r20
+ 696 0416 4996      		adiw r24,25
+ 697 0418 EC0F      		add r30,r28
+ 698 041a FD1F      		adc r31,r29
+ 699 041c E60F      		add r30,r22
+ 700 041e F71F      		adc r31,r23
+ 701 0420 DF01      		movw r26,r30
+ 702 0422 5896      		adiw r26,24
+ 703 0424 208D      		ldd r18,Z+24
+ 704               	.LVL23:
+ 705 0426 FA01      		movw r30,r20
+ 706 0428 218F      		std Z+25,r18
+ 707 042a FD01      		movw r30,r26
+ 708 042c 2181      		ldd r18,Z+1
+ 709 042e FC01      		movw r30,r24
+ 710 0430 2183      		std Z+1,r18
+ 711 0432 FD01      		movw r30,r26
+ 712 0434 2281      		ldd r18,Z+2
+ 713 0436 FC01      		movw r30,r24
+ 714 0438 2283      		std Z+2,r18
+ 715 043a FD01      		movw r30,r26
+ 716 043c 2381      		ldd r18,Z+3
+ 717 043e FC01      		movw r30,r24
+ 718 0440 2383      		std Z+3,r18
+ 719 0442 FD01      		movw r30,r26
+ 720 0444 2481      		ldd r18,Z+4
+ 721 0446 FC01      		movw r30,r24
+ 722 0448 2483      		std Z+4,r18
+ 723 044a FD01      		movw r30,r26
+ 724 044c 2581      		ldd r18,Z+5
+ 725 044e FC01      		movw r30,r24
+ 726 0450 2583      		std Z+5,r18
+ 727 0452 FD01      		movw r30,r26
+ 728 0454 2681      		ldd r18,Z+6
+ 729 0456 FC01      		movw r30,r24
+ 730 0458 2683      		std Z+6,r18
+ 731 045a FD01      		movw r30,r26
+ 732 045c 2781      		ldd r18,Z+7
+ 733 045e FC01      		movw r30,r24
+ 734 0460 2783      		std Z+7,r18
+ 735               	.LM76:
+ 736 0462 3117      		cp r19,r17
+ 737 0464 01F4      		brne .L62
+ 738 0466 8091 0000 		lds r24,BeaconNof+24
+ 739 046a 00C0      		rjmp .L60
+ 740               	.LVL24:
+ 741               	.L52:
+ 742               	.LM77:
+ 743 046c 83E0      		ldi r24,lo8(3)
+ 744 046e 989F      		mul r25,r24
+ 745 0470 C001      		movw r24,r0
+ 746 0472 1124      		clr r1
+ 747 0474 282F      		mov r18,r24
+ 748               	.LVL25:
+ 749 0476 2C5F      		subi r18,lo8(-(4))
+ 750 0478 E22F      		mov r30,r18
+ 751 047a FF27      		clr r31
+ 752 047c 682F      		mov r22,r24
+ 753 047e 6B5F      		subi r22,lo8(-(5))
+ 754 0480 00C0      		rjmp .L54
+ 755               	.LVL26:
+ 756               	.L70:
+ 757               	.LM78:
+ 758 0482 91E0      		ldi r25,lo8(1)
+ 759 0484 00C0      		rjmp .L50
+ 760               	.LVL27:
+ 761               	.L60:
+ 762               	.LM79:
+ 763 0486 8695      		lsr r24
+ 764               	.LVL28:
+ 765 0488 8873      		andi r24,lo8(56)
+ 766 048a 800F      		add r24,r16
+ 767               	.LM80:
+ 768 048c 4F89      		ldd r20,Y+23
+ 769 048e 481B      		sub r20,r24
+ 770 0490 4093 0000 		sts BeaconNof+81,r20
+ 771               	.LM81:
+ 772 0494 5527      		clr r21
+ 773 0496 6896      		adiw r28,24
+ 774 0498 C80F      		add r28,r24
+ 775 049a D11D      		adc r29,__zero_reg__
+ 776 049c BE01      		movw r22,r28
+ 777 049e 80E0      		ldi r24,lo8(BeaconNof+82)
+ 778 04a0 90E0      		ldi r25,hi8(BeaconNof+82)
+ 779               	.LVL29:
+ 780 04a2 0E94 0000 		call mem_cpy
+ 781               	.LVL30:
+ 782               	.LM82:
+ 783 04a6 80E0      		ldi r24,lo8(BeaconNof)
+ 784 04a8 90E0      		ldi r25,hi8(BeaconNof)
+ 785 04aa 0E94 0000 		call mlmeBeaconNotifyIndication
+ 786               	/* epilogue: frame size=0 */
+ 787 04ae DF91      		pop r29
+ 788 04b0 CF91      		pop r28
+ 789 04b2 1F91      		pop r17
+ 790 04b4 0F91      		pop r16
+ 791 04b6 0895      		ret
+ 792               	/* epilogue end (size=5) */
+ 793               	/* function beacon_notifyBeacon size 238 (229) */
+ 794               	.LFE12:
+ 796               	.global	beacon_synsBeaconTask
+ 798               	beacon_synsBeaconTask:
+ 799               	.LFB9:
+ 800               	.LM83:
+ 801               	/* prologue: frame size=2 */
+ 802 04b8 CF93      		push r28
+ 803 04ba DF93      		push r29
+ 804 04bc CDB7      		in r28,__SP_L__
+ 805 04be DEB7      		in r29,__SP_H__
+ 806 04c0 2297      		sbiw r28,2
+ 807 04c2 0FB6      		in __tmp_reg__,__SREG__
+ 808 04c4 F894      		cli
+ 809 04c6 DEBF      		out __SP_H__,r29
+ 810 04c8 0FBE      		out __SREG__,__tmp_reg__
+ 811 04ca CDBF      		out __SP_L__,r28
+ 812               	/* prologue end (size=10) */
+ 813               	.LVL31:
+ 814 04cc 9A83      		std Y+2,r25
+ 815 04ce 8983      		std Y+1,r24
+ 816               	.LM84:
+ 817 04d0 4981      		ldd r20,Y+1
+ 818 04d2 4423      		tst r20
+ 819 04d4 01F0      		breq .L79
+ 820               	.LVL32:
+ 821               	.LM85:
+ 822 04d6 8091 0000 		lds r24,BeaconInfo+1
+ 823 04da 8823      		tst r24
+ 824 04dc 01F4      		brne .L80
+ 825               	.L76:
+ 826               	.LM86:
+ 827 04de 81E0      		ldi r24,lo8(1)
+ 828 04e0 8093 0000 		sts BeaconInfo,r24
+ 829               	.LM87:
+ 830 04e4 FE01      		movw r30,r28
+ 831               	.LVL33:
+ 832 04e6 3196      		adiw r30,1
+ 833 04e8 8181      		ldd r24,Z+1
+ 834 04ea 8093 0000 		sts BeaconInfo+1,r24
+ 835               	.LM88:
+ 836 04ee 84E0      		ldi r24,lo8(4)
+ 837 04f0 8093 0000 		sts BeaconInfo+84,r24
+ 838               	.LM89:
+ 839 04f4 1092 0000 		sts BeaconInfo+2,__zero_reg__
+ 840               	.LM90:
+ 841 04f8 5527      		clr r21
+ 842 04fa 6627      		clr r22
+ 843 04fc 7727      		clr r23
+ 844 04fe 80E0      		ldi r24,lo8(0)
+ 845 0500 0E94 0000 		call plmeSET_request
+ 846               	.LVL34:
+ 847               	.LM91:
+ 848 0504 20E3      		ldi r18,lo8(48)
+ 849 0506 30E0      		ldi r19,hi8(48)
+ 850 0508 40E0      		ldi r20,hlo8(48)
+ 851 050a 50E0      		ldi r21,hhi8(48)
+ 852 050c 0090 0000 		lds r0,mpib+8
+ 853 0510 00C0      		rjmp 2f
+ 854 0512 220F      	1:	lsl r18
+ 855 0514 331F      		rol r19
+ 856 0516 441F      		rol r20
+ 857 0518 551F      		rol r21
+ 858 051a 0A94      	2:	dec r0
+ 859 051c 02F4      		brpl 1b
+ 860 051e 60E0      		ldi r22,lo8(0)
+ 861 0520 70E0      		ldi r23,hi8(0)
+ 862 0522 85E0      		ldi r24,lo8(5)
+ 863 0524 0E94 0000 		call timer_startTimer
+ 864 0528 00C0      		rjmp .L74
+ 865               	.LVL35:
+ 866               	.L80:
+ 867               	.LM92:
+ 868 052a 84E0      		ldi r24,lo8(4)
+ 869 052c 0E94 0000 		call timer_endTimer
+ 870               	.LVL36:
+ 871               	.LM93:
+ 872 0530 85E0      		ldi r24,lo8(5)
+ 873 0532 0E94 0000 		call timer_endTimer
+ 874 0536 4981      		ldd r20,Y+1
+ 875 0538 00C0      		rjmp .L76
+ 876               	.LVL37:
+ 877               	.L79:
+ 878               	.LM94:
+ 879 053a 20E3      		ldi r18,lo8(48)
+ 880 053c 30E0      		ldi r19,hi8(48)
+ 881 053e 40E0      		ldi r20,hlo8(48)
+ 882 0540 50E0      		ldi r21,hhi8(48)
+ 883 0542 0090 0000 		lds r0,mpib+8
+ 884 0546 00C0      		rjmp 2f
+ 885 0548 220F      	1:	lsl r18
+ 886 054a 331F      		rol r19
+ 887 054c 441F      		rol r20
+ 888 054e 551F      		rol r21
+ 889 0550 0A94      	2:	dec r0
+ 890 0552 02F4      		brpl 1b
+ 891 0554 60E0      		ldi r22,lo8(0)
+ 892 0556 70E0      		ldi r23,hi8(0)
+ 893               	.LVL38:
+ 894 0558 85E0      		ldi r24,lo8(5)
+ 895 055a 0E94 0000 		call timer_startTimer
+ 896               	.LM95:
+ 897 055e 8091 0000 		lds r24,BeaconInfo+84
+ 898 0562 8823      		tst r24
+ 899 0564 01F4      		brne .L74
+ 900               	.LM96:
+ 901 0566 1092 0000 		sts BeaconInfo+1,__zero_reg__
+ 902               	.LM97:
+ 903 056a 81E0      		ldi r24,lo8(1)
+ 904 056c 8093 0000 		sts BeaconInfo+2,r24
+ 905               	.LM98:
+ 906 0570 80EE      		ldi r24,lo8(-32)
+ 907 0572 0E94 0000 		call mlmeSyncLossIndication
+ 908               	.L74:
+ 909               	.LM99:
+ 910 0576 86E0      		ldi r24,lo8(6)
+ 911 0578 90E0      		ldi r25,hi8(6)
+ 912 057a 0E94 0000 		call mac_setTrxState
+ 913               	.LM100:
+ 914 057e 80E0      		ldi r24,lo8(0)
+ 915 0580 0E94 0000 		call schedul_removeTask
+ 916               	/* epilogue: frame size=2 */
+ 917 0584 2296      		adiw r28,2
+ 918 0586 0FB6      		in __tmp_reg__,__SREG__
+ 919 0588 F894      		cli
+ 920 058a DEBF      		out __SP_H__,r29
+ 921 058c 0FBE      		out __SREG__,__tmp_reg__
+ 922 058e CDBF      		out __SP_L__,r28
+ 923 0590 DF91      		pop r29
+ 924 0592 CF91      		pop r28
+ 925 0594 0895      		ret
+ 926               	/* epilogue end (size=9) */
+ 927               	/* function beacon_synsBeaconTask size 111 (92) */
+ 928               	.LFE9:
+ 930               	.global	beacon_initBeacon
+ 932               	beacon_initBeacon:
+ 933               	.LFB6:
+ 934               	.LM101:
+ 935               	/* prologue: frame size=0 */
+ 936 0596 8F92      		push r8
+ 937 0598 AF92      		push r10
+ 938 059a BF92      		push r11
+ 939 059c CF92      		push r12
+ 940 059e DF92      		push r13
+ 941 05a0 EF92      		push r14
+ 942 05a2 0F93      		push r16
+ 943 05a4 1F93      		push r17
+ 944               	/* prologue end (size=8) */
+ 945               	.LM102:
+ 946 05a6 E091 0000 		lds r30,BeaconInfo+3
+ 947 05aa F091 0000 		lds r31,(BeaconInfo+3)+1
+ 948               	.LVL39:
+ 949               	.LM103:
+ 950 05ae 3097      		sbiw r30,0
+ 951 05b0 01F4      		brne .+2
+ 952 05b2 00C0      		rjmp .L88
+ 953               	.L82:
+ 954               	.LM104:
+ 955 05b4 ED57      		subi r30,lo8(-(131))
+ 956 05b6 FF4F      		sbci r31,hi8(-(131))
+ 957 05b8 83E0      		ldi r24,lo8(3)
+ 958 05ba 8083      		st Z,r24
+ 959               	.LM105:
+ 960 05bc 3396      		adiw r30,3
+ 961 05be 8083      		st Z,r24
+ 962 05c0 E658      		subi r30,lo8(-(-134))
+ 963 05c2 F040      		sbci r31,hi8(-(-134))
+ 964               	.LM106:
+ 965 05c4 86E6      		ldi r24,lo8(102)
+ 966 05c6 878B      		std Z+23,r24
+ 967               	.LM107:
+ 968 05c8 8091 0000 		lds r24,mpib+32
+ 969 05cc 9091 0000 		lds r25,(mpib+32)+1
+ 970 05d0 8D5F      		subi r24,lo8(-3)
+ 971 05d2 9F4F      		sbci r25,hi8(-3)
+ 972 05d4 00F0      		brlo .L84
+ 973               	.LM108:
+ 974 05d6 2091 0000 		lds r18,mpib+28
+ 975 05da 3091 0000 		lds r19,(mpib+28)+1
+ 976 05de 1F92      		push __zero_reg__
+ 977 05e0 1F92      		push __zero_reg__
+ 978 05e2 1F92      		push __zero_reg__
+ 979 05e4 8824      		clr r8
+ 980 05e6 AA24      		clr r10
+ 981 05e8 BB24      		clr r11
+ 982 05ea CC24      		clr r12
+ 983 05ec DD24      		clr r13
+ 984 05ee EE24      		clr r14
+ 985 05f0 00E0      		ldi r16,lo8(aExtendedAddress)
+ 986 05f2 10E0      		ldi r17,hi8(aExtendedAddress)
+ 987 05f4 43E0      		ldi r20,lo8(3)
+ 988 05f6 60E0      		ldi r22,lo8(0)
+ 989 05f8 CF01      		movw r24,r30
+ 990 05fa 0E94 0000 		call mac_formatMpdu
+ 991               	.LVL40:
+ 992 05fe 0F90      		pop __tmp_reg__
+ 993 0600 0F90      		pop __tmp_reg__
+ 994 0602 0F90      	 	pop __tmp_reg__
+ 995 0604 00C0      		rjmp .L87
+ 996               	.LVL41:
+ 997               	.L84:
+ 998               	.LM109:
+ 999 0606 2091 0000 		lds r18,mpib+28
+ 1000 060a 3091 0000 		lds r19,(mpib+28)+1
+ 1001 060e 1F92      		push __zero_reg__
+ 1002 0610 1F92      		push __zero_reg__
+ 1003 0612 1F92      		push __zero_reg__
+ 1004 0614 8824      		clr r8
+ 1005 0616 AA24      		clr r10
+ 1006 0618 BB24      		clr r11
+ 1007 061a CC24      		clr r12
+ 1008 061c DD24      		clr r13
+ 1009 061e EE24      		clr r14
+ 1010 0620 00E0      		ldi r16,lo8(mpib+32)
+ 1011 0622 10E0      		ldi r17,hi8(mpib+32)
+ 1012 0624 42E0      		ldi r20,lo8(2)
+ 1013 0626 60E0      		ldi r22,lo8(0)
+ 1014 0628 CF01      		movw r24,r30
+ 1015 062a 0E94 0000 		call mac_formatMpdu
+ 1016               	.LVL42:
+ 1017 062e 0F90      		pop __tmp_reg__
+ 1018 0630 0F90      		pop __tmp_reg__
+ 1019 0632 0F90      	 	pop __tmp_reg__
+ 1020 0634 00C0      		rjmp .L87
+ 1021               	.LVL43:
+ 1022               	.L88:
+ 1023               	.LM110:
+ 1024 0636 E0E0      		ldi r30,lo8(BeaconInfo+5)
+ 1025 0638 F0E0      		ldi r31,hi8(BeaconInfo+5)
+ 1026 063a F093 0000 		sts (BeaconInfo+3)+1,r31
+ 1027 063e E093 0000 		sts BeaconInfo+3,r30
+ 1028 0642 00C0      		rjmp .L82
+ 1029               	.LVL44:
+ 1030               	.L87:
+ 1031               	/* epilogue: frame size=0 */
+ 1032 0644 1F91      		pop r17
+ 1033 0646 0F91      		pop r16
+ 1034 0648 EF90      		pop r14
+ 1035 064a DF90      		pop r13
+ 1036 064c CF90      		pop r12
+ 1037 064e BF90      		pop r11
+ 1038 0650 AF90      		pop r10
+ 1039 0652 8F90      		pop r8
+ 1040 0654 0895      		ret
+ 1041               	/* epilogue end (size=9) */
+ 1042               	/* function beacon_initBeacon size 97 (80) */
+ 1043               	.LFE6:
+ 1045               	.global	beacon_transmitConflictNotif
+ 1047               	beacon_transmitConflictNotif:
+ 1048               	.LFB2:
+ 1049               	.LM111:
+ 1050               	/* prologue: frame size=0 */
+ 1051 0656 8F92      		push r8
+ 1052 0658 AF92      		push r10
+ 1053 065a BF92      		push r11
+ 1054 065c CF92      		push r12
+ 1055 065e DF92      		push r13
+ 1056 0660 EF92      		push r14
+ 1057 0662 0F93      		push r16
+ 1058 0664 1F93      		push r17
+ 1059 0666 CF93      		push r28
+ 1060 0668 DF93      		push r29
+ 1061               	/* prologue end (size=10) */
+ 1062               	.LM112:
+ 1063 066a 0E94 0000 		call mem_getFreeTxPkt
+ 1064 066e EC01      		movw r28,r24
+ 1065               	.LVL45:
+ 1066               	.LM113:
+ 1067 0670 0097      		sbiw r24,0
+ 1068 0672 01F0      		breq .L96
+ 1069               	.LVL46:
+ 1070               	.LM114:
+ 1071 0674 62E0      		ldi r22,lo8(2)
+ 1072 0676 70E0      		ldi r23,hi8(2)
+ 1073 0678 0E94 0000 		call mem_set
+ 1074               	.LVL47:
+ 1075               	.LM115:
+ 1076 067c 85E0      		ldi r24,lo8(5)
+ 1077 067e 888F      		std Y+24,r24
+ 1078               	.LM116:
+ 1079 0680 CD57      		subi r28,lo8(-(131))
+ 1080 0682 DF4F      		sbci r29,hi8(-(131))
+ 1081 0684 1882      		st Y,__zero_reg__
+ 1082               	.LM117:
+ 1083 0686 2396      		adiw r28,3
+ 1084 0688 83E0      		ldi r24,lo8(3)
+ 1085 068a 8883      		st Y,r24
+ 1086 068c C658      		subi r28,lo8(-(-134))
+ 1087 068e D040      		sbci r29,hi8(-(-134))
+ 1088               	.LM118:
+ 1089 0690 8091 0000 		lds r24,mpib+22
+ 1090 0694 9091 0000 		lds r25,(mpib+22)+1
+ 1091 0698 8D5F      		subi r24,lo8(-3)
+ 1092 069a 9F4F      		sbci r25,hi8(-3)
+ 1093 069c 00F0      		brlo .L92
+ 1094               	.LM119:
+ 1095 069e 40E0      		ldi r20,lo8(mpib+14)
+ 1096 06a0 50E0      		ldi r21,hi8(mpib+14)
+ 1097               	.LVL48:
+ 1098 06a2 93E0      		ldi r25,lo8(3)
+ 1099               	.LVL49:
+ 1100               	.L94:
+ 1101               	.LM120:
+ 1102 06a4 2091 0000 		lds r18,mpib+28
+ 1103 06a8 3091 0000 		lds r19,(mpib+28)+1
+ 1104 06ac 81E0      		ldi r24,lo8(1)
+ 1105 06ae 8F93      		push r24
+ 1106 06b0 6896      		adiw r28,24
+ 1107 06b2 DF93      		push r29
+ 1108 06b4 CF93      		push r28
+ 1109 06b6 6897      		sbiw r28,24
+ 1110 06b8 8824      		clr r8
+ 1111 06ba 5A01      		movw r10,r20
+ 1112 06bc 6901      		movw r12,r18
+ 1113 06be E92E      		mov r14,r25
+ 1114 06c0 00E0      		ldi r16,lo8(aExtendedAddress)
+ 1115 06c2 10E0      		ldi r17,hi8(aExtendedAddress)
+ 1116 06c4 43E0      		ldi r20,lo8(3)
+ 1117               	.LVL50:
+ 1118 06c6 63E0      		ldi r22,lo8(3)
+ 1119 06c8 CE01      		movw r24,r28
+ 1120 06ca 0E94 0000 		call mac_formatMpdu
+ 1121               	.LVL51:
+ 1122               	.LM121:
+ 1123 06ce CE01      		movw r24,r28
+ 1124 06d0 0E94 0000 		call tx_trans
+ 1125 06d4 0F90      		pop __tmp_reg__
+ 1126 06d6 0F90      		pop __tmp_reg__
+ 1127 06d8 0F90      	 	pop __tmp_reg__
+ 1128 06da 8823      		tst r24
+ 1129 06dc 01F4      		brne .L96
+ 1130               	.LM122:
+ 1131 06de CE01      		movw r24,r28
+ 1132 06e0 0E94 0000 		call mem_releaseTxPkt
+ 1133 06e4 00C0      		rjmp .L96
+ 1134               	.LVL52:
+ 1135               	.L92:
+ 1136               	.LM123:
+ 1137 06e6 40E0      		ldi r20,lo8(mpib+22)
+ 1138 06e8 50E0      		ldi r21,hi8(mpib+22)
+ 1139               	.LVL53:
+ 1140 06ea 92E0      		ldi r25,lo8(2)
+ 1141               	.LVL54:
+ 1142 06ec 00C0      		rjmp .L94
+ 1143               	.LVL55:
+ 1144               	.L96:
+ 1145               	/* epilogue: frame size=0 */
+ 1146 06ee DF91      		pop r29
+ 1147 06f0 CF91      		pop r28
+ 1148 06f2 1F91      		pop r17
+ 1149 06f4 0F91      		pop r16
+ 1150 06f6 EF90      		pop r14
+ 1151 06f8 DF90      		pop r13
+ 1152 06fa CF90      		pop r12
+ 1153 06fc BF90      		pop r11
+ 1154 06fe AF90      		pop r10
+ 1155 0700 8F90      		pop r8
+ 1156 0702 0895      		ret
+ 1157               	/* epilogue end (size=11) */
+ 1158               	/* function beacon_transmitConflictNotif size 88 (67) */
+ 1159               	.LFE2:
+ 1161               	.global	beacon_timeoutSyncBeacon
+ 1163               	beacon_timeoutSyncBeacon:
+ 1164               	.LFB11:
+ 1165               	.LM124:
+ 1166               	/* prologue: frame size=0 */
+ 1167               	/* prologue end (size=0) */
+ 1168               	.LVL56:
+ 1169               	.LM125:
+ 1170 0704 8091 0000 		lds r24,BeaconInfo
+ 1171               	.LVL57:
+ 1172 0708 8823      		tst r24
+ 1173 070a 01F4      		brne .L115
+ 1174               	.LM126:
+ 1175 070c 8091 0000 		lds r24,BeaconInfo+1
+ 1176 0710 8823      		tst r24
+ 1177 0712 01F4      		brne .L116
+ 1178               	.LM127:
+ 1179 0714 80E0      		ldi r24,lo8(0)
+ 1180 0716 0E94 0000 		call schedul_removeTask
+ 1181               	.LVL58:
+ 1182 071a 0895      		ret
+ 1183               	.LVL59:
+ 1184               	.L116:
+ 1185               	.LM128:
+ 1186 071c 8091 0000 		lds r24,BeaconInfo+84
+ 1187 0720 8150      		subi r24,lo8(-(-1))
+ 1188 0722 8093 0000 		sts BeaconInfo+84,r24
+ 1189               	.LM129:
+ 1190 0726 84E0      		ldi r24,lo8(4)
+ 1191 0728 0E94 0000 		call timer_endTimer
+ 1192               	.LVL60:
+ 1193               	.LM130:
+ 1194 072c 6091 0000 		lds r22,mpib+8
+ 1195               	.LBB10:
+ 1196               	.LBB11:
+ 1197               	.LM131:
+ 1198 0730 6A30      		cpi r22,lo8(10)
+ 1199 0732 01F0      		breq .L107
+ 1200 0734 6B30      		cpi r22,lo8(11)
+ 1201 0736 00F4      		brsh .L112
+ 1202 0738 6830      		cpi r22,lo8(8)
+ 1203 073a 01F4      		brne .+2
+ 1204 073c 00C0      		rjmp .L105
+ 1205 073e 6930      		cpi r22,lo8(9)
+ 1206 0740 00F0      		brlo .+2
+ 1207 0742 00C0      		rjmp .L106
+ 1208 0744 6730      		cpi r22,lo8(7)
+ 1209 0746 01F4      		brne .L103
+ 1210 0748 84E0      		ldi r24,lo8(4)
+ 1211 074a 90E0      		ldi r25,hi8(4)
+ 1212 074c A0E0      		ldi r26,hlo8(4)
+ 1213 074e B0E0      		ldi r27,hhi8(4)
+ 1214 0750 00C0      		rjmp .L113
+ 1215               	.LVL61:
+ 1216               	.L115:
+ 1217               	.LBE11:
+ 1218               	.LBE10:
+ 1219               	.LM132:
+ 1220 0752 1092 0000 		sts BeaconInfo,__zero_reg__
+ 1221               	.LM133:
+ 1222 0756 88E0      		ldi r24,lo8(8)
+ 1223 0758 90E0      		ldi r25,hi8(8)
+ 1224 075a 0E94 0000 		call mac_setTrxState
+ 1225               	.LVL62:
+ 1226               	.LM134:
+ 1227 075e 80EE      		ldi r24,lo8(-32)
+ 1228 0760 0E94 0000 		call mlmeSyncLossIndication
+ 1229 0764 0895      		ret
+ 1230               	.L107:
+ 1231               	.LBB12:
+ 1232               	.LBB13:
+ 1233               	.LM135:
+ 1234 0766 84E1      		ldi r24,lo8(20)
+ 1235 0768 90E0      		ldi r25,hi8(20)
+ 1236 076a A0E0      		ldi r26,hlo8(20)
+ 1237 076c B0E0      		ldi r27,hhi8(20)
+ 1238               	.L113:
+ 1239               	.LBE13:
+ 1240               	.LBE12:
+ 1241               	.LM136:
+ 1242 076e 20E3      		ldi r18,lo8(48)
+ 1243 0770 30E0      		ldi r19,hi8(48)
+ 1244 0772 40E0      		ldi r20,hlo8(48)
+ 1245 0774 50E0      		ldi r21,hhi8(48)
+ 1246 0776 00C0      		rjmp 2f
+ 1247 0778 220F      	1:	lsl r18
+ 1248 077a 331F      		rol r19
+ 1249 077c 441F      		rol r20
+ 1250 077e 551F      		rol r21
+ 1251 0780 6A95      	2:	dec r22
+ 1252 0782 02F4      		brpl 1b
+ 1253 0784 281B      		sub r18,r24
+ 1254 0786 390B      		sbc r19,r25
+ 1255 0788 4A0B      		sbc r20,r26
+ 1256 078a 5B0B      		sbc r21,r27
+ 1257 078c 60E0      		ldi r22,lo8(0)
+ 1258 078e 70E0      		ldi r23,hi8(0)
+ 1259 0790 84E0      		ldi r24,lo8(4)
+ 1260 0792 0E94 0000 		call timer_startTimer
+ 1261               	.LM137:
+ 1262 0796 80E0      		ldi r24,lo8(0)
+ 1263 0798 0E94 0000 		call schedul_removeTask
+ 1264 079c 0895      		ret
+ 1265               	.L112:
+ 1266               	.LBB14:
+ 1267               	.LBB15:
+ 1268               	.LM138:
+ 1269 079e 6C30      		cpi r22,lo8(12)
+ 1270 07a0 01F0      		breq .L109
+ 1271 07a2 6C30      		cpi r22,lo8(12)
+ 1272 07a4 00F0      		brlo .L108
+ 1273 07a6 6D30      		cpi r22,lo8(13)
+ 1274 07a8 01F0      		breq .L110
+ 1275 07aa 6E30      		cpi r22,lo8(14)
+ 1276 07ac 01F0      		breq .L117
+ 1277               	.L103:
+ 1278 07ae 82E0      		ldi r24,lo8(2)
+ 1279 07b0 90E0      		ldi r25,hi8(2)
+ 1280 07b2 A0E0      		ldi r26,hlo8(2)
+ 1281 07b4 B0E0      		ldi r27,hhi8(2)
+ 1282 07b6 00C0      		rjmp .L113
+ 1283               	.L108:
+ 1284 07b8 88E2      		ldi r24,lo8(40)
+ 1285 07ba 90E0      		ldi r25,hi8(40)
+ 1286 07bc A0E0      		ldi r26,hlo8(40)
+ 1287 07be B0E0      		ldi r27,hhi8(40)
+ 1288 07c0 00C0      		rjmp .L113
+ 1289               	.L106:
+ 1290 07c2 8AE0      		ldi r24,lo8(10)
+ 1291 07c4 90E0      		ldi r25,hi8(10)
+ 1292 07c6 A0E0      		ldi r26,hlo8(10)
+ 1293 07c8 B0E0      		ldi r27,hhi8(10)
+ 1294 07ca 00C0      		rjmp .L113
+ 1295               	.L109:
+ 1296 07cc 80E5      		ldi r24,lo8(80)
+ 1297 07ce 90E0      		ldi r25,hi8(80)
+ 1298 07d0 A0E0      		ldi r26,hlo8(80)
+ 1299 07d2 B0E0      		ldi r27,hhi8(80)
+ 1300 07d4 00C0      		rjmp .L113
+ 1301               	.L105:
+ 1302 07d6 86E0      		ldi r24,lo8(6)
+ 1303 07d8 90E0      		ldi r25,hi8(6)
+ 1304 07da A0E0      		ldi r26,hlo8(6)
+ 1305 07dc B0E0      		ldi r27,hhi8(6)
+ 1306 07de 00C0      		rjmp .L113
+ 1307               	.L110:
+ 1308 07e0 8EE9      		ldi r24,lo8(158)
+ 1309 07e2 90E0      		ldi r25,hi8(158)
+ 1310 07e4 A0E0      		ldi r26,hlo8(158)
+ 1311 07e6 B0E0      		ldi r27,hhi8(158)
+ 1312 07e8 00C0      		rjmp .L113
+ 1313               	.L117:
+ 1314 07ea 8CE3      		ldi r24,lo8(316)
+ 1315 07ec 91E0      		ldi r25,hi8(316)
+ 1316 07ee A0E0      		ldi r26,hlo8(316)
+ 1317 07f0 B0E0      		ldi r27,hhi8(316)
+ 1318 07f2 00C0      		rjmp .L113
+ 1319               	.LBE15:
+ 1320               	.LBE14:
+ 1321               	/* epilogue: frame size=0 */
+ 1322               	/* epilogue: noreturn */
+ 1323               	/* epilogue end (size=0) */
+ 1324               	/* function beacon_timeoutSyncBeacon size 121 (121) */
+ 1325               	.LFE11:
+ 1327               	.global	beacon_startBeacon
+ 1329               	beacon_startBeacon:
+ 1330               	.LFB19:
+ 1331               	.LM139:
+ 1332               	/* prologue: frame size=1 */
+ 1333 07f4 CF93      		push r28
+ 1334 07f6 DF93      		push r29
+ 1335 07f8 CDB7      		in r28,__SP_L__
+ 1336 07fa DEB7      		in r29,__SP_H__
+ 1337 07fc 2197      		sbiw r28,1
+ 1338 07fe 0FB6      		in __tmp_reg__,__SREG__
+ 1339 0800 F894      		cli
+ 1340 0802 DEBF      		out __SP_H__,r29
+ 1341 0804 0FBE      		out __SREG__,__tmp_reg__
+ 1342 0806 CDBF      		out __SP_L__,r28
+ 1343               	/* prologue end (size=10) */
+ 1344               	.LVL63:
+ 1345               	.LM140:
+ 1346 0808 0097      		sbiw r24,0
+ 1347 080a 01F0      		breq .L119
+ 1348               	.LM141:
+ 1349 080c BE01      		movw r22,r28
+ 1350               	.LVL64:
+ 1351 080e 6F5F      		subi r22,lo8(-(1))
+ 1352 0810 7F4F      		sbci r23,hi8(-(1))
+ 1353 0812 0E94 0000 		call OSTmrDel
+ 1354               	.LVL65:
+ 1355               	.L119:
+ 1356               	.LBB18:
+ 1357               	.LBB19:
+ 1358               	.LM142:
+ 1359 0816 40E0      		ldi r20,lo8(0)
+ 1360 0818 50E0      		ldi r21,hi8(0)
+ 1361 081a 60E0      		ldi r22,lo8(0)
+ 1362               	.LVL66:
+ 1363 081c 80E0      		ldi r24,lo8(gs(beacon_transBeaconTask))
+ 1364 081e 90E0      		ldi r25,hi8(gs(beacon_transBeaconTask))
+ 1365               	.LVL67:
+ 1366 0820 0E94 0000 		call schedul_addTask
+ 1367               	.LBE19:
+ 1368               	.LBE18:
+ 1369               	.LM143:
+ 1370 0824 8091 0000 		lds r24,macInfo+8
+ 1371 0828 8130      		cpi r24,lo8(1)
+ 1372 082a 01F4      		brne .L123
+ 1373               	.LM144:
+ 1374 082c 6091 0000 		lds r22,SlotInfo
+ 1375 0830 7091 0000 		lds r23,(SlotInfo)+1
+ 1376 0834 8091 0000 		lds r24,(SlotInfo)+2
+ 1377 0838 9091 0000 		lds r25,(SlotInfo)+3
+ 1378 083c 20E3      		ldi r18,lo8(48)
+ 1379 083e 30E0      		ldi r19,hi8(48)
+ 1380 0840 40E0      		ldi r20,hlo8(48)
+ 1381 0842 50E0      		ldi r21,hhi8(48)
+ 1382 0844 0090 0000 		lds r0,mpib+8
+ 1383 0848 00C0      		rjmp 2f
+ 1384 084a 220F      	1:	lsl r18
+ 1385 084c 331F      		rol r19
+ 1386 084e 441F      		rol r20
+ 1387 0850 551F      		rol r21
+ 1388 0852 0A94      	2:	dec r0
+ 1389 0854 02F4      		brpl 1b
+ 1390 0856 0E94 0000 		call __udivmodsi4
+ 1391 085a 6093 0000 		sts BeaconInfo+80,r22
+ 1392 085e 7093 0000 		sts (BeaconInfo+80)+1,r23
+ 1393 0862 8093 0000 		sts (BeaconInfo+80)+2,r24
+ 1394 0866 9093 0000 		sts (BeaconInfo+80)+3,r25
+ 1395               	.L123:
+ 1396               	/* epilogue: frame size=1 */
+ 1397 086a 2196      		adiw r28,1
+ 1398 086c 0FB6      		in __tmp_reg__,__SREG__
+ 1399 086e F894      		cli
+ 1400 0870 DEBF      		out __SP_H__,r29
+ 1401 0872 0FBE      		out __SREG__,__tmp_reg__
+ 1402 0874 CDBF      		out __SP_L__,r28
+ 1403 0876 DF91      		pop r29
+ 1404 0878 CF91      		pop r28
+ 1405 087a 0895      		ret
+ 1406               	/* epilogue end (size=9) */
+ 1407               	/* function beacon_startBeacon size 68 (49) */
+ 1408               	.LFE19:
+ 1410               	.global	beacon_updateNewBeacon
+ 1412               	beacon_updateNewBeacon:
+ 1413               	.LFB8:
+ 1414               	.LM145:
+ 1415               	/* prologue: frame size=0 */
+ 1416 087c AF92      		push r10
+ 1417 087e BF92      		push r11
+ 1418 0880 CF92      		push r12
+ 1419 0882 DF92      		push r13
+ 1420 0884 EF92      		push r14
+ 1421 0886 FF92      		push r15
+ 1422 0888 0F93      		push r16
+ 1423 088a 1F93      		push r17
+ 1424 088c CF93      		push r28
+ 1425 088e DF93      		push r29
+ 1426               	/* prologue end (size=10) */
+ 1427               	.LVL68:
+ 1428 0890 EC01      		movw r28,r24
+ 1429               	.LM146:
+ 1430 0892 8091 0000 		lds r24,macInfo+8
+ 1431               	.LVL69:
+ 1432 0896 8823      		tst r24
+ 1433 0898 01F4      		brne .L125
+ 1434               	.LM147:
+ 1435 089a 898D      		ldd r24,Y+25
+ 1436 089c 86FD      		sbrc r24,6
+ 1437 089e 00C0      		rjmp .L192
+ 1438               	.L125:
+ 1439               	.LM148:
+ 1440 08a0 8981      		ldd r24,Y+1
+ 1441 08a2 8295      		swap r24
+ 1442 08a4 8695      		lsr r24
+ 1443 08a6 8695      		lsr r24
+ 1444 08a8 8370      		andi r24,0x3
+ 1445               	.LM149:
+ 1446 08aa 8230      		cpi r24,lo8(2)
+ 1447 08ac 01F4      		brne .+2
+ 1448 08ae 00C0      		rjmp .L193
+ 1449 08b0 8330      		cpi r24,lo8(3)
+ 1450 08b2 01F0      		breq .+2
+ 1451 08b4 00C0      		rjmp .L176
+ 1452 08b6 9F85      		ldd r25,Y+15
+ 1453 08b8 8091 0000 		lds r24,mpib+14
+ 1454 08bc 9817      		cp r25,r24
+ 1455 08be 01F0      		breq .+2
+ 1456 08c0 00C0      		rjmp .L176
+ 1457 08c2 9889      		ldd r25,Y+16
+ 1458 08c4 8091 0000 		lds r24,mpib+15
+ 1459 08c8 9817      		cp r25,r24
+ 1460 08ca 01F0      		breq .+2
+ 1461 08cc 00C0      		rjmp .L176
+ 1462 08ce 9989      		ldd r25,Y+17
+ 1463 08d0 8091 0000 		lds r24,mpib+16
+ 1464 08d4 9817      		cp r25,r24
+ 1465 08d6 01F0      		breq .+2
+ 1466 08d8 00C0      		rjmp .L176
+ 1467 08da 9A89      		ldd r25,Y+18
+ 1468 08dc 8091 0000 		lds r24,mpib+17
+ 1469 08e0 9817      		cp r25,r24
+ 1470 08e2 01F0      		breq .+2
+ 1471 08e4 00C0      		rjmp .L176
+ 1472 08e6 9B89      		ldd r25,Y+19
+ 1473 08e8 8091 0000 		lds r24,mpib+18
+ 1474 08ec 9817      		cp r25,r24
+ 1475 08ee 01F0      		breq .+2
+ 1476 08f0 00C0      		rjmp .L176
+ 1477 08f2 9C89      		ldd r25,Y+20
+ 1478 08f4 8091 0000 		lds r24,mpib+19
+ 1479 08f8 9817      		cp r25,r24
+ 1480 08fa 01F0      		breq .+2
+ 1481 08fc 00C0      		rjmp .L176
+ 1482 08fe 9D89      		ldd r25,Y+21
+ 1483 0900 8091 0000 		lds r24,mpib+20
+ 1484 0904 9817      		cp r25,r24
+ 1485 0906 01F0      		breq .+2
+ 1486 0908 00C0      		rjmp .L176
+ 1487 090a 9E89      		ldd r25,Y+22
+ 1488 090c 8091 0000 		lds r24,mpib+21
+ 1489 0910 9817      		cp r25,r24
+ 1490 0912 01F0      		breq .+2
+ 1491 0914 00C0      		rjmp .L176
+ 1492               	.L131:
+ 1493               	.LM150:
+ 1494 0916 38E1      		ldi r19,lo8(24)
+ 1495 0918 C32E      		mov r12,r19
+ 1496 091a D12C      		mov r13,__zero_reg__
+ 1497 091c CC0E      		add r12,r28
+ 1498 091e DD1E      		adc r13,r29
+ 1499               	.LM151:
+ 1500 0920 A090 0000 		lds r10,mpib+8
+ 1501               	.LVL70:
+ 1502               	.LM152:
+ 1503 0924 888D      		ldd r24,Y+24
+ 1504 0926 8295      		swap r24
+ 1505 0928 8F70      		andi r24,0x0f
+ 1506 092a 8093 0000 		sts mpib+34,r24
+ 1507               	.LM153:
+ 1508 092e 888D      		ldd r24,Y+24
+ 1509 0930 8F70      		andi r24,lo8(15)
+ 1510 0932 8093 0000 		sts mpib+8,r24
+ 1511               	.LM154:
+ 1512 0936 F601      		movw r30,r12
+ 1513 0938 8181      		ldd r24,Z+1
+ 1514 093a 8F70      		andi r24,lo8(15)
+ 1515 093c 8093 0000 		sts BeaconInfo+86,r24
+ 1516               	.LM155:
+ 1517 0940 8181      		ldd r24,Z+1
+ 1518 0942 8295      		swap r24
+ 1519 0944 8F70      		andi r24,0x0f
+ 1520 0946 8170      		andi r24,lo8(1)
+ 1521 0948 8093 0000 		sts BeaconInfo+87,r24
+ 1522               	.LM156:
+ 1523 094c 8981      		ldd r24,Y+1
+ 1524 094e 807C      		andi r24,lo8(-64)
+ 1525 0950 803C      		cpi r24,lo8(-64)
+ 1526 0952 01F4      		brne .+2
+ 1527 0954 00C0      		rjmp .L194
+ 1528 0956 07E0      		ldi r16,lo8(7)
+ 1529 0958 10E0      		ldi r17,hi8(7)
+ 1530               	.L136:
+ 1531 095a CE01      		movw r24,r28
+ 1532 095c 0E94 0000 		call mac_getMpduLength
+ 1533 0960 60E0      		ldi r22,lo8(0)
+ 1534 0962 70E0      		ldi r23,hi8(0)
+ 1535 0964 080F      		add r16,r24
+ 1536 0966 111D      		adc r17,__zero_reg__
+ 1537 0968 C801      		movw r24,r16
+ 1538 096a 0E94 0000 		call msupCalcPacketDuration
+ 1539 096e 8093 0000 		sts BeaconInfo+85,r24
+ 1540               	.LM157:
+ 1541 0972 B090 0000 		lds r11,mpib+8
+ 1542 0976 FFE0      		ldi r31,lo8(15)
+ 1543 0978 BF16      		cp r11,r31
+ 1544 097a 01F4      		brne .+2
+ 1545 097c 00C0      		rjmp .L137
+ 1546               	.LBB26:
+ 1547               	.LBB27:
+ 1548               	.LM158:
+ 1549               	/* #APP */
+ 1550 097e F894      		cli
+ 1551               		
+ 1552               	.LM159:
+ 1553               	/* #NOAPP */
+ 1554 0980 2091 0000 		lds r18,SlotInfo
+ 1555 0984 3091 0000 		lds r19,(SlotInfo)+1
+ 1556 0988 4091 0000 		lds r20,(SlotInfo)+2
+ 1557 098c 5091 0000 		lds r21,(SlotInfo)+3
+ 1558 0990 6091 0000 		lds r22,SlotInfo+8
+ 1559 0994 7091 0000 		lds r23,(SlotInfo+8)+1
+ 1560 0998 8091 0000 		lds r24,(SlotInfo+8)+2
+ 1561 099c 9091 0000 		lds r25,(SlotInfo+8)+3
+ 1562 09a0 261B      		sub r18,r22
+ 1563 09a2 370B      		sbc r19,r23
+ 1564 09a4 480B      		sbc r20,r24
+ 1565 09a6 590B      		sbc r21,r25
+ 1566 09a8 2093 0000 		sts SlotInfo,r18
+ 1567 09ac 3093 0000 		sts (SlotInfo)+1,r19
+ 1568 09b0 4093 0000 		sts (SlotInfo)+2,r20
+ 1569 09b4 5093 0000 		sts (SlotInfo)+3,r21
+ 1570               	.LM160:
+ 1571 09b8 20E1      		ldi r18,lo8(16)
+ 1572 09ba 26BF      		out 86-0x20,r18
+ 1573               	.LM161:
+ 1574 09bc E090 0000 		lds r14,SlotInfo+12
+ 1575 09c0 F090 0000 		lds r15,(SlotInfo+12)+1
+ 1576 09c4 F694      		lsr r15
+ 1577 09c6 E794      		ror r14
+ 1578 09c8 F694      		lsr r15
+ 1579 09ca E794      		ror r14
+ 1580 09cc F694      		lsr r15
+ 1581 09ce E794      		ror r14
+ 1582 09d0 0027      		clr r16
+ 1583 09d2 1127      		clr r17
+ 1584 09d4 20E4      		ldi r18,lo8(320)
+ 1585 09d6 31E0      		ldi r19,hi8(320)
+ 1586 09d8 40E0      		ldi r20,hlo8(320)
+ 1587 09da 50E0      		ldi r21,hhi8(320)
+ 1588 09dc 0E94 0000 		call __mulsi3
+ 1589 09e0 2091 0000 		lds r18,SlotInfo+14
+ 1590 09e4 3091 0000 		lds r19,(SlotInfo+14)+1
+ 1591 09e8 4091 0000 		lds r20,(SlotInfo+14)+2
+ 1592 09ec 5091 0000 		lds r21,(SlotInfo+14)+3
+ 1593 09f0 260F      		add r18,r22
+ 1594 09f2 371F      		adc r19,r23
+ 1595 09f4 481F      		adc r20,r24
+ 1596 09f6 591F      		adc r21,r25
+ 1597 09f8 E20E      		add r14,r18
+ 1598 09fa F31E      		adc r15,r19
+ 1599 09fc 041F      		adc r16,r20
+ 1600 09fe 151F      		adc r17,r21
+ 1601 0a00 E092 0000 		sts SlotInfo+14,r14
+ 1602 0a04 F092 0000 		sts (SlotInfo+14)+1,r15
+ 1603 0a08 0093 0000 		sts (SlotInfo+14)+2,r16
+ 1604 0a0c 1093 0000 		sts (SlotInfo+14)+3,r17
+ 1605               	.LM162:
+ 1606               	/* #APP */
+ 1607 0a10 7894      		sei
+ 1608               		
+ 1609               	/* #NOAPP */
+ 1610               	.L137:
+ 1611               	.LBE27:
+ 1612               	.LBE26:
+ 1613               	.LM163:
+ 1614 0a12 8FE0      		ldi r24,lo8(15)
+ 1615 0a14 A816      		cp r10,r24
+ 1616 0a16 01F0      		breq .L139
+ 1617               	.LM164:
+ 1618 0a18 B816      		cp r11,r24
+ 1619 0a1a 01F4      		brne .+2
+ 1620 0a1c 00C0      		rjmp .L195
+ 1621               	.L139:
+ 1622               	.LM165:
+ 1623 0a1e 8091 0000 		lds r24,mpib+2
+ 1624 0a22 8823      		tst r24
+ 1625 0a24 01F4      		brne .+2
+ 1626 0a26 00C0      		rjmp .L142
+ 1627               	.LM166:
+ 1628 0a28 8A8D      		ldd r24,Y+26
+ 1629 0a2a 9927      		clr r25
+ 1630 0a2c 8770      		andi r24,lo8(7)
+ 1631 0a2e 9070      		andi r25,hi8(7)
+ 1632 0a30 9C01      		movw r18,r24
+ 1633 0a32 220F      		lsl r18
+ 1634 0a34 331F      		rol r19
+ 1635 0a36 280F      		add r18,r24
+ 1636 0a38 391F      		adc r19,r25
+ 1637 0a3a 822F      		mov r24,r18
+ 1638               	.LVL71:
+ 1639 0a3c 8D5F      		subi r24,lo8(-(3))
+ 1640               	.LM167:
+ 1641 0a3e F601      		movw r30,r12
+ 1642               	.LVL72:
+ 1643 0a40 E80F      		add r30,r24
+ 1644 0a42 F11D      		adc r31,__zero_reg__
+ 1645 0a44 A22F      		mov r26,r18
+ 1646               	.LVL73:
+ 1647 0a46 AC5F      		subi r26,lo8(-(4))
+ 1648               	.LM168:
+ 1649 0a48 2081      		ld r18,Z
+ 1650 0a4a 322F      		mov r19,r18
+ 1651               	.LVL74:
+ 1652 0a4c 3770      		andi r19,lo8(7)
+ 1653               	.LM169:
+ 1654 0a4e 3150      		subi r19,lo8(-(-1))
+ 1655 0a50 3F3F      		cpi r19,lo8(-1)
+ 1656 0a52 01F0      		breq .L144
+ 1657               	.LM170:
+ 1658 0a54 4091 0000 		lds r20,mpib+32
+ 1659 0a58 5091 0000 		lds r21,(mpib+32)+1
+ 1660 0a5c F601      		movw r30,r12
+ 1661               	.LVL75:
+ 1662 0a5e EA0F      		add r30,r26
+ 1663 0a60 F11D      		adc r31,__zero_reg__
+ 1664 0a62 8081      		ld r24,Z
+ 1665 0a64 9181      		ldd r25,Z+1
+ 1666               	.LVL76:
+ 1667 0a66 4817      		cp r20,r24
+ 1668 0a68 5907      		cpc r21,r25
+ 1669 0a6a 01F4      		brne .L181
+ 1670 0a6c 00C0      		rjmp .L146
+ 1671               	.L148:
+ 1672 0a6e F601      		movw r30,r12
+ 1673 0a70 EA0F      		add r30,r26
+ 1674 0a72 F11D      		adc r31,__zero_reg__
+ 1675 0a74 8081      		ld r24,Z
+ 1676 0a76 9181      		ldd r25,Z+1
+ 1677 0a78 8417      		cp r24,r20
+ 1678 0a7a 9507      		cpc r25,r21
+ 1679 0a7c 01F4      		brne .+2
+ 1680 0a7e 00C0      		rjmp .L146
+ 1681               	.L181:
+ 1682               	.LM171:
+ 1683 0a80 AE5F      		subi r26,lo8(-(2))
+ 1684               	.LM172:
+ 1685 0a82 3150      		subi r19,1
+ 1686 0a84 00F4      		brcc .L148
+ 1687               	.LVL77:
+ 1688               	.L144:
+ 1689               	.LM173:
+ 1690 0a86 322F      		mov r19,r18
+ 1691 0a88 3295      		swap r19
+ 1692 0a8a 3F70      		andi r19,0x0f
+ 1693 0a8c 3770      		andi r19,lo8(7)
+ 1694 0a8e B0E0      		ldi r27,lo8(0)
+ 1695               	.LVL78:
+ 1696               	.L149:
+ 1697               	.LM174:
+ 1698 0a90 932F      		mov r25,r19
+ 1699               	.LVL79:
+ 1700 0a92 9150      		subi r25,lo8(-(-1))
+ 1701 0a94 9F3F      		cpi r25,lo8(-1)
+ 1702 0a96 01F4      		brne .+2
+ 1703 0a98 00C0      		rjmp .L150
+ 1704               	.LM175:
+ 1705 0a9a 0091 0000 		lds r16,aExtendedAddress
+ 1706 0a9e 1091 0000 		lds r17,aExtendedAddress+1
+ 1707 0aa2 2091 0000 		lds r18,aExtendedAddress+2
+ 1708 0aa6 3091 0000 		lds r19,aExtendedAddress+3
+ 1709               	.LVL80:
+ 1710 0aaa 4091 0000 		lds r20,aExtendedAddress+4
+ 1711 0aae 5091 0000 		lds r21,aExtendedAddress+5
+ 1712 0ab2 6091 0000 		lds r22,aExtendedAddress+6
+ 1713 0ab6 7091 0000 		lds r23,aExtendedAddress+7
+ 1714 0aba 00C0      		rjmp .L191
+ 1715               	.LVL81:
+ 1716               	.L183:
+ 1717               	.LM176:
+ 1718 0abc 9150      		subi r25,lo8(-(-1))
+ 1719 0abe 9F3F      		cpi r25,lo8(-1)
+ 1720 0ac0 01F4      		brne .+2
+ 1721 0ac2 00C0      		rjmp .L150
+ 1722               	.LM177:
+ 1723 0ac4 A85F      		subi r26,lo8(-(8))
+ 1724               	.LVL82:
+ 1725               	.L191:
+ 1726               	.LM178:
+ 1727 0ac6 F601      		movw r30,r12
+ 1728               	.LVL83:
+ 1729 0ac8 EA0F      		add r30,r26
+ 1730 0aca F11D      		adc r31,__zero_reg__
+ 1731 0acc 8081      		ld r24,Z
+ 1732               	.LVL84:
+ 1733 0ace 8017      		cp r24,r16
+ 1734 0ad0 01F4      		brne .L183
+ 1735 0ad2 8181      		ldd r24,Z+1
+ 1736 0ad4 8117      		cp r24,r17
+ 1737 0ad6 01F4      		brne .L183
+ 1738 0ad8 8281      		ldd r24,Z+2
+ 1739 0ada 8217      		cp r24,r18
+ 1740 0adc 01F4      		brne .L183
+ 1741 0ade 8381      		ldd r24,Z+3
+ 1742 0ae0 8317      		cp r24,r19
+ 1743 0ae2 01F4      		brne .L183
+ 1744 0ae4 8481      		ldd r24,Z+4
+ 1745 0ae6 8417      		cp r24,r20
+ 1746 0ae8 01F4      		brne .L183
+ 1747 0aea 8581      		ldd r24,Z+5
+ 1748 0aec 8517      		cp r24,r21
+ 1749 0aee 01F4      		brne .L183
+ 1750 0af0 8681      		ldd r24,Z+6
+ 1751 0af2 8617      		cp r24,r22
+ 1752 0af4 01F4      		brne .L183
+ 1753 0af6 8781      		ldd r24,Z+7
+ 1754 0af8 8717      		cp r24,r23
+ 1755 0afa 01F4      		brne .L183
+ 1756               	.LVL85:
+ 1757               	.L152:
+ 1758               	.LM179:
+ 1759 0afc 0E94 0000 		call mlme_autoPoll
+ 1760               	.LVL86:
+ 1761               	.L142:
+ 1762               	.LM180:
+ 1763 0b00 8091 0000 		lds r24,MacTx+2
+ 1764               	.LVL87:
+ 1765 0b04 8823      		tst r24
+ 1766 0b06 01F0      		breq .L157
+ 1767 0b08 8091 0000 		lds r24,MacTx+9
+ 1768 0b0c 8823      		tst r24
+ 1769 0b0e 01F0      		breq .+2
+ 1770 0b10 00C0      		rjmp .L196
+ 1771               	.L157:
+ 1772               	.LM181:
+ 1773 0b12 1092 0000 		sts BeaconInfo+2,__zero_reg__
+ 1774               	.LM182:
+ 1775 0b16 8091 0000 		lds r24,BeaconInfo+1
+ 1776 0b1a 8823      		tst r24
+ 1777 0b1c 01F0      		breq .+2
+ 1778 0b1e 00C0      		rjmp .L160
+ 1779 0b20 8091 0000 		lds r24,BeaconInfo
+ 1780 0b24 8823      		tst r24
+ 1781 0b26 01F4      		brne .+2
+ 1782 0b28 00C0      		rjmp .L176
+ 1783               	.L162:
+ 1784               	.LBB28:
+ 1785               	.LBB29:
+ 1786               	.LM183:
+ 1787 0b2a 1092 0000 		sts BeaconInfo,__zero_reg__
+ 1788               	.L163:
+ 1789               	.LM184:
+ 1790 0b2e 85E0      		ldi r24,lo8(5)
+ 1791 0b30 0E94 0000 		call timer_endTimer
+ 1792               	.LVL88:
+ 1793               	.LM185:
+ 1794 0b34 84E0      		ldi r24,lo8(4)
+ 1795 0b36 0E94 0000 		call timer_endTimer
+ 1796               	.LM186:
+ 1797 0b3a 84E0      		ldi r24,lo8(4)
+ 1798 0b3c 8093 0000 		sts BeaconInfo+84,r24
+ 1799               	.LM187:
+ 1800 0b40 8091 0000 		lds r24,BeaconInfo+1
+ 1801 0b44 8823      		tst r24
+ 1802 0b46 01F4      		brne .+2
+ 1803 0b48 00C0      		rjmp .L176
+ 1804               	.LM188:
+ 1805 0b4a 6091 0000 		lds r22,mpib+8
+ 1806               	.LBB30:
+ 1807               	.LBB31:
+ 1808               	.LM189:
+ 1809 0b4e 6A30      		cpi r22,lo8(10)
+ 1810 0b50 01F4      		brne .+2
+ 1811 0b52 00C0      		rjmp .L169
+ 1812 0b54 6B30      		cpi r22,lo8(11)
+ 1813 0b56 00F0      		brlo .L197
+ 1814 0b58 6C30      		cpi r22,lo8(12)
+ 1815 0b5a 01F4      		brne .+2
+ 1816 0b5c 00C0      		rjmp .L171
+ 1817 0b5e 6C30      		cpi r22,lo8(12)
+ 1818 0b60 00F4      		brsh .+2
+ 1819 0b62 00C0      		rjmp .L170
+ 1820 0b64 6D30      		cpi r22,lo8(13)
+ 1821 0b66 01F4      		brne .+2
+ 1822 0b68 00C0      		rjmp .L172
+ 1823 0b6a 6E30      		cpi r22,lo8(14)
+ 1824 0b6c 01F4      		brne .L165
+ 1825 0b6e 88E7      		ldi r24,lo8(632)
+ 1826 0b70 92E0      		ldi r25,hi8(632)
+ 1827 0b72 A0E0      		ldi r26,hlo8(632)
+ 1828 0b74 B0E0      		ldi r27,hhi8(632)
+ 1829 0b76 00C0      		rjmp .L175
+ 1830               	.LVL89:
+ 1831               	.L192:
+ 1832               	.LBE31:
+ 1833               	.LBE30:
+ 1834               	.LBE29:
+ 1835               	.LBE28:
+ 1836               	.LM190:
+ 1837 0b78 2D85      		ldd r18,Y+13
+ 1838 0b7a 3E85      		ldd r19,Y+14
+ 1839 0b7c 8091 0000 		lds r24,mpib+28
+ 1840 0b80 9091 0000 		lds r25,(mpib+28)+1
+ 1841 0b84 2817      		cp r18,r24
+ 1842 0b86 3907      		cpc r19,r25
+ 1843 0b88 01F0      		breq .+2
+ 1844 0b8a 00C0      		rjmp .L125
+ 1845               	.LM191:
+ 1846 0b8c 8EEE      		ldi r24,lo8(-18)
+ 1847 0b8e 0E94 0000 		call mlmeSyncLossIndication
+ 1848 0b92 00C0      		rjmp .L125
+ 1849               	.L193:
+ 1850               	.LM192:
+ 1851 0b94 2F85      		ldd r18,Y+15
+ 1852 0b96 3889      		ldd r19,Y+16
+ 1853 0b98 8091 0000 		lds r24,mpib+22
+ 1854 0b9c 9091 0000 		lds r25,(mpib+22)+1
+ 1855 0ba0 2817      		cp r18,r24
+ 1856 0ba2 3907      		cpc r19,r25
+ 1857 0ba4 01F0      		breq .+2
+ 1858 0ba6 00C0      		rjmp .L176
+ 1859 0ba8 00C0      		rjmp .L131
+ 1860               	.LVL90:
+ 1861               	.L160:
+ 1862               	.LBB32:
+ 1863               	.LBB33:
+ 1864               	.LM193:
+ 1865 0baa 8091 0000 		lds r24,BeaconInfo
+ 1866 0bae 8823      		tst r24
+ 1867 0bb0 01F4      		brne .+2
+ 1868 0bb2 00C0      		rjmp .L163
+ 1869 0bb4 00C0      		rjmp .L162
+ 1870               	.LVL91:
+ 1871               	.L197:
+ 1872               	.LBB34:
+ 1873               	.LBB35:
+ 1874               	.LM194:
+ 1875 0bb6 6830      		cpi r22,lo8(8)
+ 1876 0bb8 01F4      		brne .+2
+ 1877 0bba 00C0      		rjmp .L167
+ 1878 0bbc 6930      		cpi r22,lo8(9)
+ 1879 0bbe 00F4      		brsh .L168
+ 1880 0bc0 6730      		cpi r22,lo8(7)
+ 1881 0bc2 01F4      		brne .+2
+ 1882 0bc4 00C0      		rjmp .L198
+ 1883               	.L165:
+ 1884 0bc6 84E0      		ldi r24,lo8(4)
+ 1885 0bc8 90E0      		ldi r25,hi8(4)
+ 1886 0bca A0E0      		ldi r26,hlo8(4)
+ 1887 0bcc B0E0      		ldi r27,hhi8(4)
+ 1888               	.L175:
+ 1889               	.LBE35:
+ 1890               	.LBE34:
+ 1891               	.LM195:
+ 1892 0bce 20E3      		ldi r18,lo8(48)
+ 1893 0bd0 30E0      		ldi r19,hi8(48)
+ 1894 0bd2 40E0      		ldi r20,hlo8(48)
+ 1895 0bd4 50E0      		ldi r21,hhi8(48)
+ 1896 0bd6 00C0      		rjmp 2f
+ 1897 0bd8 220F      	1:	lsl r18
+ 1898 0bda 331F      		rol r19
+ 1899 0bdc 441F      		rol r20
+ 1900 0bde 551F      		rol r21
+ 1901 0be0 6A95      	2:	dec r22
+ 1902 0be2 02F4      		brpl 1b
+ 1903 0be4 281B      		sub r18,r24
+ 1904 0be6 390B      		sbc r19,r25
+ 1905 0be8 4A0B      		sbc r20,r26
+ 1906 0bea 5B0B      		sbc r21,r27
+ 1907 0bec 60E0      		ldi r22,lo8(0)
+ 1908 0bee 70E0      		ldi r23,hi8(0)
+ 1909 0bf0 84E0      		ldi r24,lo8(4)
+ 1910 0bf2 0E94 0000 		call timer_startTimer
+ 1911 0bf6 00C0      		rjmp .L176
+ 1912               	.LVL92:
+ 1913               	.L196:
+ 1914               	.LBE33:
+ 1915               	.LBE32:
+ 1916               	.LM196:
+ 1917 0bf8 80E0      		ldi r24,lo8(0)
+ 1918 0bfa 0E94 0000 		call tx_resumeAfterBeacon
+ 1919               	.LVL93:
+ 1920 0bfe 00C0      		rjmp .L157
+ 1921               	.LVL94:
+ 1922               	.L150:
+ 1923               	.LM197:
+ 1924 0c00 BB23      		tst r27
+ 1925 0c02 01F4      		brne .+2
+ 1926 0c04 00C0      		rjmp .L142
+ 1927 0c06 00C0      		rjmp .L152
+ 1928               	.LVL95:
+ 1929               	.L194:
+ 1930               	.LM198:
+ 1931 0c08 0DE0      		ldi r16,lo8(13)
+ 1932 0c0a 10E0      		ldi r17,hi8(13)
+ 1933 0c0c 00C0      		rjmp .L136
+ 1934               	.LVL96:
+ 1935               	.L146:
+ 1936               	.LM199:
+ 1937 0c0e B1E0      		ldi r27,lo8(1)
+ 1938               	.LVL97:
+ 1939 0c10 00C0      		rjmp .L149
+ 1940               	.LVL98:
+ 1941               	.L169:
+ 1942               	.LBB36:
+ 1943               	.LBB37:
+ 1944               	.LBB38:
+ 1945               	.LBB39:
+ 1946               	.LM200:
+ 1947 0c12 88E2      		ldi r24,lo8(40)
+ 1948 0c14 90E0      		ldi r25,hi8(40)
+ 1949 0c16 A0E0      		ldi r26,hlo8(40)
+ 1950 0c18 B0E0      		ldi r27,hhi8(40)
+ 1951 0c1a 00C0      		rjmp .L175
+ 1952               	.L195:
+ 1953               	.LBE39:
+ 1954               	.LBE38:
+ 1955               	.LBE37:
+ 1956               	.LBE36:
+ 1957               	.LM201:
+ 1958 0c1c 0E94 0000 		call mac_updateDelayedPib
+ 1959 0c20 00C0      		rjmp .L139
+ 1960               	.L170:
+ 1961               	.LBB40:
+ 1962               	.LBB41:
+ 1963               	.LBB42:
+ 1964               	.LBB43:
+ 1965               	.LM202:
+ 1966 0c22 80E5      		ldi r24,lo8(80)
+ 1967 0c24 90E0      		ldi r25,hi8(80)
+ 1968 0c26 A0E0      		ldi r26,hlo8(80)
+ 1969 0c28 B0E0      		ldi r27,hhi8(80)
+ 1970 0c2a 00C0      		rjmp .L175
+ 1971               	.L168:
+ 1972 0c2c 84E1      		ldi r24,lo8(20)
+ 1973 0c2e 90E0      		ldi r25,hi8(20)
+ 1974 0c30 A0E0      		ldi r26,hlo8(20)
+ 1975 0c32 B0E0      		ldi r27,hhi8(20)
+ 1976 0c34 00C0      		rjmp .L175
+ 1977               	.L171:
+ 1978 0c36 80EA      		ldi r24,lo8(160)
+ 1979 0c38 90E0      		ldi r25,hi8(160)
+ 1980 0c3a A0E0      		ldi r26,hlo8(160)
+ 1981 0c3c B0E0      		ldi r27,hhi8(160)
+ 1982 0c3e 00C0      		rjmp .L175
+ 1983               	.L167:
+ 1984 0c40 8CE0      		ldi r24,lo8(12)
+ 1985 0c42 90E0      		ldi r25,hi8(12)
+ 1986 0c44 A0E0      		ldi r26,hlo8(12)
+ 1987 0c46 B0E0      		ldi r27,hhi8(12)
+ 1988 0c48 00C0      		rjmp .L175
+ 1989               	.L172:
+ 1990 0c4a 8CE3      		ldi r24,lo8(316)
+ 1991 0c4c 91E0      		ldi r25,hi8(316)
+ 1992 0c4e A0E0      		ldi r26,hlo8(316)
+ 1993 0c50 B0E0      		ldi r27,hhi8(316)
+ 1994 0c52 00C0      		rjmp .L175
+ 1995               	.L198:
+ 1996 0c54 88E0      		ldi r24,lo8(8)
+ 1997 0c56 90E0      		ldi r25,hi8(8)
+ 1998 0c58 A0E0      		ldi r26,hlo8(8)
+ 1999 0c5a B0E0      		ldi r27,hhi8(8)
+ 2000 0c5c 00C0      		rjmp .L175
+ 2001               	.LVL99:
+ 2002               	.L176:
+ 2003               	.LBE43:
+ 2004               	.LBE42:
+ 2005               	.LBE41:
+ 2006               	.LBE40:
+ 2007               	/* epilogue: frame size=0 */
+ 2008 0c5e DF91      		pop r29
+ 2009 0c60 CF91      		pop r28
+ 2010 0c62 1F91      		pop r17
+ 2011 0c64 0F91      		pop r16
+ 2012 0c66 FF90      		pop r15
+ 2013 0c68 EF90      		pop r14
+ 2014 0c6a DF90      		pop r13
+ 2015 0c6c CF90      		pop r12
+ 2016 0c6e BF90      		pop r11
+ 2017 0c70 AF90      		pop r10
+ 2018 0c72 0895      		ret
+ 2019               	/* epilogue end (size=11) */
+ 2020               	/* function beacon_updateNewBeacon size 516 (495) */
+ 2021               	.LFE8:
+ 2023               	.global	beacon_transBeaconOnRequest
+ 2025               	beacon_transBeaconOnRequest:
+ 2026               	.LFB15:
+ 2027               	.LM203:
+ 2028               	/* prologue: frame size=0 */
+ 2029 0c74 CF93      		push r28
+ 2030 0c76 DF93      		push r29
+ 2031               	/* prologue end (size=2) */
+ 2032               	.LM204:
+ 2033 0c78 81E0      		ldi r24,lo8(1)
+ 2034 0c7a 8093 0000 		sts BeaconInfo+78,r24
+ 2035               	.LM205:
+ 2036 0c7e E091 0000 		lds r30,BeaconInfo+3
+ 2037 0c82 F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2038 0c86 138E      		std Z+27,__zero_reg__
+ 2039               	.LBB46:
+ 2040               	.LBB47:
+ 2041               	.LM206:
+ 2042 0c88 8091 0000 		lds r24,mpib+13
+ 2043 0c8c E091 0000 		lds r30,BeaconInfo+3
+ 2044 0c90 F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2045 0c94 8283      		std Z+2,r24
+ 2046 0c96 8F5F      		subi r24,lo8(-(1))
+ 2047 0c98 8093 0000 		sts mpib+13,r24
+ 2048               	.LM207:
+ 2049 0c9c E091 0000 		lds r30,BeaconInfo+3
+ 2050 0ca0 F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2051 0ca4 DF01      		movw r26,r30
+ 2052               	.LVL100:
+ 2053 0ca6 5896      		adiw r26,24
+ 2054               	.LM208:
+ 2055 0ca8 9091 0000 		lds r25,mpib+1
+ 2056 0cac 9795      		ror r25
+ 2057 0cae 9927      		clr r25
+ 2058 0cb0 9795      		ror r25
+ 2059 0cb2 ED01      		movw r28,r26
+ 2060 0cb4 8981      		ldd r24,Y+1
+ 2061 0cb6 8F77      		andi r24,lo8(127)
+ 2062 0cb8 892B      		or r24,r25
+ 2063 0cba 8983      		std Y+1,r24
+ 2064               	.LM209:
+ 2065 0cbc 9091 0000 		lds r25,mpib+3
+ 2066 0cc0 9170      		andi r25,lo8(1)
+ 2067 0cc2 9295      		swap r25
+ 2068 0cc4 907F      		andi r25,0xf0
+ 2069 0cc6 8F7E      		andi r24,lo8(-17)
+ 2070 0cc8 892B      		or r24,r25
+ 2071 0cca 8983      		std Y+1,r24
+ 2072               	.LM210:
+ 2073 0ccc 9091 0000 		lds r25,mpib+8
+ 2074 0cd0 9F70      		andi r25,lo8(15)
+ 2075 0cd2 808D      		ldd r24,Z+24
+ 2076 0cd4 807F      		andi r24,lo8(-16)
+ 2077 0cd6 892B      		or r24,r25
+ 2078 0cd8 808F      		std Z+24,r24
+ 2079               	.LM211:
+ 2080 0cda 9091 0000 		lds r25,mpib+34
+ 2081 0cde 9295      		swap r25
+ 2082 0ce0 907F      		andi r25,0xf0
+ 2083 0ce2 8F70      		andi r24,lo8(15)
+ 2084 0ce4 892B      		or r24,r25
+ 2085 0ce6 808F      		std Z+24,r24
+ 2086               	.LM212:
+ 2087 0ce8 90E0      		ldi r25,lo8(0)
+ 2088 0cea 8091 0000 		lds r24,macInfo+8
+ 2089 0cee 8823      		tst r24
+ 2090 0cf0 01F4      		brne .L200
+ 2091               	.LM213:
+ 2092 0cf2 91E0      		ldi r25,lo8(1)
+ 2093               	.L200:
+ 2094 0cf4 9295      		swap r25
+ 2095 0cf6 990F      		lsl r25
+ 2096 0cf8 990F      		lsl r25
+ 2097 0cfa 907C      		andi r25,0xc0
+ 2098 0cfc FD01      		movw r30,r26
+ 2099 0cfe 8181      		ldd r24,Z+1
+ 2100 0d00 807B      		andi r24,lo8(-80)
+ 2101               	.LM214:
+ 2102 0d02 892B      		or r24,r25
+ 2103 0d04 8183      		std Z+1,r24
+ 2104               	.LM215:
+ 2105 0d06 1282      		std Z+2,__zero_reg__
+ 2106               	.LM216:
+ 2107 0d08 4091 0000 		lds r20,mpib+5
+ 2108 0d0c 5527      		clr r21
+ 2109 0d0e 6091 0000 		lds r22,mpib+6
+ 2110 0d12 7091 0000 		lds r23,(mpib+6)+1
+ 2111 0d16 8091 0000 		lds r24,BeaconInfo+78
+ 2112 0d1a A80F      		add r26,r24
+ 2113 0d1c B11D      		adc r27,__zero_reg__
+ 2114 0d1e CD01      		movw r24,r26
+ 2115 0d20 0396      		adiw r24,3
+ 2116 0d22 0E94 0000 		call mem_cpy
+ 2117               	.LVL101:
+ 2118               	.LM217:
+ 2119 0d26 E091 0000 		lds r30,BeaconInfo+3
+ 2120 0d2a F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2121 0d2e 9091 0000 		lds r25,BeaconInfo+78
+ 2122 0d32 9D5F      		subi r25,lo8(-(3))
+ 2123 0d34 8091 0000 		lds r24,mpib+5
+ 2124 0d38 890F      		add r24,r25
+ 2125 0d3a 878B      		std Z+23,r24
+ 2126               	.LBE47:
+ 2127               	.LM218:
+ 2128 0d3c E091 0000 		lds r30,BeaconInfo+3
+ 2129 0d40 F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2130 0d44 8789      		ldd r24,Z+23
+ 2131 0d46 60E0      		ldi r22,lo8(0)
+ 2132 0d48 70E0      		ldi r23,hi8(0)
+ 2133 0d4a 9927      		clr r25
+ 2134 0d4c 0E94 0000 		call msupCalcPacketDuration
+ 2135               	.LBB48:
+ 2136 0d50 8093 0000 		sts BeaconInfo+85,r24
+ 2137               	.LBE48:
+ 2138               	.LBE46:
+ 2139               	.LM219:
+ 2140 0d54 8091 0000 		lds r24,BeaconInfo+3
+ 2141 0d58 9091 0000 		lds r25,(BeaconInfo+3)+1
+ 2142 0d5c 0E94 0000 		call tx_trans
+ 2143               	/* epilogue: frame size=0 */
+ 2144 0d60 DF91      		pop r29
+ 2145 0d62 CF91      		pop r28
+ 2146 0d64 0895      		ret
+ 2147               	/* epilogue end (size=3) */
+ 2148               	/* function beacon_transBeaconOnRequest size 121 (116) */
+ 2149               	.LFE15:
+ 2151               	.global	beacon_transBeacon
+ 2153               	beacon_transBeacon:
+ 2154               	.LFB14:
+ 2155               	.LM220:
+ 2156               	/* prologue: frame size=0 */
+ 2157 0d66 CF93      		push r28
+ 2158 0d68 DF93      		push r29
+ 2159               	/* prologue end (size=2) */
+ 2160               	.LM221:
+ 2161 0d6a 8091 0000 		lds r24,BeaconInfo+3
+ 2162 0d6e 9091 0000 		lds r25,(BeaconInfo+3)+1
+ 2163 0d72 4B96      		adiw r24,27
+ 2164 0d74 0E94 0000 		call indirectTx_controlIndirectPkt
+ 2165 0d78 8093 0000 		sts BeaconInfo+78,r24
+ 2166               	.LBB51:
+ 2167               	.LBB52:
+ 2168               	.LM222:
+ 2169 0d7c 8091 0000 		lds r24,mpib+13
+ 2170 0d80 E091 0000 		lds r30,BeaconInfo+3
+ 2171 0d84 F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2172 0d88 8283      		std Z+2,r24
+ 2173 0d8a 8F5F      		subi r24,lo8(-(1))
+ 2174 0d8c 8093 0000 		sts mpib+13,r24
+ 2175               	.LM223:
+ 2176 0d90 E091 0000 		lds r30,BeaconInfo+3
+ 2177 0d94 F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2178 0d98 DF01      		movw r26,r30
+ 2179               	.LVL102:
+ 2180 0d9a 5896      		adiw r26,24
+ 2181               	.LM224:
+ 2182 0d9c 9091 0000 		lds r25,mpib+1
+ 2183 0da0 9795      		ror r25
+ 2184 0da2 9927      		clr r25
+ 2185 0da4 9795      		ror r25
+ 2186 0da6 ED01      		movw r28,r26
+ 2187 0da8 8981      		ldd r24,Y+1
+ 2188 0daa 8F77      		andi r24,lo8(127)
+ 2189 0dac 892B      		or r24,r25
+ 2190 0dae 8983      		std Y+1,r24
+ 2191               	.LM225:
+ 2192 0db0 9091 0000 		lds r25,mpib+3
+ 2193 0db4 9170      		andi r25,lo8(1)
+ 2194 0db6 9295      		swap r25
+ 2195 0db8 907F      		andi r25,0xf0
+ 2196 0dba 8F7E      		andi r24,lo8(-17)
+ 2197 0dbc 892B      		or r24,r25
+ 2198 0dbe 8983      		std Y+1,r24
+ 2199               	.LM226:
+ 2200 0dc0 9091 0000 		lds r25,mpib+8
+ 2201 0dc4 9F70      		andi r25,lo8(15)
+ 2202 0dc6 808D      		ldd r24,Z+24
+ 2203 0dc8 807F      		andi r24,lo8(-16)
+ 2204 0dca 892B      		or r24,r25
+ 2205 0dcc 808F      		std Z+24,r24
+ 2206               	.LM227:
+ 2207 0dce 9091 0000 		lds r25,mpib+34
+ 2208 0dd2 9295      		swap r25
+ 2209 0dd4 907F      		andi r25,0xf0
+ 2210 0dd6 8F70      		andi r24,lo8(15)
+ 2211 0dd8 892B      		or r24,r25
+ 2212 0dda 808F      		std Z+24,r24
+ 2213               	.LM228:
+ 2214 0ddc 90E0      		ldi r25,lo8(0)
+ 2215 0dde 8091 0000 		lds r24,macInfo+8
+ 2216 0de2 8823      		tst r24
+ 2217 0de4 01F4      		brne .L203
+ 2218               	.LM229:
+ 2219 0de6 91E0      		ldi r25,lo8(1)
+ 2220               	.L203:
+ 2221 0de8 9295      		swap r25
+ 2222 0dea 990F      		lsl r25
+ 2223 0dec 990F      		lsl r25
+ 2224 0dee 907C      		andi r25,0xc0
+ 2225 0df0 FD01      		movw r30,r26
+ 2226 0df2 8181      		ldd r24,Z+1
+ 2227 0df4 807B      		andi r24,lo8(-80)
+ 2228               	.LM230:
+ 2229 0df6 892B      		or r24,r25
+ 2230 0df8 8183      		std Z+1,r24
+ 2231               	.LM231:
+ 2232 0dfa 1282      		std Z+2,__zero_reg__
+ 2233               	.LM232:
+ 2234 0dfc 4091 0000 		lds r20,mpib+5
+ 2235 0e00 5527      		clr r21
+ 2236 0e02 6091 0000 		lds r22,mpib+6
+ 2237 0e06 7091 0000 		lds r23,(mpib+6)+1
+ 2238 0e0a 8091 0000 		lds r24,BeaconInfo+78
+ 2239 0e0e A80F      		add r26,r24
+ 2240 0e10 B11D      		adc r27,__zero_reg__
+ 2241 0e12 CD01      		movw r24,r26
+ 2242 0e14 0396      		adiw r24,3
+ 2243 0e16 0E94 0000 		call mem_cpy
+ 2244               	.LVL103:
+ 2245               	.LM233:
+ 2246 0e1a E091 0000 		lds r30,BeaconInfo+3
+ 2247 0e1e F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2248 0e22 9091 0000 		lds r25,BeaconInfo+78
+ 2249 0e26 9D5F      		subi r25,lo8(-(3))
+ 2250 0e28 8091 0000 		lds r24,mpib+5
+ 2251 0e2c 890F      		add r24,r25
+ 2252 0e2e 878B      		std Z+23,r24
+ 2253               	.LBE52:
+ 2254               	.LM234:
+ 2255 0e30 E091 0000 		lds r30,BeaconInfo+3
+ 2256 0e34 F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2257 0e38 8789      		ldd r24,Z+23
+ 2258 0e3a 60E0      		ldi r22,lo8(0)
+ 2259 0e3c 70E0      		ldi r23,hi8(0)
+ 2260 0e3e 9927      		clr r25
+ 2261 0e40 0E94 0000 		call msupCalcPacketDuration
+ 2262               	.LBB53:
+ 2263 0e44 8093 0000 		sts BeaconInfo+85,r24
+ 2264               	.LBE53:
+ 2265               	.LBE51:
+ 2266               	.LM235:
+ 2267 0e48 8091 0000 		lds r24,BeaconInfo+3
+ 2268 0e4c 9091 0000 		lds r25,(BeaconInfo+3)+1
+ 2269 0e50 0E94 0000 		call tx_transBeacon
+ 2270               	.LM236:
+ 2271               	/* #APP */
+ 2272 0e54 F894      		cli
+ 2273               		
+ 2274               	.LM237:
+ 2275               	/* #NOAPP */
+ 2276 0e56 8091 0000 		lds r24,OSTmrTime
+ 2277 0e5a 9091 0000 		lds r25,(OSTmrTime)+1
+ 2278 0e5e A091 0000 		lds r26,(OSTmrTime)+2
+ 2279 0e62 B091 0000 		lds r27,(OSTmrTime)+3
+ 2280 0e66 8093 0000 		sts mpib+9,r24
+ 2281 0e6a 9093 0000 		sts (mpib+9)+1,r25
+ 2282 0e6e A093 0000 		sts (mpib+9)+2,r26
+ 2283 0e72 B093 0000 		sts (mpib+9)+3,r27
+ 2284               	.LM238:
+ 2285               	/* #APP */
+ 2286 0e76 7894      		sei
+ 2287               		
+ 2288               	.LM239:
+ 2289               	/* #NOAPP */
+ 2290 0e78 0E94 0000 		call tx_resumeAfterTxBeacon
+ 2291               	/* epilogue: frame size=0 */
+ 2292 0e7c DF91      		pop r29
+ 2293 0e7e CF91      		pop r28
+ 2294 0e80 0895      		ret
+ 2295               	/* epilogue end (size=3) */
+ 2296               	/* function beacon_transBeacon size 148 (143) */
+ 2297               	.LFE14:
+ 2299               	.global	beacon_transBeaconTask
+ 2301               	beacon_transBeaconTask:
+ 2302               	.LFB17:
+ 2303               	.LM240:
+ 2304               	/* prologue: frame size=0 */
+ 2305 0e82 AF92      		push r10
+ 2306 0e84 BF92      		push r11
+ 2307 0e86 CF92      		push r12
+ 2308 0e88 DF92      		push r13
+ 2309 0e8a EF92      		push r14
+ 2310 0e8c FF92      		push r15
+ 2311 0e8e 0F93      		push r16
+ 2312 0e90 1F93      		push r17
+ 2313 0e92 CF93      		push r28
+ 2314 0e94 DF93      		push r29
+ 2315               	/* prologue end (size=10) */
+ 2316               	.LVL104:
+ 2317               	.LM241:
+ 2318 0e96 0E94 0000 		call mac_updateDelayedPib
+ 2319               	.LVL105:
+ 2320               	.LM242:
+ 2321 0e9a 80E0      		ldi r24,lo8(0)
+ 2322 0e9c 0E94 0000 		call schedul_removeTask
+ 2323               	.LM243:
+ 2324 0ea0 20E3      		ldi r18,lo8(48)
+ 2325 0ea2 A22E      		mov r10,r18
+ 2326 0ea4 B12C      		mov r11,__zero_reg__
+ 2327 0ea6 C12C      		mov r12,__zero_reg__
+ 2328 0ea8 D12C      		mov r13,__zero_reg__
+ 2329               	.LVL106:
+ 2330 0eaa 0090 0000 		lds r0,mpib+8
+ 2331 0eae 00C0      		rjmp 2f
+ 2332 0eb0 AA0C      	1:	lsl r10
+ 2333 0eb2 BB1C      		rol r11
+ 2334 0eb4 CC1C      		rol r12
+ 2335 0eb6 DD1C      		rol r13
+ 2336 0eb8 0A94      	2:	dec r0
+ 2337 0eba 02F4      		brpl 1b
+ 2338               	.LM244:
+ 2339 0ebc E090 0000 		lds r14,BeaconInfo+80
+ 2340 0ec0 F090 0000 		lds r15,(BeaconInfo+80)+1
+ 2341 0ec4 0091 0000 		lds r16,(BeaconInfo+80)+2
+ 2342 0ec8 1091 0000 		lds r17,(BeaconInfo+80)+3
+ 2343 0ecc E114      		cp r14,__zero_reg__
+ 2344 0ece F104      		cpc r15,__zero_reg__
+ 2345 0ed0 0105      		cpc r16,__zero_reg__
+ 2346 0ed2 1105      		cpc r17,__zero_reg__
+ 2347 0ed4 01F0      		breq .L206
+ 2348               	.LM245:
+ 2349 0ed6 6091 0000 		lds r22,SlotInfo
+ 2350 0eda 7091 0000 		lds r23,(SlotInfo)+1
+ 2351 0ede 8091 0000 		lds r24,(SlotInfo)+2
+ 2352 0ee2 9091 0000 		lds r25,(SlotInfo)+3
+ 2353 0ee6 A601      		movw r20,r12
+ 2354 0ee8 9501      		movw r18,r10
+ 2355 0eea 0E94 0000 		call __udivmodsi4
+ 2356 0eee 6E15      		cp r22,r14
+ 2357 0ef0 7F05      		cpc r23,r15
+ 2358 0ef2 8007      		cpc r24,r16
+ 2359 0ef4 9107      		cpc r25,r17
+ 2360 0ef6 00F0      		brlo .+2
+ 2361 0ef8 00C0      		rjmp .L227
+ 2362               	.LM246:
+ 2363 0efa 6091 0000 		lds r22,SlotInfo
+ 2364 0efe 7091 0000 		lds r23,(SlotInfo)+1
+ 2365 0f02 8091 0000 		lds r24,(SlotInfo)+2
+ 2366 0f06 9091 0000 		lds r25,(SlotInfo)+3
+ 2367 0f0a A601      		movw r20,r12
+ 2368 0f0c 9501      		movw r18,r10
+ 2369 0f0e 0E94 0000 		call __udivmodsi4
+ 2370 0f12 E61A      		sub r14,r22
+ 2371 0f14 F70A      		sbc r15,r23
+ 2372 0f16 080B      		sbc r16,r24
+ 2373 0f18 190B      		sbc r17,r25
+ 2374 0f1a AE0C      		add r10,r14
+ 2375 0f1c BF1C      		adc r11,r15
+ 2376 0f1e C01E      		adc r12,r16
+ 2377 0f20 D11E      		adc r13,r17
+ 2378               	.L206:
+ 2379               	.LM247:
+ 2380 0f22 A601      		movw r20,r12
+ 2381 0f24 9501      		movw r18,r10
+ 2382 0f26 60E0      		ldi r22,lo8(0)
+ 2383 0f28 70E0      		ldi r23,hi8(0)
+ 2384 0f2a 8BE0      		ldi r24,lo8(11)
+ 2385 0f2c 0E94 0000 		call timer_startTimer
+ 2386               	.LBB60:
+ 2387               	.LM248:
+ 2388 0f30 8091 0000 		lds r24,BeaconInfo+3
+ 2389 0f34 9091 0000 		lds r25,(BeaconInfo+3)+1
+ 2390 0f38 4B96      		adiw r24,27
+ 2391 0f3a 0E94 0000 		call indirectTx_controlIndirectPkt
+ 2392               	.LBB61:
+ 2393 0f3e 8093 0000 		sts BeaconInfo+78,r24
+ 2394               	.LBB62:
+ 2395               	.LBB63:
+ 2396               	.LM249:
+ 2397 0f42 8091 0000 		lds r24,mpib+13
+ 2398 0f46 E091 0000 		lds r30,BeaconInfo+3
+ 2399 0f4a F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2400 0f4e 8283      		std Z+2,r24
+ 2401 0f50 8F5F      		subi r24,lo8(-(1))
+ 2402 0f52 8093 0000 		sts mpib+13,r24
+ 2403               	.LM250:
+ 2404 0f56 E091 0000 		lds r30,BeaconInfo+3
+ 2405 0f5a F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2406 0f5e DF01      		movw r26,r30
+ 2407               	.LVL107:
+ 2408 0f60 5896      		adiw r26,24
+ 2409               	.LM251:
+ 2410 0f62 9091 0000 		lds r25,mpib+1
+ 2411 0f66 9795      		ror r25
+ 2412 0f68 9927      		clr r25
+ 2413 0f6a 9795      		ror r25
+ 2414 0f6c ED01      		movw r28,r26
+ 2415 0f6e 8981      		ldd r24,Y+1
+ 2416 0f70 8F77      		andi r24,lo8(127)
+ 2417 0f72 892B      		or r24,r25
+ 2418 0f74 8983      		std Y+1,r24
+ 2419               	.LM252:
+ 2420 0f76 9091 0000 		lds r25,mpib+3
+ 2421 0f7a 9170      		andi r25,lo8(1)
+ 2422 0f7c 9295      		swap r25
+ 2423 0f7e 907F      		andi r25,0xf0
+ 2424 0f80 8F7E      		andi r24,lo8(-17)
+ 2425 0f82 892B      		or r24,r25
+ 2426 0f84 8983      		std Y+1,r24
+ 2427               	.LM253:
+ 2428 0f86 9091 0000 		lds r25,mpib+8
+ 2429 0f8a 9F70      		andi r25,lo8(15)
+ 2430 0f8c 808D      		ldd r24,Z+24
+ 2431 0f8e 807F      		andi r24,lo8(-16)
+ 2432 0f90 892B      		or r24,r25
+ 2433 0f92 808F      		std Z+24,r24
+ 2434               	.LM254:
+ 2435 0f94 9091 0000 		lds r25,mpib+34
+ 2436 0f98 9295      		swap r25
+ 2437 0f9a 907F      		andi r25,0xf0
+ 2438 0f9c 8F70      		andi r24,lo8(15)
+ 2439 0f9e 892B      		or r24,r25
+ 2440 0fa0 808F      		std Z+24,r24
+ 2441               	.LM255:
+ 2442 0fa2 90E0      		ldi r25,lo8(0)
+ 2443 0fa4 8091 0000 		lds r24,macInfo+8
+ 2444 0fa8 8823      		tst r24
+ 2445 0faa 01F4      		brne .L210
+ 2446 0fac 91E0      		ldi r25,lo8(1)
+ 2447               	.L210:
+ 2448 0fae 9295      		swap r25
+ 2449 0fb0 990F      		lsl r25
+ 2450 0fb2 990F      		lsl r25
+ 2451 0fb4 907C      		andi r25,0xc0
+ 2452 0fb6 FD01      		movw r30,r26
+ 2453 0fb8 8181      		ldd r24,Z+1
+ 2454 0fba 807B      		andi r24,lo8(-80)
+ 2455               	.LM256:
+ 2456 0fbc 892B      		or r24,r25
+ 2457 0fbe 8183      		std Z+1,r24
+ 2458               	.LM257:
+ 2459 0fc0 1282      		std Z+2,__zero_reg__
+ 2460               	.LM258:
+ 2461 0fc2 4091 0000 		lds r20,mpib+5
+ 2462 0fc6 5527      		clr r21
+ 2463 0fc8 6091 0000 		lds r22,mpib+6
+ 2464 0fcc 7091 0000 		lds r23,(mpib+6)+1
+ 2465 0fd0 8091 0000 		lds r24,BeaconInfo+78
+ 2466 0fd4 A80F      		add r26,r24
+ 2467 0fd6 B11D      		adc r27,__zero_reg__
+ 2468 0fd8 CD01      		movw r24,r26
+ 2469 0fda 0396      		adiw r24,3
+ 2470 0fdc 0E94 0000 		call mem_cpy
+ 2471               	.LVL108:
+ 2472               	.LM259:
+ 2473 0fe0 E091 0000 		lds r30,BeaconInfo+3
+ 2474 0fe4 F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2475 0fe8 9091 0000 		lds r25,BeaconInfo+78
+ 2476 0fec 9D5F      		subi r25,lo8(-(3))
+ 2477 0fee 8091 0000 		lds r24,mpib+5
+ 2478 0ff2 890F      		add r24,r25
+ 2479 0ff4 878B      		std Z+23,r24
+ 2480               	.LBE63:
+ 2481               	.LM260:
+ 2482 0ff6 E091 0000 		lds r30,BeaconInfo+3
+ 2483 0ffa F091 0000 		lds r31,(BeaconInfo+3)+1
+ 2484 0ffe 8789      		ldd r24,Z+23
+ 2485 1000 60E0      		ldi r22,lo8(0)
+ 2486 1002 70E0      		ldi r23,hi8(0)
+ 2487 1004 9927      		clr r25
+ 2488 1006 0E94 0000 		call msupCalcPacketDuration
+ 2489               	.LBB64:
+ 2490 100a 8093 0000 		sts BeaconInfo+85,r24
+ 2491               	.LBE64:
+ 2492               	.LBE62:
+ 2493               	.LM261:
+ 2494 100e 8091 0000 		lds r24,BeaconInfo+3
+ 2495 1012 9091 0000 		lds r25,(BeaconInfo+3)+1
+ 2496 1016 0E94 0000 		call tx_transBeacon
+ 2497               	.LM262:
+ 2498               	/* #APP */
+ 2499 101a F894      		cli
+ 2500               		
+ 2501               	.LM263:
+ 2502               	/* #NOAPP */
+ 2503 101c 8091 0000 		lds r24,OSTmrTime
+ 2504 1020 9091 0000 		lds r25,(OSTmrTime)+1
+ 2505 1024 A091 0000 		lds r26,(OSTmrTime)+2
+ 2506 1028 B091 0000 		lds r27,(OSTmrTime)+3
+ 2507 102c 8093 0000 		sts mpib+9,r24
+ 2508 1030 9093 0000 		sts (mpib+9)+1,r25
+ 2509 1034 A093 0000 		sts (mpib+9)+2,r26
+ 2510 1038 B093 0000 		sts (mpib+9)+3,r27
+ 2511               	.LM264:
+ 2512               	/* #APP */
+ 2513 103c 7894      		sei
+ 2514               		
+ 2515               	.LM265:
+ 2516               	/* #NOAPP */
+ 2517 103e 0E94 0000 		call tx_resumeAfterTxBeacon
+ 2518               	.LBE61:
+ 2519               	.LBE60:
+ 2520               	.LM266:
+ 2521 1042 8091 0000 		lds r24,mpib+1
+ 2522 1046 8823      		tst r24
+ 2523 1048 01F0      		breq .+2
+ 2524 104a 00C0      		rjmp .L226
+ 2525               	.LM267:
+ 2526 104c 8091 0000 		lds r24,mpib+31
+ 2527 1050 8823      		tst r24
+ 2528 1052 01F4      		brne .+2
+ 2529 1054 00C0      		rjmp .L213
+ 2530               	.LBB65:
+ 2531               	.LBB66:
+ 2532               	.LM268:
+ 2533 1056 8091 0000 		lds r24,mpib+8
+ 2534 105a 8A30      		cpi r24,lo8(10)
+ 2535 105c 01F4      		brne .+2
+ 2536 105e 00C0      		rjmp .L219
+ 2537 1060 8B30      		cpi r24,lo8(11)
+ 2538 1062 00F0      		brlo .L228
+ 2539 1064 8C30      		cpi r24,lo8(12)
+ 2540 1066 01F4      		brne .+2
+ 2541 1068 00C0      		rjmp .L221
+ 2542 106a 8C30      		cpi r24,lo8(12)
+ 2543 106c 00F4      		brsh .+2
+ 2544 106e 00C0      		rjmp .L220
+ 2545 1070 8D30      		cpi r24,lo8(13)
+ 2546 1072 01F4      		brne .+2
+ 2547 1074 00C0      		rjmp .L222
+ 2548 1076 8E30      		cpi r24,lo8(14)
+ 2549 1078 01F4      		brne .L215
+ 2550 107a 9EE9      		ldi r25,lo8(158)
+ 2551 107c E92E      		mov r14,r25
+ 2552 107e F12C      		mov r15,__zero_reg__
+ 2553 1080 012D      		mov r16,__zero_reg__
+ 2554 1082 112D      		mov r17,__zero_reg__
+ 2555 1084 00C0      		rjmp .L225
+ 2556               	.L228:
+ 2557 1086 8830      		cpi r24,lo8(8)
+ 2558 1088 01F4      		brne .+2
+ 2559 108a 00C0      		rjmp .L217
+ 2560 108c 8930      		cpi r24,lo8(9)
+ 2561 108e 00F0      		brlo .+2
+ 2562 1090 00C0      		rjmp .L218
+ 2563 1092 8730      		cpi r24,lo8(7)
+ 2564 1094 01F4      		brne .+2
+ 2565 1096 00C0      		rjmp .L229
+ 2566               	.L215:
+ 2567 1098 81E0      		ldi r24,lo8(1)
+ 2568 109a E82E      		mov r14,r24
+ 2569 109c F12C      		mov r15,__zero_reg__
+ 2570 109e 012D      		mov r16,__zero_reg__
+ 2571 10a0 112D      		mov r17,__zero_reg__
+ 2572               	.L225:
+ 2573               	.LBE66:
+ 2574               	.LBE65:
+ 2575               	.LM269:
+ 2576 10a2 2091 0000 		lds r18,BeaconInfo+86
+ 2577 10a6 3327      		clr r19
+ 2578 10a8 4427      		clr r20
+ 2579 10aa 5527      		clr r21
+ 2580 10ac DA01      		movw r26,r20
+ 2581 10ae C901      		movw r24,r18
+ 2582 10b0 880F      		lsl r24
+ 2583 10b2 991F      		rol r25
+ 2584 10b4 AA1F      		rol r26
+ 2585 10b6 BB1F      		rol r27
+ 2586 10b8 820F      		add r24,r18
+ 2587 10ba 931F      		adc r25,r19
+ 2588 10bc A41F      		adc r26,r20
+ 2589 10be B51F      		adc r27,r21
+ 2590 10c0 0396      		adiw r24,3
+ 2591 10c2 A11D      		adc r26,__zero_reg__
+ 2592 10c4 B11D      		adc r27,__zero_reg__
+ 2593 10c6 0090 0000 		lds r0,mpib+34
+ 2594 10ca 00C0      		rjmp 2f
+ 2595 10cc 880F      	1:	lsl r24
+ 2596 10ce 991F      		rol r25
+ 2597 10d0 AA1F      		rol r26
+ 2598 10d2 BB1F      		rol r27
+ 2599 10d4 0A94      	2:	dec r0
+ 2600 10d6 02F4      		brpl 1b
+ 2601 10d8 E80E      		add r14,r24
+ 2602 10da F91E      		adc r15,r25
+ 2603 10dc 0A1F      		adc r16,r26
+ 2604 10de 1B1F      		adc r17,r27
+ 2605 10e0 A801      		movw r20,r16
+ 2606 10e2 9701      		movw r18,r14
+ 2607 10e4 60E0      		ldi r22,lo8(0)
+ 2608 10e6 70E0      		ldi r23,hi8(0)
+ 2609 10e8 81E0      		ldi r24,lo8(1)
+ 2610 10ea 0E94 0000 		call timer_startTimer
+ 2611 10ee 00C0      		rjmp .L226
+ 2612               	.L227:
+ 2613               	.LM270:
+ 2614 10f0 6091 0000 		lds r22,SlotInfo
+ 2615 10f4 7091 0000 		lds r23,(SlotInfo)+1
+ 2616 10f8 8091 0000 		lds r24,(SlotInfo)+2
+ 2617 10fc 9091 0000 		lds r25,(SlotInfo)+3
+ 2618 1100 A601      		movw r20,r12
+ 2619 1102 9501      		movw r18,r10
+ 2620 1104 0E94 0000 		call __udivmodsi4
+ 2621 1108 6E19      		sub r22,r14
+ 2622 110a 7F09      		sbc r23,r15
+ 2623 110c 800B      		sbc r24,r16
+ 2624 110e 910B      		sbc r25,r17
+ 2625 1110 A61A      		sub r10,r22
+ 2626 1112 B70A      		sbc r11,r23
+ 2627 1114 C80A      		sbc r12,r24
+ 2628 1116 D90A      		sbc r13,r25
+ 2629 1118 00C0      		rjmp .L206
+ 2630               	.L213:
+ 2631               	.LM271:
+ 2632 111a 88E0      		ldi r24,lo8(8)
+ 2633 111c 90E0      		ldi r25,hi8(8)
+ 2634 111e 0E94 0000 		call mac_setTrxState
+ 2635 1122 00C0      		rjmp .L226
+ 2636               	.L219:
+ 2637               	.LBB67:
+ 2638               	.LBB68:
+ 2639               	.LM272:
+ 2640 1124 AAE0      		ldi r26,lo8(10)
+ 2641 1126 EA2E      		mov r14,r26
+ 2642 1128 F12C      		mov r15,__zero_reg__
+ 2643 112a 012D      		mov r16,__zero_reg__
+ 2644 112c 112D      		mov r17,__zero_reg__
+ 2645 112e 00C0      		rjmp .L225
+ 2646               	.L218:
+ 2647 1130 B5E0      		ldi r27,lo8(5)
+ 2648 1132 EB2E      		mov r14,r27
+ 2649 1134 F12C      		mov r15,__zero_reg__
+ 2650 1136 012D      		mov r16,__zero_reg__
+ 2651 1138 112D      		mov r17,__zero_reg__
+ 2652 113a 00C0      		rjmp .L225
+ 2653               	.L220:
+ 2654 113c F4E1      		ldi r31,lo8(20)
+ 2655 113e EF2E      		mov r14,r31
+ 2656 1140 F12C      		mov r15,__zero_reg__
+ 2657 1142 012D      		mov r16,__zero_reg__
+ 2658 1144 112D      		mov r17,__zero_reg__
+ 2659 1146 00C0      		rjmp .L225
+ 2660               	.L222:
+ 2661 1148 7FE4      		ldi r23,lo8(79)
+ 2662 114a E72E      		mov r14,r23
+ 2663 114c F12C      		mov r15,__zero_reg__
+ 2664 114e 012D      		mov r16,__zero_reg__
+ 2665 1150 112D      		mov r17,__zero_reg__
+ 2666 1152 00C0      		rjmp .L225
+ 2667               	.L229:
+ 2668 1154 02E0      		ldi r16,lo8(2)
+ 2669 1156 E02E      		mov r14,r16
+ 2670 1158 F12C      		mov r15,__zero_reg__
+ 2671 115a 012D      		mov r16,__zero_reg__
+ 2672 115c 112D      		mov r17,__zero_reg__
+ 2673 115e 00C0      		rjmp .L225
+ 2674               	.L221:
+ 2675 1160 E8E2      		ldi r30,lo8(40)
+ 2676 1162 EE2E      		mov r14,r30
+ 2677 1164 F12C      		mov r15,__zero_reg__
+ 2678 1166 012D      		mov r16,__zero_reg__
+ 2679 1168 112D      		mov r17,__zero_reg__
+ 2680 116a 00C0      		rjmp .L225
+ 2681               	.L217:
+ 2682 116c 13E0      		ldi r17,lo8(3)
+ 2683 116e E12E      		mov r14,r17
+ 2684 1170 F12C      		mov r15,__zero_reg__
+ 2685 1172 012D      		mov r16,__zero_reg__
+ 2686 1174 112D      		mov r17,__zero_reg__
+ 2687 1176 00C0      		rjmp .L225
+ 2688               	.L226:
+ 2689               	.LBE68:
+ 2690               	.LBE67:
+ 2691               	/* epilogue: frame size=0 */
+ 2692 1178 DF91      		pop r29
+ 2693 117a CF91      		pop r28
+ 2694 117c 1F91      		pop r17
+ 2695 117e 0F91      		pop r16
+ 2696 1180 FF90      		pop r15
+ 2697 1182 EF90      		pop r14
+ 2698 1184 DF90      		pop r13
+ 2699 1186 CF90      		pop r12
+ 2700 1188 BF90      		pop r11
+ 2701 118a AF90      		pop r10
+ 2702 118c 0895      		ret
+ 2703               	/* epilogue end (size=11) */
+ 2704               	/* function beacon_transBeaconTask size 396 (375) */
+ 2705               	.LFE17:
+ 2707               		.comm SlotInfo,18,1
+ 2708               		.comm BeaconInfo,88,1
+ 2709               		.comm OSIntNesting,1,1
+ 2710               		.comm OSMemFreeList,2,1
+ 2711               		.comm OSMemTbl,96,1
+ 2712               		.comm OSTmrFree,2,1
+ 2713               		.comm OSTmrUsed,2,1
+ 2714               		.comm OSTmrTime,4,1
+ 2715               		.comm OSTmrTbl,240,1
+ 2716               		.comm OSTmrFreeList,2,1
+ 2717               		.comm OSTmrWheelTbl,32,1
+ 2718               		.comm BeaconNof,96,1
+ 2860               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 mac_beacon.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:20     .text:00000000 beacon_calBeaconMargin
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:99     .text:0000005e beacon_synSlotTime
+                            *COM*:00000012 SlotInfo
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:182    .text:00000104 beacon_createBeaconTxTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:2301   .text:00000e82 beacon_transBeaconTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:205    .text:00000114 beacon_createTimeoutSyncBncTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:1163   .text:00000704 beacon_timeoutSyncBeacon
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:228    .text:00000124 beacon_createSyncBeaconTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:798    .text:000004b8 beacon_synsBeaconTask
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:251    .text:00000134 beacon_endBeaconTx
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:266    .text:0000013c beacon_beaconReceivedOnTracking
+                            *COM*:00000058 BeaconInfo
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:406    .text:0000020e beacon_formatBeacon
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:517    .text:000002e4 beacon_notifyBeacon
+                            *COM*:00000060 BeaconNof
+                            *COM*:00000004 OSTmrTime
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:932    .text:00000596 beacon_initBeacon
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:1047   .text:00000656 beacon_transmitConflictNotif
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:1329   .text:000007f4 beacon_startBeacon
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:1412   .text:0000087c beacon_updateNewBeacon
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:2025   .text:00000c74 beacon_transBeaconOnRequest
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/cci8aaaa.s:2153   .text:00000d66 beacon_transBeacon
+                            *COM*:00000001 OSIntNesting
+                            *COM*:00000002 OSMemFreeList
+                            *COM*:00000060 OSMemTbl
+                            *COM*:00000002 OSTmrFree
+                            *COM*:00000002 OSTmrUsed
+                            *COM*:000000f0 OSTmrTbl
+                            *COM*:00000002 OSTmrFreeList
+                            *COM*:00000020 OSTmrWheelTbl
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+mpib
+__mulsi3
+schedul_addTask
+timer_endTimer
+timer_startTimer
+macInfo
+mem_cpy
+msupCalcPacketDuration
+PhyInfo
+mlmeBeaconNotifyIndication
+plmeSET_request
+mlmeSyncLossIndication
+mac_setTrxState
+schedul_removeTask
+aExtendedAddress
+mac_formatMpdu
+mem_getFreeTxPkt
+mem_set
+tx_trans
+mem_releaseTxPkt
+OSTmrDel
+__udivmodsi4
+mac_getMpduLength
+mlme_autoPoll
+MacTx
+tx_resumeAfterBeacon
+mac_updateDelayedPib
+indirectTx_controlIndirectPkt
+tx_transBeacon
+tx_resumeAfterTxBeacon

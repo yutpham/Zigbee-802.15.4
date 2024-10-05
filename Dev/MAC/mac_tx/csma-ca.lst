@@ -1,0 +1,755 @@
+   1               		.file	"csma-ca.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	csmaca_initCsmaca
+  20               	csmaca_initCsmaca:
+  21               	.LFB4:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LVL0:
+  26 0000 FC01      		movw r30,r24
+  27               	.LM2:
+  28 0002 1482      		std Z+4,__zero_reg__
+  29               	.LM3:
+  30 0004 81E0      		ldi r24,lo8(1)
+  31               	.LVL1:
+  32 0006 8583      		std Z+5,r24
+  33               	.LM4:
+  34 0008 9091 0000 		lds r25,mpib+27
+  35 000c 9383      		std Z+3,r25
+  36               	.LM5:
+  37 000e 4083      		st Z,r20
+  38               	.LM6:
+  39 0010 7187      		std Z+9,r23
+  40 0012 6087      		std Z+8,r22
+  41               	.LM7:
+  42 0014 1682      		std Z+6,__zero_reg__
+  43               	.LM8:
+  44 0016 8FEF      		ldi r24,lo8(-1)
+  45 0018 8783      		std Z+7,r24
+  46               	.LM9:
+  47 001a 4423      		tst r20
+  48 001c 01F0      		breq .L2
+  49               	.LM10:
+  50 001e 8091 0000 		lds r24,mpib+3
+  51 0022 8823      		tst r24
+  52 0024 01F0      		breq .L2
+  53               	.LM11:
+  54 0026 892F      		mov r24,r25
+  55 0028 9330      		cpi r25,lo8(3)
+  56 002a 00F0      		brlo .L5
+  57 002c 82E0      		ldi r24,lo8(2)
+  58               	.L5:
+  59 002e 8383      		std Z+3,r24
+  60               	.L2:
+  61               	.LM12:
+  62 0030 81E0      		ldi r24,lo8(1)
+  63 0032 8183      		std Z+1,r24
+  64               	.LM13:
+  65 0034 1282      		std Z+2,__zero_reg__
+  66               	/* epilogue: frame size=0 */
+  67 0036 0895      		ret
+  68               	/* epilogue end (size=1) */
+  69               	/* function csmaca_initCsmaca size 28 (27) */
+  70               	.LFE4:
+  72               	.global	csmaca_locateBeaconTimeout
+  74               	csmaca_locateBeaconTimeout:
+  75               	.LFB7:
+  76               	.LM14:
+  77               	/* prologue: frame size=0 */
+  78 0038 CF93      		push r28
+  79 003a DF93      		push r29
+  80               	/* prologue end (size=2) */
+  81               	.LVL2:
+  82 003c EB01      		movw r28,r22
+  83               	.LVL3:
+  84               	.LM15:
+  85 003e 8091 0000 		lds r24,BeaconInfo
+  86               	.LVL4:
+  87 0042 8823      		tst r24
+  88 0044 01F0      		breq .L9
+  89               	.LM16:
+  90 0046 20E3      		ldi r18,lo8(48)
+  91 0048 30E0      		ldi r19,hi8(48)
+  92 004a 40E0      		ldi r20,hlo8(48)
+  93 004c 50E0      		ldi r21,hhi8(48)
+  94 004e 0090 0000 		lds r0,mpib+8
+  95 0052 00C0      		rjmp 2f
+  96 0054 220F      	1:	lsl r18
+  97 0056 331F      		rol r19
+  98 0058 441F      		rol r20
+  99 005a 551F      		rol r21
+ 100 005c 0A94      	2:	dec r0
+ 101 005e 02F4      		brpl 1b
+ 102 0060 86E0      		ldi r24,lo8(6)
+ 103 0062 0E94 0000 		call timer_startTimer
+ 104               	.LVL5:
+ 105 0066 00C0      		rjmp .L12
+ 106               	.LVL6:
+ 107               	.L9:
+ 108               	.LM17:
+ 109 0068 1E82      		std Y+6,__zero_reg__
+ 110               	.LM18:
+ 111 006a 81E0      		ldi r24,lo8(1)
+ 112 006c 90E0      		ldi r25,hi8(1)
+ 113 006e 0E94 0000 		call schedul_activate
+ 114               	.LVL7:
+ 115               	.LM19:
+ 116 0072 1882      		st Y,__zero_reg__
+ 117               	.LM20:
+ 118 0074 1C82      		std Y+4,__zero_reg__
+ 119               	.LM21:
+ 120 0076 8091 0000 		lds r24,mpib+27
+ 121 007a 8B83      		std Y+3,r24
+ 122               	.LM22:
+ 123 007c 81E0      		ldi r24,lo8(1)
+ 124 007e 8093 0000 		sts BeaconInfo+2,r24
+ 125               	.L12:
+ 126               	/* epilogue: frame size=0 */
+ 127 0082 DF91      		pop r29
+ 128 0084 CF91      		pop r28
+ 129 0086 0895      		ret
+ 130               	/* epilogue end (size=3) */
+ 131               	/* function csmaca_locateBeaconTimeout size 40 (35) */
+ 132               	.LFE7:
+ 134               	.global	csmaca_restartFromDelay
+ 136               	csmaca_restartFromDelay:
+ 137               	.LFB2:
+ 138               	.LM23:
+ 139               	/* prologue: frame size=0 */
+ 140               	/* prologue end (size=0) */
+ 141               	.LVL8:
+ 142               	.LM24:
+ 143 0088 81E0      		ldi r24,lo8(1)
+ 144 008a 90E0      		ldi r25,hi8(1)
+ 145               	.LVL9:
+ 146 008c 0E94 0000 		call schedul_activate
+ 147               	.LVL10:
+ 148               	/* epilogue: frame size=0 */
+ 149 0090 0895      		ret
+ 150               	/* epilogue end (size=1) */
+ 151               	/* function csmaca_restartFromDelay size 5 (4) */
+ 152               	.LFE2:
+ 154               	.global	csmaca_setupBackOffs
+ 156               	csmaca_setupBackOffs:
+ 157               	.LFB6:
+ 158               	.LM25:
+ 159               	/* prologue: frame size=0 */
+ 160 0092 DF92      		push r13
+ 161 0094 EF92      		push r14
+ 162 0096 FF92      		push r15
+ 163 0098 0F93      		push r16
+ 164 009a 1F93      		push r17
+ 165 009c CF93      		push r28
+ 166 009e DF93      		push r29
+ 167               	/* prologue end (size=7) */
+ 168               	.LVL11:
+ 169 00a0 EC01      		movw r28,r24
+ 170               	.LM26:
+ 171 00a2 0E94 0000 		call ramdom_getRandomByte
+ 172               	.LVL12:
+ 173 00a6 21E0      		ldi r18,lo8(1)
+ 174 00a8 30E0      		ldi r19,hi8(1)
+ 175 00aa 0B80      		ldd r0,Y+3
+ 176 00ac 00C0      		rjmp 2f
+ 177 00ae 220F      	1:	lsl r18
+ 178 00b0 331F      		rol r19
+ 179 00b2 0A94      	2:	dec r0
+ 180 00b4 02F4      		brpl 1b
+ 181 00b6 D22E      		mov r13,r18
+ 182               	.LVL13:
+ 183 00b8 DA94      		dec r13
+ 184 00ba D822      		and r13,r24
+ 185               	.LM27:
+ 186 00bc 1091 0000 		lds r17,mpib+34
+ 187 00c0 1F30      		cpi r17,lo8(15)
+ 188 00c2 01F4      		brne .+2
+ 189 00c4 00C0      		rjmp .L33
+ 190               	.LM28:
+ 191 00c6 8881      		ld r24,Y
+ 192 00c8 8823      		tst r24
+ 193 00ca 01F4      		brne .L19
+ 194 00cc 81E0      		ldi r24,lo8(1)
+ 195 00ce 90E0      		ldi r25,hi8(1)
+ 196 00d0 00C0      		rjmp .L21
+ 197               	.L19:
+ 198               	.LM29:
+ 199 00d2 8091 0000 		lds r24,BeaconInfo+87
+ 200 00d6 8823      		tst r24
+ 201 00d8 01F0      		breq .+2
+ 202 00da 00C0      		rjmp .L34
+ 203 00dc 6885      		ldd r22,Y+8
+ 204 00de 7985      		ldd r23,Y+9
+ 205               	.L22:
+ 206               	.LM30:
+ 207 00e0 8091 0000 		lds r24,BeaconInfo+86
+ 208 00e4 9927      		clr r25
+ 209 00e6 AA27      		clr r26
+ 210 00e8 BB27      		clr r27
+ 211 00ea 9C01      		movw r18,r24
+ 212 00ec AD01      		movw r20,r26
+ 213               	.LVL14:
+ 214 00ee 220F      		lsl r18
+ 215 00f0 331F      		rol r19
+ 216 00f2 441F      		rol r20
+ 217 00f4 551F      		rol r21
+ 218 00f6 280F      		add r18,r24
+ 219 00f8 391F      		adc r19,r25
+ 220 00fa 4A1F      		adc r20,r26
+ 221 00fc 5B1F      		adc r21,r27
+ 222 00fe 2D5F      		subi r18,lo8(-(3))
+ 223 0100 3F4F      		sbci r19,hi8(-(3))
+ 224 0102 4F4F      		sbci r20,hlo8(-(3))
+ 225 0104 5F4F      		sbci r21,hhi8(-(3))
+ 226 0106 00C0      		rjmp 2f
+ 227 0108 220F      	1:	lsl r18
+ 228 010a 331F      		rol r19
+ 229 010c 441F      		rol r20
+ 230 010e 551F      		rol r21
+ 231 0110 1A95      	2:	dec r17
+ 232 0112 02F4      		brpl 1b
+ 233               	.LM31:
+ 234 0114 E091 0000 		lds r30,MacTx+13
+ 235 0118 F091 0000 		lds r31,(MacTx+13)+1
+ 236 011c EC57      		subi r30,lo8(-(132))
+ 237 011e FF4F      		sbci r31,hi8(-(132))
+ 238 0120 8081      		ld r24,Z
+ 239 0122 8823      		tst r24
+ 240 0124 01F4      		brne .+2
+ 241 0126 00C0      		rjmp .L26
+ 242               	.LM32:
+ 243 0128 8091 0000 		lds r24,SlotInfo
+ 244 012c 9091 0000 		lds r25,(SlotInfo)+1
+ 245 0130 A091 0000 		lds r26,(SlotInfo)+2
+ 246 0134 B091 0000 		lds r27,(SlotInfo)+3
+ 247 0138 7901      		movw r14,r18
+ 248 013a 8A01      		movw r16,r20
+ 249 013c E81A      		sub r14,r24
+ 250 013e F90A      		sbc r15,r25
+ 251 0140 0A0B      		sbc r16,r26
+ 252 0142 1B0B      		sbc r17,r27
+ 253 0144 FB01      		movw r30,r22
+ 254 0146 8581      		ldd r24,Z+5
+ 255 0148 9927      		clr r25
+ 256 014a 0296      		adiw r24,2
+ 257 014c 8D0D      		add r24,r13
+ 258 014e 911D      		adc r25,__zero_reg__
+ 259 0150 AA27      		clr r26
+ 260 0152 97FD      		sbrc r25,7
+ 261 0154 A095      		com r26
+ 262 0156 BA2F      		mov r27,r26
+ 263 0158 E81A      		sub r14,r24
+ 264 015a F90A      		sbc r15,r25
+ 265 015c 0A0B      		sbc r16,r26
+ 266 015e 1B0B      		sbc r17,r27
+ 267 0160 0E94 0000 		call beacon_calBeaconMargin
+ 268               	.LVL15:
+ 269 0164 E81A      		sub r14,r24
+ 270 0166 F108      		sbc r15,__zero_reg__
+ 271 0168 0109      		sbc r16,__zero_reg__
+ 272 016a 1109      		sbc r17,__zero_reg__
+ 273               	.LVL16:
+ 274 016c 0894      		sec
+ 275 016e E108      		sbc r14,__zero_reg__
+ 276 0170 F108      		sbc r15,__zero_reg__
+ 277 0172 0109      		sbc r16,__zero_reg__
+ 278 0174 1109      		sbc r17,__zero_reg__
+ 279               	.LM33:
+ 280 0176 8881      		ld r24,Y
+ 281 0178 8823      		tst r24
+ 282 017a 01F4      		brne .L25
+ 283               	.L35:
+ 284 017c E094      		com r14
+ 285 017e F094      		com r15
+ 286 0180 0095      		com r16
+ 287 0182 1095      		com r17
+ 288 0184 EE24      		clr r14
+ 289 0186 17FD      		sbrc r17,7
+ 290 0188 E394      		inc r14
+ 291 018a FF24      		clr r15
+ 292 018c 0027      		clr r16
+ 293 018e 1127      		clr r17
+ 294 0190 8E2D      		mov r24,r14
+ 295 0192 9927      		clr r25
+ 296 0194 00C0      		rjmp .L21
+ 297               	.LVL17:
+ 298               	.L33:
+ 299               	.LM34:
+ 300 0196 EE24      		clr r14
+ 301 0198 FF24      		clr r15
+ 302 019a 8701      		movw r16,r14
+ 303               	.LVL18:
+ 304               	.L18:
+ 305               	.LM35:
+ 306 019c 8881      		ld r24,Y
+ 307 019e 8823      		tst r24
+ 308 01a0 01F0      		breq .L35
+ 309               	.L25:
+ 310 01a2 80E0      		ldi r24,lo8(0)
+ 311 01a4 0894      		sec
+ 312 01a6 E108      		sbc r14,__zero_reg__
+ 313 01a8 F108      		sbc r15,__zero_reg__
+ 314 01aa 0109      		sbc r16,__zero_reg__
+ 315 01ac 1109      		sbc r17,__zero_reg__
+ 316 01ae 17FF      		sbrs r17,7
+ 317 01b0 81E0      		ldi r24,lo8(1)
+ 318               	.L30:
+ 319 01b2 9927      		clr r25
+ 320 01b4 00C0      		rjmp .L21
+ 321               	.LVL19:
+ 322               	.L34:
+ 323               	.LM36:
+ 324 01b6 6885      		ldd r22,Y+8
+ 325 01b8 7985      		ldd r23,Y+9
+ 326 01ba FB01      		movw r30,r22
+ 327 01bc 8481      		ldd r24,Z+4
+ 328 01be 8823      		tst r24
+ 329 01c0 01F4      		brne .+2
+ 330 01c2 00C0      		rjmp .L22
+ 331               	.LM37:
+ 332 01c4 4091 0000 		lds r20,SlotInfo
+ 333 01c8 5091 0000 		lds r21,(SlotInfo)+1
+ 334 01cc 6091 0000 		lds r22,(SlotInfo)+2
+ 335 01d0 7091 0000 		lds r23,(SlotInfo)+3
+ 336 01d4 8091 0000 		lds r24,BeaconInfo+85
+ 337 01d8 2091 0000 		lds r18,mpib+4
+ 338 01dc 820F      		add r24,r18
+ 339 01de 912D      		mov r25,__zero_reg__
+ 340 01e0 911D      		adc r25,__zero_reg__
+ 341 01e2 7C01      		movw r14,r24
+ 342 01e4 0027      		clr r16
+ 343 01e6 F7FC      		sbrc r15,7
+ 344 01e8 0095      		com r16
+ 345 01ea 102F      		mov r17,r16
+ 346               	.LVL20:
+ 347 01ec E41A      		sub r14,r20
+ 348 01ee F50A      		sbc r15,r21
+ 349 01f0 060B      		sbc r16,r22
+ 350 01f2 170B      		sbc r17,r23
+ 351 01f4 8D2D      		mov r24,r13
+ 352 01f6 9927      		clr r25
+ 353 01f8 0396      		adiw r24,3
+ 354 01fa AA27      		clr r26
+ 355 01fc 97FD      		sbrc r25,7
+ 356 01fe A095      		com r26
+ 357 0200 BA2F      		mov r27,r26
+ 358 0202 E81A      		sub r14,r24
+ 359 0204 F90A      		sbc r15,r25
+ 360 0206 0A0B      		sbc r16,r26
+ 361 0208 1B0B      		sbc r17,r27
+ 362 020a 0894      		sec
+ 363 020c E108      		sbc r14,__zero_reg__
+ 364 020e F108      		sbc r15,__zero_reg__
+ 365 0210 0109      		sbc r16,__zero_reg__
+ 366 0212 1109      		sbc r17,__zero_reg__
+ 367 0214 00C0      		rjmp .L25
+ 368               	.LVL21:
+ 369               	.L26:
+ 370               	.LM38:
+ 371 0216 8091 0000 		lds r24,BeaconInfo+85
+ 372 021a 9927      		clr r25
+ 373 021c 0196      		adiw r24,1
+ 374 021e AA27      		clr r26
+ 375 0220 97FD      		sbrc r25,7
+ 376 0222 A095      		com r26
+ 377 0224 BA2F      		mov r27,r26
+ 378 0226 7901      		movw r14,r18
+ 379 0228 8A01      		movw r16,r20
+ 380 022a E81A      		sub r14,r24
+ 381 022c F90A      		sbc r15,r25
+ 382 022e 0A0B      		sbc r16,r26
+ 383 0230 1B0B      		sbc r17,r27
+ 384 0232 FB01      		movw r30,r22
+ 385 0234 8581      		ldd r24,Z+5
+ 386 0236 9927      		clr r25
+ 387 0238 0296      		adiw r24,2
+ 388 023a 8D0D      		add r24,r13
+ 389 023c 911D      		adc r25,__zero_reg__
+ 390 023e AA27      		clr r26
+ 391 0240 97FD      		sbrc r25,7
+ 392 0242 A095      		com r26
+ 393 0244 BA2F      		mov r27,r26
+ 394 0246 E81A      		sub r14,r24
+ 395 0248 F90A      		sbc r15,r25
+ 396 024a 0A0B      		sbc r16,r26
+ 397 024c 1B0B      		sbc r17,r27
+ 398 024e 0E94 0000 		call beacon_calBeaconMargin
+ 399               	.LVL22:
+ 400 0252 E81A      		sub r14,r24
+ 401 0254 F108      		sbc r15,__zero_reg__
+ 402 0256 0109      		sbc r16,__zero_reg__
+ 403 0258 1109      		sbc r17,__zero_reg__
+ 404               	.LVL23:
+ 405 025a 00C0      		rjmp .L18
+ 406               	.L21:
+ 407               	.LM39:
+ 408 025c 1E82      		std Y+6,__zero_reg__
+ 409               	.LM40:
+ 410 025e DF82      		std Y+7,r13
+ 411               	/* epilogue: frame size=0 */
+ 412 0260 DF91      		pop r29
+ 413 0262 CF91      		pop r28
+ 414 0264 1F91      		pop r17
+ 415 0266 0F91      		pop r16
+ 416 0268 FF90      		pop r15
+ 417 026a EF90      		pop r14
+ 418 026c DF90      		pop r13
+ 419 026e 0895      		ret
+ 420               	/* epilogue end (size=8) */
+ 421               	/* function csmaca_setupBackOffs size 241 (226) */
+ 422               	.LFE6:
+ 424               	.global	csmaca_setupBackoffCallback
+ 426               	csmaca_setupBackoffCallback:
+ 427               	.LFB3:
+ 428               	.LM41:
+ 429               	/* prologue: frame size=0 */
+ 430               	/* prologue end (size=0) */
+ 431               	.LVL24:
+ 432               	.LM42:
+ 433 0270 FC01      		movw r30,r24
+ 434 0272 2781      		ldd r18,Z+7
+ 435 0274 2223      		tst r18
+ 436 0276 01F0      		breq .L41
+ 437               	.LM43:
+ 438 0278 3327      		clr r19
+ 439 027a 4427      		clr r20
+ 440 027c 5527      		clr r21
+ 441 027e 00C0      		rjmp .L39
+ 442               	.L41:
+ 443 0280 21E0      		ldi r18,lo8(1)
+ 444 0282 30E0      		ldi r19,hi8(1)
+ 445 0284 40E0      		ldi r20,hlo8(1)
+ 446 0286 50E0      		ldi r21,hhi8(1)
+ 447               	.L39:
+ 448 0288 60E0      		ldi r22,lo8(0)
+ 449 028a 70E0      		ldi r23,hi8(0)
+ 450 028c 88E0      		ldi r24,lo8(8)
+ 451               	.LVL25:
+ 452 028e 0E94 0000 		call timer_startTimer
+ 453               	.LM44:
+ 454 0292 81E0      		ldi r24,lo8(1)
+ 455 0294 90E0      		ldi r25,hi8(1)
+ 456 0296 0E94 0000 		call schedul_suspend
+ 457               	.LM45:
+ 458 029a 81E0      		ldi r24,lo8(1)
+ 459 029c 90E0      		ldi r25,hi8(1)
+ 460               	/* epilogue: frame size=0 */
+ 461 029e 0895      		ret
+ 462               	/* epilogue end (size=1) */
+ 463               	/* function csmaca_setupBackoffCallback size 24 (23) */
+ 464               	.LFE3:
+ 466               	.global	csmaca_process
+ 468               	csmaca_process:
+ 469               	.LFB5:
+ 470               	.LM46:
+ 471               	/* prologue: frame size=0 */
+ 472 02a0 1F93      		push r17
+ 473 02a2 CF93      		push r28
+ 474 02a4 DF93      		push r29
+ 475               	/* prologue end (size=3) */
+ 476               	.LVL26:
+ 477 02a6 EC01      		movw r28,r24
+ 478               	.LM47:
+ 479 02a8 1981      		ldd r17,Y+1
+ 480 02aa 1430      		cpi r17,lo8(4)
+ 481 02ac 00F4      		brsh .L47
+ 482               	.LVL27:
+ 483               	.LM48:
+ 484 02ae 1230      		cpi r17,lo8(2)
+ 485 02b0 00F0      		brlo .L86
+ 486               	.LM49:
+ 487 02b2 81E0      		ldi r24,lo8(1)
+ 488 02b4 0E94 0000 		call phy_disableFIFOInt
+ 489               	.LM50:
+ 490 02b8 86E0      		ldi r24,lo8(6)
+ 491 02ba 90E0      		ldi r25,hi8(6)
+ 492 02bc 0E94 0000 		call mac_setTrxState
+ 493               	.LM51:
+ 494 02c0 84E0      		ldi r24,lo8(4)
+ 495 02c2 8983      		std Y+1,r24
+ 496               	.LM52:
+ 497 02c4 1A82      		std Y+2,__zero_reg__
+ 498 02c6 00C0      		rjmp .L80
+ 499               	.LVL28:
+ 500               	.L47:
+ 501               	.LM53:
+ 502 02c8 1430      		cpi r17,lo8(4)
+ 503 02ca 01F0      		breq .+2
+ 504 02cc 00C0      		rjmp .L80
+ 505               	.LM54:
+ 506 02ce 8881      		ld r24,Y
+ 507 02d0 8130      		cpi r24,lo8(1)
+ 508 02d2 01F0      		breq .L81
+ 509               	.LM55:
+ 510 02d4 0E94 0000 		call plmeCCA_request
+ 511 02d8 8430      		cpi r24,lo8(4)
+ 512 02da 01F4      		brne .+2
+ 513 02dc 00C0      		rjmp .L84
+ 514               	.LM56:
+ 515 02de 2C81      		ldd r18,Y+4
+ 516 02e0 2F5F      		subi r18,lo8(-(1))
+ 517 02e2 2C83      		std Y+4,r18
+ 518               	.LM57:
+ 519 02e4 3B81      		ldd r19,Y+3
+ 520 02e6 832F      		mov r24,r19
+ 521 02e8 9927      		clr r25
+ 522 02ea 0497      		sbiw r24,4
+ 523 02ec 04F4      		brge .+2
+ 524 02ee 00C0      		rjmp .L75
+ 525 02f0 85E0      		ldi r24,lo8(5)
+ 526               	.L77:
+ 527 02f2 8B83      		std Y+3,r24
+ 528               	.LM58:
+ 529 02f4 8091 0000 		lds r24,mpib+26
+ 530 02f8 8217      		cp r24,r18
+ 531 02fa 00F4      		brsh .+2
+ 532 02fc 00C0      		rjmp .L85
+ 533               	.LM59:
+ 534 02fe 81E0      		ldi r24,lo8(1)
+ 535 0300 8983      		std Y+1,r24
+ 536               	.LM60:
+ 537 0302 8FEF      		ldi r24,lo8(-1)
+ 538 0304 8F83      		std Y+7,r24
+ 539               	.LM61:
+ 540 0306 1A82      		std Y+2,__zero_reg__
+ 541               	.L66:
+ 542               	.LM62:
+ 543 0308 88E0      		ldi r24,lo8(8)
+ 544 030a 90E0      		ldi r25,hi8(8)
+ 545 030c 0E94 0000 		call mac_setTrxState
+ 546               	.LM63:
+ 547 0310 80E0      		ldi r24,lo8(0)
+ 548 0312 0E94 0000 		call phy_disableFIFOInt
+ 549 0316 00C0      		rjmp .L80
+ 550               	.LVL29:
+ 551               	.L86:
+ 552               	.LM64:
+ 553 0318 1130      		cpi r17,lo8(1)
+ 554 031a 01F0      		breq .+2
+ 555 031c 00C0      		rjmp .L80
+ 556               	.LM65:
+ 557 031e 2F81      		ldd r18,Y+7
+ 558 0320 2F3F      		cpi r18,lo8(-1)
+ 559 0322 01F4      		brne .+2
+ 560 0324 00C0      		rjmp .L87
+ 561               	.L48:
+ 562               	.LBB4:
+ 563               	.LBB5:
+ 564               	.LM66:
+ 565 0326 2223      		tst r18
+ 566 0328 01F4      		brne .L51
+ 567 032a 21E0      		ldi r18,lo8(1)
+ 568 032c 30E0      		ldi r19,hi8(1)
+ 569 032e 40E0      		ldi r20,hlo8(1)
+ 570 0330 50E0      		ldi r21,hhi8(1)
+ 571               	.L53:
+ 572 0332 60E0      		ldi r22,lo8(0)
+ 573 0334 70E0      		ldi r23,hi8(0)
+ 574 0336 88E0      		ldi r24,lo8(8)
+ 575 0338 0E94 0000 		call timer_startTimer
+ 576               	.LM67:
+ 577 033c 81E0      		ldi r24,lo8(1)
+ 578 033e 90E0      		ldi r25,hi8(1)
+ 579 0340 0E94 0000 		call schedul_suspend
+ 580               	.LBE5:
+ 581               	.LBE4:
+ 582               	.LM68:
+ 583 0344 1A82      		std Y+2,__zero_reg__
+ 584               	.LM69:
+ 585 0346 82E0      		ldi r24,lo8(2)
+ 586 0348 8983      		std Y+1,r24
+ 587 034a 00C0      		rjmp .L80
+ 588               	.L81:
+ 589               	.LM70:
+ 590 034c 06B6      		in __tmp_reg__,86-0x20
+ 591 034e 03FE      		sbrs __tmp_reg__,3
+ 592 0350 00C0      		rjmp .L81
+ 593               	.LM71:
+ 594 0352 0E94 0000 		call plmeCCA_request
+ 595 0356 8430      		cpi r24,lo8(4)
+ 596 0358 01F0      		breq .L88
+ 597               	.LM72:
+ 598 035a 2C81      		ldd r18,Y+4
+ 599 035c 2F5F      		subi r18,lo8(-(1))
+ 600 035e 2C83      		std Y+4,r18
+ 601               	.LM73:
+ 602 0360 81E0      		ldi r24,lo8(1)
+ 603 0362 8D83      		std Y+5,r24
+ 604               	.LM74:
+ 605 0364 3B81      		ldd r19,Y+3
+ 606 0366 832F      		mov r24,r19
+ 607 0368 9927      		clr r25
+ 608 036a 0497      		sbiw r24,4
+ 609 036c 04F0      		brlt .L68
+ 610 036e 85E0      		ldi r24,lo8(5)
+ 611               	.L70:
+ 612 0370 8B83      		std Y+3,r24
+ 613               	.LM75:
+ 614 0372 8091 0000 		lds r24,mpib+26
+ 615 0376 8217      		cp r24,r18
+ 616 0378 00F0      		brlo .L85
+ 617               	.LM76:
+ 618 037a 81E0      		ldi r24,lo8(1)
+ 619 037c 8983      		std Y+1,r24
+ 620               	.LM77:
+ 621 037e 2FEF      		ldi r18,lo8(-1)
+ 622 0380 2F83      		std Y+7,r18
+ 623               	.LM78:
+ 624 0382 1A82      		std Y+2,__zero_reg__
+ 625 0384 00C0      		rjmp .L66
+ 626               	.LVL30:
+ 627               	.L51:
+ 628               	.LBB6:
+ 629               	.LBB7:
+ 630               	.LM79:
+ 631 0386 3327      		clr r19
+ 632 0388 4427      		clr r20
+ 633 038a 5527      		clr r21
+ 634 038c 00C0      		rjmp .L53
+ 635               	.LVL31:
+ 636               	.L75:
+ 637               	.LBE7:
+ 638               	.LBE6:
+ 639               	.LM80:
+ 640 038e 832F      		mov r24,r19
+ 641 0390 8F5F      		subi r24,lo8(-(1))
+ 642 0392 00C0      		rjmp .L77
+ 643               	.L68:
+ 644               	.LM81:
+ 645 0394 832F      		mov r24,r19
+ 646 0396 8F5F      		subi r24,lo8(-(1))
+ 647 0398 00C0      		rjmp .L70
+ 648               	.L85:
+ 649               	.LM82:
+ 650 039a 84E0      		ldi r24,lo8(4)
+ 651 039c 8A83      		std Y+2,r24
+ 652 039e 00C0      		rjmp .L66
+ 653               	.L88:
+ 654               	.LM83:
+ 655 03a0 8D81      		ldd r24,Y+5
+ 656 03a2 8150      		subi r24,lo8(-(-1))
+ 657 03a4 8D83      		std Y+5,r24
+ 658               	.LM84:
+ 659 03a6 8823      		tst r24
+ 660 03a8 01F0      		breq .+2
+ 661 03aa 00C0      		rjmp .L66
+ 662               	.L84:
+ 663               	.LM85:
+ 664 03ac 83E0      		ldi r24,lo8(3)
+ 665 03ae 8A83      		std Y+2,r24
+ 666 03b0 00C0      		rjmp .L66
+ 667               	.LVL32:
+ 668               	.L87:
+ 669               	.LM86:
+ 670 03b2 0E94 0000 		call csmaca_setupBackOffs
+ 671               	.LM87:
+ 672 03b6 8130      		cpi r24,lo8(1)
+ 673 03b8 01F0      		breq .L89
+ 674               	.LM88:
+ 675 03ba E885      		ldd r30,Y+8
+ 676 03bc F985      		ldd r31,Y+9
+ 677 03be 8181      		ldd r24,Z+1
+ 678 03c0 82FF      		sbrs r24,2
+ 679 03c2 00C0      		rjmp .L54
+ 680               	.LM89:
+ 681 03c4 1A83      		std Y+2,r17
+ 682 03c6 00C0      		rjmp .L80
+ 683               	.L54:
+ 684               	.LM90:
+ 685 03c8 8091 0000 		lds r24,BeaconInfo
+ 686 03cc 8823      		tst r24
+ 687 03ce 01F4      		brne .L56
+ 688 03d0 8091 0000 		lds r24,BeaconInfo+1
+ 689 03d4 8823      		tst r24
+ 690 03d6 01F0      		breq .L90
+ 691               	.L56:
+ 692               	.LM91:
+ 693 03d8 8481      		ldd r24,Z+4
+ 694 03da 8823      		tst r24
+ 695 03dc 01F4      		brne .L91
+ 696               	.L59:
+ 697               	.LM92:
+ 698 03de 81E0      		ldi r24,lo8(1)
+ 699 03e0 8E83      		std Y+6,r24
+ 700               	.LM93:
+ 701 03e2 1A82      		std Y+2,__zero_reg__
+ 702               	.LM94:
+ 703 03e4 8983      		std Y+1,r24
+ 704 03e6 00C0      		rjmp .L80
+ 705               	.L89:
+ 706 03e8 2F81      		ldd r18,Y+7
+ 707 03ea 00C0      		rjmp .L48
+ 708               	.L91:
+ 709               	.LM95:
+ 710 03ec 20E3      		ldi r18,lo8(48)
+ 711 03ee 30E0      		ldi r19,hi8(48)
+ 712 03f0 40E0      		ldi r20,hlo8(48)
+ 713 03f2 50E0      		ldi r21,hhi8(48)
+ 714 03f4 0090 0000 		lds r0,mpib+8
+ 715 03f8 00C0      		rjmp 2f
+ 716 03fa 220F      	1:	lsl r18
+ 717 03fc 331F      		rol r19
+ 718 03fe 441F      		rol r20
+ 719 0400 551F      		rol r21
+ 720 0402 0A94      	2:	dec r0
+ 721 0404 02F4      		brpl 1b
+ 722 0406 BE01      		movw r22,r28
+ 723 0408 86E0      		ldi r24,lo8(6)
+ 724 040a 0E94 0000 		call timer_startTimer
+ 725 040e 00C0      		rjmp .L59
+ 726               	.L90:
+ 727               	.LM96:
+ 728 0410 86E0      		ldi r24,lo8(6)
+ 729 0412 90E0      		ldi r25,hi8(6)
+ 730 0414 0E94 0000 		call mac_setTrxState
+ 731 0418 E885      		ldd r30,Y+8
+ 732 041a F985      		ldd r31,Y+9
+ 733 041c 00C0      		rjmp .L56
+ 734               	.LVL33:
+ 735               	.L80:
+ 736               	/* epilogue: frame size=0 */
+ 737 041e DF91      		pop r29
+ 738 0420 CF91      		pop r28
+ 739 0422 1F91      		pop r17
+ 740 0424 0895      		ret
+ 741               	/* epilogue end (size=4) */
+ 742               	/* function csmaca_process size 197 (190) */
+ 743               	.LFE5:
+ 802               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 csma-ca.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:20     .text:00000000 csmaca_initCsmaca
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:74     .text:00000038 csmaca_locateBeaconTimeout
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:136    .text:00000088 csmaca_restartFromDelay
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:156    .text:00000092 csmaca_setupBackOffs
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:426    .text:00000270 csmaca_setupBackoffCallback
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccMRaaaa.s:468    .text:000002a0 csmaca_process
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+mpib
+BeaconInfo
+timer_startTimer
+schedul_activate
+ramdom_getRandomByte
+MacTx
+SlotInfo
+beacon_calBeaconMargin
+schedul_suspend
+phy_disableFIFOInt
+mac_setTrxState
+plmeCCA_request

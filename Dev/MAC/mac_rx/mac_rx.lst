@@ -1,0 +1,482 @@
+   1               		.file	"mac_rx.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	macrx_ProcessMpdu
+  20               	macrx_ProcessMpdu:
+  21               	.LFB2:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24 0000 0F93      		push r16
+  25 0002 1F93      		push r17
+  26 0004 CF93      		push r28
+  27 0006 DF93      		push r29
+  28               	/* prologue end (size=4) */
+  29               	.LVL0:
+  30 0008 EC01      		movw r28,r24
+  31               	.LM2:
+  32 000a 6881      		ld r22,Y
+  33 000c 962F      		mov r25,r22
+  34 000e 9770      		andi r25,lo8(7)
+  35 0010 9230      		cpi r25,lo8(2)
+  36 0012 01F4      		brne .+2
+  37 0014 00C0      		rjmp .L52
+  38               	.LVL1:
+  39               	.LM3:
+  40 0016 8091 0000 		lds r24,macInfo
+  41 001a 8430      		cpi r24,lo8(4)
+  42 001c 01F4      		brne .+2
+  43 001e 00C0      		rjmp .L7
+  44 0020 8530      		cpi r24,lo8(5)
+  45 0022 01F4      		brne .+2
+  46 0024 00C0      		rjmp .L8
+  47 0026 8230      		cpi r24,lo8(2)
+  48 0028 01F4      		brne .+2
+  49 002a 00C0      		rjmp .L53
+  50               	.L5:
+  51               	.LM4:
+  52 002c 862F      		mov r24,r22
+  53 002e 8770      		andi r24,lo8(7)
+  54 0030 9927      		clr r25
+  55 0032 8130      		cpi r24,1
+  56 0034 9105      		cpc r25,__zero_reg__
+  57 0036 01F0      		breq .L20
+  58 0038 8330      		cpi r24,3
+  59 003a 9105      		cpc r25,__zero_reg__
+  60 003c 01F4      		brne .+2
+  61 003e 00C0      		rjmp .L21
+  62 0040 892B      		or r24,r25
+  63 0042 01F4      		brne .L18
+  64               	.LM5:
+  65 0044 8091 0000 		lds r24,macInfo
+  66 0048 8430      		cpi r24,lo8(4)
+  67 004a 01F4      		brne .+2
+  68 004c 00C0      		rjmp .L54
+  69               	.LM6:
+  70 004e 2D85      		ldd r18,Y+13
+  71 0050 3E85      		ldd r19,Y+14
+  72 0052 8091 0000 		lds r24,mpib+28
+  73 0056 9091 0000 		lds r25,(mpib+28)+1
+  74 005a 2817      		cp r18,r24
+  75 005c 3907      		cpc r19,r25
+  76 005e 01F4      		brne .+2
+  77 0060 00C0      		rjmp .L55
+  78               	.L18:
+  79               	.LM7:
+  80 0062 CE01      		movw r24,r28
+  81 0064 0E94 0000 		call mem_releaseRxPkt
+  82 0068 00C0      		rjmp .L45
+  83               	.L20:
+  84               	.LM8:
+  85 006a 8CE1      		ldi r24,lo8(28)
+  86 006c 0E94 0000 		call mem_getMem
+  87 0070 FC01      		movw r30,r24
+  88 0072 9093 0000 		sts (pIndiData)+1,r25
+  89 0076 8093 0000 		sts pIndiData,r24
+  90               	.LM9:
+  91 007a 892B      		or r24,r25
+  92 007c 01F0      		breq .L18
+  93               	.LM10:
+  94 007e 8981      		ldd r24,Y+1
+  95 0080 8295      		swap r24
+  96 0082 8695      		lsr r24
+  97 0084 8695      		lsr r24
+  98 0086 8370      		andi r24,0x3
+  99 0088 8083      		st Z,r24
+ 100               	.LM11:
+ 101 008a E091 0000 		lds r30,pIndiData
+ 102 008e F091 0000 		lds r31,(pIndiData)+1
+ 103 0092 8D85      		ldd r24,Y+13
+ 104 0094 9E85      		ldd r25,Y+14
+ 105 0096 9283      		std Z+2,r25
+ 106 0098 8183      		std Z+1,r24
+ 107               	.LM12:
+ 108 009a 3396      		adiw r30,3
+ 109 009c DE01      		movw r26,r28
+ 110 009e 1F96      		adiw r26,15
+ 111 00a0 88E0      		ldi r24,lo8(8)
+ 112               	.L38:
+ 113 00a2 0D90      		ld r0,X+
+ 114 00a4 0192      		st Z+,r0
+ 115 00a6 8150      		subi r24,lo8(-(-1))
+ 116 00a8 01F4      		brne .L38
+ 117               	.LM13:
+ 118 00aa E091 0000 		lds r30,pIndiData
+ 119 00ae F091 0000 		lds r31,(pIndiData)+1
+ 120 00b2 8981      		ldd r24,Y+1
+ 121 00b4 8695      		lsr r24
+ 122 00b6 8695      		lsr r24
+ 123 00b8 8370      		andi r24,lo8(3)
+ 124 00ba 8387      		std Z+11,r24
+ 125               	.LM14:
+ 126 00bc E091 0000 		lds r30,pIndiData
+ 127 00c0 F091 0000 		lds r31,(pIndiData)+1
+ 128 00c4 8B81      		ldd r24,Y+3
+ 129 00c6 9C81      		ldd r25,Y+4
+ 130 00c8 9587      		std Z+13,r25
+ 131 00ca 8487      		std Z+12,r24
+ 132               	.LM15:
+ 133 00cc 3E96      		adiw r30,14
+ 134 00ce DE01      		movw r26,r28
+ 135 00d0 1596      		adiw r26,5
+ 136 00d2 88E0      		ldi r24,lo8(8)
+ 137               	.L39:
+ 138 00d4 0D90      		ld r0,X+
+ 139 00d6 0192      		st Z+,r0
+ 140 00d8 8150      		subi r24,lo8(-(-1))
+ 141 00da 01F4      		brne .L39
+ 142               	.LM16:
+ 143 00dc E091 0000 		lds r30,pIndiData
+ 144 00e0 F091 0000 		lds r31,(pIndiData)+1
+ 145 00e4 C258      		subi r28,lo8(-(126))
+ 146 00e6 DF4F      		sbci r29,hi8(-(126))
+ 147 00e8 8881      		ld r24,Y
+ 148 00ea CE57      		subi r28,lo8(-(-126))
+ 149 00ec D040      		sbci r29,hi8(-(-126))
+ 150 00ee 868B      		std Z+22,r24
+ 151               	.LM17:
+ 152 00f0 E091 0000 		lds r30,pIndiData
+ 153 00f4 F091 0000 		lds r31,(pIndiData)+1
+ 154 00f8 178A      		std Z+23,__zero_reg__
+ 155               	.LM18:
+ 156 00fa 108E      		std Z+24,__zero_reg__
+ 157               	.LM19:
+ 158 00fc E091 0000 		lds r30,pIndiData
+ 159 0100 F091 0000 		lds r31,(pIndiData)+1
+ 160 0104 8F89      		ldd r24,Y+23
+ 161 0106 818F      		std Z+25,r24
+ 162               	.LM20:
+ 163 0108 0091 0000 		lds r16,pIndiData
+ 164 010c 1091 0000 		lds r17,(pIndiData)+1
+ 165 0110 8F89      		ldd r24,Y+23
+ 166 0112 0E94 0000 		call mem_getMem
+ 167 0116 F801      		movw r30,r16
+ 168 0118 938F      		std Z+27,r25
+ 169 011a 828F      		std Z+26,r24
+ 170               	.LM21:
+ 171 011c E091 0000 		lds r30,pIndiData
+ 172 0120 F091 0000 		lds r31,(pIndiData)+1
+ 173 0124 828D      		ldd r24,Z+26
+ 174 0126 938D      		ldd r25,Z+27
+ 175 0128 0097      		sbiw r24,0
+ 176 012a 01F4      		brne .+2
+ 177 012c 00C0      		rjmp .L40
+ 178               	.LM22:
+ 179 012e 418D      		ldd r20,Z+25
+ 180 0130 5527      		clr r21
+ 181 0132 47FD      		sbrc r20,7
+ 182 0134 5095      		com r21
+ 183 0136 BE01      		movw r22,r28
+ 184 0138 685E      		subi r22,lo8(-(24))
+ 185 013a 7F4F      		sbci r23,hi8(-(24))
+ 186 013c 0E94 0000 		call mem_cpy
+ 187               	.LM23:
+ 188 0140 8091 0000 		lds r24,pIndiData
+ 189 0144 9091 0000 		lds r25,(pIndiData)+1
+ 190 0148 0E94 0000 		call mcpsDataIndication
+ 191 014c 00C0      		rjmp .L18
+ 192               	.L7:
+ 193               	.LM24:
+ 194 014e E091 0000 		lds r30,pScanInfo
+ 195 0152 F091 0000 		lds r31,(pScanInfo)+1
+ 196 0156 E081      		ld r30,Z
+ 197 0158 E130      		cpi r30,lo8(1)
+ 198 015a 00F4      		brsh .+2
+ 199 015c 00C0      		rjmp .L5
+ 200 015e E330      		cpi r30,lo8(3)
+ 201 0160 00F4      		brsh .+2
+ 202 0162 00C0      		rjmp .L14
+ 203 0164 E330      		cpi r30,lo8(3)
+ 204 0166 01F0      		breq .+2
+ 205 0168 00C0      		rjmp .L5
+ 206               	.LM25:
+ 207 016a 888D      		ldd r24,Y+24
+ 208 016c 8830      		cpi r24,lo8(8)
+ 209 016e 01F0      		breq .+2
+ 210 0170 00C0      		rjmp .L5
+ 211               	.L50:
+ 212               	.LM26:
+ 213 0172 CE01      		movw r24,r28
+ 214 0174 0E94 0000 		call mlme_handlePktInScan
+ 215 0178 6881      		ld r22,Y
+ 216 017a 00C0      		rjmp .L5
+ 217               	.L8:
+ 218               	.LM27:
+ 219 017c 62E0      		ldi r22,lo8(2)
+ 220 017e 85E0      		ldi r24,lo8(5)
+ 221 0180 0E94 0000 		call mac_requestState
+ 222               	.LM28:
+ 223 0184 BE01      		movw r22,r28
+ 224 0186 80E0      		ldi r24,lo8(0)
+ 225 0188 90E0      		ldi r25,hi8(0)
+ 226 018a 0E94 0000 		call mlme_handlePollTransition
+ 227 018e 6881      		ld r22,Y
+ 228 0190 00C0      		rjmp .L5
+ 229               	.L21:
+ 230               	.LM29:
+ 231 0192 888D      		ldd r24,Y+24
+ 232 0194 8530      		cpi r24,lo8(5)
+ 233 0196 01F4      		brne .+2
+ 234 0198 00C0      		rjmp .L25
+ 235 019a 8630      		cpi r24,lo8(6)
+ 236 019c 00F4      		brsh .L29
+ 237 019e 8330      		cpi r24,lo8(3)
+ 238 01a0 01F4      		brne .+2
+ 239 01a2 00C0      		rjmp .L23
+ 240 01a4 8430      		cpi r24,lo8(4)
+ 241 01a6 00F0      		brlo .+2
+ 242 01a8 00C0      		rjmp .L24
+ 243 01aa 8130      		cpi r24,lo8(1)
+ 244 01ac 01F0      		breq .+2
+ 245 01ae 00C0      		rjmp .L18
+ 246               	.LM30:
+ 247 01b0 698D      		ldd r22,Y+25
+ 248 01b2 7727      		clr r23
+ 249 01b4 20E0      		ldi r18,lo8(0)
+ 250 01b6 30E0      		ldi r19,hi8(0)
+ 251 01b8 40E0      		ldi r20,lo8(0)
+ 252 01ba 50E0      		ldi r21,hi8(0)
+ 253 01bc CE01      		movw r24,r28
+ 254 01be 0F96      		adiw r24,15
+ 255 01c0 0E94 0000 		call mlmeAssociateIndication
+ 256 01c4 00C0      		rjmp .L18
+ 257               	.LVL2:
+ 258               	.L52:
+ 259               	.LM31:
+ 260 01c6 CE01      		movw r24,r28
+ 261 01c8 0E94 0000 		call tx_notifyAck
+ 262 01cc 00C0      		rjmp .L45
+ 263               	.L53:
+ 264               	.LM32:
+ 265 01ce 9330      		cpi r25,lo8(3)
+ 266 01d0 01F4      		brne .+2
+ 267 01d2 00C0      		rjmp .L56
+ 268               	.L9:
+ 269               	.LM33:
+ 270 01d4 862F      		mov r24,r22
+ 271 01d6 8770      		andi r24,lo8(7)
+ 272 01d8 8130      		cpi r24,lo8(1)
+ 273 01da 01F0      		breq .+2
+ 274 01dc 00C0      		rjmp .L5
+ 275 01de 8F89      		ldd r24,Y+23
+ 276 01e0 8823      		tst r24
+ 277 01e2 01F0      		breq .+2
+ 278 01e4 00C0      		rjmp .L5
+ 279               	.LM34:
+ 280 01e6 BE01      		movw r22,r28
+ 281 01e8 8BEE      		ldi r24,lo8(235)
+ 282 01ea 90E0      		ldi r25,hi8(235)
+ 283 01ec 0E94 0000 		call mlme_notifyAssociation
+ 284 01f0 6881      		ld r22,Y
+ 285 01f2 00C0      		rjmp .L5
+ 286               	.L29:
+ 287               	.LM35:
+ 288 01f4 8730      		cpi r24,lo8(7)
+ 289 01f6 01F4      		brne .+2
+ 290 01f8 00C0      		rjmp .L27
+ 291 01fa 8730      		cpi r24,lo8(7)
+ 292 01fc 00F4      		brsh .+2
+ 293 01fe 00C0      		rjmp .L26
+ 294 0200 8830      		cpi r24,lo8(8)
+ 295 0202 01F0      		breq .+2
+ 296 0204 00C0      		rjmp .L18
+ 297               	.LM36:
+ 298 0206 2F96      		adiw r28,15
+ 299 0208 BE01      		movw r22,r28
+ 300 020a 8AE4      		ldi r24,lo8(74)
+ 301 020c 0E94 0000 		call mlmeSetRequest
+ 302               	.LM37:
+ 303 0210 2A96      		adiw r28,10
+ 304 0212 BE01      		movw r22,r28
+ 305 0214 80E5      		ldi r24,lo8(80)
+ 306 0216 0E94 0000 		call mlmeSetRequest
+ 307               	.LM38:
+ 308 021a 2296      		adiw r28,2
+ 309 021c BE01      		movw r22,r28
+ 310 021e 8BE4      		ldi r24,lo8(75)
+ 311 0220 0E94 0000 		call mlmeSetRequest
+ 312 0224 2397      		sbiw r28,3
+ 313               	.LM39:
+ 314 0226 4D81      		ldd r20,Y+5
+ 315 0228 6897      		sbiw r28,24
+ 316 022a 5527      		clr r21
+ 317 022c 6627      		clr r22
+ 318 022e 7727      		clr r23
+ 319 0230 80E0      		ldi r24,lo8(0)
+ 320 0232 0E94 0000 		call plmeSET_request
+ 321               	.LM40:
+ 322 0236 8981      		ldd r24,Y+1
+ 323 0238 8C70      		andi r24,lo8(12)
+ 324 023a 8C30      		cpi r24,lo8(12)
+ 325 023c 01F4      		brne .+2
+ 326 023e 00C0      		rjmp .L57
+ 327               	.L30:
+ 328               	.LM41:
+ 329 0240 8FEE      		ldi r24,lo8(-17)
+ 330 0242 0E94 0000 		call mlmeSyncLossIndication
+ 331 0246 00C0      		rjmp .L18
+ 332               	.L14:
+ 333               	.LM42:
+ 334 0248 8091 0000 		lds r24,macInfo
+ 335 024c 8430      		cpi r24,lo8(4)
+ 336 024e 01F0      		breq .+2
+ 337 0250 00C0      		rjmp .L5
+ 338 0252 00C0      		rjmp .L50
+ 339               	.L25:
+ 340               	.LM43:
+ 341 0254 2D85      		ldd r18,Y+13
+ 342 0256 3E85      		ldd r19,Y+14
+ 343 0258 8091 0000 		lds r24,mpib+28
+ 344 025c 9091 0000 		lds r25,(mpib+28)+1
+ 345 0260 2817      		cp r18,r24
+ 346 0262 3907      		cpc r19,r25
+ 347 0264 01F0      		breq .+2
+ 348 0266 00C0      		rjmp .L18
+ 349               	.LM44:
+ 350 0268 8EEE      		ldi r24,lo8(-18)
+ 351 026a 0E94 0000 		call mlmeSyncLossIndication
+ 352 026e 00C0      		rjmp .L18
+ 353               	.L54:
+ 354               	.LM45:
+ 355 0270 CE01      		movw r24,r28
+ 356 0272 0E94 0000 		call beacon_notifyBeacon
+ 357 0276 00C0      		rjmp .L18
+ 358               	.L55:
+ 359               	.LM46:
+ 360 0278 CE01      		movw r24,r28
+ 361 027a 0E94 0000 		call beacon_updateNewBeacon
+ 362 027e 00C0      		rjmp .L18
+ 363               	.L27:
+ 364               	.LM47:
+ 365 0280 0E94 0000 		call beacon_transBeaconOnRequest
+ 366 0284 00C0      		rjmp .L18
+ 367               	.L23:
+ 368               	.LM48:
+ 369 0286 8981      		ldd r24,Y+1
+ 370 0288 8C7C      		andi r24,lo8(-52)
+ 371 028a 8C3C      		cpi r24,lo8(-52)
+ 372 028c 01F0      		breq .+2
+ 373 028e 00C0      		rjmp .L18
+ 374               	.LM49:
+ 375 0290 20E0      		ldi r18,lo8(0)
+ 376 0292 40E0      		ldi r20,lo8(0)
+ 377 0294 698D      		ldd r22,Y+25
+ 378 0296 CE01      		movw r24,r28
+ 379 0298 0F96      		adiw r24,15
+ 380 029a 0E94 0000 		call mlmeDisassociateIndication
+ 381 029e 00C0      		rjmp .L18
+ 382               	.L56:
+ 383               	.LM50:
+ 384 02a0 888D      		ldd r24,Y+24
+ 385 02a2 8230      		cpi r24,lo8(2)
+ 386 02a4 01F0      		breq .+2
+ 387 02a6 00C0      		rjmp .L5
+ 388               	.LM51:
+ 389 02a8 BE01      		movw r22,r28
+ 390 02aa 80E0      		ldi r24,lo8(0)
+ 391 02ac 90E0      		ldi r25,hi8(0)
+ 392 02ae 0E94 0000 		call mlme_notifyAssociation
+ 393 02b2 6881      		ld r22,Y
+ 394 02b4 00C0      		rjmp .L9
+ 395               	.L40:
+ 396               	.LM52:
+ 397 02b6 CF01      		movw r24,r30
+ 398 02b8 0E94 0000 		call mem_freeMem
+ 399 02bc 00C0      		rjmp .L18
+ 400               	.L24:
+ 401               	.LM53:
+ 402 02be CE01      		movw r24,r28
+ 403 02c0 0E94 0000 		call indirectTx_RespondDataReq
+ 404 02c4 00C0      		rjmp .L18
+ 405               	.L26:
+ 406               	.LM54:
+ 407 02c6 8981      		ldd r24,Y+1
+ 408 02c8 8C7C      		andi r24,lo8(-52)
+ 409 02ca 883C      		cpi r24,lo8(-56)
+ 410 02cc 01F0      		breq .+2
+ 411 02ce 00C0      		rjmp .L18
+ 412               	.LM55:
+ 413 02d0 8D85      		ldd r24,Y+13
+ 414 02d2 9E85      		ldd r25,Y+14
+ 415 02d4 8F5F      		subi r24,lo8(-1)
+ 416 02d6 9F4F      		sbci r25,hi8(-1)
+ 417 02d8 01F0      		breq .+2
+ 418 02da 00C0      		rjmp .L18
+ 419 02dc 8B81      		ldd r24,Y+3
+ 420 02de 9C81      		ldd r25,Y+4
+ 421 02e0 8F5F      		subi r24,lo8(-1)
+ 422 02e2 9F4F      		sbci r25,hi8(-1)
+ 423 02e4 01F0      		breq .+2
+ 424 02e6 00C0      		rjmp .L18
+ 425               	.LM56:
+ 426 02e8 6695      		lsr r22
+ 427 02ea 6695      		lsr r22
+ 428 02ec 6695      		lsr r22
+ 429 02ee 6170      		andi r22,lo8(1)
+ 430 02f0 40E0      		ldi r20,lo8(0)
+ 431 02f2 CE01      		movw r24,r28
+ 432 02f4 0F96      		adiw r24,15
+ 433 02f6 0E94 0000 		call mlmeOrphanIndication
+ 434 02fa 00C0      		rjmp .L18
+ 435               	.L57:
+ 436               	.LM57:
+ 437 02fc BE01      		movw r22,r28
+ 438 02fe 625E      		subi r22,lo8(-(30))
+ 439 0300 7F4F      		sbci r23,hi8(-(30))
+ 440 0302 83E5      		ldi r24,lo8(83)
+ 441 0304 0E94 0000 		call mlmeSetRequest
+ 442 0308 00C0      		rjmp .L30
+ 443               	.L45:
+ 444               	/* epilogue: frame size=0 */
+ 445 030a DF91      		pop r29
+ 446 030c CF91      		pop r28
+ 447 030e 1F91      		pop r17
+ 448 0310 0F91      		pop r16
+ 449 0312 0895      		ret
+ 450               	/* epilogue end (size=5) */
+ 451               	/* function macrx_ProcessMpdu size 398 (389) */
+ 452               	.LFE2:
+ 454               		.comm pIndiData,2,1
+ 477               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 mac_rx.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGoaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGoaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGoaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGoaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGoaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccGoaaaa.s:20     .text:00000000 macrx_ProcessMpdu
+                            *COM*:00000002 pIndiData
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+macInfo
+mpib
+mem_releaseRxPkt
+mem_getMem
+mem_cpy
+mcpsDataIndication
+pScanInfo
+mlme_handlePktInScan
+mac_requestState
+mlme_handlePollTransition
+mlmeAssociateIndication
+tx_notifyAck
+mlme_notifyAssociation
+mlmeSetRequest
+plmeSET_request
+mlmeSyncLossIndication
+beacon_notifyBeacon
+beacon_updateNewBeacon
+beacon_transBeaconOnRequest
+mlmeDisassociateIndication
+mem_freeMem
+indirectTx_RespondDataReq
+mlmeOrphanIndication

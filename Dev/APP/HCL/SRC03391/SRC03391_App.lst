@@ -1,0 +1,288 @@
+   1               		.file	"SRC03391_App.c"
+   2               		.arch atmega128
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	SRC03391_ToggleState
+  20               	SRC03391_ToggleState:
+  21               	.LFB6:
+  22               	.LM1:
+  23               	/* prologue: frame size=0 */
+  24               	/* prologue end (size=0) */
+  25               	.LM2:
+  26 0000 8091 0000 		lds r24,SRC03391_state
+  27 0004 8823      		tst r24
+  28 0006 01F4      		brne .L2
+  29               	.LM3:
+  30 0008 61E0      		ldi r22,lo8(1)
+  31 000a 84E0      		ldi r24,lo8(4)
+  32 000c 0E94 0000 		call LedOnOff
+  33               	.LM4:
+  34 0010 8FEF      		ldi r24,lo8(-1)
+  35 0012 8093 0000 		sts SRC03391_state,r24
+  36 0016 00C0      		rjmp .L4
+  37               	.L2:
+  38               	.LM5:
+  39 0018 60E0      		ldi r22,lo8(0)
+  40 001a 84E0      		ldi r24,lo8(4)
+  41 001c 0E94 0000 		call LedOnOff
+  42               	.LM6:
+  43 0020 1092 0000 		sts SRC03391_state,__zero_reg__
+  44               	.L4:
+  45               	.LM7:
+  46 0024 40E0      		ldi r20,lo8(0)
+  47 0026 50E0      		ldi r21,hi8(0)
+  48 0028 61E0      		ldi r22,lo8(1)
+  49 002a 85E0      		ldi r24,lo8(5)
+  50 002c 0E94 0000 		call apf_sendAppMsg
+  51               	/* epilogue: frame size=0 */
+  52 0030 0895      		ret
+  53               	/* epilogue end (size=1) */
+  54               	/* function SRC03391_ToggleState size 25 (24) */
+  55               	.LFE6:
+  57               	.global	SRC03391_ChangeState
+  59               	SRC03391_ChangeState:
+  60               	.LFB5:
+  61               	.LM8:
+  62               	/* prologue: frame size=0 */
+  63               	/* prologue end (size=0) */
+  64               	.LVL0:
+  65               	.LM9:
+  66 0032 8093 0000 		sts SRC03391_state,r24
+  67               	.LM10:
+  68 0036 40E0      		ldi r20,lo8(0)
+  69 0038 50E0      		ldi r21,hi8(0)
+  70 003a 61E0      		ldi r22,lo8(1)
+  71 003c 85E0      		ldi r24,lo8(5)
+  72               	.LVL1:
+  73 003e 0E94 0000 		call apf_sendAppMsg
+  74               	/* epilogue: frame size=0 */
+  75 0042 0895      		ret
+  76               	/* epilogue end (size=1) */
+  77               	/* function SRC03391_ChangeState size 9 (8) */
+  78               	.LFE5:
+  80               	.global	SRC03391_HandleKeys
+  82               	SRC03391_HandleKeys:
+  83               	.LFB4:
+  84               	.LM11:
+  85               	/* prologue: frame size=0 */
+  86 0044 CF93      		push r28
+  87 0046 DF93      		push r29
+  88               	/* prologue end (size=2) */
+  89               	.LVL2:
+  90               	.LM12:
+  91 0048 8823      		tst r24
+  92 004a 01F4      		brne .L14
+  93               	.LM13:
+  94 004c C62F      		mov r28,r22
+  95 004e DD27      		clr r29
+  96               	.LM14:
+  97 0050 C1FF      		sbrs r28,1
+  98 0052 00C0      		rjmp .L11
+  99               	.LM15:
+ 100 0054 0E94 0000 		call SRC03391_ToggleState
+ 101               	.LVL3:
+ 102               	.L11:
+ 103               	.LM16:
+ 104 0058 C2FF      		sbrs r28,2
+ 105 005a 00C0      		rjmp .L14
+ 106               	.LM17:
+ 107 005c 85E0      		ldi r24,lo8(5)
+ 108               	.LVL4:
+ 109 005e 0E94 0000 		call zdp_sendEDBindReq
+ 110               	.LVL5:
+ 111               	.LVL6:
+ 112               	.L14:
+ 113               	/* epilogue: frame size=0 */
+ 114 0062 DF91      		pop r29
+ 115 0064 CF91      		pop r28
+ 116 0066 0895      		ret
+ 117               	/* epilogue end (size=3) */
+ 118               	/* function SRC03391_HandleKeys size 18 (13) */
+ 119               	.LFE4:
+ 121               	.global	SRC03391_ProcessEvent
+ 123               	SRC03391_ProcessEvent:
+ 124               	.LFB3:
+ 125               	.LM18:
+ 126               	/* prologue: frame size=0 */
+ 127 0068 CF93      		push r28
+ 128 006a DF93      		push r29
+ 129               	/* prologue end (size=2) */
+ 130               	.LVL7:
+ 131 006c FC01      		movw r30,r24
+ 132               	.LVL8:
+ 133               	.LM19:
+ 134 006e 8081      		ld r24,Z
+ 135               	.LVL9:
+ 136 0070 8035      		cpi r24,lo8(80)
+ 137 0072 01F0      		breq .L18
+ 138               	.LM20:
+ 139 0074 8135      		cpi r24,lo8(81)
+ 140 0076 00F4      		brsh .L21
+ 141 0078 8130      		cpi r24,lo8(1)
+ 142 007a 01F4      		brne .L26
+ 143 007c 00C0      		rjmp .L17
+ 144               	.L21:
+ 145 007e 8135      		cpi r24,lo8(81)
+ 146 0080 01F0      		breq .L19
+ 147 0082 8335      		cpi r24,lo8(83)
+ 148 0084 01F4      		brne .L26
+ 149 0086 00C0      		rjmp .L20
+ 150               	.L18:
+ 151               	.LM21:
+ 152 0088 82E0      		ldi r24,lo8(2)
+ 153 008a 8093 0000 		sts SRC03391_NwkState,r24
+ 154 008e 00C0      		rjmp .L26
+ 155               	.L19:
+ 156               	.LM22:
+ 157 0090 C281      		ldd r28,Z+2
+ 158 0092 D381      		ldd r29,Z+3
+ 159               	.LVL10:
+ 160               	.LM23:
+ 161 0094 8989      		ldd r24,Y+17
+ 162 0096 8295      		swap r24
+ 163 0098 8F70      		andi r24,0x0f
+ 164 009a 8230      		cpi r24,lo8(2)
+ 165 009c 01F4      		brne .L22
+ 166               	.LM24:
+ 167 009e CE01      		movw r24,r28
+ 168 00a0 0E94 0000 		call SRC03391_ProcessMSGCmd
+ 169               	.LVL11:
+ 170 00a4 00C0      		rjmp .L24
+ 171               	.LVL12:
+ 172               	.L22:
+ 173               	.LM25:
+ 174 00a6 CE01      		movw r24,r28
+ 175 00a8 0E94 0000 		call SRC03391_ProcessKVPCmd
+ 176               	.LVL13:
+ 177               	.L24:
+ 178               	.LM26:
+ 179 00ac CE01      		movw r24,r28
+ 180 00ae 0E94 0000 		call apf_releaseInComFrm
+ 181 00b2 00C0      		rjmp .L26
+ 182               	.LVL14:
+ 183               	.L20:
+ 184               	.LM27:
+ 185 00b4 8091 0000 		lds r24,SRC03391_NwkState
+ 186 00b8 8230      		cpi r24,lo8(2)
+ 187 00ba 01F4      		brne .L26
+ 188               	.LM28:
+ 189 00bc 6381      		ldd r22,Z+3
+ 190               	.LVL15:
+ 191 00be 8281      		ldd r24,Z+2
+ 192 00c0 0E94 0000 		call SRC03391_HandleKeys
+ 193               	.LVL16:
+ 194 00c4 00C0      		rjmp .L26
+ 195               	.LVL17:
+ 196               	.L17:
+ 197               	.LM29:
+ 198 00c6 4091 0000 		lds r20,SRC03391_state
+ 199 00ca 60E0      		ldi r22,lo8(SRC03391_epDescMandatory)
+ 200 00cc 70E0      		ldi r23,hi8(SRC03391_epDescMandatory)
+ 201               	.LVL18:
+ 202 00ce 80E0      		ldi r24,lo8(SRC03391_DstAddr)
+ 203 00d0 90E0      		ldi r25,hi8(SRC03391_DstAddr)
+ 204 00d2 0E94 0000 		call SRC03391_Set_OnOffSRC
+ 205               	.LVL19:
+ 206               	.LVL20:
+ 207               	.L26:
+ 208               	/* epilogue: frame size=0 */
+ 209 00d6 DF91      		pop r29
+ 210 00d8 CF91      		pop r28
+ 211 00da 0895      		ret
+ 212               	/* epilogue end (size=3) */
+ 213               	/* function SRC03391_ProcessEvent size 58 (53) */
+ 214               	.LFE3:
+ 216               	.global	SRC03391_Init
+ 218               	SRC03391_Init:
+ 219               	.LFB2:
+ 220               	.LM30:
+ 221               	/* prologue: frame size=0 */
+ 222               	/* prologue end (size=0) */
+ 223               	.LVL21:
+ 224               	.LM31:
+ 225 00dc 81E0      		ldi r24,lo8(1)
+ 226               	.LVL22:
+ 227 00de 8093 0000 		sts SRC03391_NwkState,r24
+ 228               	.LM32:
+ 229 00e2 8FEF      		ldi r24,lo8(-1)
+ 230 00e4 8093 0000 		sts SRC03391_state,r24
+ 231               	.LM33:
+ 232 00e8 1092 0000 		sts SRC03391_DstAddr,__zero_reg__
+ 233               	.LM34:
+ 234 00ec 1092 0000 		sts SRC03391_DstAddr+9,__zero_reg__
+ 235               	.LM35:
+ 236 00f0 8FEF      		ldi r24,lo8(-1)
+ 237 00f2 9FEF      		ldi r25,hi8(-1)
+ 238 00f4 9093 0000 		sts (SRC03391_DstAddr+1)+1,r25
+ 239 00f8 8093 0000 		sts SRC03391_DstAddr+1,r24
+ 240               	.LM36:
+ 241 00fc 0E94 0000 		call SRC03391_InitVars
+ 242               	.LVL23:
+ 243               	.LM37:
+ 244 0100 80E0      		ldi r24,lo8(SRC03391_epDescMandatory)
+ 245 0102 90E0      		ldi r25,hi8(SRC03391_epDescMandatory)
+ 246 0104 0E94 0000 		call app_addEP
+ 247               	.LM38:
+ 248 0108 85E0      		ldi r24,lo8(5)
+ 249 010a 0E94 0000 		call RegisterEP
+ 250               	/* epilogue: frame size=0 */
+ 251 010e 0895      		ret
+ 252               	/* epilogue end (size=1) */
+ 253               	/* function SRC03391_Init size 26 (25) */
+ 254               	.LFE2:
+ 256               	.global	SRC03391_epDescMandatory
+ 257               		.data
+ 260               	SRC03391_epDescMandatory:
+ 261 0000 05        		.byte	5
+ 262 0001 0001      		.word	256
+ 263 0003 FEFF      		.word	-2
+ 264 0005 00        		.byte	0
+ 265 0006 00        		.byte	0
+ 266 0007 0000      		.word	0
+ 267 0009 01        		.byte	1
+ 268 000a 0000      		.word	SRC03391_MandatoryOutClusters
+ 269 000c 0000      		.word	pm(SRC03391_ProcessEvent)
+ 270 000e 0000      		.word	pm(SRC03391_Init)
+ 271               		.comm SRC03391_taskID,1,1
+ 272               		.comm SRC03391_NwkState,1,1
+ 273               		.comm SRC03391_state,1,1
+ 274               		.comm SRC03391_DstAddr,10,1
+ 325               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 SRC03391_App.c
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:3      *ABS*:0000003f __SREG__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:4      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:5      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:20     .text:00000000 SRC03391_ToggleState
+                            *COM*:00000001 SRC03391_state
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:59     .text:00000032 SRC03391_ChangeState
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:82     .text:00000044 SRC03391_HandleKeys
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:123    .text:00000068 SRC03391_ProcessEvent
+                            *COM*:00000001 SRC03391_NwkState
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:260    .data:00000000 SRC03391_epDescMandatory
+                            *COM*:0000000a SRC03391_DstAddr
+C:\DOCUME~1\pnthai\LOCALS~1\Temp/ccYfaaaa.s:218    .text:000000dc SRC03391_Init
+                            *COM*:00000001 SRC03391_taskID
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+LedOnOff
+apf_sendAppMsg
+zdp_sendEDBindReq
+SRC03391_ProcessMSGCmd
+SRC03391_ProcessKVPCmd
+apf_releaseInComFrm
+SRC03391_Set_OnOffSRC
+SRC03391_InitVars
+app_addEP
+RegisterEP
+SRC03391_MandatoryOutClusters
